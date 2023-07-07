@@ -343,9 +343,13 @@
 #Properties
 #**/*.properties
 
+#Idea
+*.idea
 
 # Eclipse Gradle plugin generated files
 # Eclipse Core
 # JDT-specific (Eclipse Java Development Tools)
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,java,eclipse,visualstudiocode,intellij,maven,gradle
+HotelSolution/HotelSolution.iml
+Servers/
