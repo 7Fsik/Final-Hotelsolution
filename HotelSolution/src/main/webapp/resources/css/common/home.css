@@ -1,5 +1,37 @@
-
-.main{
+.main {
     width: 100%;
     height: 100%;
+
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    background-color: #dedede;
+    display: flex;
+}
+
+.main-aside{
+    width: 280px;
+    height: 900px ;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-box{
+    width: 100%;
+    height: 360px ;
+    border: 1px solid black;
+}
+
+.main-aside-empty{
+    width: 100%;
+    height: 90px;
+}
+
+.team-menu-bar{
+    width: 100%;
+    height: 450px;
+    border: 1px solid black;
 }
