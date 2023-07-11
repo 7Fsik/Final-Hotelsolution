@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="schedule">
+	<insert id="create" parameterType="java.util.Map">
+	    INSERT INTO SCHEDULE (
+	        NO,
+	        USER_NO,
+	        SCHEDULE_TYPE_NO,
+	        START_DATE,
+	        END_DATE,
+	        TITLE
+	      
+	    )
+	    VALUES (
+	        SEQ_SCHEDULE_NO.NEXTVAL,
+	        #{loginMember.no},
+	        1,
+	        TO_TIMESTAMP(#{data[0]}, 'YYYYMMDDHH24MISS'),
+	        TO_TIMESTAMP(#{data[1]}, 'YYYYMMDDHH24MISS'),
+	        #{data[2]}
+	        
+	    )
+	</insert>
+
+
+
+  <delete id="delete" parameterType="java.util.Map">
+  	DELETE FROM SCHEDULE
+    WHERE START_DATE =  #{data[0]}
+    AND ENE_DATE = #{data[1]}
+    AND USER_NO = #{loginMember.no}
+  </delete>
+  <update id="modify" parameterType="java.util.Map">
+  	UPDATE SCHEDULE
+    SET
+        START_DATE =  #{data[0]}
+        ,END_DATE = #{data[1]}
+       
+    WHERE USER_NO = #{loginMemberNo}
+    AND TITLE = #{data[2]}
+    
+  
+  </update>
+
+  
+  <select id="read" resultType="ScheduleVo">
+      SELECT * 
+	  FROM SCHEDULE
+  
+  </select>
+</mapper>
