@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="survey">
+  
+  <select id="titleList" resultType="SurveyDocVo">
+      SELECT * 
+	  FROM SURVEY_DOCUMENT
+	     ORDER BY no DESC
+  
+  </select>
+  
+ 
+
+    <insert id="insertDocument" parameterType="java.util.Map">
+    
+        INSERT INTO survey_document (no, title) VALUES (SEQ_SURVEY_DOCUMET_NO.NEXTVAL, #{title})
+       
+    </insert>
+	<insert id="insertQuestions">
+	    INSERT INTO survey_question (no, survey_no, question)
+    	VALUES 
+    	
+ 		(SEQ_SURVEY_QUESTION_NO.NEXTVAL, SEQ_SURVEY_DOCUMET_NO.CURRVAL,
+		#{question}
+        )
+        
+    	
+   
+	</insert>
+
+
+
+
+
+</mapper>

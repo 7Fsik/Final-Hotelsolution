@@ -11,7 +11,9 @@
     </settings>
     <typeAliases>
   		<typeAlias type="com.hotelsolution.fire.schedule.vo.ScheduleVo" alias="ScheduleVo"/>
+  		<typeAlias type="com.hotelsolution.fire.hr.vo.SurveyDocVo" alias="SurveyDocVo"/>
  	 </typeAliases>
-
+ 	 
+ 
 
 </configuration>
