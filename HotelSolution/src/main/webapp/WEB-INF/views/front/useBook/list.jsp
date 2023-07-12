@@ -75,13 +75,7 @@
     .name{
         font-size: 20px;
     }
-    .int{
-        font-size: 13px;
-    }
     .ho{
-        font-size: 15px;
-    }
-    .date{
         font-size: 15px;
     }
     .btn{
@@ -97,6 +91,7 @@
         color: white;
         border-radius: 5px;
     }
+    
 
 </style>
 <body>
@@ -110,7 +105,7 @@
         <div id="search-area">
             <div id="search">
                 <select name="" id="">
-                    <option value="">손님 이름</option>
+                    <option value="">방 호수</option>
                 </select>
                 
                 <input type="text">
@@ -127,9 +122,11 @@
 	                    <div>
 	                        <div class="name">방이름</div>
 	                        <div class="ho">호수</div>
-	                        <div class="int">손님정보</div>
-	                        <div class="date">이용일</div>
+                            <div>금액 : 100000 원</div>
 	                    </div>
+                        <div class="btn">
+                            <button>이용/예약하기</button>
+                        </div>
 	                </div>
 				</c:forEach>
             </div>
