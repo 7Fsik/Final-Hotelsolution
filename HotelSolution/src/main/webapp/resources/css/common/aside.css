@@ -1,5 +1,5 @@
 .aside {
-    width: 192px; /* 변경: 고정 너비 192px 설정 */
+    width: 128px; /* 변경: 고정 너비 192px 설정 */
     height: 100vh; /* 변경: 세로 전체 높이로 설정 */
     position: fixed; /* 변경: 고정 위치로 설정 */
     top: 0;
@@ -18,14 +18,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 200px;
+
 }
 
 .aside-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 160px; /* 변경: 아이콘 간격 추가 */
 }
 
 .aside-icon img {

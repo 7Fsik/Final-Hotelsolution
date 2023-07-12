@@ -1,16 +1,22 @@
 .header {
     width: 100%;
-    height: 108px;
+    height: 82px;
     position: sticky;
     top: 0;
     z-index: 90;
     background-color: white;
-    border-bottom: 1px solid rgb(175, 175, 175);
+    /*border-bottom: 1px solid rgb(175, 175, 175);*/
 }
 
 .header-area {
-    max-width: 1920px; /* 변경: width 대신 max-width 사용 */
+    width: 1792px;
     margin: 0 auto; /* 변경: auto 값 수정 */
+    height: 100%;
+}
+
+.header-logo{
+    height: 100%;
+    margin-left: 80px
 }
 
 .header-detail-area {

@@ -1,7 +1,6 @@
 .main {
     width: 100%;
     height: 100%;
-
 }
 
 .main-container{
@@ -11,18 +10,23 @@
     display: flex;
 }
 
+.header-logoimg{
+    justify-content: center;
+}
+
 .main-aside{
-    width: 280px;
+    width: 276px;
     height: 900px ;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
+    margin-left: 150px;
+    margin-top: 50px;
 }
 
 .profile-box{
     width: 100%;
     height: 360px ;
-    border: 1px solid black;
+    background-color: #3b444b;
 }
 
 .main-aside-empty{
@@ -33,5 +37,21 @@
 .team-menu-bar{
     width: 100%;
     height: 450px;
-    border: 1px solid black;
+    background-color: #ffffff;
 }
+
+.main-content-list {
+    display: grid;
+    grid-template-columns: 700px 430px;
+    grid-template-rows: auto;
+    grid-gap: 20px;
+    margin-top: 50px ;
+    margin-left: 40px;
+}
+
+.commute, .calendar, .mail, .board {
+    width: 700px;
+    height: 100%;
+    background-color: #ffffff;
+}
+
