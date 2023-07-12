@@ -23,13 +23,15 @@
 					<div class="main-aside-empty"></div>
 					<div class="team-menu-bar"></div>
 				</aside>
-				<div class="commute"></div>
-				<div class="calender"></div>
-				<div class="mail"></div>
-				<div class="board"></div>
+				<div class="main-content-list">
+					<div class="commute"></div>
+					<div class="calendar"></div>
+					<div class="mail"></div>
+					<div class="board"></div>
+				</div>
 			</div>
-
 		</main>
+
 
 
 	</div>
