@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Repository
 @Slf4j
-public class HrDao {
+public class SurveyDao {
 
 	public List<SurveyDocVo> titleList(SqlSessionTemplate sst) {
 		return sst.selectList("survey.titleList");
@@ -31,6 +31,10 @@ public class HrDao {
 		}
 		return result;
 		
+	}
+
+	public SurveyDocVo getRecentSurveyQnAList(SqlSessionTemplate sst) {
+		return sst.selectOne("survey.getRecentSurveyQnAList");
 	}
 
 	

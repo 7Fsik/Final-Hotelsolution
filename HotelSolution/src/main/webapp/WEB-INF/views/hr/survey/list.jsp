@@ -1,36 +1,49 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   
+<c:set var="root" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	.hrBody{
+		width : 1400px;
+		height : 820px;
+		margin-top: 10px;
+		margin-left :470px;
+		margin-right: 40px;
+		overflow: scroll;	
+		
+	}
 	.hrWrap{
 		display: grid;
         
 		grid-template-columns: 7fr 4fr;
-        place-items: center; 
-      
-		width: 70vw;
-		height : 80vh;
-		margin-top: 15vh;
-		margin-left:25vw;
-        margin-right: 10px;
+      	text-align:right;
+		width:100%;
+		height : 100%;
         border: 1px solid #3B444B;
         border-radius: 20px;
 	}
 	.listHrSurveyWrap{
-        margin-left: 20px;
-		width: 100%;
-		height : 95%;
+		margin-top:1vh;
+		margin-bottom:1vh;
+        margin-left: 1vw;
+        margin-right: 1vw;
+		width: 950px;
+		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
-        display: grid;
-        grid-template-rows: 2fr 4fr 4fr 4fr 4fr 2fr;
 	}
-    
+    .listHrSurvey{
+        width: 100%;
+		height : 100%;
+        display: grid;
+        grid-template-rows: 1fr 8fr 1fr;
+    }
     .surveyTitle{
         margin-top: 10px;
         
@@ -44,16 +57,7 @@
         place-items: center; 
         font-size: 40px;
     }
-    .qustion{
-        margin-left: 10%;
-        font-size: 20px;
-    }
-    .qustionInput{
-        width: 90%;
-        height: 30px;
-        font-size: 20px;
-        font-weight: bold;
-    }
+   
     input{
         border: 0px;
     }
@@ -70,8 +74,8 @@
         border-radius: 20px;
     }
     textarea{
-        width: 90%;
-        height: 80%;
+        width: 80%;
+        height: 60%;
         border: 0px solid #3B444B;
         border-radius: 20px;
         resize: none;
@@ -79,9 +83,12 @@
     }
 
     .titleListWrap{
-        margin-left: 20px;
-		width: 90%;
-		height : 95%;
+      	margin-top:1vh;
+		margin-bottom:1vh;
+        margin-left: 1vw;
+        margin-right: 1vw;
+		width: 370px;
+		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
       
@@ -111,66 +118,230 @@
     }
     .listWrap{
     	display: grid;
-    	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
     .pageBtn{
     text-align: center;
     }
+    .tableDiv{
+    	border: 1px solid black;
+        padding: 22px;
+        box-sizing: border-box;
+        text-align: left;
+        align-items: center;
+        
+    }
+    .tableWrap{
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 6fr 6fr 6fr 6fr;
+        box-sizing: border-box;
+    }
+    .surveyListBtn{
+        margin-top: 30px;
+        text-align: center;
+    }
 </style>
 </head>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
 <body>
-    <div class="hrWrap">
-        <div class="listHrSurveyWrap">
-                <div class="surveyTitle">
-                    <input type="text" value=" class="surveyTitleInput">
-                </div>
-               
-                
-                <div class="qustion">
-                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-                    <textarea readonly></textarea>
-                </div>
-                <div class="qustion">
-                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-                    <textarea readonly></textarea>
-                </div>
-                <div class="qustion">
-                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-                    <textarea readonly></textarea>
-                </div>
-                <div class="qustion">
-                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-                    <textarea readonly></textarea>
-                </div>
-                <div class="btn">
-                    <button type="submit" class="button">설문지 배포</button>
-                </div>
-        </div>
-        
-        <div class="titleListWrap">
-            <div class="listHead">
-                이전 설문 목록
-            </div>
-                <div class= listWrap>
-	                <c:forEach items="${voList}" var="voList" >
-					     <div class="titleList">
-		                    ${voList.title}
-		                    <br><br>
-		                    ${voList.enrollDate}
-		                </div>
-					</c:forEach>
-               </div>
-             
-                 <div class="searchList">
-                    검색할 내용 : <input type="text">
-                    <button type="submit" > 검색 </button>
-                 </div>
-                 <div class="pageBtn">
-                    페이징처리
-                 </div>                 
-            
-        </div>
+	<div class="hrBody">
+		
+	    <div class="hrWrap">
+	        <div class="listHrSurveyWrap">
+                <div class="listHrSurvey">
+                    <div class="surveyTitle">
+                            설문제목 (설문생성날짜)
+                    </div>
+	                
+	                <div class="tableWrap">
+
+                        
+                        <div class="tableDiv">
+                           
+                        </div>
+                        <div class="tableDiv">
+                            질문 1
+                        </div>
+                        <div class="tableDiv">
+                            질문 2
+                        </div>
+                        <div class="tableDiv">
+                            질문 3
+                        </div>
+                        <div class="tableDiv">
+                            질문 4
+                        </div>
+                        <div class="tableDiv">
+                            2
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            5
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            6
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            7
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            8
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            9
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            10
+                        </div>
+                        <div class="tableDiv">
+                            1번 질문의 답
+                        </div>
+                        <div class="tableDiv">
+                            2번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            3번 질문의답
+                        </div>
+                        <div class="tableDiv">
+                            4번 질문의답
+                        </div>
+
+                    </div>
+
+                    <div class="surveyListBtn">
+                        <button type="button">페이징처리</button>
+                    </div>
+	               
+	            </div>
+	        </div>
+	        
+	        <div class="titleListWrap">
+	            <div class="listHead">
+	                <div>이전 설문 목록</div>
+	            </div>
+	                <div class= listWrap>
+		                <c:forEach items="${voList}" var="voList" >
+						     <div class="titleList">
+			                    ${voList.title}
+			                    <br><br>
+			                    ${voList.enrollDate}
+			                </div>
+						</c:forEach>
+	               </div>
+	             
+	                 <div class="searchList">
+	                    검색할 내용 : <input type="text">
+	                    <button type="submit" > 검색 </button>
+	                 </div>
+	                 <div class="pageBtn">
+	                    페이징처리
+	                 </div>                 
+	            
+	        </div>
+	    </div>
     </div>
-    
 </body>
 </html>
