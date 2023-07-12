@@ -5,12 +5,18 @@
 <mapper namespace="survey">
   
   <select id="titleList" resultType="SurveyDocVo">
-      SELECT * 
-	  FROM SURVEY_DOCUMENT
-	     ORDER BY no DESC
+	      SELECT * 
+		  FROM SURVEY_DOCUMENT
+	      ORDER BY no DESC
   
   </select>
   
+   <select id="getRecentSurveyQnAList" resultType="SurveyDocVo">
+	      SELECT * 
+		  FROM SURVEY_DOCUMENT
+	      ORDER BY no DESC
+  
+  </select>
  
 
     <insert id="insertDocument" parameterType="java.util.Map">
@@ -19,14 +25,20 @@
        
     </insert>
 	<insert id="insertQuestions">
-	    INSERT INTO survey_question (no, survey_no, question)
+	    INSERT INTO survey_question 
+	    	(
+	    		no
+	    		, survey_no
+	    		, question
+	    	)
     	VALUES 
     	
- 		(SEQ_SURVEY_QUESTION_NO.NEXTVAL, SEQ_SURVEY_DOCUMET_NO.CURRVAL,
-		#{question}
-        )
+ 			(
+ 				SEQ_SURVEY_QUESTION_NO.NEXTVAL
+ 				, SEQ_SURVEY_DOCUMET_NO.CURRVAL
+ 				,#{question}
+        	)
         
-    	
    
 	</insert>
 
