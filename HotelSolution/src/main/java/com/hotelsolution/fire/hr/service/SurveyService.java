@@ -3,8 +3,10 @@ package com.hotelsolution.fire.hr.service;
 import java.util.List;
 import java.util.Map;
 
+import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
-import com.hotelsolution.fire.page.vo.PageVo;
+import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
 
 public interface SurveyService {
 	int write(Map<String, Object> map);
@@ -15,5 +17,9 @@ public interface SurveyService {
 
 	int getSurveyCnt();
 
-	List<String> geteQuestionList(String no);
+	List<SurveyQuestionVo> geteQuestionList(String no);
+
+	List<SurveyAnswerVo> answerByOneQuestion(String no, PageVo answerListPv);
+
+	int getAnswerCnt(String no);
 }

@@ -46,11 +46,11 @@
         width: 100%;
 		height : 100%;
         display: grid;
-        grid-template-rows: 1fr 8fr 1fr;
+        grid-template-rows: 1fr 1fr 7fr 1fr;
     }
     .surveyTitle{
-        margin-top: 10px;
-        padding-left : 20px;
+        margin-top: 15px;
+        padding-left : 15px;
         text-align: center;
         border: 0px;
         font-size: 40px;
@@ -113,26 +113,29 @@
     .listHead{
         margin-top: 10px;
         padding-top : 10px;
-        
+        width:370px;
         text-align: center;
         border: 0px;
         font-size: 40px;
        
         border-bottom: 1px solid #3B444B;
+        
     }
     .titleList{
-        padding-left: 10%;
-        width: 90%;
+        padding-left: 35px;
+        width: 100%;
         height: 90%;
-        margin-top: 10px;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
-         cursor: pointer;
+        cursor: pointer;
     }
     .searchList{
+    	margin-top: 20px;
+    	margin-right : 20px;
         text-align: right;
     }
     .listWrap{
+    	width:370px;
     	display: grid;
     	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
     	
@@ -179,6 +182,8 @@
 	}
 	
 	  .tableDiv{
+	  	border-collapse: separate;
+   	 border-spacing: 0;
     	border: 1px solid black;
         padding: 22px;
         box-sizing: border-box;
@@ -187,10 +192,12 @@
         
     }
     .tableWrap{
+    	border-collapse: separate;
+    border-spacing: 0;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         grid-template-columns: 6fr 6fr 6fr 6fr;
         box-sizing: border-box;
+        font-size: 22px;
     }
     .surveyListBtn{
         margin-top: 30px;
@@ -200,10 +207,11 @@
 	  white-space: nowrap;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
-	  max-width: 300px; /* 원하는 글자 수에 따라 조정 */
+	  max-width: 370px; /* 원하는 글자 수에 따라 조정 */
+	  text-align: left;
 	}
 	 p.titleTruncate{
-	 white-space: nowrap;
+	  white-space: nowrap;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
 	  max-width: 850px; /* 원하는 글자 수에 따라 조정 */
@@ -213,10 +221,52 @@
 	 white-space: nowrap;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
-	  max-width: 150px; /* 원하는 글자 수에 따라 조정 */
-	  text-align: center;
+	  max-width: 190px; /* 원하는 글자 수에 따라 조정 */
+	  text-align: left;
 	 }
-
+	  #page-area{
+   		 margin :auto;
+   	 	width: 200px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
+    }
+    .answerWrap{
+    	border-collapse: separate;
+    border-spacing: 0;
+    	display: grid;
+        grid-template-columns: 6fr 6fr 6fr 6fr;
+        box-sizing: border-box;
+       
+    }
+    .ansDivWrap{
+   	 	border-collapse: separate;
+    border-spacing: 0;
+    	display: grid;
+    	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    	box-sizing: border-box;
+    }
+    .answerWrap > div{
+    	box-sizing: border-box;
+        border: 1px solid #3B444B;
+        box-sizing: border-box;
+    }
+	.ansDiv{
+		border-collapse: separate;
+   		 border-spacing: 0;
+    	border-bottom: 1px solid black;
+        padding: 22px;
+        box-sizing: border-box;
+        text-align: left;
+        align-items: center;
+        }
+    #ans-page-area{
+   		 margin :auto;
+   	 	width: 400px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
+        }
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -230,42 +280,90 @@
 				<div class="team-menu-bar"></div>
 			</aside>
 			<div class="hrBody">
-		
 	    <div class="hrWrap">
 	        <div class="detailHrSurveyWrap">
                 <div class="detailHrSurvey">
                     <div class="surveyTitle">
-                           <p class="titleTruncate">${title} (${enrollDate})</p> 
+                           <p class="titleTruncate">${sdvo.title} (${sdvo.enrollDate})</p> 
                     </div>
 	                
 	                <div class="tableWrap">
 
                         
                        
-                        <c:forEach items="${list}" var="list" >
+                        <c:forEach items="${list}" var="list" varStatus="status">
 								<div class="tableDiv">
-		                        	 <p class="questionTruncate">${list.question})</p>
+		                        	 <p class="questionTruncate">${status.index + 1}. ${list.question}</p>
 		                        </div>
 						</c:forEach>
                        
                       
                     </div>
+                    <div class="answerWrap">
 
-                    <div class="surveyListBtn">
-                        <button type="button">페이징처리</button>
+                        <div class="ans1 ansDivWrap">
+                        	  <c:forEach items="${answerLists.get(0)}" var="list">
+								<div class="ansDiv" onclick="goSurveyResultDetailByOne(${list.questionNo},${list.answerer})">
+		                        	 <p class="questionTruncate"> ${list.answer}</p>
+		                        </div>
+							</c:forEach>
+                        </div>
+                        <div class="ans2 ansDivWrap">
+                        	<c:forEach items="${answerLists.get(1)}" var="list">
+								<div class="ansDiv">
+		                        	 <p class="questionTruncate"> ${list.answer}</p>
+		                        </div>
+							</c:forEach>
+                        </div>
+                        <div class="ans3 ansDivWrap">
+                        	<c:forEach items="${answerLists.get(2)}" var="list">
+								<div class="ansDiv">
+		                        	 <p class="questionTruncate"> ${list.answer}</p>
+		                        </div>
+							</c:forEach>
+                        </div>
+                        <div class="ans4 ansDivWrap">
+                        	<c:forEach items="${answerLists.get(3)}" var="list">
+								<div class="ansDiv">
+		                        	 <p class="questionTruncate"> ${list.answer}</p>
+		                        </div>
+							</c:forEach>
+                        </div>
+                      
+                       
+                      
                     </div>
+
+                    <div id="ans-page-area">
+		            	<c:if test="${answerListPv.currentPage > 1}">
+			            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage - 1}&titleListpage=${pv.currentPage}">이전</a>
+		            	</c:if>
+			            	<c:forEach begin="${answerListPv.startPage}" end="${answerListPv.endPage}" step="1" var="i">
+			            		<c:if test="${answerListPv.currentPage != i}">
+					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${i}&titleListpage=${pv.currentPage}">${i}</a>
+			            		</c:if>
+			            		<c:if test="${answerListPv.currentPage == i}">
+					            	<a >${i}</a>
+			            		</c:if>
+			            	</c:forEach>
+			            <c:if test="${answerListPv.currentPage < answerListPv.maxPage}">
+			            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage + 1}&titleListpage=${pv.currentPage}">다음</a>
+			            </c:if>
+		            </div>
+			                    
 	               
 	            </div>
 	        </div>
 			            <div class="titleListWrap">
 			            <div class="listHead">
-			                <div>이전 설문 목록</div>
+			                이전 설문 목록
 			            </div>
 			                <div class= listWrap>
+			                
 				                <c:forEach items="${titleList}" var="title" >
-								     <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}', '${currentPage}')">
-							            <p class="titleTruncate">${title.title}</p>
-							            <br><br>
+								     <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}')">
+							            <p class="titleListTruncate">${title.title}</p>
+							            <br>
 							            <p style="text-align: right; font-size: 15px;">(${title.enrollDate})</p>
 							        </div>
 								</c:forEach>
@@ -280,18 +378,18 @@
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/write?titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage - 1}&answerListpage=${answerListPv.currentPage}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/write?titleListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${i}&answerListpage=${answerListPv.currentPage}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/write?titleListpage=${pv.currentPage + 1}">다음</a>
+					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage + 1}&answerListpage=${answerListPv.currentPage}">다음</a>
 					            </c:if>
 				            </div>
 			                    
@@ -305,9 +403,13 @@
 </body>
 <script>
 function goDetail(no, title, enrollDate, titleListpage) {
-    window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
+    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
 }
 
+function goSurveyResultDetailByOne(questionNo, answerer) {
+	 window.location.href = '${root}/hr/survey/detail?questionNo=' + questionNo + '&answerer=' + answerer;
+	
+}
     
 </script>
 </html>

@@ -1,5 +1,6 @@
 package com.hotelsolution.fire.hr.controller;
 
+import java.lang.ProcessHandle.Info;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.SurveyService;
 import com.hotelsolution.fire.hr.service.SurveyServiceImpl;
+import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
-import com.hotelsolution.fire.page.vo.PageVo;
+import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +32,8 @@ public class SurveyController {
 	
 	private final SurveyService service;
 	
-//	
-//	public List<SurveyDocVo> getTitileList(int page){
-//		int listCount = service.getBoardCnt();
-//		int currentPage = p;
-//		int pageLimit = 5;
-//		int boardLimit = 7;
-//		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-//		return service.titleList();//화면 우측에 설문지 제목 리스트
-//	}
-	
-	//설문조사 설문지작성 페이지
-	@GetMapping("survey/write")
-	public void writeSurvey(Model model,String titleListpage) {
+
+	public Map<String, Object> titleList (String titleListpage){
 		int listCount = service.getSurveyCnt();
 		if(titleListpage == null) {
 			titleListpage = "1";
@@ -51,11 +43,25 @@ public class SurveyController {
 		int pageLimit = 5;
 		int boardLimit = 7;
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		List<SurveyDocVo> titleList =  service.titleList(pv);
+		Map<String, Object>map = new HashMap<String, Object>();
+		map.put("titleList",titleList);
+		map.put("pv", pv);
 		
-		List<SurveyDocVo> titleList = service.titleList(pv);
+		
+		return map;
+		
+		
+		
+	}
 	
-		model.addAttribute("pv",pv);
-		model.addAttribute("titleList",titleList);
+	//설문조사 설문지작성 페이지
+	@GetMapping("survey/write")
+	public void writeSurvey(Model model,String titleListpage) {
+		
+		Map<String, Object> map = titleList(titleListpage);
+		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("pv",map.get("pv"));
 		
 	}
 	
@@ -71,6 +77,42 @@ public class SurveyController {
 	        throw new RuntimeException();
 	    }
 	    return "redirect:/hr/survey/write";
+		
+	}
+	
+
+	@GetMapping("survey/answerList")
+	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage){
+		
+		Map<String, Object> map = titleList(titleListpage);
+		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("pv",map.get("pv"));
+		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
+		model.addAttribute("sdvo",sdvo);
+		model.addAttribute("list", list);
+		//질문 페이징
+		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
+		if(answerListpage == null) {
+			answerListpage = "1";
+		}
+		int currentPage = Integer.parseInt(answerListpage);
+		
+		int pageLimit = 5;
+		int boardLimit = 7;
+		PageVo answerListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		model.addAttribute("answerListPv",answerListPv);
+		//
+		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
+		for (SurveyQuestionVo vo : list) {
+		    List<SurveyAnswerVo> answerList = service.answerByOneQuestion(vo.getNo(), answerListPv);
+		    System.out.println(answerList);
+		    answerLists.add(answerList);
+		}
+		System.out.println(answerLists);
+		model.addAttribute("answerLists", answerLists);
+	
+		return "hr/survey/answer-list";
+		
 		
 	}
 	
@@ -111,30 +153,6 @@ public class SurveyController {
 //		model.addAttribute("vo", vo);
 //	}
 //	
-	@GetMapping("survey/detail")
-	public void surveyOneDetail(Model model, String no, String title ,String enrollDate, String titleListpage){
-		int listCount = service.getSurveyCnt();
-		if(titleListpage == null) {
-			titleListpage = "1";
-		}
-		int currentPage = Integer.parseInt(titleListpage);
-		
-		int pageLimit = 5;
-		int boardLimit = 7;
-		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-		
-		List<SurveyDocVo> titleList = service.titleList(pv);
-		model.addAttribute("titleList",titleList);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("pv",pv);
-		List<String> list = service.geteQuestionList(no);
-		model.addAttribute("title",title);
-		model.addAttribute("enrollDate",enrollDate);
-		model.addAttribute("list", list);
-		
-//		Map<String,List<E>> map = new HashMap<>();
-		
-	}
 	
 	
 	

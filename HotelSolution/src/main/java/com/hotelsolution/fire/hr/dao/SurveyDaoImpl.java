@@ -8,8 +8,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
-import com.hotelsolution.fire.page.vo.PageVo;
+import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,8 +50,19 @@ public class SurveyDaoImpl implements SurveyDao{
 	}
 
 	@Override
-	public List<String> geteQuestionList(SqlSessionTemplate sst, String no) {
+	public List<SurveyQuestionVo> geteQuestionList(SqlSessionTemplate sst, String no) {
 		return sst.selectList("survey.geteQuestionList",no);
+	}
+
+	@Override
+	public List<SurveyAnswerVo> answerByOneQuestion(SqlSessionTemplate sst, String no,  PageVo answerListPv) {
+		RowBounds rb = new RowBounds(answerListPv.getOffset(), answerListPv.getBoardLimit());
+		return sst.selectList("survey.answerByOneQuestion",no , rb);
+	}
+
+	@Override
+	public int getAnswerCnt(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("survey.getAnswerCnt" ,no);
 	}
 	
 	
