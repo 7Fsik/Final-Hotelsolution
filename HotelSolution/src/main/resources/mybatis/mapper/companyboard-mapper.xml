@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyBoard">
+
+	<select id="getAllCompanyBoardList" resultType="CompanyBoardVo">
+
+		select
+		no
+		,category_no,
+		writer_no
+		,title
+		,content
+		,enroll_date
+		,hit
+		,status
+		from board
+		where status = 'N'
+
+	</select>
+
+	<select id="getAllCompanyBoardCnt" resultType="int">
+		select count(no)
+		from board
+		where status ='N'
+	</select>
+
+
+</mapper>
