@@ -54,7 +54,11 @@ public class FrontController {
 	////////////////////////////////
 	
 	
-	
+	///////////////////////물품 관리 
+	@GetMapping("articleManage")
+	public String articleManage() {
+		return "front/articleManage";
+	}
 	
 	
 	

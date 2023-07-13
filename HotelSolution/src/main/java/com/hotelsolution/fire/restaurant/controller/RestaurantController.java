@@ -24,6 +24,32 @@ public class RestaurantController {
 	public String useBook() {
 		return"restaurant/useBook";
 	}
+	////////////////////////////////////
 	
+	
+	//////////////////////////////룸서비스 주문내역
+	@GetMapping("roomOrder")
+	public String roomOrder() {
+		return "restaurant/roomOrder";
+	}
+	
+	///////////////////////////////////////////
+	
+	
+	/////////////////////////////룸서비스 메뉴관리 
+	@GetMapping("menuManage")
+	public String menuManage() {
+		return"restaurant/menuManage";
+	}
+	
+	//////////////////////////////////
+	
+	
+	///////////////////////////재고관리
+	@GetMapping("articleManage")
+	public String articleManage() {
+		return"restaurant/articleManage";
+	}
+	////////////////////////////////
 	
 }//class
