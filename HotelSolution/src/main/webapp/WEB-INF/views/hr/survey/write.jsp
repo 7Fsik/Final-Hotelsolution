@@ -12,10 +12,11 @@
 	.hrBody{
 		width : 1400px;
 		height : 820px;
-		margin-top: 10px;
-		margin-left :470px;
+		margin-top: 50px;
+		margin-left :20px;
 		margin-right: 40px;
 		overflow: scroll;
+		
 		
 	}
 	.hrWrap{
@@ -27,6 +28,7 @@
 		height : 100%;
         border: 1px solid #3B444B;
         border-radius: 20px;
+        background-color: white;
 	}
 	.writeHrSurveyWrap{
 		margin-top:1vh;
@@ -118,87 +120,173 @@
         border-bottom: 1px solid #3B444B;
     }
     .titleList{
+    	text-align:left;
         padding-left: 10%;
-        width: 90%;
+        padding-right: 10%;
+        width: 100%;
         height: 90%;
         margin-top: 10px;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
+        cursor: pointer;
+        
     }
+    p.titleTruncate {
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  max-width: 300px; /* 원하는 글자 수에 따라 조정 */
+	}
     .searchList{
+    	margin-top: 20px;
+    	margin-right : 20px;
         text-align: right;
     }
     .listWrap{
     	display: grid;
     	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    	
     }
-    .pageBtn{
+    #page-area{
     text-align: center;
     }
     .searchInput{
     	border-bottom: 1px solid black;
     }
+    .main-container{
+	    width: 100%;
+	    height: 100%;
+	    background-color: #dedede;
+	    display: grid;
+    	grid-template-columns: 1fr 3fr;
+	}
+	
+	
+	.main-aside{
+	    width: 276px;
+	    height: 900px ;
+	    display: flex;
+	    flex-direction: column;
+	    margin-left: 150px;
+	    margin-top: 50px;
+	}
+	
+	.profile-box{
+	    width: 100%;
+	    height: 360px ;
+	    background-color: #3b444b;
+	}
+	
+	.main-aside-empty{
+	    width: 100%;
+	    height: 40px;
+	}
+	
+	.team-menu-bar{
+	    width: 100%;
+	    height: 360px;
+	    background-color: #ffffff;
+	}
+	a{
+		width: 30px;
+	}
+	
+
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
-<body>
-	<div class="hrBody">
 		
-	    <div class="hrWrap">
-	        <div class="writeHrSurveyWrap">
-	            <form action="${root}/hr/survey/write" method="POST" class="writeHrSurveyForm">
-	                <div class="surveyTitle">
-	                    <input type="text" placeholder="설문 제목을 입력하세요" name="title" class="surveyTitleInput">
-	                </div>
-	               
-	                
-	                <div class="qustion">
-	                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-	                    <textarea readonly></textarea>
-	                </div>
-	                <div class="qustion">
-	                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-	                    <textarea readonly></textarea>
-	                </div>
-	                <div class="qustion">
-	                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-	                    <textarea readonly></textarea>
-	                </div>
-	                <div class="qustion">
-	                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
-	                    <textarea readonly></textarea>
-	                </div>
-	                <div class="btn">
-	                    <button type="submit" class="button">설문지 배포</button>
-	                </div>
-	            </form>
-	        </div>
-	        
-	        <div class="titleListWrap">
-	            <div class="listHead">
-	                <div>이전 설문 목록</div>
-	            </div>
-	                <div class= listWrap>
-		                <c:forEach items="${voList}" var="voList" >
-						     <div class="titleList">
-			                    ${voList.title}
-			                    <br><br>
-			                    ${voList.enrollDate}
+<body>
+		<div class="main-container">
+			<aside class="main-aside">
+				<div class="profile-box"></div>
+				<div class="main-aside-empty"></div>
+				<div class="team-menu-bar"></div>
+			</aside>
+			<div class="hrBody">
+		
+			    <div class="hrWrap">
+			        <div class="writeHrSurveyWrap">
+			            <form action="${root}/hr/survey/write" method="POST" class="writeHrSurveyForm">
+			                <div class="surveyTitle">
+			                    <input type="text" placeholder="설문 제목을 입력하세요" name="title" class="surveyTitleInput">
 			                </div>
-						</c:forEach>
-	               </div>
-	             
-	                 <div class="searchList">
-	                    설문 제목 : <input type="text" class="searchInput">
-	                    <button type="submit" > 검색 </button>
-	                 </div>
-	                 <div class="pageBtn">
-	                    페이징처리
-	                 </div>                 
-	            
-	        </div>
-	    </div>
-    </div>
+			               
+			                
+			                <div class="qustion">
+			                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="qustion">
+			                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="qustion">
+			                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="qustion">
+			                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="btn">
+			                    <button type="submit" class="button">설문지 배포</button>
+			                </div>
+			            </form>
+			        </div>
+			        
+			        <div class="titleListWrap">
+			            <div class="listHead">
+			                <div>이전 설문 목록</div>
+			            </div>
+			                <div class="listWrap">
+							    <c:forEach items="${titleList}" var="title">
+							        <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}')">
+							            <p class="titleTruncate">${title.title}</p>
+							            <br><br>
+							            <p style="text-align: right; font-size: 15px;">(${title.enrollDate})</p>
+							        </div>
+							    </c:forEach>
+							</div>
+			             
+			                 <div class="searchList">
+								
+			                    설문 제목 : <input type="text" class="searchInput">
+			                    <button type="submit" > 검색 </button>
+			                 </div>
+			                 
+		                   
+		                   <div id="page-area">
+				            	<c:if test="${pv.currentPage > 1}">
+					            	<a  href="${root}/hr/survey/write?titleListpage=${pv.currentPage - 1}">이전</a>
+				            	</c:if>
+					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
+					            		<c:if test="${pv.currentPage != i}">
+							            	<a  href="${root}/hr/survey/write?titleListpage=${i}">${i}</a>
+					            		</c:if>
+					            		<c:if test="${pv.currentPage == i}">
+							            	<a >${i}</a>
+					            		</c:if>
+					            	</c:forEach>
+					            <c:if test="${pv.currentPage < pv.maxPage}">
+					            	<a  href="${root}/hr/survey/write?titleListpage=${pv.currentPage + 1}">다음</a>
+					            </c:if>
+				            </div>
+			                    
+			                                  
+			            
+			        </div>
+			    </div>
+		    </div>
+		</div>
+	
 </body>
+<script>
+function goDetail(no, title, enrollDate, titleListpage) {
+    window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
+}
+    
+</script>
+
 </html>

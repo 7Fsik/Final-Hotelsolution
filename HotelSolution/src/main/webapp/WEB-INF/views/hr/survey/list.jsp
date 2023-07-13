@@ -12,10 +12,11 @@
 	.hrBody{
 		width : 1400px;
 		height : 820px;
-		margin-top: 10px;
-		margin-left :470px;
+		margin-top: 50px;
+		margin-left :20px;
 		margin-right: 40px;
-		overflow: scroll;	
+		overflow: scroll;
+		
 		
 	}
 	.hrWrap{
@@ -27,6 +28,7 @@
 		height : 100%;
         border: 1px solid #3B444B;
         border-radius: 20px;
+        background-color: white;
 	}
 	.listHrSurveyWrap{
 		margin-top:1vh;
@@ -107,9 +109,10 @@
     }
     .titleList{
         padding-left: 10%;
-        width: 90%;
+        width: 100%;
         height: 90%;
         margin-top: 10px;
+        padding-right:20px;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
     }
@@ -124,7 +127,7 @@
     text-align: center;
     }
     .tableDiv{
-    	border: 1px solid black;
+    	border: 1px solid  #C3BFBF;
         padding: 22px;
         box-sizing: border-box;
         text-align: left;
@@ -141,12 +144,55 @@
         margin-top: 30px;
         text-align: center;
     }
+    .main-container{
+	    width: 100%;
+	    height: 100%;
+	    background-color: #dedede;
+	    display: grid;
+    	grid-template-columns: 1fr 3fr;
+	}
+	
+	
+	.main-aside{
+	    width: 276px;
+	    height: 900px ;
+	    display: flex;
+	    flex-direction: column;
+	    margin-left: 150px;
+	    margin-top: 50px;
+	}
+	
+	.profile-box{
+	    width: 100%;
+	    height: 360px ;
+	    background-color: #3b444b;
+	}
+	
+	.main-aside-empty{
+	    width: 100%;
+	    height: 40px;
+	}
+	
+	.team-menu-bar{
+	    width: 100%;
+	    height: 360px;
+	    background-color: #ffffff;
+	}
+	
+
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
+		
 <body>
-	<div class="hrBody">
+		<div class="main-container">
+			<aside class="main-aside">
+				<div class="profile-box"></div>
+				<div class="main-aside-empty"></div>
+				<div class="team-menu-bar"></div>
+			</aside>
+			<div class="hrBody">
 		
 	    <div class="hrWrap">
 	        <div class="listHrSurveyWrap">
@@ -317,31 +363,32 @@
 	               
 	            </div>
 	        </div>
-	        
-	        <div class="titleListWrap">
-	            <div class="listHead">
-	                <div>이전 설문 목록</div>
-	            </div>
-	                <div class= listWrap>
-		                <c:forEach items="${voList}" var="voList" >
-						     <div class="titleList">
-			                    ${voList.title}
-			                    <br><br>
-			                    ${voList.enrollDate}
-			                </div>
-						</c:forEach>
-	               </div>
-	             
-	                 <div class="searchList">
-	                    검색할 내용 : <input type="text">
-	                    <button type="submit" > 검색 </button>
-	                 </div>
-	                 <div class="pageBtn">
-	                    페이징처리
-	                 </div>                 
-	            
-	        </div>
-	    </div>
-    </div>
+			        <div class="titleListWrap">
+			            <div class="listHead">
+			                <div>이전 설문 목록</div>
+			            </div>
+			                <div class= listWrap>
+				                <c:forEach items="${titleList}" var="titleList" >
+								     <div class="titleList">
+					                    ${titleList.title}
+					                    <br><br>
+					                    ${titleList.enrollDate}
+					                </div>
+								</c:forEach>
+			               </div>
+			             
+			                 <div class="searchList">
+			                    설문 제목 : <input type="text" class="searchInput">
+			                    <button type="submit" > 검색 </button>
+			                 </div>
+			                 <div class="pageBtn">
+			                    페이징처리
+			                 </div>                 
+			            
+			        </div>
+			    </div>
+		    </div>
+		</div>
+	
 </body>
 </html>
