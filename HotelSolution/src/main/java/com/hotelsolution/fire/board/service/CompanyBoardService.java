@@ -1,0 +1,15 @@
+package com.hotelsolution.fire.board.service;
+
+import com.hotelsolution.fire.board.vo.CompanyBoardVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
+import org.mybatis.spring.SqlSessionTemplate;
+
+import java.util.List;
+
+public interface CompanyBoardService {
+
+    // 전체 사내 게시글 조회
+    List<CompanyBoardVo> getAllCompanyBoardList (PageVo pv);
+
+    int getCompanyBoardCnt();
+}

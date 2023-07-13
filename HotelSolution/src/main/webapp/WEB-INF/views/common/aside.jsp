@@ -17,35 +17,35 @@
     <div class="aside-icons">
         <div class="aside-icon">
             <img src="${root}/resources/img/메일.png" alt="아이콘1">
-            <span>아이콘1</span>
+            <span>메일</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/주소록.png" alt="아이콘2">
-            <span>아이콘2</span>
+            <span>주소록</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/자료실.png" alt="아이콘3">
-            <span>아이콘3</span>
+            <span>자료실</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/게시판.png" alt="아이콘4">
-            <span>아이콘4</span>
+            <span>게시판</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/채팅.png" alt="아이콘5">
-            <span>아이콘5</span>
+            <span>채팅</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/결재.png" alt="아이콘6">
-            <span>아이콘6</span>
+            <span>결재</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/일정.png" alt="아이콘7">
-            <span>아이콘7</span>
+            <span>일정</span>
         </div>
         <div class="aside-icon">
             <img src="${root}/resources/img/근태관리.png" alt="아이콘8">
-            <span>아이콘8</span>
+            <span>근태관리</span>
         </div>
     </div>
 </aside>
