@@ -21,7 +21,7 @@
 
     <insert id="insertDocument" parameterType="java.util.Map">
     
-        INSERT INTO survey_document (no, title) VALUES (SEQ_SURVEY_DOCUMET_NO.NEXTVAL, #{title})
+        INSERT INTO survey_document (no, title) VALUES (SEQ_SURVEY_DOCUMENT_NO.NEXTVAL, #{title})
        
     </insert>
 	<insert id="insertQuestions">
@@ -35,12 +35,26 @@
     	
  			(
  				SEQ_SURVEY_QUESTION_NO.NEXTVAL
- 				, SEQ_SURVEY_DOCUMET_NO.CURRVAL
+ 				, SEQ_SURVEY_DOCUMENT_NO.CURRVAL
  				,#{question}
         	)
         
    
 	</insert>
+	
+	<select id="getSurveyCnt" resultType="int">
+	  	SELECT COUNT(NO)
+	  	FROM SURVEY_DOCUMENT
+  	
+  	</select>
+  	
+  	<select id="geteQuestionList" resultType="SurveyQuestionVo">
+  		 SELECT * 
+		 FROM SURVEY_QUESTION
+		 WHERE SURVEY_NO = #{no}
+	     ORDER BY no ASC
+  	
+  	</select>
 
 
 
