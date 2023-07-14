@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.board.dao;
 
 import com.hotelsolution.fire.board.service.CompanyBoardService;
+import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import org.apache.ibatis.session.RowBounds;
@@ -24,5 +25,11 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
     public int getCompanyBoardCnt(SqlSessionTemplate sst) {
         return sst.selectOne("companyBoard.getAllCompanyBoardCnt");
     }
+
+    @Override
+    public List<CompanyBoardCategoryVo> getCategoryList(SqlSessionTemplate sst) {
+        return sst.selectList("companyBoard.getBoardCategoryList");
+    }
+
 
 }

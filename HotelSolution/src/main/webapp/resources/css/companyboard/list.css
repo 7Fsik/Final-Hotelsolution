@@ -95,3 +95,28 @@
     margin-top: 0;
     margin-bottom: 20px;
 }
+
+ .table-striped tbody tr:nth-of-type(odd) {
+     background-color: #f9f9f9;
+ }
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff;
+}
+
+.table-striped tbody td {
+    font-size: 14px;
+    /* 추가적인 스타일 지정 */
+}
+
+.table-striped{
+    width: 100%;
+    height: 90%;
+
+}
+
+.page-area{
+    display: flex;
+    justify-content: center;
+    flex-grow: 2;
+}
