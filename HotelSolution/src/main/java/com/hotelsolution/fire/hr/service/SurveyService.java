@@ -22,4 +22,6 @@ public interface SurveyService {
 	List<SurveyAnswerVo> answerByOneQuestion(String no, PageVo answerListPv);
 
 	int getAnswerCnt(String no);
+
+	List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer);
 }

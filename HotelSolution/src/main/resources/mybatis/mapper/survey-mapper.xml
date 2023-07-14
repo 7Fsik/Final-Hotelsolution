@@ -75,6 +75,18 @@
 	     ORDER BY no ASC
   	
 	</select>
+	
+	<select id="answerByOneQuestionByUser" resultType="SurveyAnswerVo">
+		 SELECT NO
+			,QUESTION_NO
+			,ANSWERER
+			,ANSWER
+		 FROM ANSWER
+		 WHERE QUESTION_NO = #{no}
+		 AND ANSWERER = #{answerer}
+	     ORDER BY no ASC
+  	
+	</select>
 
 
 

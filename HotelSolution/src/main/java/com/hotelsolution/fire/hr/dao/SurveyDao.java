@@ -26,4 +26,6 @@ public interface SurveyDao {
 
 	int getAnswerCnt(SqlSessionTemplate sst, String no);
 
+	List<SurveyAnswerVo> answerByOneQuestionByUser(SqlSessionTemplate sst, String no, String answerer);
+
 }
