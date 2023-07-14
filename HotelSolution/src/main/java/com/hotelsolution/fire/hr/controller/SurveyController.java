@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.SurveyService;
@@ -35,13 +36,14 @@ public class SurveyController {
 
 	public Map<String, Object> titleList (String titleListpage){
 		int listCount = service.getSurveyCnt();
-		if(titleListpage == null) {
+		if (titleListpage == null || titleListpage.isEmpty()) {
 			titleListpage = "1";
 		}
 		int currentPage = Integer.parseInt(titleListpage);
-		
+		System.out.println(currentPage);
 		int pageLimit = 5;
 		int boardLimit = 7;
+		
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		List<SurveyDocVo> titleList =  service.titleList(pv);
 		Map<String, Object>map = new HashMap<String, Object>();
@@ -58,7 +60,7 @@ public class SurveyController {
 	//설문조사 설문지작성 페이지
 	@GetMapping("survey/write")
 	public void writeSurvey(Model model,String titleListpage) {
-		
+		//우측 설문 제목 리스트
 		Map<String, Object> map = titleList(titleListpage);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
@@ -83,14 +85,15 @@ public class SurveyController {
 
 	@GetMapping("survey/answerList")
 	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage){
-		
+		//우측 설문 제목 리스트
 		Map<String, Object> map = titleList(titleListpage);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
+		//질문 4개 리스트 가져오기
 		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
 		model.addAttribute("sdvo",sdvo);
 		model.addAttribute("list", list);
-		//질문 페이징
+		//질문 답변 페이징
 		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
 		if(answerListpage == null) {
 			answerListpage = "1";
@@ -101,20 +104,50 @@ public class SurveyController {
 		int boardLimit = 7;
 		PageVo answerListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		model.addAttribute("answerListPv",answerListPv);
-		//
+		//질문 답변 질문별로 가져오기
 		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
 		for (SurveyQuestionVo vo : list) {
 		    List<SurveyAnswerVo> answerList = service.answerByOneQuestion(vo.getNo(), answerListPv);
-		    System.out.println(answerList);
 		    answerLists.add(answerList);
 		}
-		System.out.println(answerLists);
 		model.addAttribute("answerLists", answerLists);
+		System.out.println(answerLists);
 	
 		return "hr/survey/answer-list";
 		
 		
 	}
+
+	// 제목 리스트에서 클릭 후 해당 설문지 답변,질문 목록보기 까지
+	@GetMapping("survey/detail")
+	public void surveySelectQnaList(Model model, SurveyDocVo sdvo , String titleListpage, String answerer) {
+		if (titleListpage == null || titleListpage.isEmpty()) {
+			titleListpage = "1";
+		}
+		//우측 설문 제목 리스트
+		Map<String, Object> map = titleList(titleListpage);
+		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("pv",map.get("pv"));
+		//질문 4개 리스트 가져오기
+		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
+		model.addAttribute("sdvo",sdvo);
+		//설문지 번호에 맞는 질문 답변 질문별로 가져오기
+		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
+		for (SurveyQuestionVo vo : list) {
+		    List<SurveyAnswerVo> answerList = service.answerByOneQuestionByUser(vo.getNo(), answerer);
+		    log.info(answerList.toString());
+		    answerLists.add(answerList);
+		}
+		
+		model.addAttribute("answerer",answerer);
+		model.addAttribute("list", list);
+		log.info(answerLists.toString());
+		model.addAttribute("answerLists", answerLists);
+
+		
+	}
+	
+	
 	
 //	//첫 화면은 가장 최근 배포한 설문지의 답변, 질문 리스트 -> 제목 리스트에서 클릭 후 해당 설문지 답변,질문 목록보기 까지
 //	@GetMapping("survey/home")
@@ -135,26 +168,6 @@ public class SurveyController {
 //		return "hr/survey/list";
 //	}
 //	
-//	// 제목 리스트에서 클릭 후 해당 설문지 답변,질문 목록보기 까지
-//	@GetMapping("survey/list")
-//	public void surveySelectQnaList(Model model, int no) {
-//		int listCount = service.getSurveyCnt();
-//		int currentPage = 1;
-//		int pageLimit = 5;
-//		int boardLimit = 7;
-//		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-//		List<SurveyDocVo> titleList = service.titleList(pv);	//화면 우측에 설문지 제목 리스트
-//		if(no==0) {
-//			throw new RuntimeException("그 설문지 없는데?");
-//		}
-//		vo = service.getRecentSurveyQnAList();
-//		
-//		model.addAttribute("titleList",titleList);
-//		model.addAttribute("vo", vo);
-//	}
-//	
-	
-	
 	
 	
 }

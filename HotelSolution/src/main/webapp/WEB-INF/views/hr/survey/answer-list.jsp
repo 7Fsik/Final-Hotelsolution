@@ -61,12 +61,12 @@
         place-items: center; 
         font-size: 40px;
     }
-    .qustion{
+    .question{
     	text-align:left;
         margin-left: 10%;
         font-size: 20px;
     }
-    .qustionInput{
+    .questionInput{
     	margin-top: 2%;
         width: 70%;
         height: 30px;
@@ -97,7 +97,7 @@
         
     }
 
-    .titleListWrap{
+     .titleListWrap{
       	margin-top:1vh;
 		margin-bottom:1vh;
         margin-left: 1vw;
@@ -113,31 +113,35 @@
     .listHead{
         margin-top: 10px;
         padding-top : 10px;
-        width:370px;
+        
         text-align: center;
         border: 0px;
         font-size: 40px;
        
         border-bottom: 1px solid #3B444B;
-        
     }
     .titleList{
+    	text-align:left;
         padding-left: 35px;
+       
         width: 100%;
         height: 90%;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
         cursor: pointer;
+        
     }
-    .searchList{
+   
+  	.searchList{
     	margin-top: 20px;
     	margin-right : 20px;
         text-align: right;
     }
     .listWrap{
-    	width:370px;
+    	width:100%;
     	display: grid;
     	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    	
     	
     }
     .pageBtn{
@@ -210,13 +214,12 @@
 	  max-width: 370px; /* 원하는 글자 수에 따라 조정 */
 	  text-align: left;
 	}
-	 p.titleTruncate{
+	 p.titleTruncate {
 	  white-space: nowrap;
 	  overflow: hidden;
 	  text-overflow: ellipsis;
-	  max-width: 850px; /* 원하는 글자 수에 따라 조정 */
-	  text-align: center;
-	 }
+	  max-width: 300px; /* 원하는 글자 수에 따라 조정 */
+	}
 	 p.questionTruncate{
 	 white-space: nowrap;
 	  overflow: hidden;
@@ -299,32 +302,32 @@
                        
                       
                     </div>
-                    <div class="answerWrap">
+                    <div class="answerWrap" >
 
                         <div class="ans1 ansDivWrap">
                         	  <c:forEach items="${answerLists.get(0)}" var="list">
-								<div class="ansDiv" onclick="goSurveyResultDetailByOne(${list.questionNo},${list.answerer})">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans2 ansDivWrap">
                         	<c:forEach items="${answerLists.get(1)}" var="list">
-								<div class="ansDiv">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans3 ansDivWrap">
                         	<c:forEach items="${answerLists.get(2)}" var="list">
-								<div class="ansDiv">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans4 ansDivWrap">
                         	<c:forEach items="${answerLists.get(3)}" var="list">
-								<div class="ansDiv">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
@@ -358,16 +361,15 @@
 			            <div class="listHead">
 			                이전 설문 목록
 			            </div>
-			                <div class= listWrap>
-			                
-				                <c:forEach items="${titleList}" var="title" >
-								     <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}')">
-							            <p class="titleListTruncate">${title.title}</p>
+			                <div class="listWrap">
+							    <c:forEach items="${titleList}" var="title">
+							        <div class="titleList" onclick="goAnswerList('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}')">
+							            <p class="titleTruncate">${title.title}</p>
 							            <br>
-							            <p style="text-align: right; font-size: 15px;">(${title.enrollDate})</p>
+							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
 							        </div>
-								</c:forEach>
-			               </div>
+							    </c:forEach>
+							</div>
 			             
 			                 <div class="searchList">
 								
@@ -392,7 +394,7 @@
 					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage + 1}&answerListpage=${answerListPv.currentPage}">다음</a>
 					            </c:if>
 				            </div>
-			                    
+			               
 			                                  
 			            
 			        </div>
@@ -402,14 +404,18 @@
 	
 </body>
 <script>
-function goDetail(no, title, enrollDate, titleListpage) {
+function goAnswerList(no, title, enrollDate, titleListpage) {
     window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
 }
+function goDetail(no, title, enrollDate, titleListpage, answerer) {
+	 window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage + '&answerer=' + answerer ;
+	
+}
 
+/*
 function goSurveyResultDetailByOne(questionNo, answerer) {
 	 window.location.href = '${root}/hr/survey/detail?questionNo=' + questionNo + '&answerer=' + answerer;
 	
-}
-    
+}*/
 </script>
 </html>

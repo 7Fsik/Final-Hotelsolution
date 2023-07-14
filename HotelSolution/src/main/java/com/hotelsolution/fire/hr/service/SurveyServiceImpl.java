@@ -59,6 +59,11 @@ public class SurveyServiceImpl implements SurveyService {
 		return dao.getAnswerCnt(sst,no);
 	}
 
+	@Override
+	public List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer) {
+		return dao.answerByOneQuestionByUser(sst,no, answerer);
+	}
+
 	
 
 	

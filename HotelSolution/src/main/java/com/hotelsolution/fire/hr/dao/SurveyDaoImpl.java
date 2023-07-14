@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.hr.dao;
 
 import java.lang.ProcessHandle.Info;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,14 @@ public class SurveyDaoImpl implements SurveyDao{
 	@Override
 	public int getAnswerCnt(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("survey.getAnswerCnt" ,no);
+	}
+
+	@Override
+	public List<SurveyAnswerVo> answerByOneQuestionByUser(SqlSessionTemplate sst, String no, String answerer) {
+		Map<String, String> map = new HashMap();
+		map.put("no",no);
+		map.put("answerer", answerer);
+		return sst.selectList("survey.answerByOneQuestionByUser",map);
 	}
 	
 	
