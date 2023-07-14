@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
-import com.hotelsolution.fire.page.vo.PageVo;
+import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
 
 public interface SurveyDao {
 	
@@ -18,6 +20,10 @@ public interface SurveyDao {
 
 	int getSurveyCnt(SqlSessionTemplate sst);
 
-	List<String> geteQuestionList(SqlSessionTemplate sst, String no);
+	List<SurveyQuestionVo> geteQuestionList(SqlSessionTemplate sst, String no);
+
+	List<SurveyAnswerVo> answerByOneQuestion(SqlSessionTemplate sst, String no, PageVo answerListPv);
+
+	int getAnswerCnt(SqlSessionTemplate sst, String no);
 
 }

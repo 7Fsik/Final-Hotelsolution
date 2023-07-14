@@ -57,6 +57,7 @@
         border-bottom: 1px solid #3B444B;
     }
     .surveyTitleInput{
+    	width: 80%;
         place-items: center; 
         font-size: 40px;
     }
@@ -121,11 +122,10 @@
     }
     .titleList{
     	text-align:left;
-        padding-left: 10%;
-        padding-right: 10%;
+        padding-left: 35px;
+       
         width: 100%;
         height: 90%;
-        margin-top: 10px;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
         cursor: pointer;
@@ -143,8 +143,10 @@
         text-align: right;
     }
     .listWrap{
+    	width:100%;
     	display: grid;
     	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    	
     	
     }
     #page-area{
@@ -210,24 +212,24 @@
 			        <div class="writeHrSurveyWrap">
 			            <form action="${root}/hr/survey/write" method="POST" class="writeHrSurveyForm">
 			                <div class="surveyTitle">
-			                    <input type="text" placeholder="설문 제목을 입력하세요" name="title" class="surveyTitleInput">
+			                    <input type="text" placeholder="설문 제목을 입력하세요" name="title" class="surveyTitleInput" maxlength="30">
 			                </div>
 			               
 			                
 			                <div class="qustion">
-			                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput" maxlength="50">
 			                    <textarea readonly></textarea>
 			                </div>
 			                <div class="qustion">
-			                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput" maxlength="50">
 			                    <textarea readonly></textarea>
 			                </div>
 			                <div class="qustion">
-			                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput" maxlength="50">
 			                    <textarea readonly></textarea>
 			                </div>
 			                <div class="qustion">
-			                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput">
+			                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="qustionInput" maxlength="50">
 			                    <textarea readonly></textarea>
 			                </div>
 			                <div class="btn">
@@ -244,8 +246,8 @@
 							    <c:forEach items="${titleList}" var="title">
 							        <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}')">
 							            <p class="titleTruncate">${title.title}</p>
-							            <br><br>
-							            <p style="text-align: right; font-size: 15px;">(${title.enrollDate})</p>
+							            <br>
+							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
 							        </div>
 							    </c:forEach>
 							</div>
@@ -284,7 +286,7 @@
 </body>
 <script>
 function goDetail(no, title, enrollDate, titleListpage) {
-    window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
+    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
 }
     
 </script>
