@@ -21,9 +21,17 @@
 	</select>
 
 	<select id="getAllCompanyBoardCnt" resultType="int">
-		select count(no)
+		select
+		count(no)
 		from board
 		where status ='N'
+	</select>
+
+	<select id="getBoardCategoryList" resultType="CategoryVo">
+		select
+		no
+		,category_name
+		from board_category
 	</select>
 
 

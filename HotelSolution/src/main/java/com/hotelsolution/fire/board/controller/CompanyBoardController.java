@@ -1,16 +1,17 @@
 package com.hotelsolution.fire.board.controller;
 
 import com.hotelsolution.fire.board.service.CompanyBoardService;
+import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,8 +21,8 @@ public class CompanyBoardController {
 
     private final CompanyBoardService boardService;
 
-    @GetMapping("list")
-    public String getAllCompanyBoardList(int page, Model model) {
+    @GetMapping("list/{page}")
+    public String getAllCompanyBoardList(@PathVariable("page") int page, Model model) {
 
         int listCount = boardService.getCompanyBoardCnt();
         int currentPage = page;
@@ -31,8 +32,28 @@ public class CompanyBoardController {
 
         List<CompanyBoardVo> allCompanyBoardList = boardService.getAllCompanyBoardList(pv);
         model.addAttribute("allCompanyBoardList",allCompanyBoardList);
-        return "front/companyBoard/list";
+        model.addAttribute("pv",pv);
+        return "companyBoard/list";
     }
+    @GetMapping("post")
+    public String showWriteForm( Model model) {
+        List<CompanyBoardCategoryVo> categoryList = new ArrayList<>();
+
+        categoryList = boardService.getCategoryList();
+
+        model.addAttribute("categoryList",categoryList);
+
+
+        return "companyBoard/write";
+    }
+
+    @PostMapping("post")
+    public String writePost(){
+        return "김치 먹자";
+    }
+
+
+
 
 
 

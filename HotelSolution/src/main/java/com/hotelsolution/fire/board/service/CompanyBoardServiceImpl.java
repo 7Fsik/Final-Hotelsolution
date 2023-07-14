@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.board.service;
 
 import com.hotelsolution.fire.board.dao.CompanyBoardDaoImpl;
+import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import lombok.RequiredArgsConstructor;
@@ -28,4 +29,13 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     public int getCompanyBoardCnt() {
         return dao.getCompanyBoardCnt(sst);
     }
+
+
+
+    @Override
+    public List<CompanyBoardCategoryVo> getCategoryList() {
+        return dao.getCategoryList(sst);
+    }
+
+
 }
