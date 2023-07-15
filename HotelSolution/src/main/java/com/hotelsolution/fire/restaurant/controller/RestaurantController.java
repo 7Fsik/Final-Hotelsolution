@@ -52,4 +52,15 @@ public class RestaurantController {
 	}
 	////////////////////////////////
 	
+	
+	//////////////////////////////매출관리
+	@GetMapping("sales")
+	public String slaes() {
+		return "restaurant/sales";
+	}
+	///////////////////////////////////
+	
+	
+	
+	
 }//class
