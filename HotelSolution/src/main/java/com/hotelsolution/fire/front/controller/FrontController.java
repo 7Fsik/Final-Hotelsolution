@@ -59,7 +59,14 @@ public class FrontController {
 	public String articleManage() {
 		return "front/articleManage";
 	}
+	////////////////////////////////
 	
+	
+	/////////////////////////////매출관리 
+	@GetMapping("sales")
+	public String sales() {
+		return"front/sales";
+	}
 	
 	
 }
