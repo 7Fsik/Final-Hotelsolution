@@ -24,8 +24,8 @@ public class SurveyServiceImpl implements SurveyService {
 	private final SurveyDao dao;
 	private final SqlSessionTemplate sst;
 	@Override
-	public int write(Map<String, Object> map) {
-		return dao.write(sst, map);
+	public int create(Map<String, Object> map) {
+		return dao.create(sst, map);
 	}
 	
 	//가장 최근 배포한 설문지의 질문 답변 리스트
@@ -63,6 +63,12 @@ public class SurveyServiceImpl implements SurveyService {
 	public List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer) {
 		return dao.answerByOneQuestionByUser(sst,no, answerer);
 	}
+
+	@Override
+	public List<SurveyAnswerVo> getSurveySelectQnaTotalList(String no) {
+		return dao.getSurveySelectQnaTotalList(sst,no);
+	}
+
 
 	
 

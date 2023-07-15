@@ -10,12 +10,13 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-  		<typeAlias type="com.hotelsolution.fire.schedule.vo.ScheduleVo" alias="ScheduleVo"/>
+  		<typeAlias type="com.hotelsolution.fire.common.schedule.vo.ScheduleVo" alias="ScheduleVo"/>
   		<typeAlias type="com.hotelsolution.fire.hr.vo.SurveyDocVo" alias="SurveyDocVo"/>
   		<typeAlias type="com.hotelsolution.fire.hr.vo.SurveyQuestionVo" alias="SurveyQuestionVo"/>
   		<typeAlias type="com.hotelsolution.fire.hr.vo.SurveyAnswerVo" alias="SurveyAnswerVo"/>
         <typeAlias type="com.hotelsolution.fire.board.vo.CompanyBoardVo" alias="CompanyBoardVo"/>
         <typeAlias type="com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo" alias="CategoryVo"/>
+        <typeAlias type="com.hotelsolution.fire.common.dataroom.vo.DataRoomVo" alias="DataRoomVo"/>
 
        
        

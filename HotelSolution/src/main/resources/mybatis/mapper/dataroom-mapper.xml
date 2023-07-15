@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dataroom">
+
+	<select id="getDataRoomList" resultType="DataRoomVo">
+	    SELECT (
+	    	DATA_NO
+			,WRITER_NO
+			,CATEGORY_NO
+			,SECURITY_LEVEL
+			,TITLE
+			,CONTENT
+			,ENROLL_DATE
+			,HIT
+			,DELETE_YN
+	    ) 
+	    FROM DATAROOM
+	    WHERE CATEGORY_NO = #{no}
+	    AND DELETE_YN = 'N'
+	</select>
+	
+	<insert id="writeDataroom">
+	    INSERT INTO SCHEDULE (
+	      	DATA_NO
+			,WRITER_NO
+			,CATEGORY_NO
+			,SECURITY_LEVEL
+			,TITLE
+			,CONTENT
+			
+	    )
+	    VALUES (
+	        SEQ_DATAROOM_NO.NEXTVAL
+	        ,#{loginMember.no}
+	        ,#{drv.categoryNo}
+	        ,#{drv.securityLevel}
+	        ,#{drv.title}
+	        ,#{drv.content}
+	    )
+	</insert>
+</mapper>

@@ -14,7 +14,7 @@ public interface SurveyDao {
 	
 	List<SurveyDocVo> titleList(SqlSessionTemplate sst, PageVo pv);
 
-	int write(SqlSessionTemplate sst, Map<String, Object> map);
+	int create(SqlSessionTemplate sst, Map<String, Object> map);
 
 	SurveyDocVo getRecentSurveyQnAList(SqlSessionTemplate sst);
 
@@ -27,5 +27,8 @@ public interface SurveyDao {
 	int getAnswerCnt(SqlSessionTemplate sst, String no);
 
 	List<SurveyAnswerVo> answerByOneQuestionByUser(SqlSessionTemplate sst, String no, String answerer);
+
+	List<SurveyAnswerVo> getSurveySelectQnaTotalList(SqlSessionTemplate sst, String no);
+
 
 }

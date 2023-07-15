@@ -1,4 +1,4 @@
-package com.hotelsolution.fire.schedule.service;
+package com.hotelsolution.fire.common.schedule.service;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hotelsolution.fire.common.schedule.dao.ScheduleDao;
+import com.hotelsolution.fire.common.schedule.vo.ScheduleVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
-import com.hotelsolution.fire.schedule.dao.ScheduleDao;
-import com.hotelsolution.fire.schedule.vo.ScheduleVo;
 
 import lombok.RequiredArgsConstructor;
 
