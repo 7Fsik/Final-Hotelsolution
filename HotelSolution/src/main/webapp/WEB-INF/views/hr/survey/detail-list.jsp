@@ -52,18 +52,10 @@
         
         text-align: center;
         border: 0px;
-      
+        font-size: 40px;
        
         border-bottom: 1px solid #3B444B;
     }
-    .surveyTitle>input{
-    	font-size: 40px;
-    }
-     .surveyTitle> button{
-     	
-     	width: 50px;
-     	height: 20px;
-     }
     .surveyTitleInput{
     	width: 80%;
         place-items: center; 
@@ -200,7 +192,9 @@
 	    height: 360px;
 	    background-color: #ffffff;
 	}
-
+	a{
+		width: 50px;
+	}
 	#page-area{
    		 margin :auto;
    	 	width: 200px;
@@ -208,10 +202,13 @@
     	display: flex;
     	justify-content: space-around;
     }
-   a{
-   	width: 50px;
-   }
-
+	 #detail-list-page-area{
+   		 margin :auto;
+   	 	width: 400px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
+        }
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -228,20 +225,35 @@
 		
 			    <div class="hrWrap">
 			        <div class="writeHrSurveyWrap">
-			            <form action="${root}/hr/survey/create" method="POST" class="writeHrSurveyForm">
+			            <form action="" class="writeHrSurveyForm">
 			                <div class="surveyTitle">
 			                    <input type="text" value="${sdvo.title}" name="title" class="surveyTitleInput" maxlength="30" readonly="readonly">
-			                    <button type="button" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">목록</button>
 			                </div>
 	                        <c:forEach items="${list}" var="list" varStatus="status">
 									<div class="question">
 					                    ${status.index + 1}. <input type="text" value="${list.question}" name="question" class="questionInput" maxlength="50" readonly="readonly">
-					                    <textarea readonly="readonly">${((answerLists[status.index])[0]).answer}</textarea>
+					                    <textarea readonly="readonly">${((answerLists[status.index])[detailListPv.currentPage-1]).answer}</textarea>
 					                </div>
 							</c:forEach>
-			                
+			                 <div id="detail-list-page-area">
+				            	<c:if test="${detailListPv.currentPage > 1}">
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage - 1}&titleListpage=${pv.currentPage}">이전</a>
+				            	</c:if>
+					            	<c:forEach begin="${detailListPv.startPage}" end="${detailListPv.endPage}" step="1" var="i">
+					            		<c:if test="${detailListPv.currentPage != i}">
+							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${i}&titleListpage=${pv.currentPage}">${i}</a>
+					            		</c:if>
+					            		<c:if test="${detailListPv.currentPage == i}">
+							            	<a >${i}</a>
+					            		</c:if>
+					            	</c:forEach>
+					            <c:if test="${detailListPv.currentPage < detailListPv.maxPage}">
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage + 1}&titleListpage=${pv.currentPage} ">다음</a>
+					            </c:if>
+				         	</div>
 			               
 			            </form>
+			           
 			        </div>
 			        
 			        <div class="titleListWrap">
@@ -267,18 +279,18 @@
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage - 1}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${i}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${pv.currentPage + 1} ">다음</a>
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage + 1} ">다음</a>
 					            </c:if>
 				            </div>
 			                    
@@ -294,10 +306,7 @@
 function goDetail(no, title, enrollDate, titleListpage) {
     window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
 }
-function goDetailList(no, title, enrollDate, titleListpage) {
-	 window.location.href = '${root}/hr/survey/detailList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
-	
-}    
+    
 </script>
 
 </html>

@@ -27,7 +27,7 @@ public class SurveyDaoImpl implements SurveyDao{
 	}
 
 	@Override
-	public int write(SqlSessionTemplate sst, Map<String, Object> map) {
+	public int create(SqlSessionTemplate sst, Map<String, Object> map) {
 		List<String>list = (List<String>) map.get("questions"); 
 		int result = sst.insert("survey.insertDocument", map);
 		if(result !=1) {
@@ -73,6 +73,12 @@ public class SurveyDaoImpl implements SurveyDao{
 		map.put("answerer", answerer);
 		return sst.selectList("survey.answerByOneQuestionByUser",map);
 	}
+
+	@Override
+	public List<SurveyAnswerVo> getSurveySelectQnaTotalList(SqlSessionTemplate sst, String no) {
+		return sst.selectList("survey.getSurveySelectQnaTotalList",no);
+	}
+
 	
 	
 	

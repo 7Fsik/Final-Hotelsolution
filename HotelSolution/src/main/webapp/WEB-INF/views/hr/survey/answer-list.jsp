@@ -99,9 +99,9 @@
 
      .titleListWrap{
       	margin-top:1vh;
-		margin-bottom:1vh;
-        margin-left: 1vw;
-        margin-right: 1vw;
+		margin-bottom:20px;
+        margin-left: 10px;
+        margin-right: 20px;
 		width: 370px;
 		height : 800px;
         border: 1px solid #3B444B;
@@ -220,6 +220,13 @@
 	  text-overflow: ellipsis;
 	  max-width: 300px; /* 원하는 글자 수에 따라 조정 */
 	}
+	p.surveyTitleTruncate{
+	  white-space: nowrap;
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  max-width: 900px; /* 원하는 글자 수에 따라 조정 */
+	  text-align: left;
+	}
 	 p.questionTruncate{
 	 white-space: nowrap;
 	  overflow: hidden;
@@ -227,13 +234,7 @@
 	  max-width: 190px; /* 원하는 글자 수에 따라 조정 */
 	  text-align: left;
 	 }
-	  #page-area{
-   		 margin :auto;
-   	 	width: 200px;
-    	text-align: center;
-    	display: flex;
-    	justify-content: space-around;
-    }
+	  
     .answerWrap{
     	border-collapse: separate;
     border-spacing: 0;
@@ -263,13 +264,23 @@
         text-align: left;
         align-items: center;
         }
-    #ans-page-area{
+    	#ans-page-area{
    		 margin :auto;
    	 	width: 400px;
     	text-align: center;
     	display: flex;
     	justify-content: space-around;
         }
+        #page-area{
+   		 margin :auto;
+   	 	width: 200px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
+    }
+     a{
+   	width: 50px;
+   }
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -287,7 +298,9 @@
 	        <div class="detailHrSurveyWrap">
                 <div class="detailHrSurvey">
                     <div class="surveyTitle">
-                           <p class="titleTruncate">${sdvo.title} (${sdvo.enrollDate})</p> 
+                           <p class="surveyTitleTruncate">${sdvo.title} (${sdvo.enrollDate})</p> 
+                          
+                           
                     </div>
 	                
 	                <div class="tableWrap">
@@ -352,6 +365,7 @@
 			            <c:if test="${answerListPv.currentPage < answerListPv.maxPage}">
 			            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage + 1}&titleListpage=${pv.currentPage}">다음</a>
 			            </c:if>
+			             <button value="상세조회" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">상세조회</button>
 		            </div>
 			                    
 	               
@@ -409,6 +423,10 @@ function goAnswerList(no, title, enrollDate, titleListpage) {
 }
 function goDetail(no, title, enrollDate, titleListpage, answerer) {
 	 window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage + '&answerer=' + answerer ;
+	
+}
+function goDetailList(no, title, enrollDate, titleListpage) {
+	 window.location.href = '${root}/hr/survey/detailList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
 	
 }
 

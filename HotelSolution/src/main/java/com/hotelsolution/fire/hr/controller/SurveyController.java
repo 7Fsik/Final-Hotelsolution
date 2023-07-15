@@ -33,7 +33,7 @@ public class SurveyController {
 	
 	private final SurveyService service;
 	
-
+	//우측 제목 리스트 가져오는 메소드
 	public Map<String, Object> titleList (String titleListpage){
 		int listCount = service.getSurveyCnt();
 		if (titleListpage == null || titleListpage.isEmpty()) {
@@ -58,8 +58,8 @@ public class SurveyController {
 	}
 	
 	//설문조사 설문지작성 페이지
-	@GetMapping("survey/write")
-	public void writeSurvey(Model model,String titleListpage) {
+	@GetMapping("survey/create")
+	public void createSurvey(Model model,String titleListpage) {
 		//우측 설문 제목 리스트
 		Map<String, Object> map = titleList(titleListpage);
 		model.addAttribute("titleList",map.get("titleList"));
@@ -68,21 +68,21 @@ public class SurveyController {
 	}
 	
 	//설문지 작성후 데이터는 넘기고 홈 화면으로
-	@PostMapping("survey/write")
-	public String writeSurvry(String title, String[] question) {
+	@PostMapping("survey/create")
+	public String createSurvry(String title, String[] question) {
 		List<String> questions = Arrays.asList(question);
 	    Map<String, Object> map = new HashMap<>();
 	    map.put("title", title);
 	    map.put("questions", questions);
-	    int result = service.write(map);
+	    int result = service.create(map);
 	    if (result != 1) {
 	        throw new RuntimeException();
 	    }
-	    return "redirect:/hr/survey/write";
+	    return "redirect:/hr/survey/create";
 		
 	}
 	
-
+	//질분 답변 리스트 페이지
 	@GetMapping("survey/answerList")
 	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage){
 		//우측 설문 제목 리스트
@@ -118,7 +118,7 @@ public class SurveyController {
 		
 	}
 
-	// 제목 리스트에서 클릭 후 해당 설문지 답변,질문 목록보기 까지
+	// 리스트에서 1인 답변 클릭 후 해당 답변자의 설문지 답변보기
 	@GetMapping("survey/detail")
 	public void surveySelectQnaList(Model model, SurveyDocVo sdvo , String titleListpage, String answerer) {
 		if (titleListpage == null || titleListpage.isEmpty()) {
@@ -141,7 +141,6 @@ public class SurveyController {
 		
 		model.addAttribute("answerer",answerer);
 		model.addAttribute("list", list);
-		log.info(answerLists.toString());
 		model.addAttribute("answerLists", answerLists);
 
 		
@@ -149,25 +148,65 @@ public class SurveyController {
 	
 	
 	
-//	//첫 화면은 가장 최근 배포한 설문지의 답변, 질문 리스트 -> 제목 리스트에서 클릭 후 해당 설문지 답변,질문 목록보기 까지
-//	@GetMapping("survey/home")
-//	public String surveyHomeQnAList(Model model, SurveyDocVo vo) {
-//		int listCount = service.getSurveyCnt();
-//		int currentPage = 1;
-//		int pageLimit = 5;
-//		int boardLimit = 7;
-//		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-//		
-//		List<SurveyDocVo> titleList = service.titleList(pv);
-//		titleList = service.titleList(pv);//화면 우측에 설문지 제목 리스트
-//		
-//		vo = service.getRecentSurveyQnAList();
-//		
-//		model.addAttribute("titleList",titleList);
-//		model.addAttribute("vo",vo);
-//		return "hr/survey/list";
-//	}
-//	
+	//디테일 리스트(detail 에서 목록으로버튼 or answerList 에서 상세보기 클릭시)
+	@GetMapping("survey/detailList")
+	public String surveySelectQnaTotalList(Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage) {
+		//질문에 있는 모든 설문 답 리스트
+		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
+		if(detailListpage == null) {
+			detailListpage = "1";
+		}
+		int currentPage = Integer.parseInt(detailListpage);
+		
+		int pageLimit = 5;
+		int boardLimit = 1;
+		
+		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 	
+		model.addAttribute("detailListPv",detailListPv);
+		
+		
+		//우측 설문 제목 리스트
+		if (titleListpage == null || titleListpage.isEmpty()) {
+			titleListpage = "1";
+		}
+		Map<String, Object> map = titleList(titleListpage);
+		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("pv",map.get("pv"));
+		//질문 4개 리스트 가져오기
+		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
+		model.addAttribute("sdvo",sdvo);
+		//설문지 번호에 맞는 질문 답변 질문별로 가져오기
+		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
+		for (SurveyQuestionVo vo : list) {
+		    List<SurveyAnswerVo> answerList = service.getSurveySelectQnaTotalList(vo.getNo());
+		    answerLists.add(answerList);
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("answerLists", answerLists);
+		
+		return "hr/survey/detail-list";
+	}
+	
+	
+	//사원들이 설문조사 작성 -- 미완성 알람창에 ( 인터셉터로 창 이동시마다 검색)
+	@GetMapping("survey/write")
+	public void surveyWrite(Model model, SurveyDocVo sdvo) {
+		
+		//질문 4개 리스트 가져오기
+		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
+		model.addAttribute("sdvo",sdvo);
+		//설문지 번호에 맞는 질문 답변 질문별로 가져오기
+		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
+		for (SurveyQuestionVo vo : list) {
+		    List<SurveyAnswerVo> answerList = service.getSurveySelectQnaTotalList(vo.getNo());
+		    answerLists.add(answerList);
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("answerLists", answerLists);
+		
+	}
 	
 }

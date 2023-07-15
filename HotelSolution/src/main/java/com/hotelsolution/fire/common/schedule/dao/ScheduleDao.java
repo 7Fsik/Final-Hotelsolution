@@ -1,4 +1,4 @@
-package com.hotelsolution.fire.schedule.dao;
+package com.hotelsolution.fire.common.schedule.dao;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.hotelsolution.fire.common.schedule.vo.ScheduleVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
-import com.hotelsolution.fire.schedule.vo.ScheduleVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.hotelsolution.fire.schedule.controller;
+package com.hotelsolution.fire.common.schedule.controller;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hotelsolution.fire.common.schedule.service.ScheduleService;
 import com.hotelsolution.fire.member.vo.MemberVo;
-import com.hotelsolution.fire.schedule.service.ScheduleService;
 import com.google.gson.Gson;
 
 import lombok.RequiredArgsConstructor;

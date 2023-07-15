@@ -52,18 +52,10 @@
         
         text-align: center;
         border: 0px;
-      
+        font-size: 40px;
        
         border-bottom: 1px solid #3B444B;
     }
-    .surveyTitle>input{
-    	font-size: 40px;
-    }
-     .surveyTitle> button{
-     	
-     	width: 50px;
-     	height: 20px;
-     }
     .surveyTitleInput{
     	width: 80%;
         place-items: center; 
@@ -101,10 +93,7 @@
         height: 60%;
         border: 0px solid #3B444B;
         border-radius: 20px;
-        padding-top:10px;
-        padding-left:10px;
         resize: none;
-        overflow: scroll;
         
     }
 
@@ -200,17 +189,10 @@
 	    height: 360px;
 	    background-color: #ffffff;
 	}
-
-	#page-area{
-   		 margin :auto;
-   	 	width: 200px;
-    	text-align: center;
-    	display: flex;
-    	justify-content: space-around;
-    }
-   a{
+	 a{
    	width: 50px;
    }
+	
 
 </style>
 </head>
@@ -230,17 +212,29 @@
 			        <div class="writeHrSurveyWrap">
 			            <form action="${root}/hr/survey/create" method="POST" class="writeHrSurveyForm">
 			                <div class="surveyTitle">
-			                    <input type="text" value="${sdvo.title}" name="title" class="surveyTitleInput" maxlength="30" readonly="readonly">
-			                    <button type="button" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">목록</button>
+			                    <input type="text" placeholder="설문 제목을 입력하세요" name="title" class="surveyTitleInput" maxlength="30">
 			                </div>
-	                        <c:forEach items="${list}" var="list" varStatus="status">
-									<div class="question">
-					                    ${status.index + 1}. <input type="text" value="${list.question}" name="question" class="questionInput" maxlength="50" readonly="readonly">
-					                    <textarea readonly="readonly">${((answerLists[status.index])[0]).answer}</textarea>
-					                </div>
-							</c:forEach>
-			                
 			               
+			                
+			                <div class="question">
+			                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="question">
+			                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="question">
+			                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="question">
+			                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
+			                    <textarea readonly></textarea>
+			                </div>
+			                <div class="btn">
+			                    <button type="submit" class="button">설문지 배포</button>
+			                </div>
 			            </form>
 			        </div>
 			        
@@ -250,7 +244,7 @@
 			            </div>
 			                <div class="listWrap">
 							    <c:forEach items="${titleList}" var="title">
-							        <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}')">
+							        <div class="titleList" onclick="goAnswerList('${title.no}', '${title.title}', '${title.enrollDate}')">
 							            <p class="titleTruncate">${title.title}</p>
 							            <br>
 							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
@@ -267,18 +261,18 @@
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/create?titleListpage=${pv.currentPage - 1}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/survey/create?titleListpage=${i}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/detail?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerer=${answerer}&titleListpage=${pv.currentPage + 1} ">다음</a>
+					            	<a  href="${root}/hr/survey/create?titleListpage=${pv.currentPage + 1}">다음</a>
 					            </c:if>
 				            </div>
 			                    
@@ -291,13 +285,10 @@
 	
 </body>
 <script>
-function goDetail(no, title, enrollDate, titleListpage) {
+function goAnswerList(no, title, enrollDate, titleListpage) {
     window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
 }
-function goDetailList(no, title, enrollDate, titleListpage) {
-	 window.location.href = '${root}/hr/survey/detailList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
-	
-}    
+    
 </script>
 
 </html>

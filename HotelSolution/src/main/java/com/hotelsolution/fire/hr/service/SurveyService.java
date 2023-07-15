@@ -9,7 +9,7 @@ import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 
 public interface SurveyService {
-	int write(Map<String, Object> map);
+	int create(Map<String, Object> map);
 
 	List<SurveyDocVo> titleList(PageVo pv);
 	
@@ -24,4 +24,7 @@ public interface SurveyService {
 	int getAnswerCnt(String no);
 
 	List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer);
+
+	List<SurveyAnswerVo> getSurveySelectQnaTotalList(String no);
+
 }

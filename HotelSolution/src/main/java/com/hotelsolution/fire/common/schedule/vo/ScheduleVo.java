@@ -1,4 +1,4 @@
-package com.hotelsolution.fire.schedule.vo;
+package com.hotelsolution.fire.common.schedule.vo;
 
 import lombok.Data;
 
