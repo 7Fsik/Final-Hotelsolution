@@ -5,7 +5,7 @@
 <mapper namespace="survey">
   
   <select id="titleList" resultType="SurveyDocVo">
-			   SELECT NO, TITLE, TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') AS ENROLL_DATE
+	   SELECT NO, TITLE, TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') AS ENROLL_DATE
 		FROM SURVEY_DOCUMENT
 		ORDER BY NO DESC
 
