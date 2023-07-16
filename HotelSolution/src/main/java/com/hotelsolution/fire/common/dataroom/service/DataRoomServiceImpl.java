@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hotelsolution.fire.common.dataroom.dao.DataRoomDao;
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo;
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,15 +22,31 @@ public class DataRoomServiceImpl implements DataRoomService {
 	private final SqlSessionTemplate sst;
 	
 	@Override
-	public List<DataRoomVo> getDataRoomList(String no) {
+	public List<DataRoomVo> getDataRoomList(String categoryNo,  PageVo dataRoomListPv) {
 		
-		return dao.getDataRoomList(sst, no);
+		return dao.getDataRoomList(sst, categoryNo, dataRoomListPv);
 	}
 	
 	@Override
 	public int write(DataRoomVo drvo, List<DataRoomFileVo> drfvoList) {
 		
 		return dao.write(sst, drvo, drfvoList);
+	}
+
+	@Override
+	public DataRoomVo getDetailDrvo(String drvoNo) {
+		return dao.getDetailDrvo(sst,drvoNo);
+	}
+
+
+	@Override
+	public List<DataRoomFileVo> getDetailDrfvoList(String drvoNo) {
+		return dao.getDetailDrfvoList(sst, drvoNo);
+	}
+
+	@Override
+	public int getDataRoomCnt(String categoryNo) {
+		return dao.getDataRoomCnt(sst, categoryNo);
 	}
 
 }

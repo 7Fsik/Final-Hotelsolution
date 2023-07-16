@@ -57,15 +57,7 @@
        
         border-bottom: 1px solid #3B444B;
     }
-    .surveyTitleInput{
-        place-items: center; 
-        font-size: 40px;
-    }
-    .question{
-    	text-align:left;
-        margin-left: 10%;
-        font-size: 20px;
-    }
+
     .questionInput{
     	margin-top: 2%;
         width: 70%;
@@ -148,7 +140,7 @@
     text-align: center;
     }
     .searchInput{
-    	border-bottom: 1px solid black;
+    	border-bottom: 1px solid #3b444b;
     }
     .main-container{
 	    width: 100%;
@@ -188,7 +180,7 @@
 	  .tableDiv{
 	  	border-collapse: separate;
    	 border-spacing: 0;
-    	border: 1px solid black;
+    	border: 1px solid #3b444b;
         padding: 22px;
         box-sizing: border-box;
         text-align: left;
@@ -258,7 +250,7 @@
 	.ansDiv{
 		border-collapse: separate;
    		 border-spacing: 0;
-    	border-bottom: 1px solid black;
+    	border-bottom: 1px solid #3b444b;
         padding: 22px;
         box-sizing: border-box;
         text-align: left;

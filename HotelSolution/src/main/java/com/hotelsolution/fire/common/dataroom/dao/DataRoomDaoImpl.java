@@ -2,11 +2,13 @@ package com.hotelsolution.fire.common.dataroom.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo;
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomVo;
+import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 
@@ -14,13 +16,14 @@ import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 public class DataRoomDaoImpl implements DataRoomDao {
 
 	@Override
-	public List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, String no) {
-		return sst.selectList("dataroom.getDataRoomList", no);
+	public List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, String categoryNo, PageVo dataRoomListPv) {
+		RowBounds rb = new RowBounds(dataRoomListPv.getOffset(), dataRoomListPv.getBoardLimit());
+		return sst.selectList("dataroom.getDataRoomList", categoryNo, rb);
 	}
 
 	@Override
 	public int write(SqlSessionTemplate sst, DataRoomVo drvo, List<DataRoomFileVo> drfvoList) {
-		int result = sst.insert("survey.writeDataroom", drvo);
+		int result = sst.insert("dataroom.writeDataroom", drvo);//loginMemberNo 전달되야됨
 		if(result !=1) {
 			throw new RuntimeException("자료실 작성 에러");
 		}
@@ -28,13 +31,29 @@ public class DataRoomDaoImpl implements DataRoomDao {
 		for (DataRoomFileVo drfVo : drfvoList) {
 			if(result ==1) {
 				
-				result = sst.insert("survey.writeDataRoomFile", drfVo);
+				result = sst.insert("dataroom.writeDataRoomFile", drfVo);
 			}else {
 				throw new RuntimeException("첨부파일 첨부중 에러");
 			}
 		}
 		
 		return result;
+	}
+
+	@Override
+	public DataRoomVo getDetailDrvo(SqlSessionTemplate sst, String drvoNo) {
+		return sst.selectOne("dataroom.getDetailDrvo",drvoNo);
+	}
+
+
+	@Override
+	public List<DataRoomFileVo> getDetailDrfvoList(SqlSessionTemplate sst, String drvoNo) {
+		return sst.selectList("dataroom.getDetailDrfoList",drvoNo);
+	}
+
+	@Override
+	public int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo) {
+		return sst.selectOne("dataroom.getDataRoomCnt", categoryNo);
 	}
 		
 

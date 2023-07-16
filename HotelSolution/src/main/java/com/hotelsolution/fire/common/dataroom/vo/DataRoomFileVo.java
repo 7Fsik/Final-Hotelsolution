@@ -6,6 +6,7 @@ import lombok.Data;
 public class DataRoomFileVo {
 	private String no;
 	private String dataNo;
+	private String changeName;
 	private String fileName;
 	private String fileExplain;
 	private String enrollDate;

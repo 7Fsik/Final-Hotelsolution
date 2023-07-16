@@ -40,7 +40,6 @@ public class SurveyController {
 			titleListpage = "1";
 		}
 		int currentPage = Integer.parseInt(titleListpage);
-		System.out.println(currentPage);
 		int pageLimit = 5;
 		int boardLimit = 7;
 		
@@ -111,7 +110,6 @@ public class SurveyController {
 		    answerLists.add(answerList);
 		}
 		model.addAttribute("answerLists", answerLists);
-		System.out.println(answerLists);
 	
 		return "hr/survey/answer-list";
 		
@@ -135,7 +133,6 @@ public class SurveyController {
 		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
 		for (SurveyQuestionVo vo : list) {
 		    List<SurveyAnswerVo> answerList = service.answerByOneQuestionByUser(vo.getNo(), answerer);
-		    log.info(answerList.toString());
 		    answerLists.add(answerList);
 		}
 		
