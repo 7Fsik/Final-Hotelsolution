@@ -1,6 +1,5 @@
 package com.hotelsolution.fire.hr.controller;
 
-import java.lang.ProcessHandle.Info;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,14 +9,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.SurveyService;
-import com.hotelsolution.fire.hr.service.SurveyServiceImpl;
 import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
 import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;

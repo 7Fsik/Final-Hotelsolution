@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("dataroom")
 @Slf4j
 public class DataRoomController {
-	public final DataRoomService service;
+	private final DataRoomService service;
 	
 	//작성하기 클릭시 작성하는 화면
 	@GetMapping("write")
@@ -46,13 +50,18 @@ public class DataRoomController {
 	
 	//파일 업로드
 	@PostMapping("write")
-	public String write(Model model, DataRoomVo drvo, @RequestParam(value = "fileExplain", required = false) List<String> fileExplain,  @RequestParam("files") List<MultipartFile> fList, HttpServletRequest req ) throws Exception, IOException {
+	public String write(Model model, DataRoomVo drvo,
+			@RequestParam(value = "fileExplain", required = false) List<String> fileExplain,
+			@RequestParam("files") List<MultipartFile> fList, HttpServletRequest req ) throws Exception, IOException {
 		String savePath = req.getServletContext().getRealPath("/resources/upload/dataroom/file/");
 		int result = 0 ;
 		List<DataRoomFileVo> drfvoList = new ArrayList<DataRoomFileVo>(); // 이 위치로 이동
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-	    String loginMemberNo = loginMember.getNo();
+	    String loginMemberNo = "1"; // 실행위에 임시코드
+	    if(loginMember!=null) {
+	    	loginMemberNo = loginMember.getNo();
+	    }//임시코드
 	    drvo.setWriterNo(loginMemberNo);
 	    for (int i = 0; i < fList.size(); i++) {
 	    	DataRoomFileVo fileVo = new DataRoomFileVo();
@@ -77,26 +86,28 @@ public class DataRoomController {
 			throw new RuntimeException("자료를 무조건 추가해야됩니다. 작성 실패");
 		}
 		
-		return "redirect:/dataroom/list";
+		return "redirect:/dataroom/list?categoryNo=" + drvo.getCategoryNo();
+		
 	}
 	
 	
 	
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
-	public void list(Model model,String categoryNo, String listpage) {
+	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	    model.addAttribute("loginMember", loginMember);
 		//초기 카테고리는 개인으로
 		if(categoryNo == null) {
 			categoryNo = "100";
 		}
-		System.out.println(categoryNo);
 		//자료실 카운트
 		int listCount = service.getDataRoomCnt(categoryNo);
-		if(listpage == null) {
-			listpage = "1";
+		if(dataRoomListPage == null) {
+			dataRoomListPage = "1";
 		}
-		System.out.println(listCount);
-		int currentPage = Integer.parseInt(listpage);
+		int currentPage = Integer.parseInt(dataRoomListPage);
 		
 		int pageLimit = 5;
 		int boardLimit = 10;
@@ -104,21 +115,42 @@ public class DataRoomController {
 		PageVo dataRoomListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 	
 		model.addAttribute("dataRoomListPv",dataRoomListPv);
-		System.out.println(dataRoomListPv);
 		List<DataRoomVo> dataVoList =service.getDataRoomList(categoryNo, dataRoomListPv); 
 		model.addAttribute("dataVoList" , dataVoList);
-		System.out.println(dataVoList);
+		model.addAttribute("categoryNo" , categoryNo);
 	}
 	
+	//list에서 하나 클릭시 디테일로
 	@GetMapping("detail")
 	public void detail(Model model,String drvoNo) {
+		
 		DataRoomVo drvo = service.getDetailDrvo(drvoNo);
 		List<DataRoomFileVo> drfvoList = service.getDetailDrfvoList(drvoNo);
 		model.addAttribute("drvo",drvo);
 		model.addAttribute("drfvoList",drfvoList);
-		
 	}
 	
+	//리
+	@GetMapping("download")
+	public ResponseEntity<ByteArrayResource> download(HttpServletRequest req, String changeName, String fileName) throws Exception {
+		
+		//파일 객체 준비
+		String root = req.getServletContext().getRealPath("/resources/upload/dataroom/file/");
+		String path = root + changeName;
+		File target = new File(path);
+		byte[] data = FileUtils.readFileToByteArray(target);
+		ByteArrayResource x = new ByteArrayResource(data);
+		
+		
+		return ResponseEntity
+				.ok()
+				.contentType(MediaType.APPLICATION_OCTET_STREAM)
+				.contentLength(target.length())
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+fileName)
+				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+				.body(x)
+				;
+	}
 
 
 }

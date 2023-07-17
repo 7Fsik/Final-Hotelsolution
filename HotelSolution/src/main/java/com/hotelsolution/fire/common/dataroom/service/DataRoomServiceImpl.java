@@ -35,6 +35,10 @@ public class DataRoomServiceImpl implements DataRoomService {
 
 	@Override
 	public DataRoomVo getDetailDrvo(String drvoNo) {
+		int result = dao.increaseHit(sst, drvoNo);
+		if(result!=1) {
+			throw new RuntimeException("조회수 증가 실패");
+		}
 		return dao.getDetailDrvo(sst,drvoNo);
 	}
 

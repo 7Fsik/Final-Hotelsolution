@@ -8,6 +8,7 @@
     <!-- settings -->
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
     <typeAliases>
   		<typeAlias type="com.hotelsolution.fire.common.schedule.vo.ScheduleVo" alias="ScheduleVo"/>
