@@ -9,7 +9,8 @@
     <title>Insert title here</title>
  <style type="text/css">
 	.dataroomBody{
-		width : 1400px;
+	
+		width : 1300px;
 		height : 820px;
 		margin-top: 50px;
 		margin-left :20px;
@@ -20,12 +21,13 @@
 		
 	}
 	.dataroomWrap{
-        
+        display:grid;
 		width:100%;
-		height : 100%;
-        border: 1px solid #3B444B;
+		height : 800px;
+        border: 0px solid #3B444B;
         border-radius: 20px;
         background-color: white;
+        grid-template-rows: 2fr 11fr;
 	}
 	.writeDataroomWrap{
 		margin-top:1vh;
@@ -33,8 +35,9 @@
         margin-left: 1vw;
         margin-right: 1vw;
 		width:97%;
-		height : 800px;
+		height : 680px;
         border: 1px solid #3B444B;
+        
         border-radius: 20px;
         gap:20px;
 	}
@@ -42,7 +45,7 @@
         width: 100%;
 		height : 100%;
         display: grid;
-        grid-template-rows: 2fr 2fr 2fr 6fr 1fr;
+        grid-template-rows: 2fr 2fr 6fr 1fr;
     }
   
   
@@ -52,7 +55,7 @@
     }
    
     .button{
-    	margin: 0px auto;
+    	margin	: 0px auto;
     	margin-top: 10px;
         width: 100px;
         height: 50%;
@@ -117,10 +120,12 @@
 		grid-template-columns: 8fr 2fr; 
 	}
 	.fileUploadContainerWrap{
+		margin-top : 10px;
 		display: grid;
 		grid-template-columns: 1fr 9fr;
 	}
 	.fileUpload > input{
+		margin-left: 20px;
 		width: 500px;
 	}
 	.addFile{
@@ -161,6 +166,7 @@
 		text-align: right; 
 		font-size: 15px;
 	}
+
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -177,12 +183,15 @@
 		
 			    <div class="dataroomWrap">
 			    	
+	           			<div class= "topNameText" >자료실 등록하기</div>
 			        <div class="writeDataroomWrap">
 			           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
 							<input type="hidden" name="writerNo" value="1">
 			           		<div class="topName" >
-			           			<div class= "topNameText" >자료실 등록하기</div>
-			           			<div class="topNameSelect">
+							   <div style="font-size: 30px; padding-left:20px; margin-top: 20px;">
+							 	 제목 : <input type="text" name="title" placeholder="제목을 입력하세요"style="margin-left: 20px; border-bottom: 1px solid #3b444b; width: 800px;">
+							   </div>
+							   <div class="topNameSelect">
 			           				<select name="securityLevel" id="securityLevelSelect" style="display: none;">
 									    <option value="1">전부</option>
 									    <option value="2">슈퍼바이저이상</option>
@@ -198,17 +207,10 @@
 									</select>
 
 			           			</div>
-			           			 
-			           		</div>
-			           		<div>
-							   <div style="font-size: 30px; padding-left:20px; margin-top: 20px;">
-							 	 제목 : <input type="text" name="title" placeholder="제목을 입력하세요"style="margin-left: 20px; border-bottom: 1px solid #3b444b; width: 1200px;">
-							   </div>
-						    <hr>
 			           		</div>
 						    <div class="fileUploadContainerWrap">
 							    <div class="addFile">
-							    	<div>
+							    	<div style="padding-top: 10px;">
 									    첨부파일 :
 							    	</div>
 								    
@@ -235,7 +237,7 @@
 						    </div>
 
 						    
-						    <input class="button"  type="submit" value="등록하기" onclick="submitForm()">
+						    <input class="button"  type="submit" value="등록하기" onclick="submitForm()"style="height: 30px;">
 						</form>
 			        </div>
 			    </div>

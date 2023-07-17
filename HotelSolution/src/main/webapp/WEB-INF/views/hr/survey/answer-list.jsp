@@ -115,9 +115,9 @@
     .titleList{
     	text-align:left;
         padding-left: 35px;
-       
+       padding-top:10px;
         width: 100%;
-        height: 90%;
+        height: 100%;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
         cursor: pointer;
@@ -273,6 +273,12 @@
      a{
    	width: 50px;
    }
+    .titleList:hover {
+        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    }
+      .ansDiv:hover {
+        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    }
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>

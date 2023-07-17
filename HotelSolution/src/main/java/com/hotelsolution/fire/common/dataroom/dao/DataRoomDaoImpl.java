@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo;
 import com.hotelsolution.fire.common.dataroom.vo.DataRoomVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
-import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 
 @Repository
@@ -54,6 +53,11 @@ public class DataRoomDaoImpl implements DataRoomDao {
 	@Override
 	public int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo) {
 		return sst.selectOne("dataroom.getDataRoomCnt", categoryNo);
+	}
+
+	@Override
+	public int increaseHit(SqlSessionTemplate sst, String drvoNo) {
+		return sst.update("dataroom.increaseHit",drvoNo);
 	}
 		
 

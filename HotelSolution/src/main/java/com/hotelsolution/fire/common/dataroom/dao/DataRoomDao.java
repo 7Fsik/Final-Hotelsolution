@@ -20,4 +20,6 @@ public interface DataRoomDao {
 
 	int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo);
 
+	int increaseHit(SqlSessionTemplate sst, String drvoNo);
+
 }
