@@ -18,11 +18,7 @@
 
 		<main>
 			<div class="main-container">
-				<aside class="main-aside">
-					<div class="profile-box"></div>
-					<div class="main-aside-empty"></div>
-					<div class="team-menu-bar"></div>
-				</aside>
+				<%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 				<div class="main-content-list">
 					<div class="commute"></div>
 					<div class="calendar"></div>

@@ -27,7 +27,7 @@
                 <div class="main-aside-empty"></div>
                 <div class="team-menu-bar"></div>
             </aside>
-            <form action="${root}/board/write" method="post">
+            <form action="${root}/board/post" method="post">
                 <div class="main-content-list">
 
                     <div class="write-container">
