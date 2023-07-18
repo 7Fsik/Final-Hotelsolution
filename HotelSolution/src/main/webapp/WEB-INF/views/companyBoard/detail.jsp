@@ -24,7 +24,41 @@
       
       <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 
-      <div>아무거나넣기</div>
+      <div class="main-content">
+          <div class="main-content-wrap">
+              <div class="writer-container">
+                  <div class="titleAndWriterDate">
+                      <span class="detail-title">
+                          게시판 제목이에요 ㅎㅎ
+                      </span>
+                      <span>
+                          2023.07.18
+                      </span>
+                  </div>
+
+                  <div class="writer-profile-box">
+                      <span class="detail-writer">
+                          작성자
+                      </span>
+                      <span>
+                          카테고리이름
+                      </span>
+                  </div>
+
+              </div>
+              <div class="detail-container">
+                  게시글 쓰면 여기로와요 ㅇㅇ
+              </div>
+              <div class="comment-box">
+                  0개의 댓글
+                  <hr>
+                  <div class="comment-container">
+                      <span class="comment-writer-text"></span>
+                      <span class="comment-writer-btn"></span>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
   </main>
 
