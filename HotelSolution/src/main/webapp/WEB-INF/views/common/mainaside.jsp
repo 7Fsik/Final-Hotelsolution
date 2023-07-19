@@ -5,6 +5,7 @@
   <title>메인에 사이드바</title>
 
   <link rel="stylesheet" href="${root}/resources/css/common/header.css">
+
 </head>
 <body>
 
