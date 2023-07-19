@@ -13,16 +13,14 @@
 .writer-container{
     width: 1200px;
     height: 80px;
-    background-color: beige;
     margin-left: 40px;
-    margin-top: 50px;
+    margin-top: 20px;
     border-bottom: 1px solid black;
 }
 
 .detail-container{
     width: 1200px;
     height: 600px;
-    background-color: beige;
     margin-left: 40px;
 }
 
@@ -35,7 +33,7 @@
     height: 100%;
     background-color: white;
     margin-left: 40px;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .titleAndWriterDate{
@@ -44,7 +42,6 @@
 }
 .comment-box{
     width: 1200px;
-    background-color: #3258A3;
     height: 200px;
     margin-left: 40px;
 }
