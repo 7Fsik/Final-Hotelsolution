@@ -22,4 +22,10 @@ public class MailController {
     public String sendMailFormByNo(){
         return "mail/post";
     }
+
+    @GetMapping("detail")
+    public String mailDetailViewByNo(){
+        return "mail/detail";
+    }
+
 }
