@@ -35,24 +35,41 @@ public class ApprovalController {
 		
 	}
 	
-	//휴가신청서(화면)
+	//휴가신청서 작성(화면)
 	@GetMapping("vaction")
 	public void vaction() {
 		
 	}
 	
-	//업무보고서(화면)
+	//업무보고서 작성(화면)
 	@GetMapping("report")
 	public void report() {
 		
 	}
 	
-	//지출결의서(화면)
+	//지출결의서 작성(화면)
 	@GetMapping("expenditure")
 	public void expenditure() {
 		
 	}
 	
+	//휴가신청서 상세조회(화면)
+	@GetMapping("vactionDetail")
+	public void vactionDetail() {
+		
+	}
+	
+	//업무보고서 상세조회(화면)
+	@GetMapping("reportDetail")
+	public void reportDetail() {
+		
+	}
+	
+	//지출결의서 상세조회(화면)
+	@GetMapping("expenditureDetail")
+	public void expenditureDetail() {
+		
+	}
 	
 	
 }//class
