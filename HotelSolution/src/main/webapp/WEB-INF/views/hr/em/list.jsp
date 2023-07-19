@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
  <style type="text/css">
-	.dataroomBody{
+	.memberListBody{
 		width : 1300px;
 		height : 820px;
 		margin-top: 50px;
@@ -19,24 +19,25 @@
 		
 		
 	}
-	.dataroomWrap{
+	.memberListWrap{
         display:grid;
-		width:100%;
+		width: 1260px;
 		height : 800px;
         border: 0px solid #3B444B;
         border-radius: 20px;
         background-color: white;
         grid-template-rows: 2fr 11fr;	
 	}
-	.writeDataroomWrap{
+	.writememberListWrap{
+		display:grid;
+		grid-template-columns: 4fr 1fr;	
 		margin-top:1vh;
 		margin-bottom:1vh;
         margin-left: 1vw;
         margin-right: 1vw;
-		width:97%;
+		width:1200px;
 		height : 680px;
-        border: 1px solid #3B444B;
-        border-radius: 20px;
+       
 		
 	}
    	.listWrap{
@@ -45,8 +46,21 @@
    		display:grid;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
         margin : 20px auto;
-        width: 90%;
-   		height:95%;
+        width: 900px;
+   		height:645px;
+   		border: 1px solid #3B444B;
+        border-radius: 20px;
+        padding:20px;
+   	}
+   	.newMemberListWrap{
+   		display:grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        margin : 20px auto;
+        width: 260px;
+   		height:645px;
+   		 border: 1px solid #3B444B;
+        border-radius: 20px;
+        padding:20px;
    	}
   
     .main-container{
@@ -85,7 +99,7 @@
 	}
 	.dataListTop{
 		display:grid;
-		grid-template-columns: 4fr 12fr 12fr 12fr 3fr 8fr;
+		grid-template-columns: 2fr 3fr 2fr 4fr 4fr 5fr;
 		border: 1px solid #3b444b;	
 		box-sizing: border-box;
 		background-color: #3b444b;
@@ -103,7 +117,7 @@
 	}
 	.dataList{
 		display:grid;
-		grid-template-columns: 4fr 12fr 12fr 12fr 3fr 8fr;
+		grid-template-columns:  2fr 3fr 2fr 4fr 4fr 5fr;
 		border: 1px solid #3b444b;
 		box-sizing: border-box;
 	
@@ -146,6 +160,9 @@
       	padding-left: 40px;
       	grid-template-columns : 12fr 1fr 1fr 1fr 1fr;  
         }
+        .ac{
+        	font-size: 30px;
+        }
      .ttt{
         margin-left: 60px; 
 		margin-top: 35px;  
@@ -159,6 +176,38 @@
      .dataList:hover {
         background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
     }
+    .accept{
+    	cursor: pointer;
+    }
+    .accept:hover{
+    	  background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    }
+    .newMemberListTop{
+    	
+	    border: 1px solid #3b444b;
+	    box-sizing: border-box;
+	    background-color: #3b444b;
+	    font-weight: bold;
+	    font-size: 20px;
+	    color: white;
+    	display: grid;
+    	grid-template-columns: 8fr 5fr;
+    	
+		text-align: center;
+		padding-top: 12px;
+		box-sizing: border-box;
+    }
+    .newMemberList{
+        border: 1px solid #3b444b;
+	    box-sizing: border-box;
+	    font-size: 20px;
+    	display: grid;
+    	grid-template-columns: 8fr 5fr;
+    	
+		text-align: center;
+		box-sizing: border-box;
+    
+    }
     .main {
     width: 100%;
     height: 100%;
@@ -170,6 +219,17 @@
     background-color: #dedede;
     display: flex;
 } 
+.memberVoList{
+	    display: grid;
+    grid-template-columns: 2fr 3fr 2fr 4fr 4fr 4fr;
+    border: 1px solid #3b444b;
+    box-sizing: border-box;
+   
+}
+.memberVoList:hover{
+	 background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    
+}
 </style>
 </head>
 <%@ include file="/WEB-INF/views/common/setup.jsp" %>
@@ -183,64 +243,63 @@
 	    <div class="main-container">
 	      
 	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
-			<div class="dataroomBody">
-			    <div class="dataroomWrap">
-					<div class="ttt">	${dataVoList.get(0).categoryName } 자료실</div>
+			<div class="memberListBody">
+			    <div class="memberListWrap">
+					<div class="ttt">	${dataVoList.get(0).categoryName } 사원 목록</div>
 			    	
-			        <div class="writeDataroomWrap">
+			        <div class="writememberListWrap">
 			        	<div class="listWrap">
 			        		<div class="tt">
 			        				
 			        				<div></div>
 			        				<div class="ttc">
-									    <a href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">부서</a>
+			        					부서
 									</div>
-					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
-					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
-					        		<div class="ttc"><a href="${root}/dataroom/write">글작성</a></div>
+					        		<div class="ttc">직책</a></div>
+					        		<div class="ttc">검색칸</a></div>
+					        		<div class="ttc">검색</a></div>
 			        		</div>
 			        		
 				        	<div class="dataListTop">
-								<div class="bbrt">카테고리</div>
-								<div class="bbrt">제목</div>
-								<div class="bbrt">첨부파일</div>
-								<div class="bbrt">작성자</div>
-								<div class="bbrt">조회수</div>
-								<div>작성일</div>
+								<div class="bbrt">부서</div>
+								<div class="bbrt">직책</div>
+								<div class="bbrt">이름</div>
+								<div class="bbrt">전화번호</div>
+								<div class="bbrt">이메일</div>
+								<div>가입일</div>
 							</div>
 							
-							<c:forEach begin="1" end="10" varStatus="status">
-							    <c:set var="dataVo" value="${status.index <= dataVoList.size() ? dataVoList[status.index - 1] : null}" />
-							    <div class="dataList" onclick="goDetail(${dataVo.dataNo})">
-							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.categoryName}
-							            </c:if>
+							<c:forEach items= "${memberVoList }" var="memberVo">
+							    <div class="memberVoList" onclick="goDetail(${memberVo.no})">
+							        <div class="bbr" style="padding-left: 10px;">
+							            
+							                ${memberVo.teamName}
+							           
 							        </div>
-							        <div class="bbr" style="padding-left: 70px;">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.title}
-							            </c:if>
-							        </div>
-							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                (총 ${dataVo.fileCnt}개) ${dataVo.firstFile} 
-							            </c:if>
-							        </div>
-							        <div class="bbr"style="padding-left: 70px;">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.writerName}(${dataVo.writerTeam})
-							            </c:if>
+							        <div class="bbr" style="padding-left: 20px;">
+							          
+							                ${memberVo.positionName}
+							            
 							        </div>
 							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.hit}
-							            </c:if>
+							            
+							               ${memberVo.name } 
+							            
+							        </div>
+							        <div class="bbr"style="padding-left: 30px;">
+							            
+							               0${memberVo.id }
+							          
+							        </div>
+							        <div class="bbr">
+							          
+							                ${memberVo.email}
+							            
 							        </div>
 							        <div>
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.enrollDate}
-							            </c:if>
+							           
+							                ${memberVo.enrollDate}
+							            
 							        </div>
 							    </div>
 							</c:forEach>
@@ -267,6 +326,10 @@
 
 						</div>
 						
+						<div class="newMemberListWrap">
+							
+							
+						</div>
 			        </div>
 			    </div>
 		    </div>
@@ -276,10 +339,72 @@
 </div>
 </body>
 <script type="text/javascript">
-	function goDetail(drvoNo) {
-	  if (typeof drvoNo !== 'undefined') {
-	    window.location.href = '${root}/dataroom/detail?drvoNo=' + drvoNo;
-	  }
+		$.ajax({
+		    url: "${root}/hr/em/new",
+		    method: "GET",
+		    data: {},
+		    dataType: "json",
+		    success: function (x) {
+		        console.log(x);
+		
+		        const tbody = document.querySelector(".newMemberListWrap");
+		        let str = `
+		            <div class="ac">승인 요청</div>
+		            <div class="newMemberListTop">
+		                <div>이름</div>
+		                <div>승인</div>
+		            </div>
+		        `;
+
+		        for (let i = 0; i < x.length; i++) {
+		
+		            str += '<div class="newMemberList">' +
+		                '<div>' + x[i].name + '</div>' +
+		                '<div class="accept" onclick="acceptMember(' + x[i].no + ')">승인</div>' +
+		                '</div>';
+		        }
+		
+		        tbody.innerHTML = str;
+		    },
+		    error: function (e) {
+		        console.log(e);
+		    },
+		});
+
+	
+	
+	function acceptMember(memberNo) {
+		$.ajax({
+		    url: "${root}/hr/em/new",
+		    method: "GET",
+		    data: {},
+		    dataType: "json",
+		    success: function (x) {
+		        console.log(x);
+		
+		        const tbody = document.querySelector(".newMemberListWrap");
+		        let str = `
+		            <div class="tt">새로 가입한 멤버</div>
+		            <div class="newMemberListTop">
+		                <div>이름</div>
+		                <div>승인</div>
+		            </div>
+		        `;
+
+		        for (let i = 0; i < x.length; i++) {
+		
+		            str += '<div class="newMemberList">' +
+		                '<div>' + x[i].name + '</div>' +
+		                '<div class="accept" onclick="acceptMember(' + x[i].no + ')">승인</div>' +
+		                '</div>';
+		        }
+		
+		        tbody.innerHTML = str;
+		    },
+		    error: function (e) {
+		        console.log(e);
+		    },
+		});
 	}
 
 </script>

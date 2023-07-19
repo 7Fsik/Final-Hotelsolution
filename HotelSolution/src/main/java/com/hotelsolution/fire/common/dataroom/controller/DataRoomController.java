@@ -95,15 +95,18 @@ public class DataRoomController {
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
 	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req) {
+		System.out.println("리스트 시작!~~~~~~~~~~~~~~~~~~~");
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 	    model.addAttribute("loginMember", loginMember);
 		//초기 카테고리는 개인으로
 		if(categoryNo == null) {
-			categoryNo = "100";
+			categoryNo = "0";
 		}
 		//자료실 카운트
+		System.out.println("리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
 		int listCount = service.getDataRoomCnt(categoryNo);
+		System.out.println(listCount);
 		if(dataRoomListPage == null) {
 			dataRoomListPage = "1";
 		}
@@ -115,7 +118,9 @@ public class DataRoomController {
 		PageVo dataRoomListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 	
 		model.addAttribute("dataRoomListPv",dataRoomListPv);
-		List<DataRoomVo> dataVoList =service.getDataRoomList(categoryNo, dataRoomListPv); 
+		System.out.println("1111리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
+		List<DataRoomVo> dataVoList = service.getDataRoomList(categoryNo, dataRoomListPv); 
+		System.out.println(dataVoList+"2222리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
 		model.addAttribute("dataVoList" , dataVoList);
 		model.addAttribute("categoryNo" , categoryNo);
 	}

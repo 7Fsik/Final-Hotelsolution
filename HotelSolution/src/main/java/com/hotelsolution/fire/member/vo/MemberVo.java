@@ -17,4 +17,9 @@ public class MemberVo {
 	private String contrackWorkTime;
 	private String contrackWorkEndTime;
 	private String salary;
+	//추가 
+	private String teamName;
+	private String positionName;
+	
+	
 }

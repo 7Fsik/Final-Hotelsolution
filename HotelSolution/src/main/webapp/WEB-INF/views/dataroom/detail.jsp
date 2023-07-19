@@ -188,19 +188,30 @@
         overflow: hidden;
         text-overflow: ellipsis;
 	}
-	
+	 .main {
+    width: 100%;
+    height: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    background-color: #dedede;
+    display: flex;
+} 
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
-		
+<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-		<div class="main-container">
-			<aside class="main-aside">
-				<div class="profile-box"></div>
-				<div class="main-aside-empty"></div>
-				<div class="team-menu-bar"></div>
-			</aside>
+	<div id="wrap">
+
+	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+	
+	  <main>
+	    <div class="main-container">
+	      
+	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 			<div class="dataroomBody">
 		
 			    <div class="dataroomWrap">
@@ -258,9 +269,10 @@
 			        </div>
 			    </div>
 		    </div>
-		</div>
-       
-        
+		 </div>
+	  </main>
+
+</div>
 </body>
 <script type="text/javascript">
 	function goList(categoryNo) {
