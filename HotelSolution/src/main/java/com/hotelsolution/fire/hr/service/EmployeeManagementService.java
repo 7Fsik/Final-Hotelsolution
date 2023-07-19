@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.dao.EmployeeManagementDao;
 import com.hotelsolution.fire.member.vo.MemberVo;
 
@@ -21,16 +22,20 @@ public class EmployeeManagementService {
 	private final EmployeeManagementDao dao;
 	private final SqlSessionTemplate sst;
 	
-	public List<MemberVo> getNewList() {
-		return dao.getNewList(sst);
+	public List<MemberVo> getNewList(PageVo pv) {
+		return dao.getNewList(sst, pv);
 	}
 
-	public List<MemberVo> getMemberList() {
-		return  dao.getMemberList(sst);
+	public List<MemberVo> getMemberList(PageVo pv) {
+		return  dao.getMemberList(sst,pv);
 	}
 
 	public int getMemberCnt() {
 		return dao.getMemberCnt(sst);
+	}
+
+	public int acceptNewMember(String memberNo) {
+		return dao.acceptNewMember(sst,memberNo);
 	}
 
 }

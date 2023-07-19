@@ -185,8 +185,14 @@
 	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 			<div class="dataroomBody">
 			    <div class="dataroomWrap">
+			    <c:choose>
+   				 <c:when test="${not empty dataVoList}">
 					<div class="ttt">	${dataVoList.get(0).categoryName } 자료실</div>
-			    	
+			      </c:when>
+				    <c:otherwise>
+				       <div class="ttt"> 등록된 자료가 없습니다.</div>
+				    </c:otherwise>
+				</c:choose>
 			        <div class="writeDataroomWrap">
 			        	<div class="listWrap">
 			        		<div class="tt">
@@ -208,62 +214,62 @@
 								<div class="bbrt">조회수</div>
 								<div>작성일</div>
 							</div>
-							
-							<c:forEach begin="1" end="10" varStatus="status">
-							    <c:set var="dataVo" value="${status.index <= dataVoList.size() ? dataVoList[status.index - 1] : null}" />
-							    <div class="dataList" onclick="goDetail(${dataVo.dataNo})">
-							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.categoryName}
-							            </c:if>
-							        </div>
-							        <div class="bbr" style="padding-left: 70px;">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.title}
-							            </c:if>
-							        </div>
-							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                (총 ${dataVo.fileCnt}개) ${dataVo.firstFile} 
-							            </c:if>
-							        </div>
-							        <div class="bbr"style="padding-left: 70px;">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.writerName}(${dataVo.writerTeam})
-							            </c:if>
-							        </div>
-							        <div class="bbr">
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.hit}
-							            </c:if>
-							        </div>
-							        <div>
-							            <c:if test="${not empty dataVo}">
-							                ${dataVo.enrollDate}
-							            </c:if>
-							        </div>
-							    </div>
-							</c:forEach>
-							<c:set var="endPage" value="${dataVoList.size() + 1}" />
-							<c:set var="endPage" value="${endPage / 10 + 1}" />
-							 <div id="data-page-area">
-				            	<c:if test="${dataRoomListPv.currentPage > 1}">
-					            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}">이전</a>
-				            	</c:if>
-					            	<c:forEach begin="${dataRoomListPv.startPage}" end="${endPage}" step="1" var="i">
-
-					            		<c:if test="${dataRoomListPv.currentPage != i}">
-							            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${i}">${i}</a>
-					            		</c:if>
-					            		<c:if test="${dataRoomListPv.currentPage == i}">
-							            	<a >${i}</a>
-					            		</c:if>
-					            	</c:forEach>
-					            <c:if test="${dataRoomListPv.currentPage < dataRoomListPv.maxPage}">
-					            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}">다음</a>
-					            </c:if>
-				            </div>
-
+							<c:if test="${not empty dataVoList}">
+								<c:forEach begin="1" end="10" varStatus="status">
+								    <c:set var="dataVo" value="${status.index <= dataVoList.size() ? dataVoList[status.index - 1] : null}" />
+								    <div class="dataList" onclick="goDetail(${dataVo.dataNo})">
+								        <div class="bbr">
+								            <c:if test="${not empty dataVo}">
+								                ${dataVo.categoryName}
+								            </c:if>
+								        </div>
+								        <div class="bbr" style="padding-left: 70px;">
+								            <c:if test="${not empty dataVo}">
+								                ${dataVo.title}
+								            </c:if>
+								        </div>
+								        <div class="bbr">
+								            <c:if test="${not empty dataVo}">
+								                (총 ${dataVo.fileCnt}개) ${dataVo.firstFile} 
+								            </c:if>
+								        </div>
+								        <div class="bbr"style="padding-left: 70px;">
+								            <c:if test="${not empty dataVo}">
+								                ${dataVo.writerName}(${dataVo.writerTeam})
+								            </c:if>
+								        </div>
+								        <div class="bbr">
+								            <c:if test="${not empty dataVo}">
+								                ${dataVo.hit}
+								            </c:if>
+								        </div>
+								        <div>
+								            <c:if test="${not empty dataVo}">
+								                ${dataVo.enrollDate}
+								            </c:if>
+								        </div>
+								    </div>
+								</c:forEach>
+								<c:set var="endPage" value="${dataVoList.size() + 1}" />
+								<c:set var="endPage" value="${endPage / 10 + 1}" />
+								 <div id="data-page-area">
+					            	<c:if test="${dataRoomListPv.currentPage > 1}">
+						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}">이전</a>
+					            	</c:if>
+						            	<c:forEach begin="${dataRoomListPv.startPage}" end="${endPage}" step="1" var="i">
+	
+						            		<c:if test="${dataRoomListPv.currentPage != i}">
+								            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${i}">${i}</a>
+						            		</c:if>
+						            		<c:if test="${dataRoomListPv.currentPage == i}">
+								            	<a >${i}</a>
+						            		</c:if>
+						            	</c:forEach>
+						            <c:if test="${dataRoomListPv.currentPage < dataRoomListPv.maxPage}">
+						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}">다음</a>
+						            </c:if>
+					            </div>
+							</c:if>
 
 						</div>
 						

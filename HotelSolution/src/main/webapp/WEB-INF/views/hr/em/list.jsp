@@ -61,6 +61,7 @@
    		 border: 1px solid #3B444B;
         border-radius: 20px;
         padding:20px;
+        overflow: auto;
    	}
   
     .main-container{
@@ -97,7 +98,7 @@
 	    height: 360px;
 	    background-color: #ffffff;
 	}
-	.dataListTop{
+	.memberListTop{
 		display:grid;
 		grid-template-columns: 2fr 3fr 2fr 4fr 4fr 5fr;
 		border: 1px solid #3b444b;	
@@ -107,7 +108,7 @@
 		font-size: 20px;
 		color: white;
 	}
-	.dataListTop > div{
+	.memberListTop > div{
 		width:100%;
 		height:100%;
 		
@@ -115,25 +116,7 @@
 		padding-top: 15px;
 		box-sizing: border-box;
 	}
-	.dataList{
-		display:grid;
-		grid-template-columns:  2fr 3fr 2fr 4fr 4fr 5fr;
-		border: 1px solid #3b444b;
-		box-sizing: border-box;
 	
-	}
-	.dataList > div{
-		width:100%;
-		height:100%;
-		padding-top: 20px;
-		padding-left: 20px;
-		padding-right: 20px;
-		box-sizing: border-box;
-		white-space: nowrap; /* 한 줄로 텍스트 표시 */
-	    overflow: hidden; /* 넘치는 텍스트 숨김 */
-	    text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
-	    
-	}
 	.bbr{
 		/*border-right: 1px solid #3b444b;*/
 		white-space: nowrap; /* 한 줄로 텍스트 표시 */
@@ -148,7 +131,7 @@
 	    text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
 	    margin-left: 10px;
 	}
-	#data-page-area{
+	#page-area{
    		margin :auto;
    	 	width: 400px;
     	text-align: center;
@@ -173,9 +156,7 @@
      	cursor: pointer;
      	padding-top: 20px;	
      }
-     .dataList:hover {
-        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
-    }
+  
     .accept{
     	cursor: pointer;
     }
@@ -206,7 +187,7 @@
     	
 		text-align: center;
 		box-sizing: border-box;
-    
+    	overflow: auto;
     }
     .main {
     width: 100%;
@@ -260,7 +241,7 @@
 					        		<div class="ttc">검색</a></div>
 			        		</div>
 			        		
-				        	<div class="dataListTop">
+				        	<div class="memberListTop">
 								<div class="bbrt">부서</div>
 								<div class="bbrt">직책</div>
 								<div class="bbrt">이름</div>
@@ -303,23 +284,20 @@
 							        </div>
 							    </div>
 							</c:forEach>
-							<c:set var="endPage" value="${dataVoList.size() + 1}" />
-							<c:set var="endPage" value="${endPage / 10 + 1}" />
-							 <div id="data-page-area">
-				            	<c:if test="${dataRoomListPv.currentPage > 1}">
-					            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}">이전</a>
+							 <div id="page-area">
+				            	<c:if test="${pv.currentPage > 1}">
+					            	<a  href="${root}/hr/em/list?memberListpagee=${pv.currentPage - 1}">이전</a>
 				            	</c:if>
-					            	<c:forEach begin="${dataRoomListPv.startPage}" end="${endPage}" step="1" var="i">
-
-					            		<c:if test="${dataRoomListPv.currentPage != i}">
-							            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${i}">${i}</a>
+					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
+					            		<c:if test="${pv.currentPage != i}">
+							            	<a  href="${root}/hr/em/list?memberListpage=${i}">${i}</a>
 					            		</c:if>
-					            		<c:if test="${dataRoomListPv.currentPage == i}">
+					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${dataRoomListPv.currentPage < dataRoomListPv.maxPage}">
-					            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}">다음</a>
+					            <c:if test="${pv.currentPage < pv.maxPage}">
+					            	<a  href="${root}/hr/em/list?memberListpage=${pv.currentPage + 1}">다음</a>
 					            </c:if>
 				            </div>
 
@@ -339,6 +317,7 @@
 </div>
 </body>
 <script type="text/javascript">
+	function getMember() {
 		$.ajax({
 		    url: "${root}/hr/em/new",
 		    method: "GET",
@@ -370,36 +349,21 @@
 		        console.log(e);
 		    },
 		});
+	}
+		
 
 	
 	
 	function acceptMember(memberNo) {
 		$.ajax({
 		    url: "${root}/hr/em/new",
-		    method: "GET",
-		    data: {},
+		    method: "POST",
+		    data: {memberNo : memberNo},
 		    dataType: "json",
 		    success: function (x) {
-		        console.log(x);
-		
-		        const tbody = document.querySelector(".newMemberListWrap");
-		        let str = `
-		            <div class="tt">새로 가입한 멤버</div>
-		            <div class="newMemberListTop">
-		                <div>이름</div>
-		                <div>승인</div>
-		            </div>
-		        `;
+		    	
 
-		        for (let i = 0; i < x.length; i++) {
-		
-		            str += '<div class="newMemberList">' +
-		                '<div>' + x[i].name + '</div>' +
-		                '<div class="accept" onclick="acceptMember(' + x[i].no + ')">승인</div>' +
-		                '</div>';
-		        }
-		
-		        tbody.innerHTML = str;
+		        location.reload();
 		    },
 		    error: function (e) {
 		        console.log(e);
@@ -407,6 +371,7 @@
 		});
 	}
 
+	getMember();
 </script>
  
 </html>

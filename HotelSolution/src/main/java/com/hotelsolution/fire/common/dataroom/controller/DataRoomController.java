@@ -112,15 +112,21 @@ public class DataRoomController {
 		}
 		int currentPage = Integer.parseInt(dataRoomListPage);
 		
-		int pageLimit = 5;
 		int boardLimit = 10;
-		
+		int pageLimit = 0;
+		int temp = listCount/boardLimit +1;
+		if(temp<5) {
+			pageLimit = temp;
+		}else {
+			pageLimit=5;
+		}
 		PageVo dataRoomListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 	
 		model.addAttribute("dataRoomListPv",dataRoomListPv);
-		System.out.println("1111리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
 		List<DataRoomVo> dataVoList = service.getDataRoomList(categoryNo, dataRoomListPv); 
-		System.out.println(dataVoList+"2222리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
+		if(dataVoList ==null) {
+			dataVoList.get(0).setCategoryName("개인"); 
+			}
 		model.addAttribute("dataVoList" , dataVoList);
 		model.addAttribute("categoryNo" , categoryNo);
 	}

@@ -59,11 +59,17 @@
   	
 	</select>
 	
-		<select id="getMemberCnt" resultType="int">
+	<select id="getMemberCnt" resultType="int">
 	  	SELECT COUNT(NO)
 	  	FROM member
 	  	WHERE STATUS = 1
-	  	</select>
+  	</select>
+  	
+  	<update id="acceptNewMember">
+  		UPDATE member
+		SET status = 1
+		WHERE no = #{no}
+  	</update>
 
 
 
