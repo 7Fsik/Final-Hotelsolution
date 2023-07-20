@@ -1,0 +1,33 @@
+.main {
+    width: 100%;
+    height: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    background-color: #dedede;
+    display: flex;
+}
+
+.mail-success-container{
+    margin-left: 40px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 1300px;
+    height: 850px;
+    background-color: #ffffff;
+    border-radius: 30px;
+    font-size: 20px;
+}
+
+.mail-success-btn-list{
+    margin-top: 50px;
+}
+
+.mail-write-btn{
+    margin-left: 20px;
+}

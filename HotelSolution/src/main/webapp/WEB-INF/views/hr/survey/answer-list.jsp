@@ -57,15 +57,7 @@
        
         border-bottom: 1px solid #3B444B;
     }
-    .surveyTitleInput{
-        place-items: center; 
-        font-size: 40px;
-    }
-    .question{
-    	text-align:left;
-        margin-left: 10%;
-        font-size: 20px;
-    }
+
     .questionInput{
     	margin-top: 2%;
         width: 70%;
@@ -123,9 +115,9 @@
     .titleList{
     	text-align:left;
         padding-left: 35px;
-       
+       padding-top:10px;
         width: 100%;
-        height: 90%;
+        height: 100%;
         font-size: 20px;
         border-bottom: 1px solid #3B444B;
         cursor: pointer;
@@ -148,7 +140,7 @@
     text-align: center;
     }
     .searchInput{
-    	border-bottom: 1px solid black;
+    	border-bottom: 1px solid #3b444b;
     }
     .main-container{
 	    width: 100%;
@@ -188,7 +180,7 @@
 	  .tableDiv{
 	  	border-collapse: separate;
    	 border-spacing: 0;
-    	border: 1px solid black;
+    	border: 1px solid #3b444b;
         padding: 22px;
         box-sizing: border-box;
         text-align: left;
@@ -258,7 +250,7 @@
 	.ansDiv{
 		border-collapse: separate;
    		 border-spacing: 0;
-    	border-bottom: 1px solid black;
+    	border-bottom: 1px solid #3b444b;
         padding: 22px;
         box-sizing: border-box;
         text-align: left;
@@ -281,18 +273,36 @@
      a{
    	width: 50px;
    }
+    .titleList:hover {
+        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    }
+      .ansDiv:hover {
+        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    }
+     .main {
+    width: 100%;
+    height: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    background-color: #dedede;
+    display: flex;
+} 
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
-		
+<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-		<div class="main-container">
-			<aside class="main-aside">
-				<div class="profile-box"></div>
-				<div class="main-aside-empty"></div>
-				<div class="team-menu-bar"></div>
-			</aside>
+	<div id="wrap">
+
+	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+	
+	  <main>
+	    <div class="main-container">
+	      
+	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 			<div class="hrBody">
 	    <div class="hrWrap">
 	        <div class="detailHrSurveyWrap">
@@ -414,7 +424,11 @@
 			        </div>
 			    </div>
 		    </div>
-		</div>
+	      
+	    </div>
+	  </main>
+
+</div>
 	
 </body>
 <script>
@@ -437,3 +451,4 @@ function goSurveyResultDetailByOne(questionNo, answerer) {
 }*/
 </script>
 </html>
+	

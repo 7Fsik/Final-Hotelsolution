@@ -49,7 +49,7 @@
         font-size: 20px;
         display:flex;
         margin-bottom:40px;
-        justify-content:space-evenly;
+        justify-content:center;
         margin-top: 70px;
     }
     
@@ -101,7 +101,7 @@
 	#detail{
 		display : flex;
 		margin-top:32px;
-		justify-content:center;
+		justify-content:space-evenly;
 		font-weight: 700;
 		letter-spacing: -.6px;
 		margin-left:10px;

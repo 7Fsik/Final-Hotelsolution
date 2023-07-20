@@ -1,0 +1,47 @@
+.main {
+    width: 100%;
+    height: 100%;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    background-color: #dedede;
+    display: flex;
+}
+
+.writer-container{
+    width: 1200px;
+    height: 80px;
+    margin-left: 40px;
+    margin-top: 20px;
+    border-bottom: 1px solid black;
+}
+
+.detail-container{
+    width: 1200px;
+    height: 600px;
+    margin-left: 40px;
+}
+
+.detail-title{
+    font-size: 20px;
+}
+
+.main-content-wrap{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.titleAndWriterDate{
+    display: flex;
+    justify-content: space-between;
+}
+.comment-box{
+    width: 1200px;
+    height: 200px;
+    margin-left: 40px;
+}

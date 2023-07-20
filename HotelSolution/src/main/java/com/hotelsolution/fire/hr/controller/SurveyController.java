@@ -1,6 +1,5 @@
 package com.hotelsolution.fire.hr.controller;
 
-import java.lang.ProcessHandle.Info;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,14 +9,11 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.SurveyService;
-import com.hotelsolution.fire.hr.service.SurveyServiceImpl;
 import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
 import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
@@ -40,9 +36,14 @@ public class SurveyController {
 			titleListpage = "1";
 		}
 		int currentPage = Integer.parseInt(titleListpage);
-		System.out.println(currentPage);
-		int pageLimit = 5;
 		int boardLimit = 7;
+		int pageLimit = 0;
+		int temp = listCount/boardLimit +1;
+		if(temp<5) {
+			pageLimit = temp;
+		}else {
+			pageLimit=5;
+		}
 		
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		List<SurveyDocVo> titleList =  service.titleList(pv);
@@ -100,8 +101,14 @@ public class SurveyController {
 		}
 		int currentPage = Integer.parseInt(answerListpage);
 		
-		int pageLimit = 5;
 		int boardLimit = 7;
+		int pageLimit = 0;
+		int temp = listCount/boardLimit +1;
+		if(temp<5) {
+			pageLimit = temp;
+		}else {
+			pageLimit=5;
+		}
 		PageVo answerListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		model.addAttribute("answerListPv",answerListPv);
 		//질문 답변 질문별로 가져오기
@@ -111,7 +118,6 @@ public class SurveyController {
 		    answerLists.add(answerList);
 		}
 		model.addAttribute("answerLists", answerLists);
-		System.out.println(answerLists);
 	
 		return "hr/survey/answer-list";
 		
@@ -135,7 +141,6 @@ public class SurveyController {
 		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
 		for (SurveyQuestionVo vo : list) {
 		    List<SurveyAnswerVo> answerList = service.answerByOneQuestionByUser(vo.getNo(), answerer);
-		    log.info(answerList.toString());
 		    answerLists.add(answerList);
 		}
 		
@@ -157,10 +162,17 @@ public class SurveyController {
 			detailListpage = "1";
 		}
 		int currentPage = Integer.parseInt(detailListpage);
-		
-		int pageLimit = 5;
 		int boardLimit = 1;
-		
+		int pageLimit = 1;
+		int temp = Integer.parseInt(sdvo.getNo());
+		if(temp ==0) {
+			pageLimit = 1;
+		}
+		else if(temp<5) {
+			pageLimit = temp;
+		}else {
+			pageLimit=5;
+		}
 		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 	
 		model.addAttribute("detailListPv",detailListPv);

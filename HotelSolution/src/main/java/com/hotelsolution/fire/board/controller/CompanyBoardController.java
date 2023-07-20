@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +38,7 @@ public class CompanyBoardController {
     }
     @GetMapping("post")
     public String showWriteForm( Model model) {
-        List<CompanyBoardCategoryVo> categoryList = new ArrayList<>();
-
-        categoryList = boardService.getCategoryList();
+        List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
 
         model.addAttribute("categoryList",categoryList);
 
@@ -48,10 +47,16 @@ public class CompanyBoardController {
     }
 
     @PostMapping("post")
-    public String writePost(){
+    public String writePostByNo(CompanyBoardVo companyBoardVo){
+
         return "김치 먹자";
     }
 
+    @GetMapping("detail")
+    public String showDetailBoardByNo(){
+
+        return "companyBoard/detail";
+    }
 
 
 

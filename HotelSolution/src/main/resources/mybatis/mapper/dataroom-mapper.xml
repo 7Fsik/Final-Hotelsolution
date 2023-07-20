@@ -5,24 +5,39 @@
 <mapper namespace="dataroom">
 
 	<select id="getDataRoomList" resultType="DataRoomVo">
-	    SELECT (
-	    	DATA_NO
-			,WRITER_NO
-			,CATEGORY_NO
-			,SECURITY_LEVEL
-			,TITLE
-			,CONTENT
-			,ENROLL_DATE
-			,HIT
-			,DELETE_YN
-	    ) 
-	    FROM DATAROOM
-	    WHERE CATEGORY_NO = #{no}
-	    AND DELETE_YN = 'N'
+		
+		 SELECT
+		    D.DATA_NO,
+		    MAX(D.WRITER_NO) AS WRITER_NO,
+		    MAX(D.CATEGORY_NO) AS CATEGORY_NO,
+		    MAX(D.SECURITY_LEVEL) AS SECURITY_LEVEL,
+		    MAX(D.TITLE) AS TITLE,
+		    MAX(D.CONTENT) AS CONTENT,
+		    MAX(D.ENROLL_DATE) AS ENROLL_DATE,
+		    MAX(D.HIT) AS HIT,
+		    MAX(D.DELETE_YN) AS DELETE_YN,
+		    MAX(U.NAME) AS WRITERNAME,
+		    MAX(U.TEAM_NO) AS TEAM_NO,
+		    MAX(T.TEAM_NAME) AS WRITERTEAM,
+		    MAX(DF.FILE_NAME) AS FIRSTFILE,
+		    MAX(DC.NAME) AS CATEGORYNAME,
+		     MAX(P.NAME) AS securityLevelName,
+		    COUNT(*) AS FILECNT
+		FROM DATAROOM D
+		JOIN MEMBER U ON D.WRITER_NO = U.NO
+		JOIN TEAM T ON U.TEAM_NO = T.TEAM_NO
+		JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
+		JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
+		JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
+		WHERE D.CATEGORY_NO = #{categoryNo}
+		AND D.DELETE_YN = 'N'
+		GROUP BY D.DATA_NO
+		ORDER BY D.DATA_NO DESC
+
 	</select>
 	
 	<insert id="writeDataroom">
-	    INSERT INTO SCHEDULE (
+	    INSERT INTO DATAROOM (
 	      	DATA_NO
 			,WRITER_NO
 			,CATEGORY_NO
@@ -33,11 +48,88 @@
 	    )
 	    VALUES (
 	        SEQ_DATAROOM_NO.NEXTVAL
-	        ,#{loginMember.no}
-	        ,#{drv.categoryNo}
-	        ,#{drv.securityLevel}
-	        ,#{drv.title}
-	        ,#{drv.content}
+	        ,#{writerNo}
+	        ,#{categoryNo}
+	        ,#{securityLevel}
+	        ,#{title}
+	        ,#{content}
 	    )
 	</insert>
+	
+	<insert id="writeDataRoomFile">
+	    INSERT INTO DATAROOM_FILE (
+	      	NO
+			,DATA_NO
+			,FILE_NAME
+			,CHANGE_NAME
+			,FILE_EXPLAIN
+			
+	    )
+	    VALUES (
+	        SEQ_DATAROOM_FILE_NO.NEXTVAL
+	        ,SEQ_DATAROOM_NO.CURRVAL
+	        ,#{fileName}
+	        ,#{changeName}
+	        ,#{fileExplain}
+	    )
+	</insert>
+	
+	<select id="getDetailDrvo" resultType="DataRoomVo">
+	    SELECT
+		    D.DATA_NO,
+		    MAX(D.WRITER_NO) AS WRITER_NO,
+		    MAX(D.CATEGORY_NO) AS CATEGORY_NO,
+		    MAX(D.SECURITY_LEVEL) AS SECURITY_LEVEL,
+		    MAX(D.TITLE) AS TITLE,
+		    MAX(D.CONTENT) AS CONTENT,
+		    MAX(D.ENROLL_DATE) AS ENROLL_DATE,
+		    MAX(D.HIT) AS HIT,
+		    MAX(D.DELETE_YN) AS DELETE_YN,
+		    MAX(U.NAME) AS WRITERNAME,
+		    MAX(U.TEAM_NO) AS TEAM_NO,
+		    MAX(T.TEAM_NAME) AS WRITERTEAM,
+		    MAX(DF.FILE_NAME) AS FIRSTFILE,
+		    MAX(DC.NAME) AS CATEGORYNAME,
+		    MAX(P.NAME) AS securityLevelName,
+		    COUNT(*) AS FILECNT
+		FROM DATAROOM D
+		JOIN MEMBER U ON D.WRITER_NO = U.NO
+		JOIN TEAM T ON U.TEAM_NO = T.TEAM_NO
+		JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
+		JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
+		JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
+		WHERE D.DATA_NO = #{drvoNo}
+		AND D.DELETE_YN = 'N'
+		GROUP BY D.DATA_NO
+		ORDER BY D.DATA_NO DESC
+	    
+	</select>
+	
+	<select id="getDetailDrfoList" resultType="DataRoomFileVo">
+	    SELECT 
+	    	NO
+			,DATA_NO
+			,FILE_NAME
+			,CHANGE_NAME
+			,FILE_EXPLAIN
+			,ENROLL_DATE
+	    
+	    FROM DATAROOM_FILE
+	    WHERE DATA_NO = #{drvoNo}
+	</select>
+	
+	<select id="getDataRoomCnt" resultType="int">
+	  SELECT COUNT(DATA_NO)
+	  FROM DATAROOM
+	  WHERE CATEGORY_NO = #{categoryNo}
+	</select>
+	
+	<update id="increaseHit">
+  	UPDATE DATAROOM
+  		SET
+  			HIT = HIT + 1
+  		WHERE DATA_NO = #{no}
+    </update>
+	
+
 </mapper>
