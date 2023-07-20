@@ -16,7 +16,7 @@
     #approval{
         border: 1px solid white;
         width: 1200px;
-        height: 800px;
+        height: 850px;
         background-color:white;
         margin:auto;
         border-radius:10px;
@@ -39,7 +39,7 @@
     	table-layout:fixed;
     	width:100;
     	position:relative;
-    	top:50px;
+    	top:20px;
     	right:40px;
     }
     
@@ -47,7 +47,7 @@
     	border:1px solid lightgray;
     	width:20%;
     	padding:10px;
-    	height:40px;
+    	height:30px;
     }
     
     #head-right > table td{
@@ -56,6 +56,7 @@
     	padding:7px;
     	width:1%;
     	font-size:12px;
+    	font-weight:bold;
     }
     
     #head{
@@ -65,7 +66,7 @@
     
     #head-left{
     	position:relative;
-    	top:20px;
+    	top:40px;
     	left:30px;
     }
     
@@ -167,10 +168,20 @@
 
 	.table{
 		margin:auto;
-		margin-top:20px;
 		width:600px;
 		height:600px;
+		margin-top:20px;
 	}
+	
+	.setup-btn{
+		background-color:white;
+		border : 1px solid white;
+        cursor: pointer;
+	}
+
+    .setup-btn:hover{
+        background-color: lightgray;
+    }
     
 </style>
 </head>
@@ -180,7 +191,6 @@
 
         <div id="approval">
         
-        	<form action="">
         	
         		<div id ="head">
         		
@@ -192,6 +202,7 @@
         			</div>
 					
 					<div id="head-right">
+					
 						
 						<table>
                             <thead>
@@ -207,10 +218,21 @@
                                 <tbody>
 	                                <tr>
 	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                </tr>
+	                                
+	                                <tr>
+	                                	<td style="font-weight:bold;" colspan="5">참조자</td>
+	                                </tr>
+	                                
+	                               <tr>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td colspan="2"><a onclick="approvalLineWindow(); return false;">결재선 만들기</a></td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -219,6 +241,7 @@
 					
         		</div>
         		
+        	<form action="">
         		<div id="document">
         			<table class="table">
                         <thead>
@@ -276,6 +299,15 @@
     </div>
     
 	<script>
+	
+	 function approvalLineWindow(){
+         const width = 730;
+         const height = 600;
+         const left = (screen.width/2) - (width/2);
+			const top = 0;
+         const newWindow = window.open('${root}/approval/approvalLine', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', noopener');
+          newWindow.focus();
+     }
 
 	
 	</script>

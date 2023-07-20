@@ -142,15 +142,12 @@
 
     <div id="wrap">
     	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<%@ include file="/WEB-INF/views/common/aside.jsp" %>
-		
-		<main>
-			<div class="main-container">
-				<aside class="main-aside">
-					<div class="profile-box"></div>
-					<div class="main-aside-empty"></div>
-					<div class="team-menu-bar"></div>
-				</aside>
+  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+
+  <main>
+    <div class="main-container">
+      
+      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
         <div id="approval">
         
         		

@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"><head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link rel="stylesheet" href="${root}/resources/css/common/home.css">
 <style>
     body{
         margin: 0;
@@ -22,19 +23,20 @@
         border-radius:10px;
     }
     
-    a{
+    #approval a{
     	text-decoration:none;
         color: black;
     }
     
-    a:hover{
+    #approval a:hover{
     	color: rgb(173,180,218);
     }
     
-    h1{
+    #approval h1{
     	position:relative;
     	left:60px;
     	margin-top:15px;
+    	font-size:1.5em;
     }
     
     hr{
@@ -62,12 +64,7 @@
     	
     }
     
-    .bi bi-clipboard-minus-fill{
-    	width:30px;
-    	height:30px;
-    }
-    
-    img{
+    .list-title img{
     	width:30px;
     	height:30px;
     	margin-left:30px;
@@ -83,7 +80,7 @@
     
     .list-title{
     	display:grid;
-    	grid-template-columns:1fr 1fr 1fr;
+    	grid-template-columns:0.5fr 1fr 1fr 1fr;
     	align-items:center;
     }
     
@@ -110,6 +107,14 @@
 <body>
 
     <div id="wrap">
+    
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
+  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+
+  <main>
+    <div class="main-container">
+      
+      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 
         <div id="approval">
         
@@ -222,8 +227,12 @@
 					<a style="color:#d9d9d9ed" href="#">>></a>
 				</div>
 
-        </div>
+       		 </div>
+			</div>
+    
 
+
+		</main>
     </div>
 
 	<script>

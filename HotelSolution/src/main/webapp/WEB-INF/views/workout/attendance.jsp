@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link rel="stylesheet" href="${root}/resources/css/common/home.css">
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <style>
     body{
@@ -17,14 +19,15 @@
     
     #menu{
     	display:grid;
-    	grid-gap:20px;
     	justify-content:center;
+    	margin-top : 25px;
+    	grid-template-rows: 1fr 1fr 1fr;
     }
 
     .menu-bar{
 
         width: 800px;
-        height: 230px;
+        height: 250px;
         border: 1px solid white;
         border-radius: 10px;
         background-color: white;
@@ -34,9 +37,10 @@
     	display:grid;
     	grid-template-rows: 1fr 1fr;
     	width:350px;
-    	height:150px;
+    	height:180px;
     	position:relative;
     	left:20px;
+    	top:20px;
     }
     
     .clock{
@@ -53,6 +57,8 @@
     
     .time{
     	font-size:2.5em;
+    	position:relative;
+    	top:23px;
     }
     
     .menu-img{
@@ -64,7 +70,7 @@
     	width:350px;
     	height:230px;
     	position:absolute;
-    	top:1px;
+    	top:100px;
     }
     
     .secend-menu{
@@ -117,7 +123,10 @@
         border: 1px solid lightgray;
         border-collapse: collapse;
         width: 750px;
-       	height:160px;
+       	height:170px;
+       	position:relative;
+       	top:10px;
+       	text-align:center;
     }
 
     table > thead{
@@ -126,9 +135,16 @@
         height:35px;
     }
     
+    table > thead > tr > td{
+    	vertical-align:middle;
+    }
+    
+    tbody > tr > td{
+    	vertical-align:middle;
+    }
+    
     td{
     	letter-spacing:2px;
-    	text-align:center;
     }
     
     .table-title{
@@ -172,6 +188,14 @@
 <body>
 
 	<div id="wrap">
+	
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+
+  <main>
+    <div class="main-container">
+      
+      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
 
         <div id="menu">
             <div class="menu-bar">
@@ -262,7 +286,9 @@
             </div>
         </div>
 
-    </div>
+    	</div>
+    	</main>
+    	</div>
     
     <script>
     	

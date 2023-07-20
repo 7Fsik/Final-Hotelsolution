@@ -71,5 +71,19 @@ public class ApprovalController {
 		
 	}
 	
+	//결재선 정하기(화면)
+	@GetMapping("approvalLine")
+	public void approvalLine() {
+		
+	}
+	
 	
 }//class
+
+
+
+
+
+
+
+
