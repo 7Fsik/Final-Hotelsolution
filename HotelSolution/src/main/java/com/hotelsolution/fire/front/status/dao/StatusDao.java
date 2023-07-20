@@ -15,5 +15,7 @@ public interface StatusDao {
 	int getRoomCnt(SqlSessionTemplate sst);
 	//객실 detail
 	StatusVo getRoomByNo(SqlSessionTemplate sst, int no);
+	// 상태 수정
+	int roomStatusEdit(SqlSessionTemplate sst, StatusVo vo);
 
 }
