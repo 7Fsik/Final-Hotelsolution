@@ -27,7 +27,7 @@
 
             <div class="main-content">
                 <div class="write-btn">
-                    <button id="writeBtn" data-root="${root}">메일쓰기</button>
+                    <button id="mail-write-Btn" data-root="${root}">메일쓰기</button>
                 </div>
                 <hr class="mail-horizion">
                 <nav class="mailCntAndSearchContainer">
