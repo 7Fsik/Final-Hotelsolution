@@ -38,4 +38,9 @@ public class EmployeeManagementService {
 		return dao.acceptNewMember(sst,memberNo);
 	}
 
+	public MemberVo getDetail(String memberNo) {
+		System.out.println("서비스");
+		return dao.getDetail(sst,memberNo);
+	}
+
 }

@@ -30,4 +30,9 @@ public class EmployeeManagementDao {
 		return sst.update("member.acceptNewMember",memberNo);
 	}
 
+	public MemberVo getDetail(SqlSessionTemplate sst, String memberNo) {
+		System.out.println("dao");
+		return sst.selectOne("member.getDetail", memberNo);
+	}
+
 }

@@ -71,6 +71,7 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 			return newMemberList;
 		}
 		
+		//신규멤버 승인 포스트 매핑
 		@PostMapping("new")
 		@ResponseBody
 		public List getNewList(String memberNo) {
@@ -82,6 +83,13 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 			}else {
 				throw new RuntimeException();
 			}
+		}
+		
+		@GetMapping("getDetail")
+		public void detail(Model model, String memberNo) {
+			MemberVo vo = service.getDetail(memberNo);
+			model.addAttribute("vo", vo);
+			
 		}
 	
 	}

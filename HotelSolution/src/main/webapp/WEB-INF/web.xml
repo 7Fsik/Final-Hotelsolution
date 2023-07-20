@@ -63,4 +63,17 @@
 		<session-timeout>600</session-timeout>
 	</session-config>
  -->
+ 
+ <!-- 웹소켈 관련 코드 -->
+ <servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- 웹소켓관련 설정파일 추가-->        		 
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 </web-app>
