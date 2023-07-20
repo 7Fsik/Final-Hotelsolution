@@ -20,6 +20,7 @@ public class MemberVo {
 	//추가 
 	private String teamName;
 	private String positionName;
+	private String teamAddress;
 	
 	
 }

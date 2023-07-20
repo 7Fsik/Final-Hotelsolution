@@ -9,10 +9,10 @@
     <title>Insert title here</title>
  <style type="text/css">
 	.memberListBody{
-		width : 1300px;
-		height : 820px;
-		margin-top: 50px;
-		margin-left :20px;
+		width : 1402px;
+		height : 840px;
+		margin-top: 20px;
+		margin-left :50px;
 		margin-right: 40px;
 		overflow: scroll;
 		
@@ -21,8 +21,8 @@
 	}
 	.memberListWrap{
         display:grid;
-		width: 1260px;
-		height : 800px;
+		width: 1402px;
+		height : 840px;
         border: 0px solid #3B444B;
         border-radius: 20px;
         background-color: white;
@@ -45,7 +45,7 @@
    		
    		display:grid;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        margin : 20px auto;
+        margin-left : 20px ;
         width: 900px;
    		height:645px;
    		border: 1px solid #3B444B;
@@ -55,10 +55,10 @@
    	.newMemberListWrap{
    		display:grid;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        margin : 20px auto;
-        width: 260px;
+        margin-left: 40px;
+        width: 360px;
    		height:645px;
-   		 border: 1px solid #3B444B;
+   		border: 1px solid #3B444B;
         border-radius: 20px;
         padding:20px;
         overflow: auto;
@@ -158,7 +158,15 @@
      }
   
     .accept{
+    	margin-top: 10px;
+    	padding-top:2px;
+    	width:40px;
+    	height : 25px;
+    	border:1px solid black;
     	cursor: pointer;
+    	border-radius: 10px;	
+    	text-align: center;
+    	font-size: 15px;
     }
     .accept:hover{
     	  background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
@@ -171,8 +179,7 @@
 	    font-weight: bold;
 	    font-size: 20px;
 	    color: white;
-    	display: grid;
-    	grid-template-columns: 8fr 5fr;
+    	
     	
 		text-align: center;
 		padding-top: 12px;
@@ -183,7 +190,7 @@
 	    box-sizing: border-box;
 	    font-size: 20px;
     	display: grid;
-    	grid-template-columns: 8fr 5fr;
+    	grid-template-columns: 6fr 1fr;
     	
 		text-align: center;
 		box-sizing: border-box;
@@ -205,11 +212,19 @@
     grid-template-columns: 2fr 3fr 2fr 4fr 4fr 4fr;
     border: 1px solid #3b444b;
     box-sizing: border-box;
+    padding-top:10px;
    
 }
 .memberVoList:hover{
 	 background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
     
+}
+.ac{
+	text-align: center;
+}
+.acNamediv{
+	padding-top:10px;
+	font-size: 15px;
 }
 </style>
 </head>
@@ -328,17 +343,17 @@
 		
 		        const tbody = document.querySelector(".newMemberListWrap");
 		        let str = `
-		            <div class="ac">승인 요청</div>
+		            <div class="ac">신규 직원 등록</div>
 		            <div class="newMemberListTop">
-		                <div>이름</div>
-		                <div>승인</div>
+		                <div>직원 등록</div>
+		                
 		            </div>
 		        `;
 
 		        for (let i = 0; i < x.length; i++) {
 		
 		            str += '<div class="newMemberList">' +
-		                '<div>' + x[i].name + '</div>' +
+		                '<div class="acNamediv">' +'('+ x[i].teamName+')'+ x[i].name +' ' + x[i].positionName+ '</div>' +
 		                '<div class="accept" onclick="acceptMember(' + x[i].no + ')">승인</div>' +
 		                '</div>';
 		        }
@@ -372,6 +387,11 @@
 	}
 
 	getMember();
+	
+	function goDetail(memberNo) {
+		 window.location.href = '${root}/hr/em/getDetail?memberNo=' + memberNo ;
+		
+	}
 </script>
  
 </html>
