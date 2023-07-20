@@ -99,7 +99,7 @@
 		    TEAM t ON u.TEAM_NO = t.TEAM_NO
 		 WHERE u.NO = #{memberNo}
   	
-
+	</select>
   	<insert id="join">
   		INSERT INTO MEMBER
 	  		(NO,
@@ -114,6 +114,7 @@
 	  		#{teamNo} , #{positionNo} , #{id} ,
 	  		#{password} , #{name} , #{email} , #{image})
   	</insert>
+  	
   	
   	<select id="login">
   		
