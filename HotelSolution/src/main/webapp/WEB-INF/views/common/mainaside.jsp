@@ -42,7 +42,6 @@
       </div>
     </div>
   </div>
-  <div class="main-aside-empty"></div>
   <div class="team-menu-bar">
     <div class="team-title">프론트팀</div>
     <div class="mail-box">

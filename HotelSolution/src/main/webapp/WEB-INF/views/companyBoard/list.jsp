@@ -29,7 +29,7 @@
                 <div class="main-content-list">
                     <nav>
                         <input type="text" placeholder="검색">
-                        <button id="writeBtn" data-root="${root}">글쓰기</button>
+                        <button id="writeBtn2" data-root="${root}">글쓰기</button>
                     </nav>
                     <hr class="main-horizon-line">
 
