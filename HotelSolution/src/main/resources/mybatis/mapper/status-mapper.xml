@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="status">
+
+	<select id="selectRoomList" resultType="StatusVo">
+		
+		SELECT 
+		F.STATUS_NO
+		,S.STATUS
+		,F.ROOM_INT_NO
+		,F.TYPE_NO
+		,F.STATUS_NO
+		,F.INTRODUCE
+		,F.ROOM_NO
+		,F.IMG
+		,F.TYPE_NAME
+		,F.PRICE
+		,F.COMMON_PERSON
+		,F.MAX_PERSON
+		,F.ROOM_SIZE
+		FROM ROOM_STATUS S 
+		JOIN (SELECT 
+		I.ROOM_INT_NO
+		,I.TYPE_NO
+		,I.STATUS_NO
+		,I.INTRODUCE
+		,I.ROOM_NO
+		,I.IMG
+		,T.TYPE_NAME
+		,T.PRICE
+		,T.COMMON_PERSON
+		,T.MAX_PERSON
+		,T.ROOM_SIZE
+		FROM ROOM_INTRODUCE I
+		JOIN ROOM_TYPE T ON I.TYPE_NO = T.TYPE_NO ) F
+		ON F.STATUS_NO = S.NO
+		<where>
+			<if test="searchType == 'roomNo'">
+				F.ROOM_NO LIKE ('%'||#{searchValue}||'%')
+			</if>
+			<if test="searchType == 'statusNo'">
+				AND F.STATUS_NO LIKE ('%'||#{searchValue}||'%')
+			</if>
+			<if test="searchType == 'typeName'">
+				AND F.TYPE_NAME LIKE('%'||#{searchValue}||'%')
+			</if>
+		
+		</where>
+		
+
+	</select>
+	
+	<select id="getRoomCnt" resultType="int">
+		
+		SELECT count(ROOM_INT_NO)
+		FROM ROOM_INTRODUCE
+		
+
+	</select>
+
+	<select id="getRoomByNo" resultType="StatusVo">
+		
+		SELECT 
+		I.ROOM_INT_NO
+		,I.TYPE_NO
+		,I.STATUS_NO
+		,I.INTRODUCE
+		,I.ROOM_NO
+		,I.IMG
+		,T.TYPE_NAME
+		,T.PRICE
+		,T.COMMON_PERSON
+		,T.MAX_PERSON
+		,T.ROOM_SIZE
+		FROM ROOM_INTRODUCE I
+		JOIN ROOM_TYPE T ON I.TYPE_NO = T.TYPE_NO 
+		WHERE ROOM_INT_NO=#{no}
+		
+
+	</select>
+	
+
+
+</mapper>

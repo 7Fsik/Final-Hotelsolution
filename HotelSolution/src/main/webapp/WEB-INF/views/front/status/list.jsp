@@ -104,37 +104,52 @@
 
         <div id="search-area">
             <div id="search">
-                <select name="" id="">
-                    <option value="">방 호수</option>
-                </select>
-                
-                <input type="text">
+                <form action="/fire/front/status/list">
+                    <input type="hidden" name="page" value="1">
+                    <select name="searchType" >
+                        <option value="roomNo">방 호수</option>
+                        <option value="statusNo">객실상태</option>
+                        <option value="typeName">객실이름</option>
+                    </select>
+                    
+                    <input type="text" name="searchValue">
+                    <input type="submit" value="검색">
+                </form>
             </div>
         </div>
 
-        <div>
-            ${svList}
-        </div>
 
         <div id="list-area">
             <div id="list">
-	            <c:forEach begin="1" end="8">
-	                <div class="att">
-	                    <div class="img">
+                <c:forEach items="${svList}" var="svList">
+                    <div class="att" onclick="location.href='/fire/front/status/detail?no='+${svList.roomIntNo}">
+                    <div class="img">
 	                        <img src="/fire/static/img/front/room001.jpg">
 	                    </div>
 	                    <div>
-	                        <div class="name">방이름</div>
-	                        <div class="ho">호수</div>
+	                        <div class="name">${svList.typeName}</div>
+	                        <div class="ho">${svList.roomNo} 호</div>
 	                    </div>
                         <div class="btn">
-                            <button>객실상태 : 사용가능</button>
+                            <button>객실상태 : ${svList.status}</button>
                         </div>
 	                </div>
 				</c:forEach>
             </div>
             <div id="page-area">
-                이전 1 2 3 4 5 6 7 8 9 10 다음
+                <c:if test="${pv.currentPage >1}">
+                    <a href="/fire/front/status/list?page=1"> << </a>
+                    <a href="/fire/front/status/list?page=${pv.currentPage - 1}"> < </a>
+                </c:if>
+                
+                <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
+                    <a href="/fire/front/status/list?page= ${i}">${i}</a>
+                </c:forEach>
+                
+                <c:if test="${pv.currentPage < pv.maxPage }">
+                    <a href="/fire/front/status/list?page=${pv.maxPage}"> >> </a>            
+                    <a href="/fire/front/status/list?page=${pv.currentPage + 1}"> > </a>
+                </c:if>
             </div>
         </div>
 

@@ -94,6 +94,8 @@
         flex-direction: column;
         align-items: center;
         border-radius: 10px;
+        border: 0;
+        text-align: center;
     }
     #room-int>div{
         width: 70%;
@@ -112,15 +114,15 @@
             객실상태 상세조회
         </div>
         <div id="re">
-            <a href="">돌아가기</a>
+            <a href="#" onclick="goBack()">돌아가기</a>
         </div>
 
         <div id="int-area">
             <div class="font-25">
-                방이름
+                ${sv.typeName}
             </div>
             <div class="font-20">
-                호수
+                ${sv.roomNo} 호
             </div>
 
             <div class="img">
@@ -131,10 +133,17 @@
             </div>
             <div id="userdate-area">
                 <div class="line font-25">객실 소개</div>
-                <div id="room-int">
-                    <div>객실은 시티뷰가 보이는 저희 호텔에서 가장 깔끔한 방입니다. 연인과 머물기 좋고 힐링 하기 좋은방입니다.</div>
+                <div >
+                    <input id="room-int" type="text" value="${sv.introduce}" >
+                    
                 </div>
-                <div class="line font-25">가본 가격 : 100000원</div>
+                <div class="line font-20">기본 가격 : ${sv.price} 원</div>
+                <br>
+                <div class="line font-20">
+                    객실 상태 
+                    <input type="radio"name="status" value="1">사용가능
+                    <input type="radio"name="status" value="1">수리중
+                </div>
             </div>
             <div id="ch">
                 <button>수정하기</button>
@@ -143,6 +152,11 @@
         </div>
 
     </main>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 
 </body>
 </html>
