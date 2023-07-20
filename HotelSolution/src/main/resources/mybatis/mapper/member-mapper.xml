@@ -70,6 +70,25 @@
 		SET status = 1
 		WHERE no = #{no}
   	</update>
+  	
+  	<insert id="join">
+  		INSERT INTO MEMBER
+	  		(NO,
+	  		TEAM_NO,
+	  		POSITION_NO,
+	  		ID,
+	  		PASSWORD,
+	  		NAME,
+	  		EMAIL,
+	  		IMAGE)
+  		VALUES(SEQ_MEMBER_NO.NEXTVAL , 
+	  		#{teamNo} , #{positionNo} , #{id} ,
+	  		#{password} , #{name} , #{email} , #{image})
+  	</insert>
+  	
+  	<select id="login">
+  		
+  	</select>
 
 
 
