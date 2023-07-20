@@ -40,4 +40,9 @@ public class StatusDaoImpl implements StatusDao{
 		return sst.selectOne("status.getRoomByNo", no);
 	}
 
+	@Override
+	public int roomStatusEdit(SqlSessionTemplate sst, StatusVo vo) {
+		return sst.update("status.edit", vo);
+	}
+
 }

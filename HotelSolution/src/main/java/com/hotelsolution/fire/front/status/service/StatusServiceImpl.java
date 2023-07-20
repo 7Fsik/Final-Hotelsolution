@@ -35,4 +35,9 @@ public class StatusServiceImpl implements StatusService{
 		return sd.getRoomByNo(sst,no);
 	}
 
+	@Override
+	public int roomStatusEdit(StatusVo vo) {
+		return sd.roomStatusEdit(sst,vo);
+	}
+
 }

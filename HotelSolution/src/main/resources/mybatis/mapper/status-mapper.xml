@@ -81,6 +81,14 @@
 
 	</select>
 	
+	<update id="edit">
+	
+		UPDATE ROOM_INTRODUCE
+		SET STATUS_NO = #{statusNo}, INTRODUCE = #{introduce} , IMG = #{img}
+		WHERE ROOM_INT_NO = #{roomIntNo}
+	
+	</update>
+	
 
 
 </mapper>

@@ -39,6 +39,8 @@ public class StatusController {
 		
 		return "front/status/list";
 	}
+	
+	//객실 상태 상세조회
 	@GetMapping("detail")
 	public String roomStatusDetail(int no,Model model) {
 		
@@ -48,5 +50,19 @@ public class StatusController {
 		return "front/status/detail";
 	}
 	//////////////////////////////////////
+	
+	
+	//객실 상태 수정
+	@GetMapping("edit")
+	public String roomStatusEdit(StatusVo vo) {
+		
+		int result = ss.roomStatusEdit(vo);
+		
+		if(result != 1) {
+			throw new RuntimeException("상세조회 하다가 에러");
+		}
+		
+		return "redirect : ";
+	}
 
 }
