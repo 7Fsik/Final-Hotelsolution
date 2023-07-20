@@ -126,11 +126,7 @@
 
     /*배경*/
 
-    #wrap{
-        background-color: B9B9B9;
-        height: 100%;
-        width: 100%;
-    }
+    
 
     /*메인 사이드*/
     #main-side{
@@ -194,7 +190,12 @@
         top: 4.2%;
 
     }
-
+    #wrap{
+        background-color: rgba(185, 185, 185, 1);
+        height: 100vh;
+        width: 100vw;
+    }
+    
     
 
 
@@ -207,7 +208,7 @@
 </style>
 <body>
 	
-    <div id="wrap">
+    
 
         <!--헤더-->
         <div class="header">
@@ -311,10 +312,9 @@
 
         </div>
 
-        <div id="mainboard"></div>
 
 
-    </div>
+    
    
 
 
