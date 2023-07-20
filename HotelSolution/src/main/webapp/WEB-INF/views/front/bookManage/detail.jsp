@@ -11,9 +11,9 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #dis{
+        width: 100%;
+        height: 100%;
         background-color: white;
     }
     
@@ -92,52 +92,74 @@
         position: relative;
         right: 20px;
     }
-</style>
+    .main {
+        width: 100%;
+        height: 100%;
+    }
+
+    .main-container{
+        width: 100%;
+        height: 100%;
+        background-color: #dedede;
+        display: flex;
+    }
+    
+    </style>
 <body>
+	<div id ="wrap">
 
-<main>
+	<%@ include file="/WEB-INF/views/common/main.jsp" %>
 
-        <div id="title">
-            객실 예약 상세조회
-        </div>
-        <div id="re">
-            <a href="">돌아가기</a>
-        </div>
-
-        <div id="int-area">
-            <div class="font-25">
-                방이름
-            </div>
-            <div class="font-20">
-                호수
-            </div>
-
-            <div class="img">
-                <img src="" alt="">
-            </div>
-            <div id="userdate-area">
-                <div class="line font-25">손님 정보</div>
-                <div id="user-area" class="text-left">
-                    <div>손님이름 : </div>
-                    <div>국적 : 대한민국
+		<div id="mainboard">
+			<div id="dis">
+            
+                        <div id="title">
+                            객실 예약 상세조회
+                        </div>
+                        <div id="re">
+                            <a href="">돌아가기</a>
+                        </div>
+                
+                        <div id="int-area">
+                            <div class="font-25">
+                                방이름
+                            </div>
+                            <div class="font-20">
+                                호수
+                            </div>
+                
+                            <div class="img">
+                                <img src="" alt="">
+                            </div>
+                            <div id="userdate-area">
+                                <div class="line font-25">손님 정보</div>
+                                <div id="user-area" class="text-left">
+                                    <div>손님이름 : </div>
+                                    <div>국적 : 대한민국
+                                    </div>
+                                </div>
+                                <div id="user-area2" class="text-left">
+                                    <div>전화번호 : 010 3129 5998</div>
+                                    <div>성별 : 남</div>
+                                    <div>연령 : 24살</div>
+                                </div>
+                                <div class="line font-25">이용날짜</div>
+                                <div>시작일 : 2023-07-18</div>
+                                <div>종료일 : 2023-07-18</div>
+                            </div>
+                            <div id="ch">
+                                <input type="button" value="체크인하기">
+                            </div>
+                
+                        </div>
                     </div>
-                </div>
-                <div id="user-area2" class="text-left">
-                    <div>전화번호 : 010 3129 5998</div>
-                    <div>성별 : 남</div>
-                    <div>연령 : 24살</div>
-                </div>
-                <div class="line font-25">이용날짜</div>
-                <div>시작일 : 2023-07-18</div>
-                <div>종료일 : 2023-07-18</div>
-            </div>
-            <div id="ch">
-                <input type="button" value="체크인하기">
-            </div>
 
-        </div>
+		</div>
 
-    </main>
+	</div>
+        
+
+
 
 </body>
 </html>

@@ -3,7 +3,9 @@ package com.hotelsolution.fire.mail.controller;
 import com.hotelsolution.fire.mail.service.MailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -13,8 +15,11 @@ public class MailController {
 
     private final MailService mailService;
 
-    @GetMapping("list")
-    public String mailList(){
+    @GetMapping("list{page}")
+    public String allMailList(@PathVariable("page") int page , Model model){
+
+        int listcount = mailService.getAllCompanyBoardCnt();
+
         return "mail/list";
     }
 

@@ -105,6 +105,9 @@
         top: 55%;
         left: 60%;
     }
+    form{
+        display: contents;
+    }
 </style>
 <body>
 
@@ -128,27 +131,29 @@
             <div class="img">
                 <img src="" alt="">
             </div>
-            <div id="img-file">
-                <input type="file" value="사진 수정하기">
-            </div>
-            <div id="userdate-area">
-                <div class="line font-25">객실 소개</div>
-                <div >
-                    <input id="room-int" type="text" value="${sv.introduce}" >
-                    
+            <form action="/fire/front/status/edit" method="get" enctype="multipart/form-data">
+                <input type="hidden" name="roomIntNo" value="${sv.roomIntNo}">
+                <div id="img-file">
+                    <input type="file" name="img" value="사진 수정하기">
                 </div>
-                <div class="line font-20">기본 가격 : ${sv.price} 원</div>
-                <br>
-                <div class="line font-20">
-                    객실 상태 
-                    <input type="radio"name="status" value="1">사용가능
-                    <input type="radio"name="status" value="1">수리중
+                <div id="userdate-area">
+                    <div class="line font-25">객실 소개</div>
+                    <div >
+                        <input id="room-int" type="text" name="introduce" value="${sv.introduce}" >
+                        
+                    </div>
+                    <div class="line font-20">기본 가격 : ${sv.price} 원</div>
+                    <br>
+                    <div class="line font-20">
+                        객실 상태 
+                        <input type="radio"name="statusNo" value="1">사용가능
+                        <input type="radio"name="statusNo" value="2">수리중
+                    </div>
                 </div>
-            </div>
-            <div id="ch">
-                <button>수정하기</button>
-            </div>
-
+                <div id="ch">
+                    <input type="submit" value="수정하기">
+                </div>
+            </form>
         </div>
 
     </main>

@@ -16,4 +16,6 @@ public interface StatusService {
 	//객실 detail
 	StatusVo getRoomByNo(int no);
 
+	int roomStatusEdit(StatusVo vo);
+
 }

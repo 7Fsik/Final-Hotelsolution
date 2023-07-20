@@ -39,7 +39,7 @@
     	table-layout:fixed;
     	width:100;
     	position:relative;
-    	top:50px;
+    	top:20px;
     	right:40px;
     }
     
@@ -47,7 +47,7 @@
     	border:1px solid lightgray;
     	width:20%;
     	padding:10px;
-    	height:40px;
+    	height:30px;
     }
     
     #head-right > table td{
@@ -56,6 +56,7 @@
     	padding:7px;
     	width:1%;
     	font-size:12px;
+    	font-weight:bold;
     }
     
     #head{
@@ -65,7 +66,7 @@
     
     #head-left{
     	position:relative;
-    	top:20px;
+    	top:40px;
     	left:30px;
     }
     
@@ -192,6 +193,15 @@
 		justify-content:center;
 	}
 	
+	.setup-btn{
+		background-color:white;
+		border : 1px solid white;
+        cursor: pointer;
+	}
+
+    .setup-btn:hover{
+        background-color: lightgray;
+    }
     
 </style>
 </head>
@@ -200,8 +210,8 @@
     <div id="wrap">
 
         <div id="approval">
-        
         	<form action="">
+        
         	
         		<div id ="head">
         		
@@ -213,7 +223,7 @@
         			</div>
 					
 					<div id="head-right">
-						
+					
 						<table>
                             <thead>
                                 <tr>
@@ -225,20 +235,32 @@
                                 </tr>
                             </thead>
                                 
-                                <tbody>
+                               <tbody>
 	                                <tr>
 	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                </tr>
+	                                
+	                                <tr>
+	                                	<td style="font-weight:bold;" colspan="5">참조자</td>
+	                                </tr>
+	                                
+	                                <tr>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td colspan="2" onclick="approvalLineWindow(); return false;">결재선 만들기</td>
 	                                </tr>
                                 </tbody>
                         </table>
 						
 					</div>
-					
         		</div>
+        		
+					
         		
         		<div id="document">
         			<table class="first-table" border="1">
@@ -353,6 +375,15 @@
     </div>
     
 	<script>
+	
+	 function approvalLineWindow(){
+         const width = 730;
+         const height = 600;
+         const left = (screen.width/2) - (width/2);
+			const top = 0;
+         const newWindow = window.open('${root}/approval/approvalLine', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', noopener');
+          newWindow.focus();
+     }
 
 	
 	</script>

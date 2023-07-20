@@ -22,7 +22,44 @@
 				<div class="main-content-list">
 					<div class="commute"></div>
 					<div class="calendar"></div>
-					<div class="mail"></div>
+					<div class="mail">
+						<div class="mail-container">
+							<div class="mail-box">
+								<h1>메일함</h1>
+								<nav class="nav-bar">
+									<span class="active">받은메일함</span>
+									<span>안읽은 메일함</span>
+									<span>보낸 메일함</span>
+								</nav>
+								<hr>
+
+								<!-- Table for Received Mailbox -->
+								<table class="mail-table">
+									<thead>
+									<tr>
+										<th>메일함</th>
+										<th>작성자</th>
+										<th>메일내용</th>
+									</tr>
+									</thead>
+									<tbody>
+									<!-- You can add temporary data here using JSTL later -->
+									<!-- Example row: -->
+									<tr>
+										<td>받은메일함</td>
+										<td>John Doe</td>
+										<td>Hello, this is a sample email in the Received Mailbox.</td>
+									</tr>
+									<!-- Add more rows for the Received Mailbox as needed -->
+									</tbody>
+								</table>
+
+								<!-- Add more mail sections (tables) for "안읽은메일함" and "보낸메일함" here -->
+							</div>
+						</div>
+					</div>
+
+
 					<div class="board"></div>
 				</div>
 			</div>
