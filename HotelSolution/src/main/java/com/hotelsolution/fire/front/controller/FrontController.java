@@ -19,16 +19,7 @@ public class FrontController {
 	}
 	///////////////////////////////////
 	
-	//////////////////////////객실 상태관리 
-	@GetMapping("roomStatus/list")
-	public String roomStatusList() {
-		return "front/roomStatus/list";
-	}
-	@GetMapping("roomStatus/detail")
-	public String roomStatusDetail() {
-		return "front/roomStatus/detail";
-	}
-	//////////////////////////////////////
+	
 	
 	
 	///////////////////////////////객실 이용 / 예약 관리 

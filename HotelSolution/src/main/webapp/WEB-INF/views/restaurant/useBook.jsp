@@ -101,7 +101,45 @@
         width: 30%;
         padding: 5px
     }
-    
+    .model{
+        position: fixed;
+        background-color: white;
+        z-index: 999;
+        width: 280px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        display: none;
+        border: 3px solid rgba(59, 68, 75, 1);
+        border-radius: 10px;
+        left: 25%;
+        top: 30%;
+    }
+    .model-delete{
+        position: relative;
+        left: 45%;
+    }
+    .logo{
+        
+    }
+    .int{
+        
+    }
+    .model-btn{
+        height: 15%;
+    }
+    #overlay {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        display: none;
+    }
 </style>
 <body>
 
@@ -143,8 +181,62 @@
                         <button>이용/예약</button>
                     </div>
                 </div>
+
+                <div class="model">
+                    <div class="model-delete">
+                        X
+                    </div>
+                    <div class="logo">
+                        로고이미지
+                    </div>
+                    <div class="table-num">
+                        ${i}테이블 예약
+                    </div>
+                    <div class="int">
+                        <div>
+                            손님 이름 : <input type="text">
+                        </div>
+                        <div>
+                            핸드폰 번호 : <input type="text">
+                        </div>
+                        <div>
+                            예약 인원 : <input type="text">
+                        </div>
+                        <div>
+                            예약 시간 : <input type="time">
+                        </div>
+                    </div>
+                    <div class="model-btn">
+                        <button>예약하기</button>
+                    </div>
+                </div>
             </c:forEach>
         </div>
+
+        <div id="overlay"></div>
+        
+        <script>
+            const openModals = document.querySelectorAll('.btn-area>button');
+            const closeModals = document.querySelectorAll('.model-delete');
+            const modals = document.querySelectorAll('.model');
+            const overlay = document.querySelector("#overlay");
+
+            openModals.forEach(function(openModal, index) {
+                openModal.addEventListener('click', function() {
+                    modals[index].style.display = 'flex';
+                    overlay.style.display = "block";
+                });
+            });
+					
+            closeModals.forEach(function(closeModal, index) {
+                closeModal.addEventListener('click', function() {
+                    modals[index].style.display = 'none';
+                    overlay.style.display = "none";
+                });
+            });
+
+        </script>
+
         
 
     </main>
