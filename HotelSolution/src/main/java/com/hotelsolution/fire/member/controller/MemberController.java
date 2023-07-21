@@ -1,5 +1,7 @@
 package com.hotelsolution.fire.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Service
 @RequestMapping("member")
@@ -35,10 +38,10 @@ public class MemberController {
 		int result = service.join(vo);
 		
 		if(result != 1) {
-			throw new RuntimeException("로그인 실패");
+			throw new RuntimeException("회원가입 실패");
 		}
 		
-		return "redirect:/";
+		return "redirect:/member/login";
 		
 	}//join
 	
@@ -49,10 +52,28 @@ public class MemberController {
 	}
 	
 	//로그인
+	@PostMapping("login")
+	public String login(MemberVo vo , HttpSession session) {
+		
+
+		MemberVo loginMember = service.login(vo);
+		log.info("로그인멤버 : {}" , loginMember);
+		session.setAttribute("loginMember", loginMember);
+		
+		if(loginMember == null) {
+			throw new RuntimeException("로그인 실패");
+		}
+		
+		return "redirect:/";
+		
+	}//login
+	
+	//로그인
 	
 	//비밀번호 이메일 인증(화면)
 	@GetMapping("emailAuthentication")
 	public void emailAuthentication() {
+		
 		
 	}
 	

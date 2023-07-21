@@ -9,10 +9,12 @@ import com.hotelsolution.fire.member.dao.MemberDao;
 import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class MemberServiceImpl implements MemberService{
 	
 	private final SqlSessionTemplate sst;
@@ -35,9 +37,8 @@ public class MemberServiceImpl implements MemberService{
 	//로그인
 	public MemberVo login(MemberVo vo) {
 		
-		MemberVo loginMember = null;
 
-		loginMember = dao.login(sst, vo);
+		MemberVo loginMember = dao.login(sst, vo);
 		
 		boolean isMatch = pwdEncoder.matches(vo.getPassword(), loginMember.getPassword());
 		
