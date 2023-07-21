@@ -1,7 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:set var="root" value="${pageContext.request.contextPath}" />
-
+<c:set var="searchMap" value="${map.searchMap}" />
+<c:set var="dataRoomListPv" value="${map.dataRoomListPv}" />
+<c:set var="dataVoList" value="${map.dataVoList}" />
+<c:set var="categoryNo" value="${map.categoryNo}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +14,6 @@
 	.dataroomBody{
 		width : 1300px;
 		height : 820px;
-		margin-top: 50px;
 		margin-left :20px;
 		margin-right: 40px;
 		overflow: scroll;
@@ -144,7 +146,7 @@
       .tt{
       	display:grid;
       	padding-left: 40px;
-      	grid-template-columns : 12fr 1fr 1fr 1fr 1fr;  
+      	grid-template-columns : 1fr 1fr 1fr 1fr 12fr;  
         }
      .ttt{
         margin-left: 60px; 
@@ -170,6 +172,9 @@
     background-color: #dedede;
     display: flex;
 } 
+#img1{
+	height:20px;
+}
 </style>
 </head>
 <body>
@@ -194,17 +199,32 @@
 			        	<div class="listWrap">
 			        		<div class="tt">
 			        				
-			        				<div></div>
 			        				<div class="ttc">
 									    <a href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">부서</a>
 									</div>
 					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
 					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
 					        		<div class="ttc"><a href="${root}/dataroom/write">글작성</a></div>
+		        					  <form action="${root}/dataroom/list" method="get"" style="margin-left: 500px;">
+							                <input type="hidden" value="1" name="page">
+							                    <select name="searchType" id="opt" >
+							                        <option value="title" >제목</option>
+							                        <option value="writerName" >작성자</option>
+							                        <option value="writerTeam" >작성부서</option>
+							                        <option value="securityLevelName" >보안등급</option>
+							                        
+							                    </select>
+							                    
+							               
+							                    <input class = "searchValueElem " id="searchValue" type = "text" name = "searchValue" value = "${searchVo.searchValue}" placeholder="검색할 내용">
+							                    
+							                     <input type="image" id="img1" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" />
+							            </form>
+	               						
 			        		</div>
 			        		
 				        	<div class="dataListTop">
-								<div class="bbrt">카테고리</div>
+								<div class="bbrt"></div>
 								<div class="bbrt">제목</div>
 								<div class="bbrt">첨부파일</div>
 								<div class="bbrt">작성자</div>
@@ -247,7 +267,7 @@
 								        </div>
 								    </div>
 								</c:forEach>
-								<c:set var="endPage" value="${dataVoList.size() + 1}" />
+								<c:set var="endPage" value="${dataVoList.size() - 1}" />
 								<c:set var="endPage" value="${endPage / 10 + 1}" />
 								 <div id="data-page-area">
 					            	<c:if test="${dataRoomListPv.currentPage > 1}">

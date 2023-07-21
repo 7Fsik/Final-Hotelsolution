@@ -4,9 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dataroom">
 
-	<select id="getDataRoomList" resultType="DataRoomVo">
-		
-		 SELECT
+	<select id="getDataRoomList" resultType="DataRoomVo" parameterType="java.util.Map">
+	
+		  SELECT
 		    D.DATA_NO,
 		    MAX(D.WRITER_NO) AS WRITER_NO,
 		    MAX(D.CATEGORY_NO) AS CATEGORY_NO,
@@ -21,20 +21,39 @@
 		    MAX(T.TEAM_NAME) AS WRITERTEAM,
 		    MAX(DF.FILE_NAME) AS FIRSTFILE,
 		    MAX(DC.NAME) AS CATEGORYNAME,
-		     MAX(P.NAME) AS securityLevelName,
+		    MAX(P.NAME) AS securityLevelName,
 		    COUNT(*) AS FILECNT
-		FROM DATAROOM D
-		JOIN MEMBER U ON D.WRITER_NO = U.NO
-		JOIN TEAM T ON U.TEAM_NO = T.TEAM_NO
-		JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
-		JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
-		JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
-		WHERE D.CATEGORY_NO = #{categoryNo}
-		AND D.DELETE_YN = 'N'
-		GROUP BY D.DATA_NO
-		ORDER BY D.DATA_NO DESC
+		  FROM DATAROOM D
+		  JOIN MEMBER U ON D.WRITER_NO = U.NO
+		  JOIN TEAM T ON U.TEAM_NO = T.TEAM_NO
+		  JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
+		  JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
+		  JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
+		  WHERE D.CATEGORY_NO = #{categoryNo}
+		  AND D.DELETE_YN = 'N'
+		  <if test="searchType == 'title'">
+		    AND TITLE LIKE ('%'|| #{searchValue}|| '%')
 
+		  </if>
+		   <if test="searchType == 'writerName'">
+		    AND U.NAME LIKE ('%'|| #{searchValue}|| '%')
+
+		  </if>
+		   <if test="searchType == 'writerTeam'">
+		    AND T.TEAM_NAME LIKE ('%'|| #{searchValue}|| '%')
+
+		  </if>
+		  
+		  <if test="searchType == 'securityLevelName'">
+		    AND P.NAME LIKE ('%'|| #{searchValue}|| '%')
+
+		  </if>
+		  
+		  GROUP BY D.DATA_NO
+		  ORDER BY D.DATA_NO DESC
+	
 	</select>
+
 	
 	<insert id="writeDataroom">
 	    INSERT INTO DATAROOM (

@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.common.dataroom.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -10,7 +11,6 @@ import com.hotelsolution.fire.common.page.vo.PageVo;
 
 public interface DataRoomDao {
 
-	List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, String categoryNo, PageVo dataRoomListPv);
 
 	int write(SqlSessionTemplate sst, DataRoomVo drvo, List<DataRoomFileVo> drfvoList);
 
@@ -21,5 +21,7 @@ public interface DataRoomDao {
 	int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo);
 
 	int increaseHit(SqlSessionTemplate sst, String drvoNo);
+
+	List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, Map<String, Object> map);
 
 }

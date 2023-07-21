@@ -10,12 +10,10 @@
 <title>Insert title here</title>
 <style type="text/css">
 	.hrBody{
-		width : 1400px;
-		height : 820px;
-		margin-top: 50px;
-		margin-left :20px;
+		width : 100%;
+		height : 100%;
 		margin-right: 40px;
-		overflow: scroll;
+		overflow: scroll;	
 		
 		
 	}
@@ -35,7 +33,7 @@
 		margin-bottom:1vh;
         margin-left: 1vw;
         margin-right: 1vw;
-		width: 950px;
+		width: 900px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
@@ -105,7 +103,7 @@
 		margin-bottom:20px;
         margin-left: 10px;
         margin-right: 20px;
-		width: 370px;
+		width: 350px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;

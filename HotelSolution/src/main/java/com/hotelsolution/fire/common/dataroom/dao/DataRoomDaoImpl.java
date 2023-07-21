@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.common.dataroom.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,9 +16,12 @@ import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
 public class DataRoomDaoImpl implements DataRoomDao {
 
 	@Override
-	public List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, String categoryNo, PageVo dataRoomListPv) {
+	public List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, Map<String, Object> map) {
+		PageVo dataRoomListPv = (PageVo) map.get("dataRoomListPv");
 		RowBounds rb = new RowBounds(dataRoomListPv.getOffset(), dataRoomListPv.getBoardLimit());
-		return sst.selectList("dataroom.getDataRoomList", categoryNo, rb);
+		System.out.println(dataRoomListPv);
+		System.out.println(map);
+		return sst.selectList("dataroom.getDataRoomList", map, rb);
 	}
 
 	@Override

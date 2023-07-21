@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatRoom">
+
+	<insert id="create" parameterType="java.util.Map">
+		    INSERT INTO CHAT_ROOM (
+		      	NO
+				,USER1_NO
+				,USER2_NO
+				,UPDATE_TIME
+				
+		    )
+		    VALUES (
+		        SEQ_CHAT_ROOM_NO.NEXTVAL
+		        ,#{user1No}
+		        ,#{user2No}
+		        ,SYSDATE
+		        
+		    )
+	</insert>
+	<select id="getCreateChatRoomVo" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo" parameterType="java.util.Map">
+		 SELECT 
+	    	NO
+			,USER1_NO AS USER1NO
+			,USER2_NO AS USER2NO
+			,UPDATE_TIME AS UPDATETIME
+	    
+	    FROM CHAT_ROOM
+	    WHERE USER1_NO = #{user1No}
+	    AND USER2_NO = #{user2No}
+	</select>
+
+	<select id="findAllRooms" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo">
+		SELECT 
+	    	NO
+			,USER1_NO AS USER1NO
+			,USER2_NO AS USER2NO
+			,UPDATE_TIME AS UPDATETIME
+	    
+	    FROM CHAT_ROOM
+	    WHERE USER1_NO = #{no}
+	    OR USER2_NO = #{no}
+	</select>
+	
+	<select id="findRoomByNo" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo">
+		SELECT 
+	    	NO
+			,USER1_NO AS USER1NO
+			,USER2_NO AS USER2NO
+			,UPDATE_TIME AS UPDATETIME
+	    
+	    FROM CHAT_ROOM
+	    WHERE NO = #{roomId}
+	</select>
+</mapper>

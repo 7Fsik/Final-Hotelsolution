@@ -9,9 +9,8 @@
 <title>Insert title here</title>
 <style type="text/css">
 	.detailWrap{
-		width: 1400px;
+		width: 1330px;
 		height:860px;
-		border: 1px solid black;
 		border-radius: 20px;
 		display:grid;
 		grid-template-rows : 1fr 2fr;	

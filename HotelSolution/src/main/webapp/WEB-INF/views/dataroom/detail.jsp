@@ -12,7 +12,6 @@
 	.dataroomBody{
 		width : 1300px;
 		height : 820px;
-		margin-top: 50px;
 		margin-left :20px;
 		margin-right: 40px;
 		overflow: scroll;

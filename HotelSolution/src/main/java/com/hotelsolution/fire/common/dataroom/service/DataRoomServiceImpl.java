@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.common.dataroom.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,9 @@ public class DataRoomServiceImpl implements DataRoomService {
 	private final SqlSessionTemplate sst;
 	
 	@Override
-	public List<DataRoomVo> getDataRoomList(String categoryNo,  PageVo dataRoomListPv) {
+	public List<DataRoomVo> getDataRoomList(Map<String, Object> map) {
 		
-		return dao.getDataRoomList(sst, categoryNo, dataRoomListPv);
+		return dao.getDataRoomList(sst,  map);
 	}
 	
 	@Override

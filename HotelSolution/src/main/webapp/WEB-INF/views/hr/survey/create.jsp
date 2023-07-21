@@ -10,11 +10,8 @@
 <title>Insert title here</title>
 <style type="text/css">
 	.hrBody{
-		width : 1400px;
-		height : 820px;
-		margin-top: 50px;
-		margin-left :20px;
-		margin-right: 40px;
+		width : 100%;
+		height : 100%;
 		overflow: scroll;
 		
 		
@@ -35,7 +32,7 @@
 		margin-bottom:1vh;
         margin-left: 1vw;
         margin-right: 1vw;
-		width: 950px;
+		width: 900px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
@@ -102,7 +99,7 @@
 		margin-bottom:20px;
         margin-left: 10px;
         margin-right: 20px;
-		width: 370px;
+		width: 350px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
@@ -242,7 +239,7 @@
 			                    <textarea readonly></textarea>
 			                </div>
 			                <div class="btn">
-			                    <button type="submit" class="button">설문지 배포</button>
+			                    <button type="submit" class="button" onclick="submitForm()">설문지 배포</button>
 			                </div>
 			            </form>
 			        </div>
@@ -298,10 +295,28 @@
  	
 </body>
 <script>
-function goAnswerList(no, title, enrollDate, titleListpage) {
-    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
-}
+	function goAnswerList(no, title, enrollDate, titleListpage) {
+	    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
+	}
     
+   
+	function validateForm() {
+	    let surveyTitleInput = document.querySelector('.surveyTitleInput');
+	    if (surveyTitleInput.value.trim() === '') {
+	        alert("제목은 입력하셔야 됩니다.");
+	        return false;
+	    }
+	    return true;
+	}
+
+// 등록하기 버튼 클릭 시 폼 유효성 검사 수행
+	function submitForm() {
+	 if (!validateForm()) {
+	    event.preventDefault();
+	    
+	  }
+	}
+
 </script>
 
 </html>
