@@ -30,6 +30,7 @@
     
     .title , .date{
     	color:#949494;
+    	font-size:18px;
     }
     
     #head-right > table{
@@ -57,6 +58,7 @@
     	width:1%;
     	font-size:12px;
     	font-weight:bold;
+    	vertical-align:middle;
     }
     
     #head{
@@ -73,6 +75,16 @@
     #document{
     	position:relative;
     	top:40px;
+    }
+    
+    #head-left > h1{
+    	font-size:25px;
+    	padding:0px 0px 10px;
+    	margin-top:10px;
+    }
+    
+    #head-left > input{
+    	font-size:18px;
     }
 
     /* #document > table > tbody > tr:last-child{
@@ -91,6 +103,8 @@
     	width:90px;
     	height:50px;
     	text-align:center;
+    	border: 1px solid lightgray;
+    	vertical-align:middle;
     }
 
     .first-table > thead > tr > td > input{
@@ -103,6 +117,8 @@
     	width:125px;
     	height:50px;
     	text-align:center;
+    	border:1px solid lightgray;
+    	vertical-align:middle;
     }
     
 	.input{
@@ -143,15 +159,35 @@
 	.first-table{
 		margin:auto;
 		margin-top:20px;
-		width:600px;
+		width:800px;
 	}
 	
 	.second-table{
 		margin:auto;
 		margin-top:20px;
-		width:600px;
-		height:300px;
+		width:800px;
+		height:450px;
 	}
+	
+	.second-table > thead > tr > td{
+    	width:90px;
+    	text-align:center;
+    	border: 1px solid lightgray;
+    	vertical-align:middle;
+    }
+    
+    .second-table > tbody > tr > td{
+    	width:125px;
+    	text-align:center;
+    	border:1px solid lightgray;
+    	vertical-align:middle;
+    }
+    
+    .second-table > thead > tr > th{
+    	text-align:center;
+    	height:30px;
+    	vertical-align:middle;
+    }
 	
 	.second-table > thead > tr > td:first-child{
 		width:250px;
@@ -187,6 +223,11 @@
 		text-align:center;
 	}
 	
+	.second-table > tbody > tr > th{
+		text-align:center;
+		vertical-align:middle;
+	}
+	
 	.last-td-content{
 		margin-top:20px;
 		display:flex;
@@ -209,6 +250,10 @@
 
     <div id="wrap">
 
+ <%@ include file="/WEB-INF/views/common/main.jsp" %>
+
+   <div id="mainboard">
+
         <div id="approval">
         	<form action="">
         
@@ -217,7 +262,7 @@
         		
         			<div id="head-left">
 						<div class="title">기안문서</div>
-						<h2>호텔 솔루션 지출결의서</h2>        
+						<h1>호텔 솔루션 지출결의서</h1>        
 						<span class="date">요청일자</span> 
 					 	 : <input type="date" class="myDate">
         			</div>
@@ -371,6 +416,10 @@
         	</form>
         		
 	    </div>
+
+
+   </div>
+		
 
     </div>
     

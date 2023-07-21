@@ -19,10 +19,11 @@
     #approval{
         border: 1px solid white;
         width: 1200px;
-        height: 700px;
+        height: 750px;
         background-color:white;
         margin:auto;
         border-radius:10px;
+        margin-top:20px
     }
     
     #approval a{
@@ -97,7 +98,7 @@
     	display:flex;
     	justify-content:center;
     	align-items:center;
-        margin-top: 20px;
+        margin-top: 50px;
     }
     #page-area > a{
 		margin:15px;
@@ -109,13 +110,11 @@
 <body>
 
     <div id="wrap">
-    	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+    
+     <%@ include file="/WEB-INF/views/common/main.jsp" %>
 
-  <main>
-    <div class="main-container">
-      
-      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
+   <div id="mainboard">
+
         <div id="approval">
         
         		
@@ -240,12 +239,13 @@
 				</div>
 
         </div>
+   
+   </div>
+    
 			</div>
     
 
 
-		</main>
-    </div>
 	<script>
 	
 	</script>

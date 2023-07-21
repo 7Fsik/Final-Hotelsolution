@@ -30,6 +30,7 @@
     
     .title , .date{
     	color:#949494;
+    	font-size:18px;
     }
     
     #head-right > table{
@@ -39,7 +40,7 @@
     	table-layout:fixed;
     	width:100;
     	position:relative;
-    	top:50px;
+    	top:20px;
     	right:40px;
     }
     
@@ -47,7 +48,7 @@
     	border:1px solid lightgray;
     	width:20%;
     	padding:10px;
-    	height:40px;
+    	height:30px;
     }
     
     #head-right > table td{
@@ -56,6 +57,8 @@
     	padding:7px;
     	width:1%;
     	font-size:12px;
+    	font-weight:bold;
+    	vertical-align:middle;
     }
     
     #head{
@@ -65,21 +68,33 @@
     
     #head-left{
     	position:relative;
-    	top:20px;
+    	top:40px;
     	left:30px;
     }
     
+      #head-left > h1{
+    	font-size:25px;
+    	padding:0px 0px 10px;
+    	margin-top:10px;
+    }
+    
+    #head-left > input{
+    	font-size:18px;
+    }
+    
+    
     #document{
     	position:relative;
-    	top:40px;
+    	top:30px;
     }
     
     #document > table{
     	border-collapse:collapse;
+    	width:700px;
     }
     
     #document > table > thead > tr > td:not(:first-child){
-        width: 500px;
+        width: 400px;
     }
     
     #document > table > thead > tr > td:first-child{
@@ -92,14 +107,18 @@
     
     #document > table > thead > tr > td{
     	border: 1px solid black;
+    	text-align:center;
+    	vertical-align:middle;
     }
     
      #document > table > tbody > tr > td{
      	border: 1px solid black;
+     	text-align:center;
+     	vertical-align:middle;
      }
-
+     
     #document td .input{
-    	width:500px;
+    	width:300px;
     	border:none;
     	text-align:center;
     	outline:none;
@@ -127,7 +146,7 @@
 
     }
     
-    textarea{
+    .table > tbody > tr > td > textarea{
     	resize:none;
     	height:90px;
     	width:500px;
@@ -167,10 +186,20 @@
 
 	.table{
 		margin:auto;
-		margin-top:20px;
 		width:600px;
 		height:600px;
+		margin-top:20px;
 	}
+	
+	.setup-btn{
+		background-color:white;
+		border : 1px solid white;
+        cursor: pointer;
+	}
+
+    .setup-btn:hover{
+        background-color: lightgray;
+    }
     
 </style>
 </head>
@@ -178,20 +207,24 @@
 
     <div id="wrap">
 
+	<%@ include file="/WEB-INF/views/common/main.jsp" %>
+
+   <div id="mainboard">
+
         <div id="approval">
         
-        	<form action="">
         	
         		<div id ="head">
         		
         			<div id="head-left">
 						<div class="title">기안문서</div>
-						<h2>호텔 솔루션 업무보고서</h2>        
+						<h1>호텔 솔루션 업무보고서</h1>        
 						<span class="date">보고일자</span> 
 					 	 : <input type="date" class="myDate">
         			</div>
 					
 					<div id="head-right">
+					
 						
 						<table>
                             <thead>
@@ -207,10 +240,21 @@
                                 <tbody>
 	                                <tr>
 	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
-	                                	<td>1</td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                </tr>
+	                                
+	                                <tr>
+	                                	<td style="font-weight:bold;" colspan="5">참조자</td>
+	                                </tr>
+	                                
+	                               <tr>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td></td>
+	                                	<td colspan="2">X</td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -219,6 +263,7 @@
 					
         		</div>
         		
+        	<form action="">
         		<div id="document">
         			<table class="table">
                         <thead>
@@ -246,7 +291,7 @@
                             
                             <tr>
                                 <td class="reason">진행상황</td>
-                               <td><textarea name="progress"></textarea></td>
+                               <td><textarea name="progress" readonly></textarea></td>
                             </tr>
 
                             <tr>
@@ -256,12 +301,8 @@
                             
                            	<tr>
                            		<td>건의사항</td>
-                                <td colspan="2"><textarea style="height:170px;" name=""></textarea>
+                                <td colspan="2"><textarea style="height:170px;" name="" readonly></textarea>
                                 
-						                <div class="submitBtn">
-							                <input type="submit" value="제출하기">
-						                </div>
-                                </td>
                            	</tr>
 
                         </tbody>
@@ -272,11 +313,14 @@
         	</form>
         		
 	    </div>
+   
+   </div>
+	
 
     </div>
     
 	<script>
-
+	
 	
 	</script>
 	
