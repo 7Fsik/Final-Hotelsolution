@@ -15,10 +15,9 @@ public class MailController {
 
     private final MailService mailService;
 
-    @GetMapping("list{page}")
-    public String allMailList(@PathVariable("page") int page , Model model){
+    @GetMapping("list")
+    public String allMailList(Model model){
 
-        int listcount = mailService.getAllCompanyBoardCnt();
 
         return "mail/list";
     }

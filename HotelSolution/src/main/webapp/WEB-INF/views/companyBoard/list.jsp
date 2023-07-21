@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +15,8 @@
 
     <div id="wrap">
 
-        <%@ include file="/WEB-INF/views/common/header.jsp" %>
-        <%@ include file="/WEB-INF/views/common/aside.jsp" %>
-
-        <main>
-            <div class="main-container">
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+        <div id="mainboard">
                 <aside class="main-aside">
                     <div class="profile-box"></div>
                     <div class="main-aside-empty"></div>
@@ -89,7 +85,6 @@
                     </div>
                 </div>
             </div>
-        </main>
 
     </div>
 
