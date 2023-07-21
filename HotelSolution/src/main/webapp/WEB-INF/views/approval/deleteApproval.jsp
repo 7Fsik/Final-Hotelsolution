@@ -141,14 +141,12 @@
 <body>
 
     <div id="wrap">
-    	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+    
+     <%@ include file="/WEB-INF/views/common/main.jsp" %>
 
-  <main>
-    <div class="main-container">
-      
-      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
-        <div id="approval">
+   <div id="mainboard">
+
+ <div id="approval">
         
         		
 					<h1>결재</h1>
@@ -286,10 +284,11 @@
 				</div>
 
 
-        		</div>
+        		</div>   
+   </div>
+    
+       
 			</div>
-		</main>
-    </div>
 	<script>
 	
 	const icon = document.querySelector('.bi-x');

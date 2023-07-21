@@ -108,13 +108,9 @@
 
     <div id="wrap">
     
-    <%@ include file="/WEB-INF/views/common/header.jsp" %>
-  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+     <%@ include file="/WEB-INF/views/common/main.jsp" %>
 
-  <main>
-    <div class="main-container">
-      
-      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
+   <div id="mainboard">
 
         <div id="approval">
         
@@ -228,12 +224,15 @@
 				</div>
 
        		 </div>
+   
+   </div>
+    
+    
+
 			</div>
     
 
 
-		</main>
-    </div>
 
 	<script>
 	

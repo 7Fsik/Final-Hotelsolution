@@ -16,7 +16,7 @@
     #approval{
         border: 1px solid white;
         width: 1200px;
-        height: 850px;
+        height: 800px;
         background-color:white;
         margin:auto;
         border-radius:10px;
@@ -30,6 +30,7 @@
     
     .title , .date{
     	color:#949494;
+    	font-size:18px;
     }
     
     #head-right > table{
@@ -57,6 +58,7 @@
     	width:1%;
     	font-size:12px;
     	font-weight:bold;
+    	vertical-align:middle;
     }
     
     #head{
@@ -70,17 +72,29 @@
     	left:30px;
     }
     
+      #head-left > h1{
+    	font-size:25px;
+    	padding:0px 0px 10px;
+    	margin-top:10px;
+    }
+    
+    #head-left > input{
+    	font-size:18px;
+    }
+    
+    
     #document{
     	position:relative;
-    	top:40px;
+    	top:30px;
     }
     
     #document > table{
     	border-collapse:collapse;
+    	width:700px;
     }
     
     #document > table > thead > tr > td:not(:first-child){
-        width: 500px;
+        width: 400px;
     }
     
     #document > table > thead > tr > td:first-child{
@@ -93,14 +107,18 @@
     
     #document > table > thead > tr > td{
     	border: 1px solid black;
+    	text-align:center;
+    	vertical-align:middle;
     }
     
      #document > table > tbody > tr > td{
      	border: 1px solid black;
+     	text-align:center;
+     	vertical-align:middle;
      }
-
+     
     #document td .input{
-    	width:500px;
+    	width:300px;
     	border:none;
     	text-align:center;
     	outline:none;
@@ -128,7 +146,7 @@
 
     }
     
-    textarea{
+    .table > tbody > tr > td > textarea{
     	resize:none;
     	height:90px;
     	width:500px;
@@ -189,6 +207,10 @@
 
     <div id="wrap">
 
+	<%@ include file="/WEB-INF/views/common/main.jsp" %>
+
+   <div id="mainboard">
+
         <div id="approval">
         
         	
@@ -196,7 +218,7 @@
         		
         			<div id="head-left">
 						<div class="title">기안문서</div>
-						<h2>호텔 솔루션 업무보고서</h2>        
+						<h1>호텔 솔루션 업무보고서</h1>        
 						<span class="date">보고일자</span> 
 					 	 : <input type="date" class="myDate">
         			</div>
@@ -295,6 +317,9 @@
         	</form>
         		
 	    </div>
+   
+   </div>
+	
 
     </div>
     
