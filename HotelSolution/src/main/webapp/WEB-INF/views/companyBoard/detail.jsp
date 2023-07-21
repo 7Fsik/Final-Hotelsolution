@@ -41,7 +41,6 @@
 
               </div>
               <div class="detail-container">
-                  게시글 쓰면 여기로와요 ㅇㅇ
               </div>
               <div class="comment-box">
                   0개의 댓글
@@ -54,7 +53,6 @@
           </div>
       </div>
     </div>
-  </main>
 
 </div>
 

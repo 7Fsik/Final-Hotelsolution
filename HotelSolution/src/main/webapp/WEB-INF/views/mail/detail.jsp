@@ -67,10 +67,8 @@
                 <textarea class="mail-detail-input"></textarea>
               </label>
             </div>
-        </div>
       </div>
     </div>
-  </main>
 </div>
 
 </body>

@@ -32,4 +32,7 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
     }
 
 
+    public int writeCompanyBoardPost(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo) {
+        return sst.insert("companyBoard.writeCompanyBoardPost",companyBoardVo);
+    }
 }

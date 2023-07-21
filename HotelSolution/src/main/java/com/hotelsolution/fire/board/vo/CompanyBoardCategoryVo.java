@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CompanyBoardCategoryVo {
 
-    private int no;
+    private int categoryNo;
     private String categoryName;
 }

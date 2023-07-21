@@ -34,5 +34,25 @@
 		from board_category
 	</select>
 
+	<insert id="writeCompanyBoardPost" parameterType="CompanyBoardVo">
+		insert into board
+		(
+			no
+			,category_no
+			,writer_no
+			,title
+			,content
+			,enroll_date)
+		values
+		(
+			seq_board_no.nextval,
+			#{categoryNo},
+			#{writerNo},
+			#{title},
+			#{content},
+			#{enrollDate}
+		)
+	</insert>
+
 
 </mapper>
