@@ -70,7 +70,7 @@ public class CompanyBoardController {
         if(result != 1){
             return "redirect:/error";
         }
-        return "김치 먹자";
+        return "redirect:/main";
     }
 
     @GetMapping("detail")
