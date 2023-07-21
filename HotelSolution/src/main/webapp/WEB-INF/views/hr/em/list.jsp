@@ -228,17 +228,13 @@
 }
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-	<div id="wrap">
 
-	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+	<div id ="wrap">
 	
-	  <main>
-	    <div class="main-container">
-	      
-	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
+	   <%@ include file="/WEB-INF/views/common/main.jsp" %>
+	
+	   <div id="mainboard">
 			<div class="memberListBody">
 			    <div class="memberListWrap">
 					<div class="ttt">	${dataVoList.get(0).categoryName } 사원 목록</div>
@@ -326,10 +322,11 @@
 			        </div>
 			    </div>
 		    </div>
-		 </div>
-	  </main>
-
-</div>
+	   
+	   </div>
+	
+	</div>
+			
 </body>
 <script type="text/javascript">
 	function getMember() {
