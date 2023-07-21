@@ -37,5 +37,10 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
         return dao.getCategoryList(sst);
     }
 
+    @Override
+    public int writeCompanyBoardPost(CompanyBoardVo companyBoardVo) {
+        return dao.writeCompanyBoardPost(sst, companyBoardVo);
+    }
+
 
 }

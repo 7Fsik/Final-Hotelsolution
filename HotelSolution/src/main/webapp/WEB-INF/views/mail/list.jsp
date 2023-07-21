@@ -40,17 +40,19 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>네모 체크해줘</th>
+                            <th><input type="checkbox"></input></th>
                             <th>읽음</th>
                             <th>삭제</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
+                            <th><input type="checkbox"></input></th>
                             <td>작성자</td>
                             <td>작성내용</td>
                             <td>날짜</td>
                         </tr>
+
                         </tbody>
                     </table>
                 </div>

@@ -23,10 +23,10 @@
 
                     <div class="write-container">
                         <label>
-                            <select class="category-btn" name="freeBoardCategoryNo" required>
+                            <select class="category-btn" name="categoryNo" required>
                                 <option disabled="disabled" value="">주제 선택</option>
                                 <c:forEach var="vo" items="${categoryList}">
-                                    <option value="${vo.no}">${vo.categoryName}</option>
+                                    <option value="${vo.categoryNo}">${vo.categoryName}</option>
                                 </c:forEach>
                             </select>
                         </label>
@@ -35,12 +35,17 @@
                         </div>
                     </div>
 
+                    <div class="write-title">
+                        <input type="text" name="title" placeholder="제목을 입력해주세요 ㅎㅎ">
+                    </div>
                     <hr class="horizon-line">
 
                     <div class="write-area">
                         <textarea id="editor" name="editordata" class="custom-toolbar">
 
                         </textarea>
+
+                        <input type="text" name="content" placeholder="임시용입니다~">
 
 
                     </div>

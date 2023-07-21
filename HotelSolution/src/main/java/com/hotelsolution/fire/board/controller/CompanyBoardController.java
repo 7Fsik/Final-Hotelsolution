@@ -6,11 +6,14 @@ import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
+@Slf4j
 public class CompanyBoardController {
 
     private final CompanyBoardService boardService;
@@ -47,8 +51,25 @@ public class CompanyBoardController {
     }
 
     @PostMapping("post")
-    public String writePostByNo(CompanyBoardVo companyBoardVo){
+    public String writeCompanyBoardPostByNo( HttpServletRequest request)
+    {
+        String categoryNo = request.getParameter("categoryNo");
+        log.info("categoryNo" + categoryNo);
+        String title = request.getParameter("title"); // 요청으로부터 타이틀 값 받아오기
+        String content = request.getParameter("content"); // 요청으로부터 내용 값 받아오기
 
+
+        CompanyBoardVo companyBoardVo = new CompanyBoardVo();
+
+        companyBoardVo.setWriterNo(1);    // 라이터넘버를 1로 설정 (임시값)
+        companyBoardVo.setTitle(title);
+        companyBoardVo.setContent(content);   // 라이터넘버를 1로 설정
+        companyBoardVo.setCategoryNo(categoryNo);
+        int result = boardService.writeCompanyBoardPost(companyBoardVo);
+
+        if(result != 1){
+            return "redirect:/error";
+        }
         return "김치 먹자";
     }
 
@@ -57,6 +78,8 @@ public class CompanyBoardController {
 
         return "companyBoard/detail";
     }
+
+
 
 
 

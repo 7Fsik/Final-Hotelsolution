@@ -9,7 +9,7 @@ import java.util.Date;
 public class CompanyBoardVo {
 
     private int no;
-    private int categoryNo;
+    private String categoryNo;
     private int writerNo;
     private String title;
     private String content;

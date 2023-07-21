@@ -7,21 +7,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>사내게시판 목록조회합시다</title>
-    <link rel="stylesheet" href="${root}/resources/css/companyboard/list.css">
-    <script defer src="${root}/resources/js/companyboard/list.js"></script>
+
 </head>
 
 <body>
 
-    <div id="wrap">
 
+    <div id="wrap">
         <%@ include file="/WEB-INF/views/common/main.jsp" %>
+        <link rel="stylesheet" href="${root}/resources/css/companyboard/list.css">
+        <script defer src="${root}/resources/js/companyboard/list.js"></script>
+
         <div id="mainboard">
-                <aside class="main-aside">
-                    <div class="profile-box"></div>
-                    <div class="main-aside-empty"></div>
-                    <div class="team-menu-bar"></div>
-                </aside>
                 <div class="main-content-list">
                     <nav>
                         <input type="text" placeholder="검색">
