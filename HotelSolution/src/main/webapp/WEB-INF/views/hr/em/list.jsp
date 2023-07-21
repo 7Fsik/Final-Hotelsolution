@@ -9,10 +9,8 @@
     <title>Insert title here</title>
  <style type="text/css">
 	.memberListBody{
-		width : 1402px;
-		height : 840px;
-		margin-top: 20px;
-		margin-left :50px;
+		width : 100%;
+		height : 100%;
 		margin-right: 40px;
 		overflow: scroll;
 		
@@ -21,8 +19,8 @@
 	}
 	.memberListWrap{
         display:grid;
-		width: 1402px;
-		height : 840px;
+		width : 100%;
+		height : 100%;
         border: 0px solid #3B444B;
         border-radius: 20px;
         background-color: white;
@@ -55,8 +53,8 @@
    	.newMemberListWrap{
    		display:grid;
         grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        margin-left: 40px;
-        width: 360px;
+        margin-left: 20px;
+        width: 350px;
    		height:645px;
    		border: 1px solid #3B444B;
         border-radius: 20px;

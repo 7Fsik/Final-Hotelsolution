@@ -10,13 +10,10 @@
 <title>Insert title here</title>
 <style type="text/css">
 	.hrBody{
-		width : 1400px;
-		height : 820px;
-		margin-top: 50px;
-		margin-left :20px;
+		width : 100%;
+		height : 100%;
 		margin-right: 40px;
 		overflow: scroll;
-		
 		
 	}
 	.hrWrap{
@@ -35,7 +32,7 @@
 		margin-bottom:1vh;
         margin-left: 1vw;
         margin-right: 1vw;
-		width: 950px;
+		width: 900px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
@@ -68,6 +65,7 @@
     	width: 80%;
         place-items: center; 
         font-size: 40px;
+        
     }
     .question{
     	text-align:left;
@@ -113,7 +111,7 @@
 		margin-bottom:20px;
         margin-left: 10px;
         margin-right: 20px;
-		width: 370px;
+		width: 350px;
 		height : 800px;
         border: 1px solid #3B444B;
         border-radius: 20px;
@@ -241,7 +239,7 @@
 			            <form action="${root}/hr/survey/create" method="POST" class="writeHrSurveyForm">
 			                <div class="surveyTitle">
 			                    <input type="text" value="${sdvo.title}" name="title" class="surveyTitleInput" maxlength="30" readonly="readonly">
-			                    <button type="button" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">목록</button>
+			                    
 			                </div>
 	                        <c:forEach items="${list}" var="list" varStatus="status">
 									<div class="question">
@@ -249,7 +247,9 @@
 					                    <textarea readonly="readonly">${((answerLists[status.index])[0]).answer}</textarea>
 					                </div>
 							</c:forEach>
-			                
+			                	<div style="text-align: center;">
+			                		<button type="button" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">목록으로</button>
+			                	</div>
 			               
 			            </form>
 			        </div>

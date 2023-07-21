@@ -3,7 +3,9 @@ package com.hotelsolution.fire.common.dataroom.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,8 +96,7 @@ public class DataRoomController {
 	
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
-	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req) {
-		System.out.println("리스트 시작!~~~~~~~~~~~~~~~~~~~");
+	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req,String searchType, String searchValue) {
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 	    model.addAttribute("loginMember", loginMember);
@@ -104,31 +105,33 @@ public class DataRoomController {
 			categoryNo = "0";
 		}
 		//자료실 카운트
-		System.out.println("리스트  카운티 시작직전!~~~~~~~~~~~~~~~~~~~");
 		int listCount = service.getDataRoomCnt(categoryNo);
-		System.out.println(listCount);
 		if(dataRoomListPage == null) {
 			dataRoomListPage = "1";
 		}
 		int currentPage = Integer.parseInt(dataRoomListPage);
 		
 		int boardLimit = 10;
-		int pageLimit = 0;
-		int temp = listCount/boardLimit +1;
-		if(temp<5) {
-			pageLimit = temp;
-		}else {
-			pageLimit=5;
-		}
+		int pageLimit = 5;
+//		int temp = (listCount-1)/boardLimit +1;
+//		if(temp<5) {
+//			pageLimit = temp;
+//		}else {
+//			pageLimit=5;
+//		}
 		PageVo dataRoomListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-	
-		model.addAttribute("dataRoomListPv",dataRoomListPv);
-		List<DataRoomVo> dataVoList = service.getDataRoomList(categoryNo, dataRoomListPv); 
+		Map<String,Object> map = new HashMap();
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
+		map.put("dataRoomListPv", dataRoomListPv);
+		map.put("categoryNo" , categoryNo);
+		model.addAttribute("searchMap",map);
+		List<DataRoomVo> dataVoList = service.getDataRoomList(map); 
 		if(dataVoList ==null) {
 			dataVoList.get(0).setCategoryName("개인"); 
 			}
-		model.addAttribute("dataVoList" , dataVoList);
-		model.addAttribute("categoryNo" , categoryNo);
+		map.put("dataVoList" , dataVoList);
+		model.addAttribute("map" , map);
 	}
 	
 	//list에서 하나 클릭시 디테일로
