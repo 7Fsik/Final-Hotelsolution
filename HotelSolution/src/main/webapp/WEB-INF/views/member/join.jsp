@@ -118,6 +118,8 @@
     	border-radius:10px;
     	width:100px;
     }
+    
+    
 	
 </style>
 </head>
@@ -125,25 +127,25 @@
 
 	<div id="wrap">
 
-    <form action="${root}/member/join" method="post">
+    <form action="${root}/member/join" method="post" onsubmit="return checkAll();">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
             </div>
             
             <div class="join-area">
-                 <label for="">NAME</label>
+                <label for="">NAME</label>
                 <input name="name" type="text" placeholder="이름을 입력하세요." >
             </div>
             
             <div class="join-area">
                  <label for="">ID</label> 
-                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11">
+                <input name="id" type="text" pattern="[0-9]+" placeholder="휴대폰번호로 가입하기" maxlength="11" onblur="checkAll();">
             </div>
            
             <div class="join-area">
                  <label for="">PWD</label> 
-                <input name="password" type="password" placeholder="8~16자 대문자+특수문자 사용" maxlength="16">
+                <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16">
             </div>
            
             <div class="join-area">
@@ -193,6 +195,82 @@
      </form>
 
     </div>
+
+    <script>
+
+        //회원가입 유효성 검사 체크
+        function checkAll() {
+
+            const id = document.querySelector('input[name=id]').value;
+            const password = document.querySelector('input[name=password]').value;
+            const email = document.querySelector('input[name=email]').value;
+           
+
+            if(!checkId(id)){
+                return false;
+            } else if(!checkPassword(password)){
+                return false;
+            } else if(!checkEmail(email)){
+                return false;
+            }
+                return true;
+
+        }//checkAll
+
+        //회원가입 input 공백확인 함수
+        function checkExist(value , dataName) {
+            
+            if(value==""){
+                alert(dataName + "입력해주세요.")
+                return false;
+            }
+            return true;
+
+        }//checkExist
+
+        //ID유효성 검사
+        function checkId(id) {
+            
+            if(!checkExist(id,"아이디를")){
+                return false;
+            }
+
+            const idRegExp = /[^0-9]/;
+
+            if(!idRegExp.test(Number(id))){
+                alert("아이디는 숫자로만 입력해야합니다.")
+                return false;
+            }
+            return true;
+
+
+        }//checkId
+
+        //비밀번호 유효성 검사
+        function checkPassword(password) {
+            
+            if(!checkExist(password,"비밀번호를")){
+                return false;
+            }
+
+            return true;
+
+        }//checkPassword
+
+        //이메일 유효성 검사
+        function checkEmail(email) {
+            
+            if(!checkExist(email,"이메일을")){
+                return false;
+            }
+
+            return true;
+
+        }//checkEmail
+
+
+
+    </script>
 
 </body>
 </html>

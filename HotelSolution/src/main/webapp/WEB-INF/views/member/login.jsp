@@ -113,7 +113,7 @@
 
 	<div id="wrap">
 
-    <form action="">
+    <form action="${root}/member/login" method="post">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
@@ -121,12 +121,12 @@
             
             <div class="login-area">
                  <label for="name">ID</label>
-                <input type="text" placeholder="휴대폰 번호를 입력하세요" maxlength="11">
+                <input name="id" type="text" placeholder="휴대폰 번호를 입력하세요" maxlength="11">
             </div>
             
             <div class="login-area">
                  <label for="name">PWD</label> 
-                <input type="password" placeholder="비밀번호를 입력하세요">
+                <input name="password" type="password" placeholder="비밀번호를 입력하세요">
             </div>
 
 				<div id="login-btn"><input type="submit" value="로그인"></div>

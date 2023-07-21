@@ -116,7 +116,24 @@
   	</insert>
   	
   	
-  	<select id="login">
+  	<select id="login" resultType="MemberVo">
+  	
+  	SELECT 
+	    NO
+	    ,TEAM_NO
+	    ,POSITION_NO
+	    ,ID
+	    ,PASSWORD
+	    ,NAME
+	    ,EMAIL
+	    ,IMAGE
+	    ,ENROLL_DATE
+	    ,STATUS
+	    ,CONTRACT_WORK_TIME
+	    ,CONTRACT_WORK_END_TIME
+	    ,SALARY
+	FROM MEMBER WHERE
+	ID = #{id} AND STATUS = 0
   		
 
   	</select>
