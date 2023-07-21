@@ -19,6 +19,7 @@
 		
 		
 		
+		
 	}
 	.dataroomWrap{
         display:grid;
@@ -201,78 +202,74 @@
 } 
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-	<div id="wrap">
+	<div id ="wrap">
 
-	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+	   <%@ include file="/WEB-INF/views/common/main.jsp" %>
 	
-	  <main>
-	    <div class="main-container">
-	      
-	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
+	   <div id="mainboard">
+			
 			<div class="dataroomBody">
+				
+					    <div class="dataroomWrap">
+					    	
+			           			<div class= "topNameText" >${drvo.title} (${drvo.categoryName}자료실)</div>
+					        <div class="writeDataroomWrap">
+					           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
+									<input type="hidden" name="writerNo" value="1">
+					           		<div class="topName" >
+									   <div class="topNameSelect">
+									   		작성자 :(${drvo.writerTeam}팀) ${drvo.writerName}
+									   </div>
+									   <div class="topNameSelect">
+											보안등급 : ${drvo.securityLevelName} 이상	           				
+					           			</div>
+										 <div class="topNameSelect">
+											작성날짜 : ${drvo.enrollDate} 			           				
+					           			</div>
+									   <div class="topNameSelect">
+											조회수 : ${drvo.hit}			           				
+					           			</div>
+					           			
+					           		</div>
+								    <div class="fileUploadContainerWrap">
+								    	 <c:forEach items="${drfvoList}" var="drfvo" varStatus="status">
+										    <div class="fileVo1" >
+										    	파일 이름 : ${drfvo.fileName }
+										    
+									       	
+									       	</div>
+									       	<div class="fileVo2" >
+										    
+									       		파일 설명 : ${drfvo.fileExplain }
+									       	
+									       	</div>
+									       	<div class="fileVo3">
+										    
+									       	
+									       		<a href="${root}/dataroom/download?changeName=${drfvo.changeName}&fileName=${drfvo.fileName}">다운로드</a>
+									       	</div>
+								       	</c:forEach>
+								    </div>
+								    <div>
+									    <div class="fileContent">
+										    <div>내용 :</div>
+										    <div></div>
+										    <div></div>
+										    <textarea name="content" placeholder="" readonly="readonly"> ${drvo.content}</textarea>
+										</div>
+								    </div>
 		
-			    <div class="dataroomWrap">
-			    	
-	           			<div class= "topNameText" >${drvo.title} (${drvo.categoryName}자료실)</div>
-			        <div class="writeDataroomWrap">
-			           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
-							<input type="hidden" name="writerNo" value="1">
-			           		<div class="topName" >
-							   <div class="topNameSelect">
-							   		작성자 :(${drvo.writerTeam}팀) ${drvo.writerName}
-							   </div>
-							   <div class="topNameSelect">
-									보안등급 : ${drvo.securityLevelName} 이상	           				
-			           			</div>
-								 <div class="topNameSelect">
-									작성날짜 : ${drvo.enrollDate} 			           				
-			           			</div>
-							   <div class="topNameSelect">
-									조회수 : ${drvo.hit}			           				
-			           			</div>
-			           			
-			           		</div>
-						    <div class="fileUploadContainerWrap">
-						    	 <c:forEach items="${drfvoList}" var="drfvo" varStatus="status">
-								    <div class="fileVo1" >
-								    	파일 이름 : ${drfvo.fileName }
 								    
-							       	
-							       	</div>
-							       	<div class="fileVo2" >
-								    
-							       		파일 설명 : ${drfvo.fileExplain }
-							       	
-							       	</div>
-							       	<div class="fileVo3">
-								    
-							       	
-							       		<a href="${root}/dataroom/download?changeName=${drfvo.changeName}&fileName=${drfvo.fileName}">다운로드</a>
-							       	</div>
-						       	</c:forEach>
-						    </div>
-						    <div>
-							    <div class="fileContent">
-								    <div>내용 :</div>
-								    <div></div>
-								    <div></div>
-								    <textarea name="content" placeholder="" readonly="readonly"> ${drvo.content}</textarea>
-								</div>
-						    </div>
-
-						    
-						    <input class="button"  type="button" value="목록으로" onclick="goList(${drvo.categoryNo})">
-						</form>
-			        </div>
-			    </div>
-		    </div>
-		 </div>
-	  </main>
-
-</div>
+								    <input class="button"  type="button" value="목록으로" onclick="goList(${drvo.categoryNo})">
+								</form>
+					        </div>
+					    </div>
+				    </div>	   
+	   </div>
+	
+	</div>
+			
 </body>
 <script type="text/javascript">
 	function goList(categoryNo) {

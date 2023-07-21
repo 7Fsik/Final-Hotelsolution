@@ -227,18 +227,14 @@
 } 
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-	<div id="wrap">
+	<div id ="wrap">
 
-	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
+	   <%@ include file="/WEB-INF/views/common/main.jsp" %>
 	
-	  <main>
-	    <div class="main-container">
-	      
-	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
-			<div class="hrBody">
+	   <div id="mainboard">
+	
+	      <div class="hrBody">
 		
 			    <div class="hrWrap">
 			        <div class="writeHrSurveyWrap">
@@ -301,10 +297,11 @@
 			        </div>
 			    </div>
 		    </div>
-		 </div>
-	  </main>
-
-</div>
+	   
+	   </div>
+	
+	</div>
+			
 </body>
 <script>
 function goDetail(no, title, enrollDate, titleListpage) {

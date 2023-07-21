@@ -172,18 +172,15 @@
 } 
 </style>
 </head>
-<%@ include file="/WEB-INF/views/common/setup.jsp" %>
 <body>
-	<div id="wrap">
 
-	  <%@ include file="/WEB-INF/views/common/header.jsp" %>
-	  <%@ include file="/WEB-INF/views/common/aside.jsp" %>
-	
-	  <main>
-	    <div class="main-container">
-	      
-	      <%@ include file="/WEB-INF/views/common/mainaside.jsp"%>
-			<div class="dataroomBody">
+		<div id ="wrap">
+
+		   <%@ include file="/WEB-INF/views/common/main.jsp" %>
+		
+		   <div id="mainboard">
+		
+		   		<div class="dataroomBody">
 			    <div class="dataroomWrap">
 			    <c:choose>
    				 <c:when test="${not empty dataVoList}">
@@ -276,10 +273,9 @@
 			        </div>
 			    </div>
 		    </div>
-		 </div>
-	  </main>
-
-</div>
+		   </div>
+		
+		</div>
 </body>
 <script type="text/javascript">
 	function goDetail(drvoNo) {
