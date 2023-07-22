@@ -288,6 +288,10 @@
     background-color: #dedede;
     display: flex;
 } 
+#img1{
+	height:20px; 
+	
+}
 </style>
 </head>
 <body>
@@ -322,28 +326,28 @@
 
                         <div class="ans1 ansDivWrap">
                         	  <c:forEach items="${answerLists.get(0)}" var="list">
-								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}','${searchValue}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans2 ansDivWrap">
                         	<c:forEach items="${answerLists.get(1)}" var="list">
-								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}','${searchValue}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans3 ansDivWrap">
                         	<c:forEach items="${answerLists.get(2)}" var="list">
-								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}','${searchValue}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
                         </div>
                         <div class="ans4 ansDivWrap">
                         	<c:forEach items="${answerLists.get(3)}" var="list">
-								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}')">
+								<div class="ansDiv" onclick="goDetail('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}' , '${list.answerer}','${searchValue}')">
 		                        	 <p class="questionTruncate"> ${list.answer}</p>
 		                        </div>
 							</c:forEach>
@@ -355,20 +359,20 @@
 
                     <div id="ans-page-area">
 		            	<c:if test="${answerListPv.currentPage > 1}">
-			            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage - 1}&titleListpage=${pv.currentPage}">이전</a>
+			            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage - 1}&titleListpage=${pv.currentPage}">이전</a>
 		            	</c:if>
 			            	<c:forEach begin="${answerListPv.startPage}" end="${answerListPv.endPage}" step="1" var="i">
 			            		<c:if test="${answerListPv.currentPage != i}">
-					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${i}&titleListpage=${pv.currentPage}">${i}</a>
+					            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${i}&titleListpage=${pv.currentPage}">${i}</a>
 			            		</c:if>
 			            		<c:if test="${answerListPv.currentPage == i}">
 					            	<a >${i}</a>
 			            		</c:if>
 			            	</c:forEach>
 			            <c:if test="${answerListPv.currentPage < answerListPv.maxPage}">
-			            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage + 1}&titleListpage=${pv.currentPage}">다음</a>
+			            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage + 1}&titleListpage=${pv.currentPage}">다음</a>
 			            </c:if>
-			             <button value="상세조회" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}')">상세조회</button>
+			             <button value="상세조회" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}', '${searchValue}')">상세조회</button>
 		            </div>
 			                    
 	               
@@ -380,7 +384,7 @@
 			            </div>
 			                <div class="listWrap">
 							    <c:forEach items="${titleList}" var="title">
-							        <div class="titleList" onclick="goAnswerList('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}')">
+							        <div class="titleList" onclick="goAnswerList('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}','${searchValue}')">
 							            <p class="titleTruncate">${title.title}</p>
 							            <br>
 							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
@@ -388,27 +392,31 @@
 							    </c:forEach>
 							</div>
 			             
-			                 <div class="searchList">
-								
-			                    설문 제목 : <input type="text" class="searchInput">
-			                    <button type="submit" > 검색 </button>
-			                 </div>
+			                <form action="${root}/hr/survey/answerList" method="get" class="searchList">
+							    <input type="hidden" name="no" value="${sdvo.no}" />
+							    <input type="hidden" name="title" value="${sdvo.title}" />
+							    <input type="hidden" name="enrollDate" value="${sdvo.enrollDate}" />
+							    <input type="hidden" name="answerListpage" value="${pv.currentPage}" />
+							    <input class="searchValueElem" id="searchValue" type="text" name="searchValue" value="${searchVo.searchValue}" placeholder="검색할 내용" />
+							    <input type="image" id="img1" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" />
+							</form>
+
 			                 
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage - 1}&answerListpage=${answerListPv.currentPage}">이전</a>
+					            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage - 1}&answerListpage=${answerListPv.currentPage}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${i}&answerListpage=${answerListPv.currentPage}">${i}</a>
+							            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${i}&answerListpage=${answerListPv.currentPage}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/answerList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage + 1}&answerListpage=${answerListPv.currentPage}">다음</a>
+					            <c:if test="${pv.currentPage < pv.endPage}">
+					            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&titleListpage=${pv.currentPage + 1}&answerListpage=${answerListPv.currentPage}">다음</a>
 					            </c:if>
 				            </div>
 			               
@@ -427,15 +435,15 @@
 	
 </body>
 <script>
-function goAnswerList(no, title, enrollDate, titleListpage) {
-    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
+function goAnswerList(no, title, enrollDate, titleListpage, searchValue) {
+    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage +'&searchValue='+searchValue;
 }
-function goDetail(no, title, enrollDate, titleListpage, answerer) {
-	 window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage + '&answerer=' + answerer ;
+function goDetail(no, title, enrollDate, titleListpage, answerer, searchValue) {
+	 window.location.href = '${root}/hr/survey/detail?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage + '&answerer=' + answerer  +'&searchValue='+searchValue;
 	
 }
-function goDetailList(no, title, enrollDate, titleListpage) {
-	 window.location.href = '${root}/hr/survey/detailList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage;
+function goDetailList(no, title, enrollDate, titleListpage, searchValue) {
+	 window.location.href = '${root}/hr/survey/detailList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage +'&searchValue='+searchValue;
 	
 }
 

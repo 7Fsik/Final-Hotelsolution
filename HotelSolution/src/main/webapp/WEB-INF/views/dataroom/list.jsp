@@ -205,7 +205,7 @@
 					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
 					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
 					        		<div class="ttc"><a href="${root}/dataroom/write">글작성</a></div>
-		        					  <form action="${root}/dataroom/list" method="get"" style="margin-left: 500px;">
+		        					  <form action="${root}/dataroom/list" method="get" style="margin-left: 500px;">
 							                <input type="hidden" value="1" name="page">
 							                    <select name="searchType" id="opt" >
 							                        <option value="title" >제목</option>

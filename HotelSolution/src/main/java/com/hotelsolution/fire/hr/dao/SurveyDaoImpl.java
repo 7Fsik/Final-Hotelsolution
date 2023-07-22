@@ -21,9 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 public class SurveyDaoImpl implements SurveyDao{
 	
 	@Override
-	public List<SurveyDocVo> titleList(SqlSessionTemplate sst, PageVo pv) {
+	public List<SurveyDocVo> titleList(SqlSessionTemplate sst, PageVo pv, String searchValue) {
 		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
-		return sst.selectList("survey.titleList",null,rb);
+		return sst.selectList("survey.titleList",searchValue,rb);
 	}
 
 	@Override
@@ -46,8 +46,8 @@ public class SurveyDaoImpl implements SurveyDao{
 	}
 
 	@Override
-	public int getSurveyCnt(SqlSessionTemplate sst) {
-		return sst.selectOne("survey.getSurveyCnt");
+	public int getSurveyCnt(SqlSessionTemplate sst, String searchValue) {
+		return sst.selectOne("survey.getSurveyCnt",searchValue);
 	}
 
 	@Override
