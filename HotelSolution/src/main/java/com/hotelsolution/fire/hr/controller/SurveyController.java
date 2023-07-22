@@ -37,15 +37,17 @@ public class SurveyController {
 		}
 		int currentPage = Integer.parseInt(titleListpage);
 		int boardLimit = 7;
-		int pageLimit = 0;
-		int temp = (listCount-1)/boardLimit +1;
-		if(temp<5) {
-			pageLimit = temp;
-		}else {
-			pageLimit=5;
+		int pageLimit = 5;
+		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		int realPage = (pv.getListCount()-1)/boardLimit+1;
+		if(realPage<=pv.getPageLimit()) {
+			pv.setEndPage(realPage);
+		}
+		if(realPage<=pv.getEndPage()) {
+			pv.setEndPage(realPage);
 		}
 		
-		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+				
 		List<SurveyDocVo> titleList =  service.titleList(pv,searchValue);
 		Map<String, Object>map = new HashMap<String, Object>();
 		map.put("titleList",titleList);
@@ -104,14 +106,15 @@ public class SurveyController {
 		int currentPage = Integer.parseInt(answerListpage);
 		
 		int boardLimit = 7;
-		int pageLimit = 0;
-		int temp = listCount/boardLimit +1;
-		if(temp<5) {
-			pageLimit = temp;
-		}else {
-			pageLimit=5;
-		}
+		int pageLimit = 5;
 		PageVo answerListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		int realPage = (answerListPv.getListCount()-1)/boardLimit+1;
+		if(realPage<=answerListPv.getPageLimit()) {
+			answerListPv.setEndPage(realPage);
+		}
+		if(realPage<=answerListPv.getEndPage()) {
+			answerListPv.setEndPage(realPage);
+		}
 		model.addAttribute("answerListPv",answerListPv);
 		//질문 답변 질문별로 가져오기
 		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
@@ -120,7 +123,6 @@ public class SurveyController {
 		    answerLists.add(answerList);
 		}
 		model.addAttribute("answerLists", answerLists);
-	
 		return "hr/survey/answer-list";
 		
 		
@@ -159,25 +161,23 @@ public class SurveyController {
 	//디테일 리스트(detail 에서 목록으로버튼 or answerList 에서 상세보기 클릭시)
 	@GetMapping("survey/detailList")
 	public String surveySelectQnaTotalList(Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage, String searchValue, String answerer) {
-		//질문에 있는 모든 설문 답 리스트
+
 		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
 		if(detailListpage == null) {
 			detailListpage = "1";
 		}
 		int currentPage = Integer.parseInt(detailListpage);
 		int boardLimit = 1;
-		int pageLimit = 1;
-		int temp = Integer.parseInt(sdvo.getNo());
-		if(temp ==0) {
-			pageLimit = 1;
-		}
-		else if(temp<5) {
-			pageLimit = temp;
-		}else {
-			pageLimit=5;
-		}
-		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		int pageLimit = 5;
 	
+		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		int realPage = (detailListPv.getListCount()-1)/boardLimit+1;
+		if(realPage<=detailListPv.getPageLimit()) {
+			detailListPv.setEndPage(realPage);
+		}
+		if(realPage<=detailListPv.getEndPage()) {
+			detailListPv.setEndPage(realPage);
+		}
 		model.addAttribute("detailListPv",detailListPv);
 		
 		

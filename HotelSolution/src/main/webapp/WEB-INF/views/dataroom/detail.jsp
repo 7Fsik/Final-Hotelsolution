@@ -218,7 +218,7 @@
 									<input type="hidden" name="writerNo" value="1">
 					           		<div class="topName" >
 									   <div class="topNameSelect">
-									   		작성자 :(${drvo.writerTeam}팀) ${drvo.writerName}
+									   		작성자 :(${drvo.writerTeam}) ${drvo.writerName}
 									   </div>
 									   <div class="topNameSelect">
 											보안등급 : ${drvo.securityLevelName} 이상	           				

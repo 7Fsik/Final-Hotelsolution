@@ -40,6 +40,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DataRoomController {
 	private final DataRoomService service;
 	
+	
+	
 	//작성하기 클릭시 작성하는 화면
 	@GetMapping("write")
 	public void write(Model model,HttpServletRequest req, String categoryNo) {
@@ -52,7 +54,7 @@ public class DataRoomController {
 	
 	//파일 업로드
 	@PostMapping("write")
-	public String write(Model model, DataRoomVo drvo,
+	public String write(Model model, DataRoomVo drvo,String categoryNo,
 			@RequestParam(value = "fileExplain", required = false) List<String> fileExplain,
 			@RequestParam("files") List<MultipartFile> fList, HttpServletRequest req ) throws Exception, IOException {
 		String savePath = req.getServletContext().getRealPath("/resources/upload/dataroom/file/");
@@ -60,11 +62,12 @@ public class DataRoomController {
 		List<DataRoomFileVo> drfvoList = new ArrayList<DataRoomFileVo>(); // 이 위치로 이동
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-//	    String loginMemberNo = "1"; // 실행위에 임시코드
+//	    String loginMemberNo = ""; // 실행위에 임시코드
 //	    if(loginMember!=null) {
 //	    	loginMemberNo = loginMember.getNo();
 //	    }//임시코드
 	    drvo.setWriterNo(loginMember.getNo());
+	    drvo.setCategoryNo(categoryNo);
 	    for (int i = 0; i < fList.size(); i++) {
 	    	DataRoomFileVo fileVo = new DataRoomFileVo();
 	        drfvoList.add(fileVo);
@@ -97,6 +100,9 @@ public class DataRoomController {
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
 	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req,String searchType, String searchValue) {
+		Map<String,Object> map = new HashMap();
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 	    model.addAttribute("loginMember", loginMember);
@@ -104,8 +110,9 @@ public class DataRoomController {
 		if(categoryNo == null) {
 			categoryNo = "0";
 		}
+		map.put("categoryNo" , categoryNo);
 		//자료실 카운트
-		int listCount = service.getDataRoomCnt(categoryNo);
+		int listCount = service.getDataRoomCnt(map);
 		if(dataRoomListPage == null) {
 			dataRoomListPage = "1";
 		}
@@ -113,19 +120,18 @@ public class DataRoomController {
 		
 		int boardLimit = 10;
 		int pageLimit = 5;
-//		int temp = (listCount-1)/boardLimit +1;
-//		if(temp<5) {
-//			pageLimit = temp;
-//		}else {
-//			pageLimit=5;
-//		}
 		PageVo dataRoomListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-		Map<String,Object> map = new HashMap();
-		map.put("searchType", searchType);
-		map.put("searchValue", searchValue);
+		
+		int realPage = (dataRoomListPv.getListCount()-1)/boardLimit+1;
+		if(realPage<=dataRoomListPv.getPageLimit()) {
+			dataRoomListPv.setEndPage(realPage);
+		}
+	
+		if(realPage<=dataRoomListPv.getEndPage()) {
+			dataRoomListPv.setEndPage(realPage);
+		}
 		map.put("dataRoomListPv", dataRoomListPv);
 		map.put("categoryNo" , categoryNo);
-		model.addAttribute("searchMap",map);
 		List<DataRoomVo> dataVoList = service.getDataRoomList(map); 
 		if(dataVoList ==null) {
 			dataVoList.get(0).setCategoryName("개인"); 

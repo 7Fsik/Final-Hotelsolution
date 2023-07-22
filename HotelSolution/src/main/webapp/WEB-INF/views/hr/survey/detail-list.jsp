@@ -310,7 +310,7 @@
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${pv.currentPage < pv.maxPage}">
+					            <c:if test="${pv.currentPage < pv.endPage}">
 					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage + 1}&searchValue=${searchValue} ">다음</a>
 					            </c:if>
 				            </div>

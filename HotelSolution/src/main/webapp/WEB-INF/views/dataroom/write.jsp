@@ -200,14 +200,15 @@
 							   </div>
 							   <div class="topNameSelect">
 			           				<select name="securityLevel" id="securityLevelSelect" style="display: none;">
+			           					
 									    <option value="1">전부</option>
 									    <option value="2">슈퍼바이저이상</option>
 									    <option value="3">팀장이상</option>
-									    <option value="4">지배인이상</option>
+									    <option value="4">매니저이상</option>
 									</select>
 
 			           				<select name="categoryNo" id="categorySelect">
-									    <option value="0" selected>카테고리</option>
+									    <option value="${categoryNo}" selected>카테고리</option>
 									    <option value="0">공용</option>
 									    <option value="${loginMember.teamNo}">부서</option>
 									    <option value="100">개인</option>

@@ -18,7 +18,7 @@ public interface DataRoomDao {
 
 	List<DataRoomFileVo> getDetailDrfvoList(SqlSessionTemplate sst, String drvoNo);
 
-	int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo);
+	int getDataRoomCnt(SqlSessionTemplate sst, Map<String, Object> map);
 
 	int increaseHit(SqlSessionTemplate sst, String drvoNo);
 

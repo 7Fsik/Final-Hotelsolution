@@ -1,10 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <c:set var="root" value="${pageContext.request.contextPath}" />
-<c:set var="searchMap" value="${map.searchMap}" />
 <c:set var="dataRoomListPv" value="${map.dataRoomListPv}" />
 <c:set var="dataVoList" value="${map.dataVoList}" />
 <c:set var="categoryNo" value="${map.categoryNo}" />
+<c:set var="searchValue" value="${map.searchValue}" />
+<c:set var="searchType" value="${map.searchType}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -146,7 +147,7 @@
       .tt{
       	display:grid;
       	padding-left: 40px;
-      	grid-template-columns : 1fr 1fr 1fr 1fr 12fr;  
+      	grid-template-columns : 1fr 1fr 1fr 1fr 2fr;  
         }
      .ttt{
         margin-left: 60px; 
@@ -156,7 +157,7 @@
         }
      .ttc{
      	cursor: pointer;
-     	padding-top: 20px;	
+     	padding-top: 10px;	
      }
      .dataList:hover {
         background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
@@ -175,6 +176,38 @@
 #img1{
 	height:20px;
 }
+ a {
+            text-decoration: none; /* Remove underline */
+            color: #007bff; /* Set default link color (blue in this case) */
+        }
+
+        /* Apply Bootstrap button styles to <a> tags */
+        a.tcca {
+        	
+            display: inline-block;
+            padding: 0.375rem 0.75rem;
+            margin-bottom: 0;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            color:#6c757d;
+            
+        }
+
+        /* Set the link color on hover */
+        a.tcca:hover {
+            color: skyblue; /* Change to olive green (#28a745) on hover */
+            text-decoration: none; /* Remove underline on hover */
+        }
+
 </style>
 </head>
 <body>
@@ -200,17 +233,17 @@
 			        		<div class="tt">
 			        				
 			        				<div class="ttc">
-									    <a href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">부서</a>
+									    <a class="tcca" href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">부서</a>
 									</div>
-					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
-					        		<div class="ttc"><a href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
-					        		<div class="ttc"><a href="${root}/dataroom/write">글작성</a></div>
-		        					  <form action="${root}/dataroom/list" method="get" style="margin-left: 500px;">
+					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
+					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
+					        		<div class="ttc"  style="margin-right: 5px; text-align: right;"><a class="tcca" href="${root}/dataroom/write?categoryNo=${categoryNo}" style="color: #3b444b;">글작성</a></div>
+		        					  <form action="${root}/dataroom/list" method="get" style="margin-reft: 10px; text-align: right; padding-top: 15px;">
 							                <input type="hidden" value="1" name="page">
+							                <input type="hidden" value="${categoryNo}" name="categoryNo">
 							                    <select name="searchType" id="opt" >
 							                        <option value="title" >제목</option>
 							                        <option value="writerName" >작성자</option>
-							                        <option value="writerTeam" >작성부서</option>
 							                        <option value="securityLevelName" >보안등급</option>
 							                        
 							                    </select>
@@ -224,7 +257,7 @@
 			        		</div>
 			        		
 				        	<div class="dataListTop">
-								<div class="bbrt"></div>
+								<div class="bbrt">등급</div>
 								<div class="bbrt">제목</div>
 								<div class="bbrt">첨부파일</div>
 								<div class="bbrt">작성자</div>
@@ -234,10 +267,10 @@
 							<c:if test="${not empty dataVoList}">
 								<c:forEach begin="1" end="10" varStatus="status">
 								    <c:set var="dataVo" value="${status.index <= dataVoList.size() ? dataVoList[status.index - 1] : null}" />
-								    <div class="dataList" onclick="goDetail(${dataVo.dataNo})">
+								    <div class="dataList" onclick="goDetail(${dataVo.dataNo},${dataVo.securityLevel},${loginMember.positionNo},${dataVo.writerNo},${loginMember.no})">
 								        <div class="bbr">
 								            <c:if test="${not empty dataVo}">
-								                ${dataVo.categoryName}
+								                ${dataVo.securityLevelName}
 								            </c:if>
 								        </div>
 								        <div class="bbr" style="padding-left: 70px;">
@@ -267,23 +300,21 @@
 								        </div>
 								    </div>
 								</c:forEach>
-								<c:set var="endPage" value="${dataVoList.size() - 1}" />
-								<c:set var="endPage" value="${endPage / 10 + 1}" />
 								 <div id="data-page-area">
 					            	<c:if test="${dataRoomListPv.currentPage > 1}">
-						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}">이전</a>
+						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}">이전</a>
 					            	</c:if>
-						            	<c:forEach begin="${dataRoomListPv.startPage}" end="${endPage}" step="1" var="i">
+						            	<c:forEach begin="${dataRoomListPv.startPage}" end="${dataRoomListPv.endPage}" step="1" var="i">
 	
 						            		<c:if test="${dataRoomListPv.currentPage != i}">
-								            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${i}">${i}</a>
+								            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
 						            		</c:if>
 						            		<c:if test="${dataRoomListPv.currentPage == i}">
 								            	<a >${i}</a>
 						            		</c:if>
 						            	</c:forEach>
-						            <c:if test="${dataRoomListPv.currentPage < dataRoomListPv.maxPage}">
-						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}">다음</a>
+						            <c:if test="${dataRoomListPv.currentPage < dataRoomListPv.maxPage +1}">
+						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}">다음</a>
 						            </c:if>
 					            </div>
 							</c:if>
@@ -298,12 +329,24 @@
 		</div>
 </body>
 <script type="text/javascript">
-	function goDetail(drvoNo) {
-	  if (typeof drvoNo !== 'undefined') {
-	    window.location.href = '${root}/dataroom/detail?drvoNo=' + drvoNo;
-	  }
+	function goDetail(drvoNo,drvoLevel,loginMemberLevel,writerNo,loginMemberNo) {
+		
+		if(drvoLevel<=loginMemberLevel){
+			  if (typeof drvoNo !== 'undefined') {
+				    window.location.href = '${root}/dataroom/detail?drvoNo=' + drvoNo;
+				  }
+		}else if(writerNo==loginMemberNo){
+			if (typeof drvoNo !== 'undefined') {
+			    window.location.href = '${root}/dataroom/detail?drvoNo=' + drvoNo;
+			  }
+		}else{
+			alert("보안등급 이하입니다.");
+		  event.preventDefault();
+		}
+	
 	}
+	
 
-</script>
+  </script>
  
 </html>

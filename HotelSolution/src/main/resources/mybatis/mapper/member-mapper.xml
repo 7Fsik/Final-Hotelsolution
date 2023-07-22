@@ -34,7 +34,7 @@
   	
 	</select>
 	
-	<select id="getMemberList" resultType="MemberVo">
+	<select id="getMemberList" resultType="MemberVo" parameterType="java.util.Map">
 			SELECT 
 		    u.NO,
 		    u.TEAM_NO,
@@ -57,14 +57,65 @@
 		    POSITION p ON u.POSITION_NO = p.NO
 		JOIN 
 		    TEAM t ON u.TEAM_NO = t.TEAM_NO
-		 WHERE STATUS = 1
-  	
+		 WHERE u.STATUS = 1
+			     <if test="searchType == 'teamName'">
+			        AND t.TEAM_NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'positionName'">
+			        AND p.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'name'">
+			        AND u.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'id'">
+			        AND '0' || u.ID LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'email'">
+			        AND u.EMAIL LIKE ('%'|| #{searchValue} || '%')
+			        </if>
 	</select>
 	
-	<select id="getMemberCnt" resultType="int">
+	<select id="getMemberCnt"  resultType="int" parameterType="java.util.Map">
 	  	SELECT COUNT(NO)
-	  	FROM member
-	  	WHERE STATUS = 1
+			FROM (
+			    SELECT
+			        u.NO,
+			        u.TEAM_NO,
+			        p.name AS POSITIONNAME,
+			        u.ID,
+			        u.PASSWORD,
+			        u.NAME,
+			        u.EMAIL,
+			        u.IMAGE,
+			        u.ENROLL_DATE,
+			        u.STATUS,
+			        u.CONTRACT_WORK_TIME,
+			        u.CONTRACT_WORK_END_TIME,
+			        u.SALARY,
+			        t.TEAM_NAME AS TEAMNAME,
+			        COUNT(*) AS MEMCNT
+			    FROM MEMBER U
+			    JOIN POSITION p ON u.POSITION_NO = p.NO
+			    JOIN TEAM t ON u.TEAM_NO = t.TEAM_NO
+			    WHERE STATUS = 1
+			
+			    <if test="searchType == 'teamName'">
+			        AND t.TEAM_NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'positionName'">
+			        AND p.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'name'">
+			        AND u.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'id'">
+			        AND '0' || u.ID LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'email'">
+			        AND u.EMAIL LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    GROUP BY u.NO, u.TEAM_NO, p.NAME, u.ID, u.PASSWORD, u.NAME, u.EMAIL, u.IMAGE, u.ENROLL_DATE, u.STATUS, u.CONTRACT_WORK_TIME, u.CONTRACT_WORK_END_TIME, u.SALARY, t.TEAM_NAME
+			)
   	</select>
   	
   	<update id="acceptNewMember">
@@ -109,10 +160,12 @@
 	  		PASSWORD,
 	  		NAME,
 	  		EMAIL,
-	  		IMAGE)
+	  		IMAGE,
+	  		CHANGE_IMAGE
+	  		)
   		VALUES(SEQ_MEMBER_NO.NEXTVAL , 
 	  		#{teamNo} , #{positionNo} , #{id} ,
-	  		#{password} , #{name} , #{email} , #{image})
+	  		#{password} , #{name} , #{email} , #{image}, #{changeImage})
   	</insert>
   	
   	
@@ -120,8 +173,8 @@
   	
   	SELECT 
 	    NO
-	    ,TEAM_NO
-	    ,POSITION_NO
+	    ,TEAM_NO AS TEAMNO
+	    ,POSITION_NO AS POSITIONNO
 	    ,ID
 	    ,PASSWORD
 	    ,NAME
@@ -132,8 +185,9 @@
 	    ,CONTRACT_WORK_TIME
 	    ,CONTRACT_WORK_END_TIME
 	    ,SALARY
+	    ,CHANGE_IMAGE AS CHANGEIMAGE
 	FROM MEMBER WHERE
-	ID = #{id} AND STATUS = 0
+	ID = #{id} 
   		
 
   	</select>
