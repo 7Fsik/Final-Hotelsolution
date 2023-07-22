@@ -11,11 +11,11 @@ import com.hotelsolution.fire.common.page.vo.PageVo;
 public interface SurveyService {
 	int create(Map<String, Object> map);
 
-	List<SurveyDocVo> titleList(PageVo pv);
+	List<SurveyDocVo> titleList(PageVo pv, String searchValue);
 	
 	SurveyDocVo getRecentSurveyQnAList();
 
-	int getSurveyCnt();
+	int getSurveyCnt(String searchValue);
 
 	List<SurveyQuestionVo> geteQuestionList(String no);
 

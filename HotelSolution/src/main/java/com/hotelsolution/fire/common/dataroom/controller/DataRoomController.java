@@ -60,11 +60,11 @@ public class DataRoomController {
 		List<DataRoomFileVo> drfvoList = new ArrayList<DataRoomFileVo>(); // 이 위치로 이동
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-	    String loginMemberNo = "1"; // 실행위에 임시코드
-	    if(loginMember!=null) {
-	    	loginMemberNo = loginMember.getNo();
-	    }//임시코드
-	    drvo.setWriterNo(loginMemberNo);
+//	    String loginMemberNo = "1"; // 실행위에 임시코드
+//	    if(loginMember!=null) {
+//	    	loginMemberNo = loginMember.getNo();
+//	    }//임시코드
+	    drvo.setWriterNo(loginMember.getNo());
 	    for (int i = 0; i < fList.size(); i++) {
 	    	DataRoomFileVo fileVo = new DataRoomFileVo();
 	        drfvoList.add(fileVo);

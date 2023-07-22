@@ -12,13 +12,13 @@ import com.hotelsolution.fire.common.page.vo.PageVo;
 
 public interface SurveyDao {
 	
-	List<SurveyDocVo> titleList(SqlSessionTemplate sst, PageVo pv);
+	List<SurveyDocVo> titleList(SqlSessionTemplate sst, PageVo pv, String searchValue);
 
 	int create(SqlSessionTemplate sst, Map<String, Object> map);
 
 	SurveyDocVo getRecentSurveyQnAList(SqlSessionTemplate sst);
 
-	int getSurveyCnt(SqlSessionTemplate sst);
+	int getSurveyCnt(SqlSessionTemplate sst, String searchValue);
 
 	List<SurveyQuestionVo> geteQuestionList(SqlSessionTemplate sst, String no);
 

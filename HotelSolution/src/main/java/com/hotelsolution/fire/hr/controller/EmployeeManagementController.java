@@ -40,7 +40,7 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 			
 			int currentPage = Integer.parseInt(memberListpage);
 			int boardLimit = 10;
-			int temp = listCount/boardLimit +1;
+			int temp = (listCount-1)/boardLimit +1;
 			int pageLimit = 0;
 			if(temp<5) {
 				pageLimit = temp;

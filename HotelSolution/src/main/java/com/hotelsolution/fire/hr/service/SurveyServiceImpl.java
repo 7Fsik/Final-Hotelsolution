@@ -34,13 +34,13 @@ public class SurveyServiceImpl implements SurveyService {
 	}
 
 	@Override
-	public List<SurveyDocVo> titleList(PageVo pv) {
-		return dao.titleList(sst , pv);
+	public List<SurveyDocVo> titleList(PageVo pv, String searchValue) {
+		return dao.titleList(sst , pv, searchValue);
 	}
 
 	@Override
-	public int getSurveyCnt() {
-		return dao.getSurveyCnt(sst);
+	public int getSurveyCnt(String searchValue) {
+		return dao.getSurveyCnt(sst,searchValue);
 	}
 
 	@Override

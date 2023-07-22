@@ -30,15 +30,15 @@ public class SurveyController {
 	private final SurveyService service;
 	
 	//우측 제목 리스트 가져오는 메소드
-	public Map<String, Object> titleList (String titleListpage){
-		int listCount = service.getSurveyCnt();
+	public Map<String, Object> titleList (String titleListpage, String searchValue){
+		int listCount = service.getSurveyCnt(searchValue);
 		if (titleListpage == null || titleListpage.isEmpty()) {
 			titleListpage = "1";
 		}
 		int currentPage = Integer.parseInt(titleListpage);
 		int boardLimit = 7;
 		int pageLimit = 0;
-		int temp = listCount/boardLimit +1;
+		int temp = (listCount-1)/boardLimit +1;
 		if(temp<5) {
 			pageLimit = temp;
 		}else {
@@ -46,7 +46,7 @@ public class SurveyController {
 		}
 		
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-		List<SurveyDocVo> titleList =  service.titleList(pv);
+		List<SurveyDocVo> titleList =  service.titleList(pv,searchValue);
 		Map<String, Object>map = new HashMap<String, Object>();
 		map.put("titleList",titleList);
 		map.put("pv", pv);
@@ -60,10 +60,11 @@ public class SurveyController {
 	
 	//설문조사 설문지작성 페이지
 	@GetMapping("survey/create")
-	public void createSurvey(Model model,String titleListpage) {
+	public void createSurvey(Model model,String titleListpage,  String searchValue) {
 		//우측 설문 제목 리스트
-		Map<String, Object> map = titleList(titleListpage);
+		Map<String, Object> map = titleList(titleListpage, searchValue);
 		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("searchValue",searchValue);
 		model.addAttribute("pv",map.get("pv"));
 		
 	}
@@ -85,15 +86,16 @@ public class SurveyController {
 	
 	//질분 답변 리스트 페이지
 	@GetMapping("survey/answerList")
-	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage){
+	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage, String searchValue){
 		//우측 설문 제목 리스트
-		Map<String, Object> map = titleList(titleListpage);
+		Map<String, Object> map = titleList(titleListpage, searchValue);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
 		//질문 4개 리스트 가져오기
 		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
 		model.addAttribute("sdvo",sdvo);
 		model.addAttribute("list", list);
+		model.addAttribute("searchValue", searchValue);
 		//질문 답변 페이징
 		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
 		if(answerListpage == null) {
@@ -126,12 +128,12 @@ public class SurveyController {
 
 	// 리스트에서 1인 답변 클릭 후 해당 답변자의 설문지 답변보기
 	@GetMapping("survey/detail")
-	public void surveySelectQnaList(Model model, SurveyDocVo sdvo , String titleListpage, String answerer) {
+	public void surveySelectQnaList(Model model, SurveyDocVo sdvo , String titleListpage, String answerer, String searchValue)  {
 		if (titleListpage == null || titleListpage.isEmpty()) {
 			titleListpage = "1";
 		}
 		//우측 설문 제목 리스트
-		Map<String, Object> map = titleList(titleListpage);
+		Map<String, Object> map = titleList(titleListpage, searchValue);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
 		//질문 4개 리스트 가져오기
@@ -144,6 +146,7 @@ public class SurveyController {
 		    answerLists.add(answerList);
 		}
 		
+		model.addAttribute("searchValue",searchValue);
 		model.addAttribute("answerer",answerer);
 		model.addAttribute("list", list);
 		model.addAttribute("answerLists", answerLists);
@@ -155,7 +158,7 @@ public class SurveyController {
 	
 	//디테일 리스트(detail 에서 목록으로버튼 or answerList 에서 상세보기 클릭시)
 	@GetMapping("survey/detailList")
-	public String surveySelectQnaTotalList(Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage) {
+	public String surveySelectQnaTotalList(Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage, String searchValue, String answerer) {
 		//질문에 있는 모든 설문 답 리스트
 		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
 		if(detailListpage == null) {
@@ -178,11 +181,12 @@ public class SurveyController {
 		model.addAttribute("detailListPv",detailListPv);
 		
 		
+	
 		//우측 설문 제목 리스트
 		if (titleListpage == null || titleListpage.isEmpty()) {
 			titleListpage = "1";
 		}
-		Map<String, Object> map = titleList(titleListpage);
+		Map<String, Object> map = titleList(titleListpage, searchValue);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
 		//질문 4개 리스트 가져오기
@@ -195,6 +199,7 @@ public class SurveyController {
 		    answerLists.add(answerList);
 		}
 		
+		model.addAttribute("searchValue", searchValue);
 		model.addAttribute("list", list);
 		model.addAttribute("answerLists", answerLists);
 		
