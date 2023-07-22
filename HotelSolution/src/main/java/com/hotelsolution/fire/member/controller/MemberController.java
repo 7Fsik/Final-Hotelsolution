@@ -1,5 +1,10 @@
 package com.hotelsolution.fire.member.controller;
 
+
+import java.io.File;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.hotelsolution.fire.member.service.MemberService;
 import com.hotelsolution.fire.member.vo.MemberVo;
@@ -33,8 +39,9 @@ public class MemberController {
 	
 	//회원가입
 	@PostMapping("join")
-	public String join(MemberVo vo) {
+	public String join(MemberVo vo ,HttpServletRequest req) {
 		log.info(vo.toString());
+		
 		int result = service.join(vo);
 		
 		if(result != 1) {
@@ -55,7 +62,6 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(MemberVo vo , HttpSession session) {
 		
-
 		MemberVo loginMember = service.login(vo);
 		log.info("로그인멤버 : {}" , loginMember);
 		session.setAttribute("loginMember", loginMember);

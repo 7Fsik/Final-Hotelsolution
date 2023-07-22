@@ -33,7 +33,7 @@
     
     #box{
         width: 700px;
-        height: 500px;
+        height: 510px;
         border: 1px solid #3B444B;
         border-radius: 10px;
         margin: 0 auto;
@@ -62,8 +62,9 @@
 	.join-area > input{
 		border: none;
         outline: none;
-        font-size:20px;
+        font-size:17px;
         padding: 3px;
+        width: 200px;
 	}
 
     /* @media(max-width: 768px){
@@ -119,6 +120,17 @@
     	width:100px;
     }
     
+    input[type="number"]::-webkit-outer-spin-button,
+	input[type="number"]::-webkit-inner-spin-button {
+	   	 -webkit-appearance: none;
+	   	 margin: 0;
+	}
+	
+	.errorMessage{
+		font-size:15px;
+		position:relative;
+		left:315px;
+	}
     
 	
 </style>
@@ -127,7 +139,7 @@
 
 	<div id="wrap">
 
-    <form action="${root}/member/join" method="post" onsubmit="return checkAll();">
+    <form action="${root}/member/join" method="post" enctype="multipart/form-data">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
@@ -140,12 +152,14 @@
             
             <div class="join-area">
                  <label for="">ID</label> 
-                <input name="id" type="text" pattern="[0-9]+" placeholder="휴대폰번호로 가입하기" maxlength="11" onblur="checkAll();">
+                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11" oninput="checkId(this); checkEmpty(this);" onblur="checkEmpty(this);">
+                <span class="errorMessage" style="display: none; color: red;">* 아이디를 입력하세요.</span>
             </div>
            
             <div class="join-area">
                  <label for="">PWD</label> 
-                <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16">
+                <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16" oninput="checkPwd(this);" onblur="checkEmpty(this);">
+                <span class="errorMessage" style="display: none; color: red;">* 비밀번호를 입력하세요.</span>
             </div>
            
             <div class="join-area">
@@ -197,80 +211,68 @@
     </div>
 
     <script>
-
-        //회원가입 유효성 검사 체크
-        function checkAll() {
-
-            const id = document.querySelector('input[name=id]').value;
-            const password = document.querySelector('input[name=password]').value;
-            const email = document.querySelector('input[name=email]').value;
-           
-
-            if(!checkId(id)){
-                return false;
-            } else if(!checkPassword(password)){
-                return false;
-            } else if(!checkEmail(email)){
-                return false;
-            }
-                return true;
-
-        }//checkAll
-
-        //회원가입 input 공백확인 함수
-        function checkExist(value , dataName) {
-            
-            if(value==""){
-                alert(dataName + "입력해주세요.")
-                return false;
-            }
-            return true;
-
-        }//checkExist
-
-        //ID유효성 검사
+        
+        //아이디 숫자만 입력가능하게
         function checkId(id) {
             
-            if(!checkExist(id,"아이디를")){
-                return false;
+            const value = id.value;
+            const idRegex = /^[0-9]*$/;
+
+            if(!idRegex.test(value)){
+                alert('숫자만 입력 가능합니다.');
+                id.value='';
             }
 
-            const idRegExp = /[^0-9]/;
+        }
 
-            if(!idRegExp.test(Number(id))){
-                alert("아이디는 숫자로만 입력해야합니다.")
-                return false;
+        //input 태그 공백일때 경고문 뜨기
+        function checkEmpty(idEmpty) {
+            const value = idEmpty.value.trim();
+            const errorMessage = idEmpty.nextElementSibling;
+
+            if (value === '') {
+                errorMessage.style.display = 'inline'; 
+                idEmpty.focus(); 
+            } else {
+                errorMessage.style.display = 'none';
             }
-            return true;
 
-
-        }//checkId
+        }
 
         //비밀번호 유효성 검사
-        function checkPassword(password) {
+        function checkPwd(pwd) {
             
-            if(!checkExist(password,"비밀번호를")){
-                return false;
+            const pwdValue = pwd.value;
+            const pwdRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}$/;
+            const errorMessage = pwd.nextElementSibling;
+
+            if(pwdValue==''){
+                errorMessage.textContent = "* 비밀번호를 입력하세요."
+                errorMessage.style.display = 'inline';
+                pwd.focus();
+            }
+            else if(!pwdRegex.test(pwdValue)){
+                errorMessage.textContent = '* 규칙에 맞게 작성하세요.';
+                errorMessage.style.display = 'inline';
+                pwd.focus();
+            }else{
+                errorMessage.style.display='none';
             }
 
-            return true;
-
-        }//checkPassword
-
+        }
+        
         //이메일 유효성 검사
-        function checkEmail(email) {
+        function checkEmail(params) {
             
-            if(!checkExist(email,"이메일을")){
-                return false;
-            }
-
-            return true;
-
-        }//checkEmail
-
+        }
+        
 
 
     </script>
+        
+
+
+
 
 </body>
 </html>
