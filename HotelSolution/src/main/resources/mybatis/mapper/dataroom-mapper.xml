@@ -3,6 +3,47 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dataroom">
+	
+	<select id="getDataRoomCnt" resultType="int" parameterType="java.util.Map">
+		  SELECT COUNT(DATA_NO)
+		  FROM (
+		    SELECT 
+		      D.DATA_NO,
+		      D.WRITER_NO AS WRITER_NO,
+		      D.CATEGORY_NO AS CATEGORY_NO,
+		      D.SECURITY_LEVEL AS SECURITY_LEVEL,
+		      D.TITLE AS TITLE,
+		      D.CONTENT AS CONTENT,
+		      D.ENROLL_DATE AS ENROLL_DATE,
+		      D.HIT AS HIT,
+		      D.DELETE_YN AS DELETE_YN,
+		      U.NAME AS WRITERNAME,
+		      U.TEAM_NO AS TEAM_NO,
+		      T.TEAM_NAME AS WRITERTEAM,
+		      DF.FILE_NAME AS FIRSTFILE,
+		      DC.NAME AS CATEGORYNAME,
+		      P.NAME AS securityLevelName,
+		      COUNT(*) AS FILECNT
+		    FROM DATAROOM D
+		    JOIN MEMBER U ON D.WRITER_NO = U.NO
+		    JOIN TEAM T ON U.TEAM_NO = T.TEAM_NO
+		    JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
+		    JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
+		    JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
+		    WHERE CATEGORY_NO = #{categoryNo}
+		    <if test="searchType == 'title'">
+		      AND TITLE LIKE ('%'|| #{searchValue}|| '%')
+		    </if>
+		    <if test="searchType == 'writerName'">
+		      AND U.NAME LIKE ('%'|| #{searchValue}|| '%')
+		    </if>
+		    <if test="searchType == 'securityLevelName'">
+		      AND P.NAME LIKE ('%'|| #{searchValue}|| '%')
+		    </if>
+		    GROUP BY D.DATA_NO, D.WRITER_NO, D.CATEGORY_NO, D.SECURITY_LEVEL, D.TITLE, D.CONTENT, D.ENROLL_DATE, D.HIT, D.DELETE_YN, U.NAME, U.TEAM_NO, T.TEAM_NAME, DF.FILE_NAME, DC.NAME, P.NAME
+		  )
+	</select>
+
 
 	<select id="getDataRoomList" resultType="DataRoomVo" parameterType="java.util.Map">
 	
@@ -39,10 +80,7 @@
 		    AND U.NAME LIKE ('%'|| #{searchValue}|| '%')
 
 		  </if>
-		   <if test="searchType == 'writerTeam'">
-		    AND T.TEAM_NAME LIKE ('%'|| #{searchValue}|| '%')
-
-		  </if>
+		 
 		  
 		  <if test="searchType == 'securityLevelName'">
 		    AND P.NAME LIKE ('%'|| #{searchValue}|| '%')
@@ -135,12 +173,6 @@
 	    
 	    FROM DATAROOM_FILE
 	    WHERE DATA_NO = #{drvoNo}
-	</select>
-	
-	<select id="getDataRoomCnt" resultType="int">
-	  SELECT COUNT(DATA_NO)
-	  FROM DATAROOM
-	  WHERE CATEGORY_NO = #{categoryNo}
 	</select>
 	
 	<update id="increaseHit">

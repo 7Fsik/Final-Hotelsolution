@@ -278,7 +278,7 @@ c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage - 1}"><</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
@@ -289,7 +289,7 @@ c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${pv.currentPage < pv.endPage}">
-					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage + 1}">다음</a>
+					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage + 1}">></a>
 					            </c:if>
 				            </div>        		             
 			            

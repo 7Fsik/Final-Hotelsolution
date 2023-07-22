@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.hr.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,13 +17,14 @@ public class EmployeeManagementDao {
 		return sst.selectList("member.getNewList",null,rb);
 	}
 
-	public List<MemberVo> getMemberList(SqlSessionTemplate sst, PageVo pv) {
+	public List<MemberVo> getMemberList(SqlSessionTemplate sst, Map<String, Object> map) {
+		PageVo pv = (PageVo) map.get("pv");
 		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
-		return sst.selectList("member.getMemberList",null,rb);
+		return sst.selectList("member.getMemberList",map,rb);
 	}
 
-	public int getMemberCnt(SqlSessionTemplate sst) {
-		return sst.selectOne("member.getMemberCnt");
+	public int getMemberCnt(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("member.getMemberCnt",map);
 	}
 
 	public int acceptNewMember(SqlSessionTemplate sst, String memberNo) {

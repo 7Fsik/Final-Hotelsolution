@@ -42,7 +42,7 @@
    		
    		
    		display:grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 10fr 1fr ;
         margin-left : 20px ;
         width: 900px;
    		height:645px;
@@ -137,12 +137,14 @@
     	justify-content: space-around;
         }
       .tt{
-      	display:grid;
       	padding-left: 40px;
-      	grid-template-columns : 12fr 1fr 1fr 1fr 1fr;  
+        }
+        #img1{
+        	height: 20px;
         }
         .ac{
         	font-size: 30px;
+        	
         }
      .ttt{
         margin-left: 60px; 
@@ -224,6 +226,10 @@
 	padding-top:10px;
 	font-size: 15px;
 }
+.aj{
+	display: grid;
+	 grid-template-rows: repeat(10,1fr);
+}
 </style>
 </head>
 <body>
@@ -240,14 +246,23 @@
 			        <div class="writememberListWrap">
 			        	<div class="listWrap">
 			        		<div class="tt">
-			        				
-			        				<div></div>
-			        				<div class="ttc">
-			        					부서
-									</div>
-					        		<div class="ttc">직책</a></div>
-					        		<div class="ttc">검색칸</a></div>
-					        		<div class="ttc">검색</a></div>
+		        				 <form action="${root}/hr/em/list" method="get" style="margin-left: 500px;">
+						                <input type="hidden" value="1" name="page">
+						                    <select name="searchType" id="opt" >
+						                        <option value="teamName" >부서</option>
+						                        <option value="positionName" >직책</option>
+						                        <option value="name" >이름</option>
+						                        <option value="id">전화번호</option>
+						                        <option value="email">이메일</option>
+						                        
+						                    </select>
+						                    
+						               
+						                    <input class = "searchValueElem " id="searchValue" type = "text" name = "searchValue" value = "${searchVo.searchValue}" placeholder="검색할 내용">
+						                    
+						                     <input type="image" id="img1" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" />
+						            </form>
+	               						
 			        		</div>
 			        		
 				        	<div class="memberListTop">
@@ -259,40 +274,8 @@
 								<div>가입일</div>
 							</div>
 							
-							<c:forEach items= "${memberVoList }" var="memberVo">
-							    <div class="memberVoList" onclick="goDetail(${memberVo.no})">
-							        <div class="bbr" style="padding-left: 10px;">
-							            
-							                ${memberVo.teamName}
-							           
-							        </div>
-							        <div class="bbr" style="padding-left: 20px;">
-							          
-							                ${memberVo.positionName}
-							            
-							        </div>
-							        <div class="bbr">
-							            
-							               ${memberVo.name } 
-							            
-							        </div>
-							        <div class="bbr"style="padding-left: 30px;">
-							            
-							               0${memberVo.id }
-							          
-							        </div>
-							        <div class="bbr">
-							          
-							                ${memberVo.email}
-							            
-							        </div>
-							        <div>
-							           
-							                ${memberVo.enrollDate}
-							            
-							        </div>
-							    </div>
-							</c:forEach>
+							<div class="aj">
+							</div>
 							 <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
 					            	<a  href="${root}/hr/em/list?memberListpagee=${pv.currentPage - 1}">이전</a>
@@ -305,9 +288,11 @@
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${pv.currentPage < pv.maxPage}">
+					            <c:if test="${pv.currentPage < pv.endPage}">
 					            	<a  href="${root}/hr/em/list?memberListpage=${pv.currentPage + 1}">다음</a>
 					            </c:if>
+					            <div class="searchType" hidden="">${searchType}</div>
+					            <div class="searchValue" hidden="">${searchValue}</div>
 				            </div>
 
 
@@ -327,7 +312,7 @@
 			
 </body>
 <script type="text/javascript">
-	function getMember() {
+	function getNewMember() {
 		$.ajax({
 		    url: "${root}/hr/em/new",
 		    method: "GET",
@@ -354,6 +339,7 @@
 		        }
 		
 		        tbody.innerHTML = str;
+		        getMember();
 		    },
 		    error: function (e) {
 		        console.log(e);
@@ -361,7 +347,45 @@
 		});
 	}
 		
+	function getMember(memberListpage){
+		const searchValue = document.querySelector(".searchValue").innerText;
+	    const searchType = document.querySelector(".searchType").innerText;
+		$.ajax({
+			url: "${root}/hr/em/list",
+		    method: "POST",
+		    data: {
+	            searchType: searchType,
+	            searchValue: searchValue
+	        },
+		    dataType: "json",
+		    success: function (x) {
+		        console.log(x);
+		
+		        const otbody = document.querySelector(".aj");
+		        let ostr = "";
 
+		        for (let i = 0; i < x.length; i++) {
+		        	ostr += '<div class="memberVoList" onclick="goDetail('+x[i].no +')">'+
+	                ' <div class="bbr" style="padding-left: 10px;">'+ x[i].teamName + '</div>'+
+	                ' <div class="bbr" style="padding-left: 20px;">'+ x[i].positionName + '</div>' +
+	                ' <div class="bbr">'+ x[i].name + '</div>' +
+	                ' <div class="bbr" style="padding-left: 30px;">0'+x[i].id + '</div>' +
+	                ' <div class="bbr">'+x[i].email + '</div>' +
+	                ' <div>'+x[i].enrollDate + '</div>'
+	                +'</div>'
+	                ;
+				   
+		        }
+					ostr +='</div>';
+		
+		        otbody.innerHTML = ostr;
+		    },
+		    error: function (e) {
+		        console.log(e);
+		    },
+		});
+		
+	}
 	
 	
 	function acceptMember(memberNo) {
@@ -371,9 +395,7 @@
 		    data: {memberNo : memberNo},
 		    dataType: "json",
 		    success: function (x) {
-		    	
-
-		        location.reload();
+				getNewMember();
 		    },
 		    error: function (e) {
 		        console.log(e);
@@ -381,6 +403,7 @@
 		});
 	}
 
+	getNewMember();
 	getMember();
 	
 	function goDetail(memberNo) {

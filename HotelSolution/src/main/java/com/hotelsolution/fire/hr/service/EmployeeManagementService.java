@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.hr.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,12 @@ public class EmployeeManagementService {
 		return dao.getNewList(sst, pv);
 	}
 
-	public List<MemberVo> getMemberList(PageVo pv) {
-		return  dao.getMemberList(sst,pv);
+	public List<MemberVo> getMemberList(Map<String, Object> map) {
+		return  dao.getMemberList(sst,map);
 	}
 
-	public int getMemberCnt() {
-		return dao.getMemberCnt(sst);
+	public int getMemberCnt(Map<String, Object> map) {
+		return dao.getMemberCnt(sst, map);
 	}
 
 	public int acceptNewMember(String memberNo) {

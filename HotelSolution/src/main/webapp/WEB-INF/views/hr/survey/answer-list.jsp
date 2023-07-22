@@ -369,7 +369,7 @@
 					            	<a >${i}</a>
 			            		</c:if>
 			            	</c:forEach>
-			            <c:if test="${answerListPv.currentPage < answerListPv.maxPage}">
+			            <c:if test="${answerListPv.currentPage < answerListPv.endPage}">
 			            	<a  href="${root}/hr/survey/answerList?searchValue=${searchValue}&no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&answerListpage=${answerListPv.currentPage + 1}&titleListpage=${pv.currentPage}">다음</a>
 			            </c:if>
 			             <button value="상세조회" onclick="goDetailList('${sdvo.no}', '${sdvo.title}', '${sdvo.enrollDate}', '${pv.currentPage}', '${searchValue}')">상세조회</button>

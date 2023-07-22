@@ -18,6 +18,6 @@ public interface DataRoomService {
 
 	List<DataRoomFileVo> getDetailDrfvoList(String drvoNo);
 
-	int getDataRoomCnt(String categoryNo);
+	int getDataRoomCnt(Map<String, Object> map);
 
 }
