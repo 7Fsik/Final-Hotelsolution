@@ -28,33 +28,75 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 		
 		private final EmployeeManagementService service;
 		
+	
 		
 		//직원 관리 페이지
 		@GetMapping("list")
-		public void list(Model model, String memberListpage) {
+		public void list(Model model, String memberListpage,String searchType, String searchValue) {
+			Map<String,Object> map = new HashMap();
+			map.put("searchType", searchType);
+			map.put("searchValue", searchValue);
 			//등록 직원 리스트 조회
-			int listCount = service.getMemberCnt();
+			int listCount = service.getMemberCnt(map);
 			if (memberListpage == null || memberListpage.isEmpty()) {
 				memberListpage = "1";
 			}
 			
 			int currentPage = Integer.parseInt(memberListpage);
 			int boardLimit = 10;
-			int temp = listCount/boardLimit +1;
-			int pageLimit = 0;
-			if(temp<5) {
-				pageLimit = temp;
-			}else {
-				pageLimit=5;
+			int pageLimit = 5;
+			PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+			int realPage = (pv.getListCount()-1)/boardLimit+1;
+			if(realPage<=pv.getPageLimit()) {
+				pv.setEndPage(realPage);
+			}
+		
+			if(realPage<=pv.getEndPage()) {
+				pv.setEndPage(realPage);
 			}
 			
-			PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-			List<MemberVo> memberVoList = service.getMemberList(pv);
+			map.put("pv", pv);
+			System.out.println("getList직원 "+pv);
+			List<MemberVo> memberVoList = service.getMemberList(map);
 			model.addAttribute("memberVoList", memberVoList);
 			model.addAttribute("memberListpage",memberListpage);
 			model.addAttribute("pv", pv);
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("searchValue", searchValue);
+			System.out.println(map);
+			System.out.println(memberVoList);
 			
+		}
+		//승인 이후 직원 목록 변동
+		@PostMapping("list")
+		@ResponseBody
+		public List list(String memberListpage,String searchType, String searchValue) {
+			Map<String,Object> map = new HashMap();
+			map.put("searchType", searchType);
+			map.put("searchValue", searchValue);
+			System.out.println(map);
+			int listCount = service.getMemberCnt(map);
+			if (memberListpage == null || memberListpage.isEmpty()) {
+				memberListpage = "1";
+			}
 			
+			int currentPage = Integer.parseInt(memberListpage);
+			int boardLimit = 10;
+			int pageLimit = 5;
+			PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+			int realPage = (pv.getListCount()-1)/boardLimit+1;
+			if(realPage<=pv.getPageLimit()) {
+				pv.setEndPage(realPage);
+			}
+		
+			if(realPage<=pv.getEndPage()) {
+				pv.setEndPage(realPage);
+			}
+			System.out.println("postList직원 "+pv);
+			map.put("pv", pv);
+			return service.getMemberList(map);
+			
+		
 		}
 		
 		//

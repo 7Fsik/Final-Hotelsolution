@@ -50,8 +50,8 @@ public class DataRoomServiceImpl implements DataRoomService {
 	}
 
 	@Override
-	public int getDataRoomCnt(String categoryNo) {
-		return dao.getDataRoomCnt(sst, categoryNo);
+	public int getDataRoomCnt(Map<String, Object> map) {
+		return dao.getDataRoomCnt(sst, map);
 	}
 
 }

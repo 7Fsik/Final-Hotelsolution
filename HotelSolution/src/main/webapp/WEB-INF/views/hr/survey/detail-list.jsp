@@ -153,9 +153,6 @@
     	
     	
     }
-    #page-area{
-    text-align: center;
-    }
     .searchInput{
     	border-bottom: 1px solid #3b444b;
     }
@@ -221,6 +218,16 @@
     background-color: #dedede;
     display: flex;
 } 
+   #page-area{
+   		 margin :auto;
+   	 	width: 200px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
+    }
+    #img1{
+    	height: 20px;
+    }
 </style>
 </head>
 <body>
@@ -246,18 +253,18 @@
 							</c:forEach>
 			                 <div id="detail-list-page-area">
 				            	<c:if test="${detailListPv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage - 1}&titleListpage=${pv.currentPage}">이전</a>
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage - 1}&titleListpage=${pv.currentPage}&searchValue=${searchValue}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${detailListPv.startPage}" end="${detailListPv.endPage}" step="1" var="i">
 					            		<c:if test="${detailListPv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${i}&titleListpage=${pv.currentPage}">${i}</a>
+							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${i}&titleListpage=${pv.currentPage}&searchValue=${searchValue}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${detailListPv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${detailListPv.currentPage < detailListPv.maxPage}">
-					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage + 1}&titleListpage=${pv.currentPage} ">다음</a>
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage + 1}&titleListpage=${pv.currentPage}&searchValue=${searchValue} ">다음</a>
 					            </c:if>
 				         	</div>
 			               
@@ -271,7 +278,7 @@
 			            </div>
 			                <div class="listWrap">
 							    <c:forEach items="${titleList}" var="title">
-							        <div class="titleList" onclick="goDetail('${title.no}', '${title.title}', '${title.enrollDate}')">
+							        <div class="titleList"  onclick="goAnswerList('${title.no}', '${title.title}', '${title.enrollDate}', '${pv.currentPage}','${searchValue}')">
 							            <p class="titleTruncate">${title.title}</p>
 							            <br>
 							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
@@ -279,27 +286,32 @@
 							    </c:forEach>
 							</div>
 			             
-			                 <div class="searchList">
-								
-			                    설문 제목 : <input type="text" class="searchInput">
-			                    <button type="submit" > 검색 </button>
-			                 </div>
+			                <form action="${root}/hr/survey/detailList" method="get" class="searchList">
+							    <input type="hidden" name="no" value="${sdvo.no}" />
+							    <input type="hidden" name="title" value="${sdvo.title}" />
+							    <input type="hidden" name="enrollDate" value="${sdvo.enrollDate}" />
+							    <input type="hidden" name="answerListpage" value="${pv.currentPage}" />
+							    <input type="hidden" name="detailListpage" value="${detailListPv.currentPage}" />
+							    <input class="searchValueElem" id="searchValue" type="text" name="searchValue" value="${searchVo.searchValue}" placeholder="검색할 내용" />
+							    <input type="image" id="img1" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" />
+							</form>
+			                 
 			                 
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage - 1}&searchValue=${searchValue}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${i}&searchValue=${searchValue}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage + 1} ">다음</a>
+					            <c:if test="${pv.currentPage < pv.endPage}">
+					            	<a  href="${root}/hr/survey/detailList?no=${sdvo.no}&title=${sdvo.title}&enrollDate=${sdvo.enrollDate}&detailListpage=${detailListPv.currentPage}&titleListpage=${pv.currentPage + 1}&searchValue=${searchValue} ">다음</a>
 					            </c:if>
 				            </div>
 			                    
@@ -314,8 +326,8 @@
 	</div>
 </body>
 <script>
-function goDetail(no, title, enrollDate, titleListpage) {
-    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate+'&titleListpage=1';
+function goAnswerList(no, title, enrollDate, titleListpage, searchValue) {
+    window.location.href = '${root}/hr/survey/answerList?no=' + no + '&title=' + title + '&enrollDate=' + enrollDate + '&titleListpage=' + titleListpage +'&searchValue='+searchValue;
 }
     
 </script>

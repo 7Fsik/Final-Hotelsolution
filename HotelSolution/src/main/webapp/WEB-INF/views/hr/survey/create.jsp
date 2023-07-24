@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    
@@ -149,9 +149,15 @@
     	
     	
     }
-    #page-area{
-    text-align: center;
+  
+     #page-area{
+   		 margin :auto;
+   	 	width: 200px;
+    	text-align: center;
+    	display: flex;
+    	justify-content: space-around;
     }
+    
     .searchInput{
     	border-bottom: 1px solid #3b444b;
     }
@@ -203,6 +209,9 @@
     background-color: #dedede;
     display: flex;
 } 
+#img1{
+	height:20px;
+}
 </style>
 </head>
 <body>
@@ -256,33 +265,33 @@
 							            <p style="text-align: right; font-size: 15px; margin-right: 5px;">(${title.enrollDate})</p>
 							        </div>
 							    </c:forEach>
-							</div>
-			             
-			                 <div class="searchList">
+							
+			                
+			             </div>
+			              <form action="${root}/hr/survey/create" method="get" class="searchList">
 								
-			                    설문 제목 : <input type="text" class="searchInput">
-			                    <button type="submit" > 검색 </button>
-			                 </div>
+			                   <input class = "searchValueElem " id="searchValue" type = "text" name = "searchValue" value = "${searchVo.searchValue}" placeholder="검색할 내용">
+							                    
+			                     <input type="image" id="img1" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" />
+			                 </form>
 			                 
 		                   
 		                   <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/survey/create?titleListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage - 1}"><</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/survey/create?titleListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${i}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
-					            <c:if test="${pv.currentPage < pv.maxPage}">
-					            	<a  href="${root}/hr/survey/create?titleListpage=${pv.currentPage + 1}">다음</a>
+					            <c:if test="${pv.currentPage < pv.endPage}">
+					            	<a  href="${root}/hr/survey/create?searchValue=${searchValue}&titleListpage=${pv.currentPage + 1}">></a>
 					            </c:if>
-				            </div>
-			                    
-			                                  
+				            </div>        		             
 			            
 			        </div>
 			    </div>

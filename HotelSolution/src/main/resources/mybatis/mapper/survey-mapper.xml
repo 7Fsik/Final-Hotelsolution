@@ -7,7 +7,12 @@
   <select id="titleList" resultType="SurveyDocVo">
 	   SELECT NO, TITLE, TO_CHAR(ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') AS ENROLL_DATE
 		FROM SURVEY_DOCUMENT
+		<if test="searchValue != null and searchValue != '' ">
+					where TITLE LIKE ('%'|| #{searchValue}|| '%')
+
+		</if>
 		ORDER BY NO DESC
+		
 
   
   </select>
@@ -47,12 +52,18 @@
 	<select id="getSurveyCnt" resultType="int">
 	  	SELECT COUNT(NO)
 	  	FROM SURVEY_DOCUMENT
+	  	<if test="searchValue != null and searchValue != '' ">
+				where TITLE LIKE ('%'|| #{searchValue}|| '%')
+
+		</if>
   	
   	</select>
   	<select id="getAnswerCnt" resultType="int">
-	  	SELECT COUNT(NO)
-	  	FROM ANSWER
-	  	WHERE QUESTION_NO = #{no}
+	  SELECT COUNT(A.NO)
+		    FROM ANSWER A
+		    JOIN SURVEY_QUESTION SQ ON A.QUESTION_NO = SQ.NO
+		    JOIN SURVEY_DOCUMENT SD ON SQ.SURVEY_NO = SD.NO
+		    WHERE SD.NO = #{NO}
 	  	
   		
   	</select>

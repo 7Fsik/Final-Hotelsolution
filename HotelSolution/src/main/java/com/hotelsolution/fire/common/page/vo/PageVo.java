@@ -1,8 +1,9 @@
 package com.hotelsolution.fire.common.page.vo;
 
+import lombok.Data;
 import lombok.Getter;
 
-@Getter
+@Data
 public class PageVo {
 
 

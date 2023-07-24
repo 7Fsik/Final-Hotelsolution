@@ -19,8 +19,6 @@ public class DataRoomDaoImpl implements DataRoomDao {
 	public List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, Map<String, Object> map) {
 		PageVo dataRoomListPv = (PageVo) map.get("dataRoomListPv");
 		RowBounds rb = new RowBounds(dataRoomListPv.getOffset(), dataRoomListPv.getBoardLimit());
-		System.out.println(dataRoomListPv);
-		System.out.println(map);
 		return sst.selectList("dataroom.getDataRoomList", map, rb);
 	}
 
@@ -55,8 +53,8 @@ public class DataRoomDaoImpl implements DataRoomDao {
 	}
 
 	@Override
-	public int getDataRoomCnt(SqlSessionTemplate sst, String categoryNo) {
-		return sst.selectOne("dataroom.getDataRoomCnt", categoryNo);
+	public int getDataRoomCnt(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("dataroom.getDataRoomCnt", map);
 	}
 
 	@Override
