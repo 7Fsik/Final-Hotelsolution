@@ -13,9 +13,8 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
     
@@ -96,45 +95,49 @@
 </style>
 <body>
 
-    <main>
+    <div id ="wrap">
 
-        <div id="title">
-            객실 이용관리
-        </div>
-
-        <div id="search-area">
-            <div id="search">
-                <select name="" id="">
-                    <option value="">방 호수</option>
-                </select>
-                
-                <input type="text">
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
+            <div id="title">
+                객실 이용관리
             </div>
-        </div>
-
-        <div id="list-area">
-            <div id="list">
-	            <c:forEach begin="1" end="8">
-	                <div class="att">
-	                    <div class="img">
-	                        <img src="/fire/static/img/front/room001.jpg">
-	                    </div>
-	                    <div>
-	                        <div class="name">방이름</div>
-	                        <div class="ho">호수</div>
-	                    </div>
-                        <div class="btn">
-                            <button>이용내역</button>
+    
+            <div id="search-area">
+                <div id="search">
+                    <select name="" id="">
+                        <option value="">방 호수</option>
+                    </select>
+                    
+                    <input type="text">
+                </div>
+            </div>
+    
+            <div id="list-area">
+                <div id="list">
+                    <c:forEach begin="1" end="8">
+                        <div class="att"onclick="location.href='/fire/front/useManage/detail'">
+                            <div class="img">
+                                <img src="/fire/static/img/front/room001.jpg">
+                            </div>
+                            <div>
+                                <div class="name">방이름</div>
+                                <div class="ho">호수</div>
+                            </div>
+                            <div class="btn">
+                                <button>이용내역</button>
+                            </div>
                         </div>
-	                </div>
-				</c:forEach>
-            </div>
-            <div id="page-area">
-                이전 1 2 3 4 5 6 7 8 9 10 다음
+                    </c:forEach>
+                </div>
+                <div id="page-area">
+                    이전 1 2 3 4 5 6 7 8 9 10 다음
+                </div>
             </div>
         </div>
-
-    </main>
+    
+    </div>
 
 </body>
 </html>

@@ -16,7 +16,7 @@
 		,F.ROOM_NO
 		,F.IMG
 		,F.TYPE_NAME
-		,F.PRICE
+		,F.COMMON_PRICE
 		,F.COMMON_PERSON
 		,F.MAX_PERSON
 		,F.ROOM_SIZE
@@ -29,7 +29,7 @@
 		,I.ROOM_NO
 		,I.IMG
 		,T.TYPE_NAME
-		,T.PRICE
+		,T.COMMON_PRICE
 		,T.COMMON_PERSON
 		,T.MAX_PERSON
 		,T.ROOM_SIZE
@@ -41,10 +41,10 @@
 				F.ROOM_NO LIKE ('%'||#{searchValue}||'%')
 			</if>
 			<if test="searchType == 'statusNo'">
-				AND F.STATUS_NO LIKE ('%'||#{searchValue}||'%')
+				F.STATUS_NO LIKE ('%'||#{searchValue}||'%')
 			</if>
 			<if test="searchType == 'typeName'">
-				AND F.TYPE_NAME LIKE('%'||#{searchValue}||'%')
+				F.TYPE_NAME LIKE('%'||#{searchValue}||'%')
 			</if>
 		
 		</where>
@@ -70,7 +70,7 @@
 		,I.ROOM_NO
 		,I.IMG
 		,T.TYPE_NAME
-		,T.PRICE
+		,T.COMMON_PRICE
 		,T.COMMON_PERSON
 		,T.MAX_PERSON
 		,T.ROOM_SIZE

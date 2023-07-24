@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bookManage">
+
+	<select id="selectRoomList" resultType="StatusVo">
+		
+		
+	</select>
+	
+	<select id="getBookCnt" resultType="int">
+		
+		SELECT count(NO)
+		FROM BOOK_LIST
+		
+
+	</select>
+
+	<select id="list" resultType="BookManageVo">
+		
+		SELECT 
+		G.GUEST_NO
+		,G.NAME
+		,G.PHONE_NUMBER
+		,G.GENDER
+		,G.AGE
+		,G.NATIONALLITY
+		,S.TYPE_NAME
+		,S.NO
+		,S.ROOM_INT_NO
+		,S.BOOK_DATE
+		,TO_CHAR(S.START_DATE, 'MM-DD') AS START_DATE
+		,TO_CHAR(S.END_DATE, 'MM-DD') AS END_DATE
+		,S.USER_NO
+		,S.PRICE
+		,S.ROOM_NO
+		,S.IMG
+		FROM ROOM_GUEST G
+		JOIN (SELECT 
+		T.TYPE_NAME
+		,S.NO
+		,S.GUEST_NO
+		,S.ROOM_INT_NO
+		,S.BOOK_DATE
+		,S.START_DATE
+		,S.END_DATE
+		,S.USER_NO
+		,S.PRICE
+		,S.ROOM_NO
+		,S.IMG
+		FROM ROOM_TYPE T
+		JOIN (SELECT 
+		B.NO
+		,B.GUEST_NO
+		,B.ROOM_INT_NO
+		,B.BOOK_DATE
+		,B.START_DATE
+		,B.END_DATE
+		,B.USER_NO
+		,B.PRICE
+		,I.ROOM_NO
+		,I.IMG
+		,I.TYPE_NO
+		FROM BOOK_LIST B
+		JOIN ROOM_INTRODUCE I ON B.ROOM_INT_NO = I.ROOM_INT_NO) S
+		ON  T.TYPE_NO = S.TYPE_NO ) S
+		ON G.GUEST_NO = S.GUEST_NO
+		<where>
+			<if test="searchType == 'name'">
+				G.NAME LIKE ('%'||#{searchValue}||'%')
+			</if>
+			<if test="searchType == 'phoneNumber'">
+				G.PHONE_NUMBER LIKE ('%'||#{searchValue}||'%')
+			</if>
+		</where>
+		
+	</select>
+	
+	
+	<select id="getBookByNo" resultType="BookManageVo">
+		SELECT 
+		G.GUEST_NO
+		,G.NAME
+		,G.PHONE_NUMBER
+		,G.GENDER
+		,G.AGE
+		,G.NATIONALLITY
+		,S.TYPE_NAME
+		,S.NO
+		,S.ROOM_INT_NO
+		,S.BOOK_DATE
+		,TO_CHAR(S.START_DATE, 'YYYY-MM-DD') AS START_DATE
+		,TO_CHAR(S.END_DATE, 'YYYY-MM-DD') AS END_DATE
+		,S.USER_NO
+		,S.PRICE
+		,S.ROOM_NO
+		,S.IMG
+		FROM ROOM_GUEST G
+		JOIN (SELECT 
+		T.TYPE_NAME
+		,S.NO
+		,S.GUEST_NO
+		,S.ROOM_INT_NO
+		,S.BOOK_DATE
+		,S.START_DATE
+		,S.END_DATE
+		,S.USER_NO
+		,S.PRICE
+		,S.ROOM_NO
+		,S.IMG
+		FROM ROOM_TYPE T
+		JOIN (SELECT 
+		B.NO
+		,B.GUEST_NO
+		,B.ROOM_INT_NO
+		,B.BOOK_DATE
+		,B.START_DATE
+		,B.END_DATE
+		,B.USER_NO
+		,B.PRICE
+		,I.ROOM_NO
+		,I.IMG
+		,I.TYPE_NO
+		FROM BOOK_LIST B
+		JOIN ROOM_INTRODUCE I ON B.ROOM_INT_NO = I.ROOM_INT_NO) S
+		ON  T.TYPE_NO = S.TYPE_NO ) S
+		ON G.GUEST_NO = S.GUEST_NO
+		WHERE S.NO = #{no}
+	
+	</select>
+	
+	
+	
+
+
+</mapper>
