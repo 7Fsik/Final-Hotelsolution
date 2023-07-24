@@ -22,9 +22,6 @@ public class ScheduleService {
 	
 	private final SqlSessionTemplate sst;
 
-	public List<ScheduleVo> readSchedule(MemberVo loginMember){
-		return dao.readSchedule(sst, loginMember);
-	}
 	
 //	public List<ScheduleVo> tgetFullCalendar(String lectureNo) throws SQLException {
 //		Connection conn = JDBCTemplate.getConnection();
@@ -34,9 +31,9 @@ public class ScheduleService {
 //		return voList;
 //	}
 
-	public int createSchedule(MemberVo loginMember, String[] data)  {
+	public int createSchedule(MemberVo loginMember, ScheduleVo vo)  {
 		
-		return dao.createSchedule(sst, loginMember, data);
+		return dao.createSchedule(sst, loginMember, vo);
 	}
 
 	public int modifySchedule(MemberVo loginMember, String[] data) {
@@ -47,9 +44,17 @@ public class ScheduleService {
 
 	public int deleteSchedule(MemberVo loginMember, String[] data) {
 		return dao.deleteSchedule(sst, loginMember, data);
-
 	
 		
+	}
+
+
+	public List<ScheduleVo> getMySchedule(String no) {
+		return dao.getMySchedule(sst,no);
+	}
+
+	public List<ScheduleVo> getTeamSchedule(MemberVo loginMember) {
+		return dao.getTeamSchedule(sst,loginMember);
 	}
 
 	

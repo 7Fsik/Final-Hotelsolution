@@ -212,7 +212,7 @@
 				
 					    <div class="dataroomWrap">
 					    	
-			           			<div class= "topNameText" >${drvo.title} (${drvo.categoryName}자료실)</div>
+			           			<div class= "topNameText" >${drvo.title}  <p style="text-align: right; margin-right: 40px; font-size: 30px; color:#3b444b ">(${drvo.categoryName}자료실)</p></div>
 					        <div class="writeDataroomWrap">
 					           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
 									<input type="hidden" name="writerNo" value="1">

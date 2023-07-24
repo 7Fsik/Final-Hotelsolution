@@ -11,4 +11,8 @@ public class ScheduleVo {
 	private String startDate;
 	private String endDate;
 	private String scheduleTypeNo;
+	//추가
+	private String writerName;
+	private String typeName;
+	
 }
