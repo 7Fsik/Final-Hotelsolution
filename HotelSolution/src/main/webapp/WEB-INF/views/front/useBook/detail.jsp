@@ -11,9 +11,8 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
     
@@ -107,64 +106,68 @@
 </style>
 <body>
 
-<main>
+    <div id ="wrap">
 
-        <div id="title">
-            객실 이용 / 예약
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
+            <div id="title">
+                객실 이용 / 예약
+            </div>
+            <div id="re">
+                <a href="">돌아가기</a>
+            </div>
+    
+            <div id="int-area">
+                <div class="font-25">
+                    방이름
+                </div>
+                <div class="font-20">
+                    호수
+                </div>
+    
+                <div class="img">
+                    <img src="" alt="">
+                </div>
+                <div id="userdate-area">
+                    <div class="line font-25">손님 정보</div>
+                    <div id="user-area" class="text-left">
+                        <div>
+                            손님이름 : <input type="text">
+                        </div>
+                        <div>
+                            국적 : <input type="text">
+                        </div>
+                    </div>
+                    <div id="user-area2" class="text-left">
+                        <div>
+                            전화번호 : <input type="text">
+                        </div>
+                        <div>
+                            성별 : <input class="small-input" type="text">
+                        </div>
+                        <div>
+                            연령 : <input class="small-input" type="text"> 살
+                        </div>
+                    </div>
+                    <div class="line font-25">이용날짜</div>
+                    <div>
+                        시작일 : <input type="date">
+                    </div>
+                    <div>
+                        종료일 : <input type="date">
+                    </div>
+                    <div id="price">총 객실 금액 : 230000 원</div>
+                </div>
+                <div id="ch">
+                    <button>예약하기</button>
+                    <button>이용하기</button>
+                </div>
+    
+            </div>
         </div>
-        <div id="re">
-            <a href="">돌아가기</a>
-        </div>
-
-        <div id="int-area">
-            <div class="font-25">
-                방이름
-            </div>
-            <div class="font-20">
-                호수
-            </div>
-
-            <div class="img">
-                <img src="" alt="">
-            </div>
-            <div id="userdate-area">
-                <div class="line font-25">손님 정보</div>
-                <div id="user-area" class="text-left">
-                    <div>
-                        손님이름 : <input type="text">
-                    </div>
-                    <div>
-                        국적 : <input type="text">
-                    </div>
-                </div>
-                <div id="user-area2" class="text-left">
-                    <div>
-                        전화번호 : <input type="text">
-                    </div>
-                    <div>
-                        성별 : <input class="small-input" type="text">
-                    </div>
-                    <div>
-                        연령 : <input class="small-input" type="text"> 살
-                    </div>
-                </div>
-                <div class="line font-25">이용날짜</div>
-                <div>
-                    시작일 : <input type="date">
-                </div>
-                <div>
-                    종료일 : <input type="date">
-                </div>
-                <div id="price">총 객실 금액 : 230000 원</div>
-            </div>
-            <div id="ch">
-                <button>예약하기</button>
-                <button>이용하기</button>
-            </div>
-
-        </div>
-
-    </main>
+    
+    </div>
 
 </body>
 </html>

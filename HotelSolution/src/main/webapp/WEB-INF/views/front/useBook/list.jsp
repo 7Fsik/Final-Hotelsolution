@@ -13,9 +13,8 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
     
@@ -96,46 +95,50 @@
 </style>
 <body>
 
-    <main>
+    <div id ="wrap">
 
-        <div id="title">
-            객실 예약관리
-        </div>
-
-        <div id="search-area">
-            <div id="search">
-                <select name="" id="">
-                    <option value="">방 호수</option>
-                </select>
-                
-                <input type="text">
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
+            <div id="title">
+                이용/예약 가능한 객실
             </div>
-        </div>
-
-        <div id="list-area">
-            <div id="list">
-	            <c:forEach begin="1" end="8">
-	                <div class="att">
-	                    <div class="img">
-	                        <img src="/fire/static/img/front/room001.jpg">
-	                    </div>
-	                    <div>
-	                        <div class="name">방이름</div>
-	                        <div class="ho">호수</div>
-                            <div>금액 : 100000 원</div>
-	                    </div>
-                        <div class="btn">
-                            <button>이용/예약하기</button>
+    
+            <div id="search-area">
+                <div id="search">
+                    <select name="" id="">
+                        <option value="">방 호수</option>
+                    </select>
+                    
+                    <input type="date">
+                </div>
+            </div>
+    
+            <div id="list-area">
+                <div id="list">
+                    <c:forEach items="${voList}" var="vo">
+                        <div class="att" onclick="location.href='/fire/front/useBook/detail'">
+                            <div class="img">
+                                <img src="/fire/static/img/front/room001.jpg">
+                            </div>
+                            <div>
+                                <div class="name">${vo.typeName}</div>
+                                <div class="ho">${vo.roomNo}</div>
+                                <div>금액 :  원</div>
+                            </div>
+                            <div class="btn">
+                                <button>이용/예약하기</button>
+                            </div>
                         </div>
-	                </div>
-				</c:forEach>
-            </div>
-            <div id="page-area">
-                이전 1 2 3 4 5 6 7 8 9 10 다음
+                    </c:forEach>
+                </div>
+                <div id="page-area">
+                    이전 1 2 3 4 5 6 7 8 9 10 다음
+                </div>
             </div>
         </div>
-
-    </main>
+    
+    </div>
 
 </body>
 </html>

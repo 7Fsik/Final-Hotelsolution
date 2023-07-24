@@ -1,11 +1,11 @@
-package com.hotelsolution.fire.front.status.vo;
+package com.hotelsolution.fire.front.useBook.vo;
 
 import lombok.Data;
 
 @Data
-public class StatusVo {
-	
-	//INT
+public class UseBookVo {
+
+	//객실 정보들 
 	private String roomIntNo;
 	private String typeNo;
 	private String statusNo;
@@ -13,16 +13,14 @@ public class StatusVo {
 	private String roomNo;
 	private String img;
 	
-	//type
 	private String typeName;
 	private String commonPrice;
 	private String commonPerson;
 	private String maxPerson;
 	private String roomSize;
 	
-	//status
+	//객실 예약정보
+	private String totalPrice;
 	
-	private String status;
 	
-
 }

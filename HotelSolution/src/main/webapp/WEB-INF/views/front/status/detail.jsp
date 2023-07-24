@@ -11,9 +11,8 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
     
@@ -111,57 +110,64 @@
 </style>
 <body>
 
-<main>
+    <div id ="wrap">
 
-        <div id="title">
-            객실상태 상세조회
-        </div>
-        <div id="re">
-            <a href="#" onclick="goBack()">돌아가기</a>
-        </div>
-
-        <div id="int-area">
-            <div class="font-25">
-                ${sv.typeName}
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
+            <div id="title">
+                객실상태 상세조회
             </div>
-            <div class="font-20">
-                ${sv.roomNo} 호
+            <div id="re">
+                <a href="#" onclick="goBack()">돌아가기</a>
             </div>
-
-            <div class="img">
-                <img src="" alt="">
-            </div>
-            <form action="/fire/front/status/edit" method="get" enctype="multipart/form-data">
-                <input type="hidden" name="roomIntNo" value="${sv.roomIntNo}">
-                <div id="img-file">
-                    <input type="file" name="img" value="사진 수정하기">
+    
+            <div id="int-area">
+                <div class="font-25">
+                    ${sv.typeName}
                 </div>
-                <div id="userdate-area">
-                    <div class="line font-25">객실 소개</div>
-                    <div >
-                        <input id="room-int" type="text" name="introduce" value="${sv.introduce}" >
-                        
+                <div class="font-20">
+                    ${sv.roomNo} 호
+                </div>
+    
+                <div class="img">
+                    <img src="" alt="">
+                </div>
+                <form action="/fire/front/status/edit" method="get" enctype="multipart/form-data">
+                    <input type="hidden" name="roomIntNo" value="${sv.roomIntNo}">
+                    <div id="img-file">
+                        <input type="file" name="img" value="사진 수정하기">
                     </div>
-                    <div class="line font-20">기본 가격 : ${sv.price} 원</div>
-                    <br>
-                    <div class="line font-20">
-                        객실 상태 
-                        <input type="radio"name="statusNo" value="1">사용가능
-                        <input type="radio"name="statusNo" value="2">수리중
+                    <div id="userdate-area">
+                        <div class="line font-25">객실 소개</div>
+                        <div >
+                            <input id="room-int" type="text" name="introduce" value="${sv.introduce}" >
+                            
+                        </div>
+                        <div class="line font-20">기본 가격 : ${sv.commonPrice} 원</div>
+                        <br>
+                        <div class="line font-20">
+                            객실 상태 
+                            <input type="radio"name="statusNo" value="1">사용가능
+                            <input type="radio"name="statusNo" value="2">수리중
+                        </div>
                     </div>
-                </div>
-                <div id="ch">
-                    <input type="submit" value="수정하기">
-                </div>
-            </form>
+                    <div id="ch">
+                        <input type="submit" value="수정하기">
+                    </div>
+                </form>
+            </div>
         </div>
+    
+    </div>
+    
 
-    </main>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+
+<script>
+    function goBack() {
+         window.history.back();
+    }
+</script>
 
 </body>
 </html>
