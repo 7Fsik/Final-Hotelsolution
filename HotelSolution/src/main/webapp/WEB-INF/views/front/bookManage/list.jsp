@@ -13,10 +13,10 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        
         background-color: white;
+        border-radius: 10px;
     }
     
 
@@ -72,6 +72,16 @@
         position: relative;
         top: 10px;
     }
+    .fff{
+        display: flex;
+        flex-direction: column;
+    }
+    .ggg{
+        padding: 5px;
+    }
+    .blk{
+        display: inline-block;
+    }
     .name{
         font-size: 20px;
     }
@@ -100,45 +110,66 @@
 
 </style>
 <body>
+    <div id ="wrap">
 
-    <main>
-
-        <div id="title">
-            객실 예약관리
-        </div>
-
-        <div id="search-area">
-            <div id="search">
-                <select name="" id="">
-                    <option value="">손님 이름</option>
-                </select>
-                
-                <input type="text">
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
+            <div id="title">
+                객실 예약관리
+            </div>
+    
+            <div id="search-area">
+                <div id="search">
+                    <form action="/fire/front/bookManage/list">
+                        <input type="hidden" name="page" value="1">
+                        <select name="searchType" >
+                            <option value="name">손님 이름</option>
+                            <option value="phoneNumber">전화 번호</option>
+                        </select>
+                        
+                        <input type="text" name="searchValue">
+                        <input type="submit" value="검색">
+                    </form>
+                </div>
+            </div>
+    
+            <div id="list-area">
+                <div id="list">
+                    <c:forEach items="${bmList}" var="bmList">
+                        <div class="att" onclick="location.href='/fire/front/bookManage/detail?no='+${bmList.no}">
+                            <div class="img">
+                                <img src="/fire/static/img/front/room001.jpg">
+                            </div>
+                            <div class="fff">
+                                <div class="name blk ggg">${bmList.typeName}</div>
+                                <div class="ho blk ggg">${bmList.roomNo}</div>
+                                <div class="int blk ggg">손님정보 : ${bmList.name}(${bmList.phoneNumber})</div>
+                                <div class="date blk ggg">이용 날짜 :${bmList.startDate} ~ ${bmList.endDate} </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+                <div id="page-area">
+                    <c:if test="${pv.currentPage >1}">
+                        <a href="/fire/front/bookManage/list?page=1"> << </a>
+                        <a href="/fire/front/bookManage/list?page=${pv.currentPage - 1}"> < </a>
+                    </c:if>
+                    
+                    <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
+                        <a href="/fire/front/bookManage/list?page= ${i}">${i}</a>
+                    </c:forEach>
+                    
+                    <c:if test="${pv.currentPage < pv.maxPage }">
+                        <a href="/fire/front/bookManage/list?page=${pv.maxPage}"> >> </a>            
+                        <a href="/fire/front/bookManage/list?page=${pv.currentPage + 1}"> > </a>
+                    </c:if>
+                </div>
             </div>
         </div>
+    
+    </div>
 
-        <div id="list-area">
-            <div id="list">
-	            <c:forEach begin="1" end="8">
-	                <div class="att">
-	                    <div class="img">
-	                        <img src="/fire/static/img/front/room001.jpg">
-	                    </div>
-	                    <div>
-	                        <div class="name">방이름</div>
-	                        <div class="ho">호수</div>
-	                        <div class="int">손님정보</div>
-	                        <div class="date">이용일</div>
-	                    </div>
-	                </div>
-				</c:forEach>
-            </div>
-            <div id="page-area">
-                이전 1 2 3 4 5 6 7 8 9 10 다음
-            </div>
-        </div>
-
-    </main>
 
 </body>
 </html>

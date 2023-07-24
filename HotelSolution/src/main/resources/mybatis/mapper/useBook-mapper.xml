@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="useBook">
+
+<select id="getBookNo" resultType="int">
+
+	SELECT ROOM_INT_NO FROM BOOK_LIST
+	WHERE (
+    START_DATE &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD')-1
+    AND END_DATE-1 &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD'))
+
+</select>
+
+<select id="getRoomList" resultType="UseBookVo">
+
+	SELECT
+	I.ROOM_INT_NO
+	,I.TYPE_NO
+	,I.STATUS_NO
+	,I.INTRODUCE
+	,I.ROOM_NO
+	,I.IMG
+	,T.TYPE_NAME
+	,T.COMMON_PRICE
+	FROM ROOM_INTRODUCE I
+	JOIN ROOM_TYPE T ON I.TYPE_NO = T.TYPE_NO
+	<where>
+	 NOT I.ROOM_INT_NO IN
+    <foreach collection="numList" item="num" open="(" separator="," close=")">
+        #{num}
+    </foreach>
+	</where>
+
+</select>
+
+<select id="getRoomCnt" resultType="int">
+
+	SELECT
+	COUNT(ROOM_INT_NO)
+	FROM ROOM_INTRODUCE I
+	JOIN ROOM_TYPE T ON I.TYPE_NO = T.TYPE_NO
+	<where>
+	NOT I.ROOM_INT_NO IN
+	<foreach collection="numList" item="num" open="(" separator="," close=")">
+        #{num}
+    </foreach>
+	
+	</where>
+	
+</select>
+
+	
+	
+
+
+</mapper>

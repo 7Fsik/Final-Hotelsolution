@@ -11,9 +11,8 @@
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
     
@@ -117,167 +116,172 @@
 </style>
 <body>
 
-<main>
+    <div id ="wrap">
 
-        <div id="title">
-            객실 이용내역
-        </div>
-        <div id="re">
-            <a href="">돌아가기</a>
-        </div>
-
-        <div id="int-area">
-            <div class="font-25">
-                방이름
-            </div>
-            <div class="font-20">
-                호수
-            </div>
-
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    
+        <div id="mainboard">
             
-            <div id="history-area">
-                <div class="service-list">
-                    <div class="line">객실 비품 분출내역</div>
-                    <div style="height: 100px;">
-                        <table >
-                            <thead>
-                                <tr>
-                                    <th style="width: 40px;"></th>
-                                    <th style="width: 100px;;" >비품명</th>
-                                    <th style="width: 40px;">수량</th>
-                                    <th style="width: 100px;">금액</th>
-                                </tr>
-                            </thead>
-                                <tr>
-                                    <td style="height: 19px;">1</td>
-                                    <td style="height: 19px;">콜라</td>
-                                    <td style="height: 19px;">2</td>
-                                    <td style="height: 19px;">6000 원</td>
-                                </tr>
-                        </table>
-                    </div>
-                    <div>금액 19000 원</div>
+            <div id="title">
+                객실 이용내역
+            </div>
+            <div id="re">
+                <a href="">돌아가기</a>
+            </div>
+    
+            <div id="int-area">
+                <div class="font-25">
+                    방이름
                 </div>
-
-                <div class="service-list">
-                    <div class="line">음식 주문내역</div>
-                    <div style="height: 100px;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 40px;"></th>
-                                    <th style="width: 100px;">음식명</th>
-                                    <th style="width: 40px;">수량</th>
-                                    <th style="width: 100px;">금액</th>
-                                    <th style="width: 40px;">완료</th>
-                                </tr>
-                            </thead>
-                                <tr>
-                                    <td>1</td>
-                                    <td>콜라</td>
-                                    <td>2</td>
-                                    <td>6000 원</td>
-                                    <td>Y</td>
-                                </tr>
-                        </table>
-                    </div>
-                    <div>금액 19000 원</div>
+                <div class="font-20">
+                    호수
                 </div>
-
-                <div>
-                    <div class="line">객실 비품 주문</div>
-                    <div class="order-grid">
-                        <div>
+    
+                
+                <div id="history-area">
+                    <div class="service-list">
+                        <div class="line">객실 비품 분출내역</div>
+                        <div style="height: 100px;">
+                            <table >
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;"></th>
+                                        <th style="width: 100px;;" >비품명</th>
+                                        <th style="width: 40px;">수량</th>
+                                        <th style="width: 100px;">금액</th>
+                                    </tr>
+                                </thead>
+                                    <tr>
+                                        <td style="height: 19px;">1</td>
+                                        <td style="height: 19px;">콜라</td>
+                                        <td style="height: 19px;">2</td>
+                                        <td style="height: 19px;">6000 원</td>
+                                    </tr>
+                            </table>
+                        </div>
+                        <div>금액 19000 원</div>
+                    </div>
+    
+                    <div class="service-list">
+                        <div class="line">음식 주문내역</div>
+                        <div style="height: 100px;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;"></th>
+                                        <th style="width: 100px;">음식명</th>
+                                        <th style="width: 40px;">수량</th>
+                                        <th style="width: 100px;">금액</th>
+                                        <th style="width: 40px;">완료</th>
+                                    </tr>
+                                </thead>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>콜라</td>
+                                        <td>2</td>
+                                        <td>6000 원</td>
+                                        <td>Y</td>
+                                    </tr>
+                            </table>
+                        </div>
+                        <div>금액 19000 원</div>
+                    </div>
+    
+                    <div>
+                        <div class="line">객실 비품 주문</div>
+                        <div class="order-grid">
                             <div>
-                                <input style="width: 130px;" type="text" placeholder="비품명을 입력하시오">
-                                <input type="submit" value="검색">
+                                <div>
+                                    <input style="width: 130px;" type="text" placeholder="비품명을 입력하시오">
+                                    <input type="submit" value="검색">
+                                </div>
+                                <div>
+                                    <table style="width: 200px;">
+                                        <tr>
+                                            <th>이름</th>
+                                            <th>금액</th>
+                                            <th>수량</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>콜라</td>
+                                            <td>3000 원</td>
+                                            <td>1</td>
+                                            <td>+</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                             <div>
+                                장바구니
                                 <table style="width: 200px;">
-                                    <tr>
-                                        <th>이름</th>
-                                        <th>금액</th>
-                                        <th>수량</th>
-                                        <th></th>
-                                    </tr>
                                     <tr>
                                         <td>콜라</td>
                                         <td>3000 원</td>
                                         <td>1</td>
-                                        <td>+</td>
                                     </tr>
                                 </table>
+                                총 금액 : 3000 원
                             </div>
                         </div>
                         <div>
-                            장바구니
-                            <table style="width: 200px;">
-                                <tr>
-                                    <td>콜라</td>
-                                    <td>3000 원</td>
-                                    <td>1</td>
-                                </tr>
-                            </table>
-                            총 금액 : 3000 원
+                            <button>주문하기</button>
                         </div>
+                        
                     </div>
                     <div>
-                        <button>주문하기</button>
-                    </div>
-                    
-                </div>
-                <div>
-                    <div class="line">음식 주문</div>
-                    <div class="order-grid">
-                        <div>
+                        <div class="line">음식 주문</div>
+                        <div class="order-grid">
                             <div>
-                                <input style="width: 130px;" type="text" placeholder="비품명을 입력하시오">
-                                <input type="submit" value="검색">
+                                <div>
+                                    <input style="width: 130px;" type="text" placeholder="비품명을 입력하시오">
+                                    <input type="submit" value="검색">
+                                </div>
+                                <div>
+                                    <table style="width: 200px;">
+                                        <tr>
+                                            <th>이름</th>
+                                            <th>금액</th>
+                                            <th>수량</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>콜라</td>
+                                            <td>3000 원</td>
+                                            <td>1</td>
+                                            <td>+</td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                             <div>
+                                장바구니
                                 <table style="width: 200px;">
-                                    <tr>
-                                        <th>이름</th>
-                                        <th>금액</th>
-                                        <th>수량</th>
-                                        <th></th>
-                                    </tr>
                                     <tr>
                                         <td>콜라</td>
                                         <td>3000 원</td>
                                         <td>1</td>
-                                        <td>+</td>
                                     </tr>
                                 </table>
+                                총 금액 : 3000 원
                             </div>
                         </div>
                         <div>
-                            장바구니
-                            <table style="width: 200px;">
-                                <tr>
-                                    <td>콜라</td>
-                                    <td>3000 원</td>
-                                    <td>1</td>
-                                </tr>
-                            </table>
-                            총 금액 : 3000 원
+                            <button>주문하기</button>
                         </div>
                     </div>
-                    <div>
-                        <button>주문하기</button>
-                    </div>
                 </div>
+                <div id="price-area">
+                    <div>시작일 : 2023-07-12</div>
+                    <div>종료일 : 2023-07-12</div>
+                    <div>객실금액 : 100000 원</div>
+                    <div>총 결제 금액 : 150000 원</div>
+                </div>
+                <div><button style="width: 200px;">체크아웃 / 결제하기</button></div>
             </div>
-            <div id="price-area">
-                <div>시작일 : 2023-07-12</div>
-                <div>종료일 : 2023-07-12</div>
-                <div>객실금액 : 100000 원</div>
-                <div>총 결제 금액 : 150000 원</div>
-            </div>
-            <div><button style="width: 200px;">체크아웃 / 결제하기</button></div>
         </div>
-
-    </main>
+    
+    </div>
 
 </body>
 </html>
