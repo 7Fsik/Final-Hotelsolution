@@ -20,6 +20,8 @@
 
 <link rel="stylesheet" href="${root}/resources/css/common/setup.css">
 <script defer src="${root}/resources/js/common/main-aside.js"></script>
+<script defer src="${root}/resources/js/common/aside.js"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -291,7 +293,7 @@
         <!--어사이드바-->
         <aside class="aside">
             <div class="aside-icons">
-                <div class="aside-icon">
+                <div id="mail-icon" class="aside-icon" onclick="gotoMail('${root}/mail/list')">
                     <img src="${root}/resources/img/메일.png" alt="아이콘1">
                     <span>메일</span>
                 </div>
@@ -303,11 +305,11 @@
                     <img src="${root}/resources/img/자료실.png" alt="아이콘3">
                     <span>자료실</span>
                 </div>
-                <div class="aside-icon">
+                <div id="board=icon" onclick="gotoBoard('${root}/board/list/1')" class="aside-icon">
                     <img src="${root}/resources/img/게시판.png" alt="아이콘4">
                     <span>게시판</span>
                 </div>
-                <div class="aside-icon">
+                <div id="board-icon" class="aside-icon">
                     <img src="${root}/resources/img/채팅.png" alt="아이콘5">
                     <span>채팅</span>
                 </div>
@@ -432,6 +434,26 @@
                                 <li><a href="#">매출관리1</a></li>
                                 <li><a href="#">매출관리2</a></li>
                                 <li><a href="#">매출관리3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">메일함</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">보낸메일함</a></li>
+                                <li><a href="#">받은메일함</a></li>
+                                <li><a href="#">휴지통</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">게시판</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">프론트팀게시판</a></li>
+                                <li><a href="#">좋은게시판</a></li>
+                                <li><a href="#">공지사항</a></li>
                             </ul>
                         </div>
                     </div>
