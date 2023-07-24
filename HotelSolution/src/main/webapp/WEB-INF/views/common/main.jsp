@@ -245,10 +245,10 @@
     }
 
 
-
-
-
-
+    
+	.aside-icon img{
+		cursor: pointer;
+	}
 
 
 
@@ -302,7 +302,7 @@
                     <span>주소록</span>
                 </div>
                 <div class="aside-icon">
-                    <img src="${root}/resources/img/자료실.png" alt="아이콘3">
+                    <img src="${root}/resources/img/자료실.png" alt="아이콘3" onclick="goDataroomByAside()">
                     <span>자료실</span>
                 </div>
                 <div id="board=icon" onclick="gotoBoard('${root}/board/list/1')" class="aside-icon">
@@ -318,7 +318,7 @@
                     <span>결재</span>
                 </div>
                 <div class="aside-icon">
-                    <img src="${root}/resources/img/일정.png" alt="아이콘7">
+                    <img src="${root}/resources/img/일정.png" alt="아이콘7" onclick="goScheduleByAside()">
                     <span>일정</span>
                 </div>
                 <div class="aside-icon">
@@ -470,4 +470,13 @@
 
     
 </body>
+<script type="text/javascript">
+	function goDataroomByAside() {
+	    window.location.href = "${root}/dataroom/list";
+	}
+	function goScheduleByAside() {
+	    window.location.href = "${root}/schedule/calendar";
+	}
+
+</script>
 </html>

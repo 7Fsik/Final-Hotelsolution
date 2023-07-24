@@ -233,10 +233,10 @@
 			        		<div class="tt">
 			        				
 			        				<div class="ttc">
-									    <a class="tcca" href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">부서</a>
+									    <a class="tcca" href="${root}/dataroom/list?categoryNo=${loginMember.teamNo}&dataRoomListPage=1">${loginMember.teamName}자료실</a>
 									</div>
-					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인</a></div>
-					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용</a></div>
+					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=100&dataRoomListPage=1">개인자료실</a></div>
+					        		<div class="ttc"><a class="tcca" href="${root}/dataroom/list?categoryNo=0&dataRoomListPage=1">공용자료실</a></div>
 					        		<div class="ttc"  style="margin-right: 5px; text-align: right;"><a class="tcca" href="${root}/dataroom/write?categoryNo=${categoryNo}" style="color: #3b444b;">글작성</a></div>
 		        					  <form action="${root}/dataroom/list" method="get" style="margin-reft: 10px; text-align: right; padding-top: 15px;">
 							                <input type="hidden" value="1" name="page">
@@ -265,8 +265,7 @@
 								<div>작성일</div>
 							</div>
 							<c:if test="${not empty dataVoList}">
-								<c:forEach begin="1" end="10" varStatus="status">
-								    <c:set var="dataVo" value="${status.index <= dataVoList.size() ? dataVoList[status.index - 1] : null}" />
+								<c:forEach items="${dataVoList}" var="dataVo" varStatus="status">
 								    <div class="dataList" onclick="goDetail(${dataVo.dataNo},${dataVo.securityLevel},${loginMember.positionNo},${dataVo.writerNo},${loginMember.no})">
 								        <div class="bbr">
 								            <c:if test="${not empty dataVo}">

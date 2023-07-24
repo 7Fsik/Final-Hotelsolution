@@ -2,6 +2,8 @@ package com.hotelsolution.fire.common.dataroom.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -105,6 +107,7 @@ public class DataRoomController {
 		map.put("searchValue", searchValue);
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	    System.out.println("list loginmember"+loginMember);
 	    model.addAttribute("loginMember", loginMember);
 		//초기 카테고리는 개인으로
 		if(categoryNo == null) {
@@ -150,26 +153,32 @@ public class DataRoomController {
 		model.addAttribute("drfvoList",drfvoList);
 	}
 	
-	//리
+	private String encodeFileName(String fileName) {
+	    try {
+	        return URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+	    } catch (UnsupportedEncodingException e) {
+	        e.printStackTrace();
+	        return fileName; // 예외 발생 시 원래 파일 이름을 그대로 반환
+	    }
+	}
+
 	@GetMapping("download")
 	public ResponseEntity<ByteArrayResource> download(HttpServletRequest req, String changeName, String fileName) throws Exception {
-		
-		//파일 객체 준비
-		String root = req.getServletContext().getRealPath("/resources/upload/dataroom/file/");
-		String path = root + changeName;
-		File target = new File(path);
-		byte[] data = FileUtils.readFileToByteArray(target);
-		ByteArrayResource x = new ByteArrayResource(data);
-		
-		
-		return ResponseEntity
-				.ok()
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.contentLength(target.length())
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+fileName)
-				.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-				.body(x)
-				;
+	    // 파일 객체 준비
+	    String root = req.getServletContext().getRealPath("/resources/upload/dataroom/file/");
+	    String path = root + changeName;
+	    File target = new File(path);
+	    byte[] data = FileUtils.readFileToByteArray(target);
+	    ByteArrayResource resource = new ByteArrayResource(data);
+
+	    String encodedFileName = encodeFileName(fileName);
+
+	    return ResponseEntity
+	            .ok()
+	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	            .contentLength(target.length())
+	            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + encodedFileName)
+	            .body(resource);
 	}
 
 

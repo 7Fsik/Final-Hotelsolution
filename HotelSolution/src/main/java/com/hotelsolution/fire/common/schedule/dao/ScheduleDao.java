@@ -20,32 +20,20 @@ public class ScheduleDao {
 
 	
 	
-	public List<ScheduleVo> readSchedule(SqlSessionTemplate sst, MemberVo loginMember) {
-		return sst.selectList("schedule.read", loginMember);
-	}
+	
 
-	public int createSchedule(SqlSessionTemplate sst, MemberVo loginMember, String[] data) {
+	public int createSchedule(SqlSessionTemplate sst, MemberVo loginMember, ScheduleVo vo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		log.info(loginMember.toString());
 		map.put("loginMember", loginMember);
-		map.put("data", data);
-		log.info(data.toString());
-		log.info(data[0]);
-		log.info(data[1]);
-		log.info(data[2]);
+		map.put("vo", vo);
 	    return sst.insert("schedule.create", map);
 	}
 
 	public int modifySchedule(SqlSessionTemplate sst, MemberVo loginMember, String[] data) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		log.info(loginMember.toString());
 		map.put("loginMember", loginMember);
 		map.put("data", data);
-		log.info(data.toString());
-		log.info(data[0]);
-		log.info(data[1]);
-		log.info(data[2]);
 	    return sst.update("schedule.modify", map);
 	}
 
@@ -54,6 +42,15 @@ public class ScheduleDao {
 		map.put("loginMember", loginMember);
 		map.put("data", data);
 	    return sst.delete("schedule.delete", map);
+	}
+////////////////////////////////////////////////////////////////////////////
+
+	public List<ScheduleVo> getMySchedule(SqlSessionTemplate sst, String no) {
+		return sst.selectList("schedule.getMySchedule", no);
+	}
+
+	public List<ScheduleVo> getTeamSchedule(SqlSessionTemplate sst, MemberVo loginMember) {
+		return sst.selectList("schedule.getTeamSchedule", loginMember);
 	}
 	
 	

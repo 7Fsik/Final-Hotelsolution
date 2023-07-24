@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import com.hotelsolution.fire.hr.service.SurveyService;
 import com.hotelsolution.fire.hr.vo.SurveyAnswerVo;
 import com.hotelsolution.fire.hr.vo.SurveyDocVo;
 import com.hotelsolution.fire.hr.vo.SurveyQuestionVo;
+import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -224,6 +227,13 @@ public class SurveyController {
 		model.addAttribute("list", list);
 		model.addAttribute("answerLists", answerLists);
 		
+	}
+	public void surveyAlert(HttpSession session) {
+	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	    int memberSurveyCnt = service.getAnswerCnt(loginMember.getNo())/4;
+	    int totalSurveyCnt = service.getSurveyCnt("");
+	    System.out.println(memberSurveyCnt);
+	    System.out.println(totalSurveyCnt);
 	}
 	
 }
