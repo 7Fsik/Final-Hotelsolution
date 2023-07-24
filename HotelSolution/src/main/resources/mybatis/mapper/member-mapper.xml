@@ -100,20 +100,23 @@
 		 WHERE u.NO = #{memberNo}
   	
 	</select>
-  	<insert id="join">
-  		INSERT INTO MEMBER
-	  		(NO,
-	  		TEAM_NO,
-	  		POSITION_NO,
-	  		ID,
-	  		PASSWORD,
-	  		NAME,
-	  		EMAIL,
-	  		IMAGE)
-  		VALUES(SEQ_MEMBER_NO.NEXTVAL , 
-	  		#{teamNo} , #{positionNo} , #{id} ,
-	  		#{password} , #{name} , #{email} , #{image})
-  	</insert>
+  	 <insert id="join">
+        INSERT INTO MEMBER
+           (NO,
+           TEAM_NO,
+           POSITION_NO,
+           ID,
+           PASSWORD,
+           NAME,
+           EMAIL,
+           IMAGE,
+           CHANGE_IMAGE
+           )
+        VALUES(SEQ_MEMBER_NO.NEXTVAL , 
+           #{teamNo} , #{positionNo} , #{id} ,
+           #{password} , #{name} , #{email} , #{image}, #{changeImage})
+     </insert>
+
   	
   	
   	<select id="login" resultType="MemberVo">
@@ -136,6 +139,28 @@
 	ID = #{id} AND STATUS = 0
   		
 
+  	</select>
+  	
+  	<select id="findPwd" resultType="MemberVo">
+  	
+  		SELECT
+  		 NO
+	    ,TEAM_NO
+	    ,POSITION_NO
+	    ,ID
+	    ,PASSWORD
+	    ,NAME
+	    ,EMAIL
+	    ,IMAGE
+	    ,ENROLL_DATE
+	    ,STATUS
+	    ,CONTRACT_WORK_TIME
+	    ,CONTRACT_WORK_END_TIME
+	    ,SALARY
+		FROM MEMBER WHERE
+		ID = #{id} AND EMAIL = #{email} AND STATUS = 0
+  		
+  	
   	</select>
 
 

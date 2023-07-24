@@ -55,7 +55,6 @@
     }
     
     label {
-    	display:inline-block;
     	width:100px;
     }
 	
@@ -93,6 +92,8 @@
     	margin-top : 5px;
     	font-weight:700;
     	transition-duration: 0.5s;
+    	margin-top:15px;
+        position: fixed;
     } 
     
      #join-btn > input:hover{
@@ -131,7 +132,14 @@
 		position:relative;
 		left:315px;
 	}
-    
+	
+	#preview-area{
+		position:relative;
+		bottom:150px;
+		left:100px;
+	}
+	
+
 	
 </style>
 </head>
@@ -170,11 +178,12 @@
 
                 <div class="join-area">
                     <label for="">PROFILE</label> 
-                    <label class="profile" for="imgFile">
-                       프로필사진
-                    </label>
-                   <input name="image" type="file" id="imgFile">
-               </div>
+                        <label class="profile" for="imgFile">
+                           프로필사진
+                        </label>
+                   <input name="file" type="file" id="imgFile">
+	                  
+                </div>
    
                <div class="join-area">
                     <label for="">POSITION</label> 
@@ -201,7 +210,10 @@
                </div>
 
 
-				<div id="join-btn"><input type="submit" value="가입하기"></div>
+				<div id="join-btn">
+                    <input class="submitBtn" type="submit" value="가입하기">
+                   <img id="preview-area">
+                </div>
 				
                
         </div>
@@ -261,12 +273,27 @@
 
         }
         
-        //이메일 유효성 검사
-        function checkEmail(params) {
-            
-        }
-        
+       //프로필 사진 미리보기
+       const fileTag = document.querySelector('input[type=file]');
 
+       fileTag.addEventListener('change' , ()=>{
+           const previewArea = document.querySelector('#preview-area');
+           if(fileTag.files.length > 0){
+
+                const fr = new FileReader();
+                fr.readAsDataURL(fileTag.files[0]);
+                fr.onload = (event)=>{
+                	previewArea.src = event.target.result;
+                	previewArea.width = '30';
+                	previewArea.height = '30';
+                    previewArea.style.borderRadius = '50%';
+                }
+           }else{
+            previewArea.src = '';
+           }
+
+       });
+    
 
     </script>
         

@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>Insert title here</title>
 <style>
     body{
@@ -121,7 +122,7 @@
 
 	<div id="wrap">
 
-    <form action="">
+    <form action="${root}/member/emailAuthentication" method="post">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
@@ -129,19 +130,19 @@
             
             <div class="password-area">
                  <label for="name">ID</label>
-                <input type="text" placeholder="휴대폰 번호를 입력하세요" maxlength="11">
+                <input name="id" type="text" placeholder="휴대폰 번호를 입력하세요" maxlength="11">
             </div>
             
             <div class="password-area">
                  <label for="name">E-MAIL</label> 
-                <input type="text" placeholder="이메일을 입력하세요">
+                <input name="email" type="text" placeholder="이메일을 입력하세요">
             </div>
 
                     <div id="code-btn"><button type="button">인증코드 받기</button></div>
                    
                    <div id="code-box">
 	                	<div class="detail">
-		                	인증코드 <input class="code-input" type="text" name="code">
+		                	인증코드 <input class="code-input" type="text" name="code" maxlength="6" placeholder="인증번호 6자리 입력">
 		                	<input class="sub-input" type="submit" value="확인">
 	                	</div>
 		                <ul class="list">
@@ -157,6 +158,55 @@
     </div>
 
     <script>
+
+        const Btn = document.querySelector('#code-btn');
+        
+        //메일 발송
+        function sendMail(email) {
+            $.ajax({
+                type : 'post',
+                url : '${root}/member/emailAuthentication',
+                data : {
+                    email : email,
+                },
+                success : function (data) {
+                    console.log('발신 성공');
+                    alert('메일 발신 성공');
+                },
+                error : function (e) {
+                    console.log('발신 실패');
+                    alert('메일 발신 실패');
+                }
+            })
+        }
+        
+        //ID , EMAIL 맞는지 확인
+        Btn.addEventListener('click' , function (params) {
+            const id = document.querySelector('input[name=id]').value;
+            const email = document.querySelector('input[name=email]').value;
+            $.ajax({
+               type : "post",
+               url : '${root}/member/emailAuthentication',
+               dataType : 'text',
+               data : {
+                id : id,
+                email : email,
+               },
+               success : (data)=>{
+                console.log('통신 성공');
+                if(data === "success"){
+                    alert('인증번호가 발송되었습니다.');
+                    sendMail(email);
+                }else{
+                    alert('불일치');
+                }
+               },
+               error : (e)=>{
+                alert('아이디 혹은 이메일을 다시 입력해주세요.');
+               },
+            });      
+            
+        })
 
         const subMitBtn = document.querySelector('.sub-input');
         subMitBtn.addEventListener('click' , ()=>{

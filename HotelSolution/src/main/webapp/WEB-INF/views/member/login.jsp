@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>Insert title here</title>
 <style>
     body{
@@ -140,6 +141,40 @@
      </form>
 
     </div>
+
+    <script>
+
+            const loginBtn = document.querySelector('#login-btn') 
+            loginBtn.addEventListener('click' , function name(e) {
+                
+                e.preventDefault();
+    
+                const userId = document.querySelector('input[name=id]').value;
+                const password = document.querySelector('input[type=password]').value;
+    
+            $.ajax({
+                type : "post",
+                url : "${root}/member/login",
+                dataType : 'text',
+                data : {
+                    id : userId,
+                    password : password
+                },
+                success : function name(data) {
+                    console.log(data);
+                    if(data === "success")
+                        window.location.href = "/fire";
+                },
+                error : function (e) {
+                    alert('아이디와 비밀번호를 다시 확인해주세요.');
+                    document.querySelector('input[name=id]').value = '';
+                    document.querySelector('input[type=password]').value ='';
+                }
+            });
+         });
+
+
+    </script>
 
 </body>
 </html>

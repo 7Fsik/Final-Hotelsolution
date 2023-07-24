@@ -7,5 +7,7 @@ public interface MemberService {
 	int join(MemberVo vo);
 	
 	MemberVo login(MemberVo vo);
+
+	boolean emailAuthenTication(MemberVo vo);
 	
 }

@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotelsolution.fire.member.dao.MemberDao;
 import com.hotelsolution.fire.member.vo.MemberVo;
@@ -34,6 +35,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	@ResponseBody
 	//로그인
 	public MemberVo login(MemberVo vo) {
 		
@@ -47,6 +49,15 @@ public class MemberServiceImpl implements MemberService{
 		}
 		
 		return loginMember;
+	}
+
+	@Override
+	//비밀번호 재설정 (이메일 인증)
+	public boolean emailAuthenTication(MemberVo vo) {
+		
+		MemberVo emailCheck = dao.emailAuthenTication(sst,vo);
+		
+		return emailCheck != null;
 	}
 
 }//class
