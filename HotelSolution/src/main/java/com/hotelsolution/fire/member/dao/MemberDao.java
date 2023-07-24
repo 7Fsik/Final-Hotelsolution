@@ -9,5 +9,7 @@ public interface MemberDao {
 	int join(SqlSessionTemplate sst , MemberVo vo);
 
 	MemberVo login(SqlSessionTemplate sst , MemberVo vo);
+
+	MemberVo emailAuthenTication(SqlSessionTemplate sst, MemberVo vo);
 	
 }

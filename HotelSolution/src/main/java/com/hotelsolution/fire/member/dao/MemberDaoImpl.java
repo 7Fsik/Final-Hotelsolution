@@ -21,4 +21,10 @@ public class MemberDaoImpl implements MemberDao{
 		return sst.selectOne("member.login" , vo);
 	}
 
+	@Override
+	//비밀번호 재설정 이메일인증
+	public MemberVo emailAuthenTication(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.selectOne("member.findPwd" , vo);
+	}
+
 }

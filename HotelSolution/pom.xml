@@ -254,6 +254,20 @@
 	         <artifactId>jackson-core</artifactId>
 	         <version>2.9.9</version>
     	</dependency>
+    	
+		<!-- 승권 -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+		
+		<!-- 승권 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 		
 		
 
