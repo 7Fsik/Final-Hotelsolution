@@ -7,15 +7,11 @@ import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,7 +21,6 @@ import java.util.List;
 public class CompanyBoardController {
 
     private final CompanyBoardService boardService;
-
     @GetMapping("list/{page}")
     public String getAllCompanyBoardList(@PathVariable("page") int page, Model model) {
 
