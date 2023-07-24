@@ -19,6 +19,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
 <link rel="stylesheet" href="${root}/resources/css/common/setup.css">
+<script defer src="${root}/resources/js/common/main-aside.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,12 +146,53 @@
         grid-template-rows: 1.3fr 1fr;
         justify-items: center;
     }
-    .team-menu-bar{
+    .team-menu-bar {
         width: 16vw;
         height: 38vh;
         background-color: #3B444B;
         border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        color: white;
     }
+
+    .team-title {
+        font-size: 25px;
+        font-weight: bold;
+        margin-top: 10px; /* 수정된 부분: 위쪽 마진으로 조절 */
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10%; /* 수정된 부분: 높이를 10%로 설정 */
+        width: 100%;
+    }
+    .sub-menu{
+        padding-bottom: 40px;
+    }
+    .sub-menu-title{
+        font-size: 20px;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .sub-menu ul{
+        display: none;
+    }
+
+    .sub-menu.active ul {
+        display: block;
+    }
+
+    .sub-menu{
+        padding-bottom: 20px;
+    }
+
+
+
+
     .employee-container{
         display: flex;
         flex-direction: column;
@@ -200,7 +242,10 @@
         margin-right: 15px; /* 헤더, 노티피케이션, 챗, 프로필 영역 사이에 10px의 오른쪽 마진을 줍니다. */
     }
 
-    
+
+
+
+
 
 
 
@@ -288,8 +333,22 @@
                         <img class="header-profile-img-2" src="${root}/resources/img/증명사진.png" >
                     </div>
                     <div>
-                        <div class="fontbb pp">홍길동 사원</div>
-                        <div >프론트팀</div>
+                        <div class="fontbb pp">${sessionScope.loginMember.name} 사원</div>
+                        <c:if test="${sessionScope.loginMember.teamNo == 1}" >
+                            <div>경영지원팀</div>
+                        </c:if>
+                        <c:if test="${sessionScope.loginMember.teamNo == 2}" >
+                            <div>프론트팀/시설관리팀</div>
+                        </c:if>
+                        <c:if test="${sessionScope.loginMember.teamNo == 3}" >
+                            <div>식음팀</div>
+                        </c:if>
+                        <c:if test="${sessionScope.loginMember.teamNo == 4}" >
+                            <div>인사팀</div>
+                        </c:if>
+                        <c:if test="${sessionScope.loginMember.teamNo == 5}" >
+                            <div>구매/재무팀</div>
+                        </c:if>
                     </div>
                 </div>
                 <div id="profile-menu" class="fontbb">
@@ -300,17 +359,83 @@
             </div>
 
             <div class="team-menu-bar">
-                <div class="team-title">프론트팀</div>
+                <c:if test="${sessionScope.loginMember.teamNo == 1}">
+                <div class="team-title">경영지원팀</div>
                 <div class="mail-box">
-                    <div class="sub-menu">
-                        <div class="sub-menu-title">메일함</div>
-                        <ul>
-                            <li><a href="#">보낸메일함</a></li>
-                            <li><a href="#">받은메일함</a></li>
-                            <li><a href="#">휴지통</a></li>
-                        </ul>
-                    </div>
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">메일함</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">보낸메일함</a></li>
+                                <li><a href="#">받은메일함</a></li>
+                                <li><a href="#">휴지통</a></li>
+                            </ul>
+                        </div>
                 </div>
+                </c:if>
+                <c:if test="${sessionScope.loginMember.teamNo == 2}">
+                    <div class="team-title">프론트팀/시설관리팀</div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">객실관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">객실 상태 관리</a></li>
+                                <li><a href="#">객실 예약 관리 </a></li>
+                                <li><a href="#">객실 이용 관리</a></li>
+                            </ul>
+                            <div class="sub-menu-title">매출관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">객실 상태 관리</a></li>
+                                <li><a href="#">객실 예약 관리 </a></li>
+                                <li><a href="#">객실 이용 관리</a></li>
+                            </ul>
+                            <div class="sub-menu-title">재고관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">객실 상태 관리</a></li>
+                                <li><a href="#">객실 예약 관리 </a></li>
+                                <li><a href="#">객실 이용 관리</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.loginMember.teamNo == 3}">
+                    <div class="team-title">식음팀</div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">메일함</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">보낸메일함</a></li>
+                                <li><a href="#">받은메일함</a></li>
+                                <li><a href="#">휴지통</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.loginMember.teamNo == 4}">
+                    <div class="team-title">인사팀</div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">메일함</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">보낸메일함</a></li>
+                                <li><a href="#">받은메일함</a></li>
+                                <li><a href="#">휴지통</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.loginMember.teamNo == 5}">
+                    <div class="team-title">구매/재무팀</div>
+                    <div class="mail-box">
+                        <div class="sub-menu">
+                            <div class="sub-menu-title">매출관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="#">매출관리1</a></li>
+                                <li><a href="#">매출관리2</a></li>
+                                <li><a href="#">매출관리3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
             </div>
 
         </div>
