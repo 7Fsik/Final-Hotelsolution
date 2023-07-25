@@ -58,7 +58,7 @@
 <script>
     const ckeditor_config = {
 
-        resize_enaleb : false,
+        resize_enable : false,
 
         enterMode : CKEDITOR.ENTER_BR,
 
