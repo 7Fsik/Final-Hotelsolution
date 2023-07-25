@@ -149,10 +149,6 @@ public class MemberController {
 	//비밀번호 재설정
 	
 
-	
-	
-	
-	
-	
+
 	
 }

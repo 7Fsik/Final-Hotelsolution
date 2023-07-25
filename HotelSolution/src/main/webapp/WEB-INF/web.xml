@@ -49,8 +49,15 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
+		<!-- 404 예외를 처리하기 위해 파라미터 추가	-->
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
+
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
@@ -75,5 +82,10 @@
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-	</servlet>
+</servlet>
+
+<error-page>
+	<error-code>404</error-code>
+	<location>/WEB-INF/views/error/exception404.jsp</location>
+</error-page>
 </web-app>
