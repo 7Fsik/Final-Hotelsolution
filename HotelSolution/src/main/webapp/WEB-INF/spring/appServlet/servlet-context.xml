@@ -44,6 +44,7 @@
 		<beans:property name="maxInMemorySize" value="1048576"/>
 	</beans:bean>
 
+	<!-- ck업로드에디터 이미지 첨부파일 경로 -->
 	
 </beans:beans>
 

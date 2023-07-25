@@ -1,56 +1,24 @@
-.main {
-    width: 100%;
-    height: 100%;
-}
-
-.main-content-list{
-    width: 100%;
-    height: 100%;
-    background-color: #dedede;
-    display: flex;
-}
-
-.header-logoimg{
-    justify-content: center;
-}
-
-
-
-.category-btn{
-    margin-top: 50px;
-    margin-left: 50px;
-}
-
-.horizon-line{
-    width: 1330px;
-    margin-left: 50px;
-    background-color: #3B444B;
-    border: 2px solid;
-}
-
-.write-area{
-    width: 1330px;
-    height: 800px;
-    margin-top: 50px;
-    margin-left: 50px;
-    background-color: #3B444B;
-}
-
-.write-container{
-    display: flex;
-}
-
 .write-btn{
-    margin-top: 50px;
-    margin-left: 1000px;
+    margin-top: 20px;
+}
+
+#write-title{
+    margin-top: 20px;
 }
 
 /* ckeditor css */
 
 /* 툴바의 너비 조절 */
 .ck.ck-editor {
-    width: 950px;
+    width: 100%;
+    height: 100%;
     margin: 0 auto;
+    border-radius: 10px;
+}
+
+.write-area{
+    width: 100%;
+    height: 600px;
 }
 
 /* 에디터의 높이 제한 */
@@ -76,10 +44,10 @@
 
 /* 이미지를 감싸는 <p> 태그 제외 */
 .ck-content p {
-    display: inline;
+    /*display: inline;*/
     margin: 0;
-    padding: 0;
-    white-space: nowrap;
+    /*padding: 0;*/
+    /*white-space: nowrap;*/
 }
 
 /* 각 줄 뒤에 플로트를 해제 */
@@ -88,3 +56,38 @@
     display: table;
     clear: both;
 }
+
+
+
+.write-container{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+#editor{
+    width: 100%;
+    height: 100%;
+}
+
+/*에디터 감싸는곳 ~*/
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused){
+    min-height: 550px;
+}
+
+.ck ck-editor__main{
+    width: 100%;
+    height: 100%;
+}
+
+/* 기본 텍스트 크기 조절 */
+.ck-content p {
+    font-size: 16px; /* 원하는 크기로 설정 */
+}
+
+/* 에디터 크기 조절 */
+.ck-editor__editable {
+    height: 550px; /* 높이를 550px로 조절 */
+    overflow-y: auto; /* 스크롤이 가능하도록 설정 */
+}
+
