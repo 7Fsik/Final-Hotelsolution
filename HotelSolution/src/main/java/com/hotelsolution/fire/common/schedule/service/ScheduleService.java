@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.common.schedule.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,10 @@ public class ScheduleService {
 
 	public List<ScheduleVo> getTeamSchedule(MemberVo loginMember) {
 		return dao.getTeamSchedule(sst,loginMember);
+	}
+
+	public ScheduleVo detailSchedule(Map<String, String> map) {
+		return dao.detailSchedule(sst,map);
 	}
 
 	

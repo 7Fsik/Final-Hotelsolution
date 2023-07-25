@@ -46,11 +46,16 @@ public class ScheduleDao {
 ////////////////////////////////////////////////////////////////////////////
 
 	public List<ScheduleVo> getMySchedule(SqlSessionTemplate sst, String no) {
+		System.out.println(no);
 		return sst.selectList("schedule.getMySchedule", no);
 	}
 
 	public List<ScheduleVo> getTeamSchedule(SqlSessionTemplate sst, MemberVo loginMember) {
 		return sst.selectList("schedule.getTeamSchedule", loginMember);
+	}
+
+	public ScheduleVo detailSchedule(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectOne("schedule.detailSchedule",map);
 	}
 	
 	

@@ -15,6 +15,11 @@
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js'></script>
 	<!-- fullcalendar 언어 CDN -->
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap JS 및 팝업 기능을 사용하기 위한 jQuery -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+		
 	<style>
 		/* body 스타일 */
 		html,
@@ -45,6 +50,71 @@
 		text-decoration: none;
 		}
 
+/* Modal 내부 CSS */
+.modal-content {
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background-color: #f0f0f0;
+  border-bottom: none;
+  padding: 10px;
+}
+
+.modal-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.detail-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Modal 내부 컨텐츠 스타일 */
+.memberVoList {
+  margin-bottom: 10px;
+}
+
+.memberVoList > div {
+  padding: 5px;
+}
+
+.bbr {
+  font-weight: bold;
+}
+
+/* Modal 닫기 버튼 스타일 */
+.modal-footer {
+  border-top: none;
+  padding: 10px;
+}
+
+.modal-footer .btn-secondary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: #0056b3;
+}
+#mainboard{
+
+background-color:  white;
+border-radius: 20px;
+}
+#calendar-container{
+	margin :10px;
+	
+}
+.fc-event-time{
+	display:none;
+}
 	</style>
 	
 </head>
@@ -56,15 +126,34 @@
 
    <div id="mainboard">
 	
-     <!-- calendar 태그 -->
-	<div id='calendar-container'>
-		<div id='calendar'>
-			<form id="myForm" action="${root}/schedule/calendar" method="post">
-			    <input type="hidden" name="params" id="paramsInput">
-			</form>
+	     <!-- calendar 태그 -->
+		<div id='calendar-container'>
+			<div id='calendar'>
+				<form id="myForm" action="${root}/schedule/calendar" method="post">
+				    <input type="hidden" name="params" id="paramsInput">
+				</form>
+			</div>
 		</div>
-	</div>
-   
+   	<!-- 모달 창 -->
+		<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="eventDetailModalLabel">일정 상세 정보</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div class="detail-content">
+		         
+		        </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
    </div>
 
 </div>
@@ -111,11 +200,19 @@
 				locale: 'ko', // 한국어 설정
 				
 				eventAdd: function (obj) { // 이벤트 추가(드래그)
+				
+					let endDateString = obj.event.end;
+					let end = new Date(endDateString);
+					end.setDate(end.getDate() + 1);
+					
+					let startDateString = obj.event.start;
+					let start = new Date(startDateString);
+					start.setDate(start.getDate() + 1);
 				    const params = [];
 				    params.push("write");
 				    params.push(obj.event.title);
-				    params.push(obj.event.start);
-				    params.push(obj.event.end);
+				    params.push(start);
+				    params.push(end);
 
 				    // JSON 데이터를 숨겨진 input 요소에 설정
 				    document.querySelector("#paramsInput").value = JSON.stringify(params);
@@ -124,35 +221,108 @@
 				    document.querySelector("#myForm").submit();
 				},
 
+				eventMouseLeave: function(obj) {
+					
+					let endDateString = obj.event.end;
+					let end = new Date(endDateString);
+					end.setDate(end.getDate() + 1);
+					
+					let startDateString = obj.event.start;
+					let start = new Date(startDateString);
+					start.setDate(start.getDate() + 1);
+					  const params = [];
+					  params.push("detail");
+					  params.push(obj.event.title);
+					  params.push(start);
+					    params.push(end);
 
+					  $.ajax({
+					    url: '${root}/schedule/calendar/detail',
+					    type: 'post',
+					    data: {
+					      params: JSON.stringify(params)
+					    },
+					    success: function (data) {
+					      // 성공적으로 데이터를 가져온 경우 모달에 내용을 채웁니다.
+					      const detailModal = $('#eventDetailModal');
+					      const detailContent = detailModal.find('.detail-content');
+					      let ostr = "";
+
+					      // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
+					     
+					        ostr += '<div class="memberVoList">' +
+					          '<div class="bbr" style="text-align:center; font-size:25px;">'+  data.startDate + '~'+ data.endDate+ '</div>' +
+					          '<div class="bbr">작성자 : '+ data.writerName + '</div>' +
+					          '<div class="bbr">타입 : '+  data.typeName +'</div>' +
+					          '<div class="bbr" >제목 : ' + data.title + '</div>' +
+					          '<div class="bbr" >내용 : ' + '<'+data.typeName+'>'+'</div>' +
+					          '<div class="dcontent" style="width:400px; height:300px; overflow: scroll; word-wrap: break-word; padding-left:20px;">   ' + data.content + '</div>' +
+					          '</div>';
+					   
+
+					      // 모달에 내용을 삽입합니다.
+					      detailContent.html(ostr);
+
+					      // 모달을 보여줍니다.
+					      detailModal.modal('show');
+					    },
+					    error: function () {
+					      alert("없는일정입니다.");
+					    }
+					  });
+					},
+
+					
+					
+				    
+				
 				eventChange: function (obj) { // 이벤트 수정(이벤트 드래그)
-					const params = [];
-					params.push("modify")
-					params.push(obj.event.title);
-					params.push(obj.event.start);
-					params.push(obj.event.end);
+					let endDateString = obj.event.end;
+					let end = new Date(endDateString);
+					end.setDate(end.getDate() + 1);
+					
+					let startDateString = obj.event.start;
+					let start = new Date(startDateString);
+					start.setDate(start.getDate() + 1);
+					  const params = [];
+					  params.push("modify");
+					  params.push(obj.event.title);
+					  params.push(start);
+					    params.push(end);
 
-					$.ajax({
-						url: '${root}/schedule/calendar',
-						type: 'post',
-						data: {
-							params: JSON.stringify(params)
-						},
-						error: function () {
-							alert("error2");
-						}
-					});
-				},
+					  $.ajax({
+					    url: '${root}/schedule/calendar',
+					    type: 'post',
+					    data: {
+					      params: JSON.stringify(params)
+					    },
+					    success: function () {
+					      // 성공 시 처리할 코드를 추가하시면 됩니다 (필요하면)
+					    },
+					    error: function () {
+					      alert("작성자만 수정이 가능합니다");
+					    }
+					  });
+					},
+
+				
 				eventClick: function (obj) { // 이벤트 삭제 (이벤트 클릭)
 					var result = confirm('이 일정을 삭제하시겠습니까?');
 
 					if (result == true) {
+						
 						const params = [];
-						params.push("delete")
+						let endDateString = obj.event.end;
+						let end = new Date(endDateString);
+						end.setDate(end.getDate() + 1);
+						
+						let startDateString = obj.event.start;
+						let start = new Date(startDateString);
+						start.setDate(start.getDate() + 1);
+						params.push("delete");
 						params.push(obj.event.title);
-						params.push(obj.event.start);
-						params.push(obj.event.end);
-
+						  params.push(start);
+						    params.push(end);
 						$.ajax({
 							url: '${root}/schedule/calendar',
 							type: 'post',
@@ -163,7 +333,7 @@
 								location.reload();
 							},
 							error: function () {
-								alert("error3");
+								alert("작성자만 삭제가 가능합니다");
 							}
 						});
 					}
@@ -186,18 +356,42 @@
 				// 이벤트 
 				events: [
 					<c:forEach items="${myList}" var="my">
-						{
-						title: '${my.title}',
-						start: '${my.startDate}',
-						end: '${my.endDate}',
-						backgroundColor: 'red'
-						},
+					    <c:if test="${my.scheduleTypeNo==1}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        time: '${my.typeName}',
+					        backgroundColor: 'black'
+					        },
+					    </c:if>
+					    <c:if test="${my.scheduleTypeNo==3}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        time: '${my.typeName}',
+					        backgroundColor: 'orange'
+					        },
+					    </c:if>
+				        <c:if test="${my.scheduleTypeNo==4}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        time: '${my.typeName}',
+					        backgroundColor: 'red'
+					        },
+					    </c:if>
+					    <!-- 추가적인 조건에 따른 데이터 처리 -->
 					</c:forEach>
+
 					<c:forEach items="${teamList}" var="team">
 						{
 						title: '${team.title}',
 						start: '${team.startDate}',
 						end: '${team.endDate}',
+						time: '${team.typeName}',
 						backgroundColor: 'blue'
 						},
 					</c:forEach>
@@ -210,8 +404,6 @@
 			calendar.render();
 		});
 	})();
-	
-	
 	
 </script>
 </body>
