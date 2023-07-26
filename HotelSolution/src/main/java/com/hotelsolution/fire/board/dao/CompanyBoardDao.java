@@ -15,4 +15,8 @@ public interface CompanyBoardDao {
 
 
     List<CompanyBoardCategoryVo> getCategoryList(SqlSessionTemplate sst);
+
+    void increaseCompanyBoardHit(SqlSessionTemplate sst, int no);
+
+    CompanyBoardVo getCompanyBoardDetailByNo(SqlSessionTemplate sst, int no);
 }

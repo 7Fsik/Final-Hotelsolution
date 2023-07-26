@@ -31,6 +31,16 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
         return sst.selectList("companyBoard.getBoardCategoryList");
     }
 
+    @Override
+    public void increaseCompanyBoardHit(SqlSessionTemplate sst, int no) {
+        sst.selectOne("companyBoard.increaseHit",no);
+    }
+
+    @Override
+    public CompanyBoardVo getCompanyBoardDetailByNo(SqlSessionTemplate sst, int no) {
+        return sst.selectOne("companyBoard.getCompanyBoardDetailByNo",no);
+    }
+
 
     public int writeCompanyBoardPost(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo) {
         return sst.insert("companyBoard.writeCompanyBoardPost",companyBoardVo);

@@ -54,5 +54,27 @@
 		)
 	</insert>
 
+	<select id="increaseHit" resultType="int">
+		update board
+		set hit = hit + 1
+		where no = #{no}
+	</select>
+
+
+	<select id="getCompanyBoardDetailByNo" resultType="CompanyBoardVo">
+		select
+		b.no
+		,b.category_no
+		,b.writer_no
+		,b.title
+		,b.content
+		,b.enroll_date
+		,b.hit
+		,m.name as writerName
+		from board b
+		left join member m
+		on b.no = m.no
+		where b.no= #{no}
+	</select>
 
 </mapper>

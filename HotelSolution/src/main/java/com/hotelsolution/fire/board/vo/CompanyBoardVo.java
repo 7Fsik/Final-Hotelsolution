@@ -16,4 +16,5 @@ public class CompanyBoardVo {
     private LocalDateTime enrollDate;
     private int hit;
     private String status;
+    private String writerName;
 }

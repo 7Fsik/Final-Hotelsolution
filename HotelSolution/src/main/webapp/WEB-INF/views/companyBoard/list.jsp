@@ -21,8 +21,12 @@
         <div id="mainboard">
                 <div class="main-content-list">
                     <nav>
-                        <input type="text" placeholder="검색">
-                        <button id="writeBtn2" data-root="${root}">글쓰기</button>
+                        <div class="input-group mb-3">
+                            <label>
+                                <input type="text" placeholder="검색" class="form-control">
+                            </label>
+                        </div>
+                        <button id="writeBtn2" data-root="${root}" class="btn btn-primary">글쓰기</button>
                     </nav>
                     <hr class="main-horizon-line">
 
@@ -42,7 +46,7 @@
                                 </thead>
                                 <tbody>
                                 <c:forEach items="${allCompanyBoardList}" var="board">
-                                    <tr>
+                                    <tr class="clickable-row" data-no="${board.no}"  data-root="${root}">
                                         <td>${board.no}</td>
                                         <td>${board.title}</td>
                                         <td>부서</td>
@@ -53,33 +57,36 @@
                                 </c:forEach>
                                 </tbody>
                             </table>
+                            <div class="page-area">
+                                <c:if test="${pv.currentPage > 1}">
+                                    <a class="btn btn-primary" href="${root}/board/list/${pv.currentPage - 1}">이전</a>
+                                </c:if>
+                                <c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
+                                    <c:choose>
+                                        <c:when test="${pv.currentPage != i}">
+                                            <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}">${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-primary btn-sm">${i}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                                <c:if test="${pv.currentPage < pv.maxPage}">
+                                    <a class="btn btn-primary btn-sm" href="${root}/board/list/${pv.currentPage + 1}">다음</a>
+                                </c:if>
+                            </div>
+
                         </div>
 
 
-                        <div class="page-area">
-                            <c:if test="${pv.currentPage > 1}">
-                                <a class="btn btn-primary" href="${root}/board/list/${pv.currentPage - 1}">이전</a>
-                            </c:if>
-                            <c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
-                                <c:choose>
-                                    <c:when test="${pv.currentPage != i}">
-                                        <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}">${i}</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="btn btn-primary btn-sm">${i}</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                            <c:if test="${pv.currentPage < pv.maxPage}">
-                                <a class="btn btn-primary btn-sm" href="${root}/board/list/${pv.currentPage + 1}">다음</a>
-                            </c:if>
+
+                        <div class="weekly-board-list">
+                            <h3>주간 인기 게시글</h3>
                         </div>
 
 
                     </div>
-                    <div class="weekly-board-list">
-                        <h3>주간 인기 게시글</h3>
-                    </div>
+
                 </div>
             </div>
 
@@ -87,3 +94,4 @@
 
 </body>
 </html>
+

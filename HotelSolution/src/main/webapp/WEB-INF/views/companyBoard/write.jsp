@@ -43,7 +43,8 @@
 
                 <div class="write-area">
                     <label for="editor"></label>
-                    <textarea id="editor-data" name="content" class="custom-toolbar">
+                    <label for="editor-data"></label>
+                        <textarea id="editor-data" name="content" class="custom-toolbar">
                         </textarea>
                 </div>
 
@@ -58,16 +59,25 @@
 <script>
     const ckeditor_config = {
 
-        resize_enable : false,
+        resize_enable : true,
+
+        removePlugins: 'resize',
+
 
         enterMode : CKEDITOR.ENTER_BR,
 
         shiftEnterMode : CKEDITOR.ENTER_P,
 
-        filebrowserUploadUrl : "${root}/board/upload"
+        filebrowserUploadUrl : "${root}/board/upload",
+
+        height : 440,
+        // AutoImage 플러그인 추가
+
+
     };
 
-    CKEDITOR.replace("editor-data", ckeditor_config);
+    CKEDITOR.replace("editor-data", ckeditor_config
+    );
 
 
 </script>
