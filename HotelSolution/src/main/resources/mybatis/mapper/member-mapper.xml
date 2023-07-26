@@ -201,6 +201,28 @@
   		
   	
   	</select>
+  	
+  	<update id="updateMailKey" parameterType="hashMap">
+  	
+  		UPDATE MEMBER SET
+  		EMAIL_KEY = #{authKey}
+  		WHERE EMAIL = #{email}
+  	
+  	</update>
+  	
+  	<select id="emailKeyRightOrNo" resultType="String">
+  		SELECT EMAIL_KEY
+	    FROM MEMBER
+	    WHERE EMAIL = #{email}
+  	</select>
+  	
+  	<update id="changePwd">
+  	
+  		UPDATE MEMBER SET 
+		PASSWORD = #{password}
+		WHERE EMAIL = #{email}
+  	
+  	</update>
 
 
 

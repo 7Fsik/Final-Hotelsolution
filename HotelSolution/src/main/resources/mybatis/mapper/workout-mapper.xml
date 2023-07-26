@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="workout">
+  
+  
+	<insert id="recordStartTime">
+	
+		INSERT INTO COMMUTE_RECORD 
+			(NO, 
+			USER_NO ,
+			WORK_START_TIME)
+		VALUES
+			(SEQ_COMMUTE_RECORD_NO.NEXTVAL
+			,4
+			,SYSDATE)
+	
+	</insert>
+
+
+
+</mapper>

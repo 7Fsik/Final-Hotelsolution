@@ -147,7 +147,7 @@
 
 	<div id="wrap">
 
-    <form action="${root}/member/join" method="post" enctype="multipart/form-data">
+    <form action="${root}/member/join" method="post" enctype="multipart/form-data" onsubmit="return checkJoin();">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
@@ -293,6 +293,21 @@
            }
 
        });
+
+       //양식을 다 채워야 회원가입 가능하게
+
+       function checkJoin(params) {
+        const input = document.querySelectorAll('input[type=text],input[type=password],input[type=email]');
+
+        for(let i=0; i<input.length; i++){
+            if(input[i].value.trim() === ''){
+                alert('양식을 전부 입력해주세요.');
+                return false;
+            }
+        }
+
+       }
+       
     
 
     </script>

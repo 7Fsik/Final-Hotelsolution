@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,30 +54,38 @@ public class MemberController {
 	@PostMapping("join")
 	public String join(MemberVo vo ,HttpServletRequest req
 			,@RequestParam("file") MultipartFile image
-			) throws Exception, Exception {
-		String savePath = req.getServletContext().getRealPath("/resources/img/member/profile/");
+			) {
 		
 		log.info(vo.toString());
 		
-		if(!image.isEmpty()) {
-			String originName = image.getOriginalFilename();
-			vo.setImage(originName);
-			String randomName = UUID.randomUUID().toString();
-			String ext = originName.substring(originName.lastIndexOf("."));
-			String changeName = randomName+ext;
-			vo.setChangeImage(changeName);
-			String path = savePath + changeName;
-			File target = new File(path);
-			image.transferTo(target);
-		}
-		
-		int result = service.join(vo);
-		
-		if(result != 1) {
+		try {
+			String savePath = req.getServletContext().getRealPath("/resources/img/member/profile/");
+			
+			if(!image.isEmpty()) {
+				log.info(savePath);
+				String originName = image.getOriginalFilename();
+				vo.setImage(originName);
+				String randomName = UUID.randomUUID().toString();
+				String ext = originName.substring(originName.lastIndexOf("."));
+				String changeName = randomName+ext;
+				vo.setChangeImage(changeName);
+				String path = savePath + changeName;
+				File target = new File(path);
+				image.transferTo(target);
+			}
+			
+			int result = service.join(vo);
+			
+			if(result != 1) {
+				throw new RuntimeException("회원가입 실패");
+			}
+			
+			return "redirect:/member/login";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException("회원가입 실패");
 		}
-		
-		return "redirect:/member/login";
 		
 	}//join
 	
@@ -129,11 +136,37 @@ public class MemberController {
 			return "fail";
 		}
 		
-		String email = vo.getEmail();
+		return "success";
+		
+	}
+	
+	//메일 보내고 멤버테이블에 인증번호 업데이트
+	@PostMapping("emailAuthentication.wow")
+	public String mailAuth(@RequestParam("email") String email ,HttpSession session) throws Exception {
+
 		String authKey = mailSendService.sendAuthMail(email);
 		
-		session.setAttribute("authKey", authKey);
+		int result = service.updateMailKey(email , authKey);
+		if(result != 1) {
+			throw new RuntimeException("인증키 업데이트 에러");
+		}
 		
+		return authKey;
+	}
+	
+	//메일로 받은 인증번호가 맞는지 아닌지 판단
+	@PostMapping("emailKeyRightOrNo")
+	@ResponseBody
+	public String emailKeyRightOrNo(@RequestParam("email") String email 
+								  , @RequestParam("code") String code) {
+		
+		String getCode = service.emailKeyRightOrNo(email);
+		System.out.println("[email] : " + email);
+		System.out.println("[code] : " +code );
+		
+		if(!getCode.equals(code)) {
+			return "fail";
+		}
 		return "success";
 		
 	}
@@ -147,6 +180,22 @@ public class MemberController {
 	}
 	
 	//비밀번호 재설정
+	@PostMapping("passwordReset")
+	public String passwordReset(@RequestParam("password") String password 
+							  , @RequestParam("passwordAgain") String passwordAgain
+							  , String email) {
+		
+		int result = service.passwordReset(password , email);
+		
+		log.info(Integer.toString(result));
+		
+		if(result != 1) {
+			throw new RuntimeException("비밀번호 변경 오류");
+		}
+		
+		return "redirect:/member/login";
+		
+	}//passwordReset
 	
 
 

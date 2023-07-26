@@ -20,8 +20,8 @@
     #menu{
     	display:grid;
     	justify-content:center;
-    	margin-top : 25px;
     	grid-template-rows: 1fr 1fr 1fr;
+		grid-gap: 20px;
     }
 
     .menu-bar{
@@ -55,12 +55,6 @@
 		justify-content:center;
     }
     
-    .time{
-    	font-size:2.5em;
-    	position:relative;
-    	top:23px;
-    }
-    
     .menu-img{
     	display:flex;
     	flex-direction: row-reverse;
@@ -70,7 +64,7 @@
     	width:350px;
     	height:230px;
     	position:absolute;
-    	top:100px;
+    	top:10px;
     }
     
     .secend-menu{
@@ -182,6 +176,12 @@
     	border : 1px solid #D9D9D9;
     }
     
+    #stopwatch{
+		font-size:1.8em;
+		position:relative;
+		top:23px;
+    }
+    
     
 </style>
 </head>
@@ -200,12 +200,18 @@
 		               <div class="secend-menu">
 			               <div class="work-time">
 				               	<div class="work-time-text">오늘 근무한 시간</div>
-				               	<div><h1 class="time"></h1></div>
+				               	<div id="stopwatch">
+				               		<span id="time">00</span>
+				               		<span>:</span>
+				               		<span id="min">00</span>
+				               		<span>:</span>
+				               		<span id="sec">00</span>
+				               	</div>
 			               </div>
 			               	<div class="work-btn">
-				               	<div><button style="position:relative; right:10px;">출근</button></div>
-				               	<div><button>퇴근</button></div>
-				               	<div class="text">버튼을 눌러 출근시간을 기록하세요</div>
+				               	<div><button id="startBtn" onclick="startClock();" style="position:relative; right:10px;">출근</button></div>
+				               	<div><button id="endBtn" onclick="stopClock();">퇴근</button></div>
+				               	<div class="text">버튼을 눌러 <br>출근시간을 기록하세요</div>
 			               	</div>
 		               </div>
             	</div>
@@ -311,26 +317,74 @@
         }, 1000);
         
         //아래 시계 만들기
-        const clock2 = document.querySelector('.time');
+        // const clock2 = document.querySelector('.time');
         
-        function getTime2(params) {
-            const time2 = new Date();
-            const hour = String(time2.getHours()).padStart(2, "0");
-            const minutes = String(time2.getMinutes()).padStart(2, "0");
-            const seconds = String(time2.getSeconds()).padStart(2, "0");
+        // function getTime2(params) {
+        //     const time2 = new Date();
+        //     const hour = String(time2.getHours()).padStart(2, "0");
+        //     const minutes = String(time2.getMinutes()).padStart(2, "0");
+        //     const seconds = String(time2.getSeconds()).padStart(2, "0");
             
-            clock2.innerHTML = hour+":"+minutes+":"+seconds;
-        }
+        //     clock2.innerHTML = hour+":"+minutes+":"+seconds;
+        // }
 
-        //아래 시계 실행
-        getTime2();
-        setInterval(() => {
-            getTime2();
-        }, 1000);
+        // //아래 시계 실행
+        // getTime2();
+        // setInterval(() => {
+        //     getTime2();
+        // }, 1000);
         
         //출근 그래프
-       
-        
+
+		//출근시간 기록하기
+		let startTime;
+		let interval;
+		
+		function startClock() {
+		  if (!startTime) {
+		    startTime = Date.now();
+		    localStorage.setItem("startTime", startTime);
+		  }
+		  interval = setInterval(updateClock, 1000);
+		}
+		
+		function updateClock() {
+		  const currentTime = Date.now() - startTime;
+		  const seconds = Math.floor(currentTime / 1000) % 60;
+		  const minutes = Math.floor(currentTime / 1000 / 60) % 60;
+		  const hours = Math.floor(currentTime / 1000 / 60 / 60);
+		
+		  document.getElementById("time").textContent = formatTime(hours);
+		  document.getElementById("min").textContent = formatTime(minutes);
+		  document.getElementById("sec").textContent = formatTime(seconds);
+		}
+		
+		function formatTime(time) {
+		  return time.toString().padStart(2, "0");
+		}
+		
+		function stopClock() {
+		  clearInterval(interval);
+		  startTime = null;
+		  localStorage.removeItem("startTime");
+		  document.getElementById("time").textContent = "00";
+		  document.getElementById("min").textContent = "00";
+		  document.getElementById("sec").textContent = "00";
+		}
+		
+		document.getElementById("startBtn").addEventListener("click", () => {
+		  startClock();
+		});
+		
+		document.getElementById("endBtn").addEventListener("click", () => {
+		  stopClock();
+		});
+		
+		if (localStorage.getItem("startTime")) {
+		  startTime = parseInt(localStorage.getItem("startTime"));
+		  startClock();
+		}
+
 
     </script>
 
