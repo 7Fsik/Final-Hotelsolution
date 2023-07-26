@@ -31,7 +31,6 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     }
 
 
-
     @Override
     public List<CompanyBoardCategoryVo> getCategoryList() {
         return dao.getCategoryList(sst);
@@ -40,6 +39,16 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     @Override
     public int writeCompanyBoardPost(CompanyBoardVo companyBoardVo) {
         return dao.writeCompanyBoardPost(sst, companyBoardVo);
+    }
+
+    @Override
+    public void increaseCompanyBoardHit(int no) {
+        dao.increaseCompanyBoardHit(sst,no);
+    }
+
+    @Override
+    public CompanyBoardVo getCompanyBoardDetailByNo(int no) {
+        return dao.getCompanyBoardDetailByNo(sst,no);
     }
 
 

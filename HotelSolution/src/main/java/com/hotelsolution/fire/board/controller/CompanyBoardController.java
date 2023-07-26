@@ -74,14 +74,9 @@ public class CompanyBoardController {
         if(result != 1){
             return "redirect:/error";
         }
-        return "redirect:/main";
+        return "redirect:/board/list/1";
     }
 
-    @GetMapping("detail")
-    public String showDetailBoardByNo(){
-
-        return "companyBoard/detail";
-    }
 
     @ResponseBody
     @RequestMapping(value = "upload" )
@@ -138,6 +133,20 @@ public class CompanyBoardController {
             }
 
         }
+    }
+
+    @GetMapping("detail")
+    public String handleCompanyBoardDetailRequest(@RequestParam int no, Model model)
+    {
+        boardService.increaseCompanyBoardHit(no);
+
+        CompanyBoardVo companyBoardVo  = boardService.getCompanyBoardDetailByNo(no);
+
+
+        model.addAttribute("companyBoardVo",companyBoardVo);
+
+        return "companyBoard/detail";
+
     }
 
 

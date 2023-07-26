@@ -7,8 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>사내게시판 목록조회합시다</title>
-  <link rel="stylesheet" href="${root}/resources/css/companyboard/detail.css">
-  <script defer src="${root}/resources/js/companyboard/detail.js"></script>
+
 </head>
 
 <body>
@@ -17,30 +16,38 @@
 
 
     <%@ include file="/WEB-INF/views/common/main.jsp" %>
+    <link rel="stylesheet" href="${root}/resources/css/companyboard/detail.css">
+    <script src="${root}/resources/ckeditor/ckeditor.js"></script>
+    <script defer src="${root}/resources/js/companyboard/detail.js"></script>
     <div id="mainboard">
       <div class="main-content">
           <div class="main-content-wrap">
               <div class="writer-container">
                   <div class="titleAndWriterDate">
                       <span class="detail-title">
-                          게시판 제목이에요 ㅎㅎ
+                          제목
+                          ${companyBoardVo.title}
                       </span>
                       <span>
-                          2023.07.18
+                          ${companyBoardVo.enrollDate}
                       </span>
+                      <c:if test="${sessionScope.loginMember.no eq companyBoardVo.writerNo}">
+                          <button type="button" onclick="companyBoardEdit();">수정하기</button>
+                          <button type="button" onclick="companyBoardDrop();">삭제하기</button>
+                      </c:if>
                   </div>
 
                   <div class="writer-profile-box">
-                      <span class="detail-writer">
-                          작성자
-                      </span>
                       <span>
-                          카테고리이름
+                          ${companyBoardVo.writerName}
                       </span>
                   </div>
 
               </div>
-              <div class="detail-container">
+              <hr>
+
+              <div id="content" contenteditable="false">
+                  ${companyBoardVo.content}
               </div>
               <div class="comment-box">
                   0개의 댓글
@@ -58,3 +65,18 @@
 
 </body>
 </html>
+
+<script>
+
+    function companyBoardEdit(){
+        window.location.href= "${root}/board/drop";
+    }
+
+    function companyBoardDrop(){
+        alert("삭제하시겠습니까?");
+        window.location.href= "${root}/board/delete"
+
+    }
+
+</script>
+

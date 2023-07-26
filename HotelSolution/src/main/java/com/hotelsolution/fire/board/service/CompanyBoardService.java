@@ -18,4 +18,8 @@ public interface CompanyBoardService {
     List<CompanyBoardCategoryVo> getCategoryList();
 
     int writeCompanyBoardPost(CompanyBoardVo companyBoardVo);
+
+    void increaseCompanyBoardHit(int no);
+
+    CompanyBoardVo getCompanyBoardDetailByNo(int no);
 }
