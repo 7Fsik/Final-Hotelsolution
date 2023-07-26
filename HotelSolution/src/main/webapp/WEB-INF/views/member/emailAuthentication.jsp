@@ -122,7 +122,7 @@
 
 	<div id="wrap">
 
-    <form action="${root}/member/emailAuthentication" method="post">
+    <form action="" method="post">
         <div id="box">
             <div id="logo">
                 <img style="width: 300px;" src="${root}/resources/img/호텔솔루션.png" alt="">
@@ -135,15 +135,15 @@
             
             <div class="password-area">
                  <label for="name">E-MAIL</label> 
-                <input name="email" type="text" placeholder="이메일을 입력하세요">
+                <input name="email" type="email" placeholder="이메일을 입력하세요">
             </div>
 
-                    <div id="code-btn"><button type="button">인증코드 받기</button></div>
+                    <div id="code-btn"><button type="button" formaction="${root}/member/emailAuthentication.wow">인증코드 받기</button></div>
                    
                    <div id="code-box">
 	                	<div class="detail">
 		                	인증코드 <input class="code-input" type="text" name="code" maxlength="6" placeholder="인증번호 6자리 입력">
-		                	<input class="sub-input" type="submit" value="확인">
+		                	<input formaction="${root}/member/emailKeyRightOrNo" class="sub-input" type="submit" value="확인">
 	                	</div>
 		                <ul class="list">
 	                        <li>3분안으로 입력해주세요.</li>
@@ -158,29 +158,9 @@
     </div>
 
     <script>
-
+        
+        //ID , EMAIL 맞는지 확인하고 맞으면 메일보내기
         const Btn = document.querySelector('#code-btn');
-        
-        //메일 발송
-        function sendMail(email) {
-            $.ajax({
-                type : 'post',
-                url : '${root}/member/emailAuthentication',
-                data : {
-                    email : email,
-                },
-                success : function (data) {
-                    console.log('발신 성공');
-                    alert('메일 발신 성공');
-                },
-                error : function (e) {
-                    console.log('발신 실패');
-                    alert('메일 발신 실패');
-                }
-            })
-        }
-        
-        //ID , EMAIL 맞는지 확인
         Btn.addEventListener('click' , function (params) {
             const id = document.querySelector('input[name=id]').value;
             const email = document.querySelector('input[name=email]').value;
@@ -196,9 +176,22 @@
                 console.log('통신 성공');
                 if(data === "success"){
                     alert('인증번호가 발송되었습니다.');
-                    sendMail(email);
+                    const email = document.querySelector('input[name=email]').value;
+                    $.ajax({
+                        type : 'post',
+                        url : '${root}/member/emailAuthentication.wow',
+                        data : {
+                            email : email,
+                        },
+                        success : function (data) {
+                            console.log(data);
+                        },
+                        error : function (e) {
+                            console.log(e);
+                        }
+                    })
                 }else{
-                    alert('불일치');
+                    alert('아이디 혹은 이메일을 다시 입력해주세요.');
                 }
                },
                error : (e)=>{
@@ -206,16 +199,36 @@
                },
             });      
             
-        })
+        });
 
         const subMitBtn = document.querySelector('.sub-input');
-        subMitBtn.addEventListener('click' , ()=>{
-                //const no = '${vo.infoNo}'
-				const width = 800;
-				const height = 1000;
-				const left = (screen.width/2) - (width/2);
-				const top = 0;
-				window.open('${root}/member/passwordReset?code='+1 ,'', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top )
+        
+        subMitBtn.addEventListener('click' , (event)=>{
+            event.preventDefault();
+            const code = document.querySelector('input[name=code]').value;
+            const email = document.querySelector('input[type=email]').value;
+        $.ajax({
+            type : "post",
+            url : "${root}/member/emailKeyRightOrNo",
+            dataType : 'text',
+            data : {
+                email : email,
+                code : code
+            },
+            success : function(data) {
+                if(data == "success"){
+                    alert('인증번호 확인완료');
+                    window.location.href = "${root}/member/passwordReset?email="+encodeURIComponent(email);
+                }else{
+                    alert('인증번호를 다시 확인해주세요');
+                    const code = document.querySelector('input[name=code]').value = '';
+                }
+            },
+            error : function(e) {
+                console.log(e);
+            }
+        });
+
         })
 
     </script>

@@ -1,5 +1,8 @@
 package com.hotelsolution.fire.member.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,6 +61,41 @@ public class MemberServiceImpl implements MemberService{
 		MemberVo emailCheck = dao.emailAuthenTication(sst,vo);
 		
 		return emailCheck != null;
+	}
+	
+	@Override
+	//인증번호 멤버테이블 컬럼에 업데이트
+	public int updateMailKey(String email, String authKey) {
+		
+		Map<String, Object> emailKey = new HashMap<>();
+		emailKey.put("email", email);
+		emailKey.put("authKey", authKey);
+		
+		return dao.updateMailKey(sst, emailKey);
+	}
+	
+
+	@Override
+	//메일로 받은 인증번호가 맞는지 아닌지 판단
+	public String emailKeyRightOrNo(String email) {
+		return dao.emailKeyRightOrNo(sst,email);
+		
+	}
+
+
+	@Override
+	public int passwordReset(String password, String email) {
+		
+		String pwd = password;
+		String newPwd = pwdEncoder.encode(pwd);
+
+		Map<String, String> params = new HashMap<>();
+		params.put("password", newPwd);
+		params.put("email", email);
+		
+		
+		
+		return dao.passwordReset(sst,params);
 	}
 
 }//class

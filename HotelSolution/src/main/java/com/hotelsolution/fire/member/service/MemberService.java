@@ -9,5 +9,11 @@ public interface MemberService {
 	MemberVo login(MemberVo vo);
 
 	boolean emailAuthenTication(MemberVo vo);
-	
+
+	int passwordReset(String password, String email);
+
+	int updateMailKey(String email, String authKey);
+
+	String emailKeyRightOrNo(String email);
+
 }
