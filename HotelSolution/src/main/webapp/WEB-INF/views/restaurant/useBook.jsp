@@ -8,16 +8,14 @@
 <title>Insert title here</title>
 </head>
 <style>
-     body{
+    body{
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
-    
 
     #title{
         font-size: 40px;
@@ -50,7 +48,7 @@
         font-size: 0.6em;
         align-items: center
     }
-    button{
+    .bbb{
         border:0;
         background-color: rgba(59, 68, 75, 1);
         color: white;
@@ -143,104 +141,112 @@
 </style>
 <body>
 
-	<main>
+    <div id ="wrap">
 
-
-        <div id="title">
-            식당 테이블
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+     
+        <div id="mainboard">
+     
+           <div id="title">
+                 식당 테이블
+             </div>
+             <div id="search-area">
+                 <div id="search">
+                     예약 날짜 : 
+                     <input type="date">
+                 </div>
+             </div>
+     
+             <div id="table-area">
+                 <c:forEach begin="1" end="21" var="i">
+                     <div class="table-int" >
+                         <div class="table-num t-bold">
+                             ${i}
+                         </div>
+                         <div class="book-list">
+                             <div class="book-int">
+                                 <div class="ss"> 김찬진 (01012341234)</div>
+                                 <div class="sidegrid ss">
+                                     <div>17:00 4명   </div>
+                                     <div class="sidegrid">
+                                         <div class="ok">확인 </div>
+                                         <div class="no">취소</div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="btn-area">
+                             <div >
+                                 최대인원 : 4명
+                             </div>
+                             <button class="bbb">이용/예약</button>
+                         </div>
+                     </div>
+     
+                     <div class="model">
+                         <div class="model-delete">
+                             X
+                         </div>
+                         <div class="logo">
+                             로고이미지
+                         </div>
+                         <div class="table-num">
+                             ${i}테이블 예약
+                         </div>
+                         <div class="int">
+                             <div>
+                                 손님 이름 : <input type="text">
+                             </div>
+                             <div>
+                                 핸드폰 번호 : <input type="text">
+                             </div>
+                             <div>
+                                 예약 인원 : <input type="text">
+                             </div>
+                             <div>
+                                 예약 시간 : <input type="time">
+                             </div>
+                         </div>
+                         <div class="model-btn">
+                             <button>예약하기</button>
+                         </div>
+                     </div>
+                 </c:forEach>
+             </div>
+     
+             
+             <div id="overlay"></div>
+        
         </div>
-        <div id="search-area">
-            <div id="search">
-                예약 날짜 : 
-                <input type="date">
-            </div>
-        </div>
-
-        <div id="table-area">
-            <c:forEach begin="1" end="21" var="i">
-                <div class="table-int" >
-                    <div class="table-num t-bold">
-                        ${i}
-                    </div>
-                    <div class="book-list">
-                        <div class="book-int">
-                            <div class="ss"> 김찬진 (01012341234)</div>
-                            <div class="sidegrid ss">
-                                <div>17:00 4명   </div>
-                                <div class="sidegrid">
-                                    <div class="ok">확인 </div>
-                                    <div class="no">취소</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="btn-area">
-                        <div >
-                            최대인원 : 4명
-                        </div>
-                        <button>이용/예약</button>
-                    </div>
-                </div>
-
-                <div class="model">
-                    <div class="model-delete">
-                        X
-                    </div>
-                    <div class="logo">
-                        로고이미지
-                    </div>
-                    <div class="table-num">
-                        ${i}테이블 예약
-                    </div>
-                    <div class="int">
-                        <div>
-                            손님 이름 : <input type="text">
-                        </div>
-                        <div>
-                            핸드폰 번호 : <input type="text">
-                        </div>
-                        <div>
-                            예약 인원 : <input type="text">
-                        </div>
-                        <div>
-                            예약 시간 : <input type="time">
-                        </div>
-                    </div>
-                    <div class="model-btn">
-                        <button>예약하기</button>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
+     
+     </div>
 
         
-        <div id="overlay"></div>
         
-        <script>
-            const openModals = document.querySelectorAll('.btn-area>button');
-            const closeModals = document.querySelectorAll('.model-delete');
-            const modals = document.querySelectorAll('.model');
-            const overlay = document.querySelector("#overlay");
+<script>
+    const openModals = document.querySelectorAll('.btn-area>button');
+    const closeModals = document.querySelectorAll('.model-delete');
+    const modals = document.querySelectorAll('.model');
+    const overlay = document.querySelector("#overlay");
 
-            openModals.forEach(function(openModal, index) {
-                openModal.addEventListener('click', function() {
-                    modals[index].style.display = 'flex';
-                    overlay.style.display = "block";
-                });
-            });
-					
-            closeModals.forEach(function(closeModal, index) {
-                closeModal.addEventListener('click', function() {
-                    modals[index].style.display = 'none';
-                    overlay.style.display = "none";
-                });
-            });
+    openModals.forEach(function(openModal, index) {
+        openModal.addEventListener('click', function() {
+            modals[index].style.display = 'flex';
+            overlay.style.display = "block";
+        });
+    });
+            
+    closeModals.forEach(function(closeModal, index) {
+        closeModal.addEventListener('click', function() {
+            modals[index].style.display = 'none';
+            overlay.style.display = "none";
+        });
+    });
 
-        </script>
+</script>
 
         
 
-    </main>
 
 </body>
 </html>

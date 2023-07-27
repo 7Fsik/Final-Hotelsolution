@@ -380,21 +380,19 @@
                         <div class="sub-menu">
                             <div class="sub-menu-title">객실관리</div>
                             <ul class="sub-menu-list">
-                                <li><a href="#">객실 상태 관리</a></li>
-                                <li><a href="#">객실 예약 관리 </a></li>
-                                <li><a href="#">객실 이용 관리</a></li>
+                                <li><a href="${root}/front/status/list?page=1">객실 상태 관리</a></li>
+                                <li><a href="${root}/front/bookManage/list?page=1">객실 예약 관리 </a></li>
+                                <li><a href="${root}/front/useManage/list?page=1">객실 이용 관리</a></li>
+                                <li><a href="${root}/front/useBook/list?page=1">객실 예약 / 이용</a></li>
                             </ul>
                             <div class="sub-menu-title">매출관리</div>
                             <ul class="sub-menu-list">
-                                <li><a href="#">객실 상태 관리</a></li>
-                                <li><a href="#">객실 예약 관리 </a></li>
-                                <li><a href="#">객실 이용 관리</a></li>
+                                <li><a href="${root}/front/sales">매출관리</a></li>
                             </ul>
                             <div class="sub-menu-title">재고관리</div>
                             <ul class="sub-menu-list">
-                                <li><a href="#">객실 상태 관리</a></li>
-                                <li><a href="#">객실 예약 관리 </a></li>
-                                <li><a href="#">객실 이용 관리</a></li>
+                                <li><a href="${root}/front/articleManage">재고 수량 관리</a></li>
+                                <li><a href="${root}/front/productManage">객실 비품 서비스 관리</a></li>
                             </ul>
                         </div>
                     </div>
@@ -403,11 +401,23 @@
                     <div class="team-title">식음팀</div>
                     <div class="mail-box">
                         <div class="sub-menu">
-                            <div class="sub-menu-title">메일함</div>
+                            <div class="sub-menu-title">룸 서비스</div>
                             <ul class="sub-menu-list">
-                                <li><a href="#">보낸메일함</a></li>
-                                <li><a href="#">받은메일함</a></li>
-                                <li><a href="#">휴지통</a></li>
+                                <li><a href="${root}/restaurant/">룸 서비스 주문 내역</a></li>
+                            </ul>
+                            <div class="sub-menu-title">식당관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="${root}/restaurant/useBook">식당 이용 / 예약</a></li>
+                                <li><a href="${root}/restaurant/table">식당 테이블</a></li>
+                            </ul>
+                            <div class="sub-menu-title">재고관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="${root}/restaurant/articleManage">재고 수량 관리</a></li>
+                                <li><a href="${root}/restaurant/">메뉴 관리</a></li>
+                            </ul>
+                            <div class="sub-menu-title">매출관리</div>
+                            <ul class="sub-menu-list">
+                                <li><a href="${root}/restaurant/sales">매출조회</a></li>
                             </ul>
                         </div>
                     </div>
