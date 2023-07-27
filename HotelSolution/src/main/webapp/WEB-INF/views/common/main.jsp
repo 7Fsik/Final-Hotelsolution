@@ -322,7 +322,7 @@
                     <span>일정</span>
                 </div>
                 <div class="aside-icon">
-                    <img src="${root}/resources/img/근태관리.png" alt="아이콘8">
+                    <img src="${root}/resources/img/근태관리.png" alt="아이콘8" onclick="goWorkOutByAside();">
                     <span>근태관리</span>
                 </div>
             </div>
@@ -476,6 +476,11 @@
 	}
 	function goScheduleByAside() {
 	    window.location.href = "${root}/schedule/calendar";
+	}
+	
+	//근태관리 페이지 이동
+	function goWorkOutByAside(){
+		window.location.href = "${root}/workout/attendance";
 	}
 
 </script>

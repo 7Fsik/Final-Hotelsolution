@@ -4,6 +4,8 @@ import com.hotelsolution.fire.workout.vo.WorkoutVo;
 
 public interface WorkoutService {
 
-	int checkWorkStart(WorkoutVo vo);
+	int recordStartTime(String no);
+
+	int recordEndTime(String no);
 
 }
