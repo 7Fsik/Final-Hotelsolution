@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="useManage">
+
+<select id="getUseCnt" resultType="int">
+
+	SELECT
+	COUNT(U.ROOM_USE_NO)
+	FROM
+	(SELECT 
+	I.ROOM_INT_NO,
+	I.TYPE_NO,
+	I.ROOM_NO,
+	I.IMG,
+	T.TYPE_NAME,
+	T.COMMON_PRICE
+	FROM ROOM_INTRODUCE I
+	JOIN ROOM_TYPE T ON I.TYPE_NO=T.TYPE_NO) R
+	JOIN (SELECT 
+	U.ROOM_USE_NO,
+	U.BOOK_NO,
+	U.TOTAL_PRICE,
+	L.ROOM_INT_NO,
+	L.START_DATE,
+	L.END_DATE
+	FROM ROOM_USE U
+	JOIN BOOK_LIST L ON U.BOOK_NO = L.NO) U
+	ON U.ROOM_INT_NO = R.ROOM_INT_NO
+	<where>
+	#{date} BETWEEN U.START_DATE AND U.END_DATE-1
+		<if test="searchValue != null ">
+			R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
+		</if>
+	</where>
+
+</select>
+
+<select id="getUseList" resultType="UseManageVo">
+
+	SELECT
+	R.ROOM_INT_NO,
+	R.TYPE_NO,
+	R.ROOM_NO,
+	R.IMG,
+	R.TYPE_NAME,
+	R.COMMON_PRICE,
+	U.ROOM_USE_NO,
+	U.BOOK_NO,
+	U.TOTAL_PRICE,
+	U.ROOM_INT_NO,
+	U.START_DATE,
+	U.END_DATE
+	FROM
+	(SELECT 
+	I.ROOM_INT_NO,
+	I.TYPE_NO,
+	I.ROOM_NO,
+	I.IMG,
+	T.TYPE_NAME,
+	T.COMMON_PRICE
+	FROM ROOM_INTRODUCE I
+	JOIN ROOM_TYPE T ON I.TYPE_NO=T.TYPE_NO) R
+	JOIN (SELECT 
+	U.ROOM_USE_NO,
+	U.BOOK_NO,
+	U.TOTAL_PRICE,
+	L.ROOM_INT_NO,
+	L.START_DATE,
+	L.END_DATE
+	FROM ROOM_USE U
+	JOIN BOOK_LIST L ON U.BOOK_NO = L.NO) U
+	ON U.ROOM_INT_NO = R.ROOM_INT_NO
+	<where>
+	#{date} BETWEEN U.START_DATE AND U.END_DATE-1
+	
+		<if test="searchValue != null ">
+			R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
+		</if>
+	</where>
+
+</select>
+
+<select id="getUseByNo" resultType="UseManageVo">
+	SELECT
+		R.ROOM_INT_NO,
+		R.TYPE_NO,
+		R.ROOM_NO,
+		R.IMG,
+		R.TYPE_NAME,
+		U.ROOM_USE_NO,
+		U.BOOK_NO,
+		U.TOTAL_PRICE,
+		U.ROOM_INT_NO,
+		TO_CHAR(U.START_DATE, 'YYYY-MM-DD') AS START_DATE,
+		TO_CHAR(U.END_DATE, 'YYYY-MM-DD') AS END_DATE,
+	    TO_NUMBER(SUBSTR((U.END_DATE - U.START_DATE)*R.COMMON_PRICE, 2, INSTR((U.END_DATE - U.START_DATE)*R.COMMON_PRICE, ' ') - 1)) AS COMMON_PRICE
+		FROM
+		(SELECT 
+		I.ROOM_INT_NO,
+		I.TYPE_NO,
+		I.ROOM_NO,
+		I.IMG,
+		T.TYPE_NAME,
+		T.COMMON_PRICE
+		FROM ROOM_INTRODUCE I
+		JOIN ROOM_TYPE T ON I.TYPE_NO=T.TYPE_NO) R
+		JOIN (SELECT 
+		U.ROOM_USE_NO,
+		U.BOOK_NO,
+		U.TOTAL_PRICE,
+		L.ROOM_INT_NO,
+		L.START_DATE,
+		L.END_DATE
+		FROM ROOM_USE U
+		JOIN BOOK_LIST L ON U.BOOK_NO = L.NO) U
+		ON U.ROOM_INT_NO = R.ROOM_INT_NO
+		WHERE ROOM_USE_NO = #{NO}
+
+</select>
+
+
+<select id="roomOrderList" resultType="RoomOrderVo">
+	SELECT
+	O.NO,
+	O.ROOM_USE_NO,
+	O.PRODUCT_NO,
+	O.FINISH_YN,
+	O."COUNT",
+	P.NAME,
+	P.PAY
+	FROM PRODUCT_ORDER_LIST O
+	JOIN ROOM_PRODUCT P ON O.PRODUCT_NO=P.PRODUCT_NO
+	WHERE O.ROOM_USE_NO = #{NO}
+
+</select>
+
+
+<select id="foodOrderList" resultType="FoodOrderVo">
+	
+	SELECT 
+	O.LIST_NO,
+	O.ROOM_USE_NO,
+	O.FOOD_NO,
+	O.FINISH_YN,
+	O."COUNT",
+	F.NAME,
+	F.PAY
+	FROM FOOD_ORDER_LIST O
+	JOIN FOOD_MENU F ON O.FOOD_NO=F.FOOD_NO
+	WHERE O.ROOM_USE_NO = #{NO}
+
+</select>
+
+<select id="roomSearch" resultType="RoomOrderVo">
+
+	SELECT 
+	*
+	FROM ROOM_PRODUCT
+	<where>
+		<if test="searchValue != null ">
+				NAME LIKE ('%'||#{searchValue}||'%')
+			</if> 	
+	</where>
+
+
+</select>
+
+<select id="foodSearch" resultType="FoodOrderVo">
+
+	SELECT 
+	*
+	FROM FOOD_MENU
+	<where>
+		<if test="searchValue != null ">
+				NAME LIKE ('%'||#{searchValue}||'%')
+			</if> 	
+	</where>
+
+
+</select>
+
+<insert id="foodOrder">
+
+	INSERT ALL
+	 <foreach collection="noList" index="index" item="no" >
+		INTO FOOD_ORDER_LIST(lIST_NO,ROOM_USE_NO,FOOD_NO,COUNT)
+		VALUES(SEQ_FOOD_ORDER_LIST_NO.NEXTVAL,#{useNo},#{no},#{numList[${index}]}) 
+  	</foreach>
+	SELECT * FROM DUAL
+</insert>
+
+<insert id="roomOrder">
+
+	INSERT ALL
+	 <foreach collection="noList" index="index" item="no" >
+		INTO PRODUCT_ORDER_LIST(NO,ROOM_USE_NO,PRODUCT_NO,COUNT)
+		VALUES(SEQ_PRODUCT_ORDER_LIST_NO.NEXTVAL,#{useNo},#{no},#{numList[${index}]}) 
+  	</foreach>
+	SELECT * FROM DUAL
+</insert>
+
+
+
+	
+	
+
+
+</mapper>

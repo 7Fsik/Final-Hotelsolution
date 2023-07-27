@@ -11,16 +11,7 @@ public class FrontController {
 	
 	
 	
-	/////////////////////////////객실 이용관리
-	@GetMapping("useManage/list")
-	public String useManageList() {
-		return "front/useManage/list";
-	}
-	@GetMapping("useManage/detail")
-	public String useManageDetail() {
-		return "front/useManage/detail";
-	}
-	////////////////////////////////
+	
 	
 	
 	///////////////////////물품 관리 

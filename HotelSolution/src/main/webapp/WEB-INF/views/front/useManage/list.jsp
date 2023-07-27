@@ -106,23 +106,20 @@
     
             <div id="search-area">
                 <div id="search">
-                    <select name="" id="">
-                        <option value="">방 호수</option>
-                    </select>
-                    
-                    <input type="text">
+                    <input type="text" placeholder="방 호수를 입력하시오 ">
+                    <input type="submit" value="검색">
                 </div>
             </div>
     
             <div id="list-area">
                 <div id="list">
-                    <c:forEach begin="1" end="8">
+                    <c:forEach items="${useList}" var="useList">
                         <div class="att"onclick="location.href='/fire/front/useManage/detail'">
                             <div class="img">
                                 <img src="/fire/static/img/front/room001.jpg">
                             </div>
                             <div>
-                                <div class="name">방이름</div>
+                                <div class="name">${useList.roomUseNo}</div>
                                 <div class="ho">호수</div>
                             </div>
                             <div class="btn">
@@ -132,7 +129,19 @@
                     </c:forEach>
                 </div>
                 <div id="page-area">
-                    이전 1 2 3 4 5 6 7 8 9 10 다음
+                    <c:if test="${pv.currentPage >1}">
+                        <a href="/fire/front/status/list?page=1&searchValue=${searchValue}"> << </a>
+                        <a href="/fire/front/status/list?page=${pv.currentPage - 1}&searchValue=${searchValue}"> < </a>
+                    </c:if>
+                    
+                    <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
+                        <a href="/fire/front/status/list?page= ${i}&searchValue=${searchValue}">${i}</a>
+                    </c:forEach>
+                    
+                    <c:if test="${pv.currentPage < pv.maxPage }">
+                        <a href="/fire/front/status/list?page=${pv.maxPage}&searchValue=${searchValue}"> >> </a>            
+                        <a href="/fire/front/status/list?page=${pv.currentPage + 1}&searchValue=${searchValue}"> > </a>
+                    </c:if>
                 </div>
             </div>
         </div>
