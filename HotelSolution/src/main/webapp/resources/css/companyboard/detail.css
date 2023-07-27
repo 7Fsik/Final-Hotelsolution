@@ -1,6 +1,6 @@
 #content{
     width: 100%;
-    height: 500px;
+    height: 400px;
     overflow-y: auto;
 }
 
@@ -8,4 +8,31 @@
     max-width: 100%;
 
 }
+
+.comment-box{
+    width: 100%;
+    height: 320px;
+    background-color: #EDE7F6;
+    margin-top: 40px;
+    border-radius: 15px;
+}
+
+.comment-cnt{
+    padding: 10px;
+}
+
+#writer-comment-btn{
+    width: 10%;
+    height: 8%;
+    font-size: 14px;
+    margin-left: 30px;
+}
+
+#comment-input-text{
+    margin-left: 20px;
+    width: 800px;
+    text-align: center;
+}
+
+
 

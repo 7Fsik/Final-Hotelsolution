@@ -3,13 +3,14 @@ package com.hotelsolution.fire.board.controller;
 import com.google.gson.JsonObject;
 import com.hotelsolution.fire.board.service.CompanyBoardService;
 import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
+import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
+import com.hotelsolution.fire.member.vo.MemberVo;
 import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.lang.reflect.Member;
 import java.util.List;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
@@ -52,19 +54,24 @@ public class CompanyBoardController {
         model.addAttribute("categoryList",categoryList);
 
 
-        return "companyBoard/write";
+        return "companyBoard/post";
     }
 
     @PostMapping("post")
-    public String writeCompanyBoardPostByNo(HttpSession session, CompanyBoardVo companyBoardVo)
-    {
-
-        int result = boardService.writeCompanyBoardPost(companyBoardVo);
-
-        if(result != 1){
-            return "redirect:/error";
+    public String writeCompanyBoardPostByNo(@ModelAttribute("loginMember") MemberVo loginMember, CompanyBoardVo companyBoardVo) {
+        if(loginMember != null){
+            companyBoardVo.setWriterNo(loginMember.getNo());
+            int result = boardService.writeCompanyBoardPost(companyBoardVo);
+            if(result != 1){
+                return "redirect:/error";
+            }
         }
         return "redirect:/board/list/1";
+    }
+
+    @ModelAttribute("loginMember")
+    public MemberVo getLoginMember(HttpSession session) {
+        return (MemberVo) session.getAttribute("loginMember");
     }
 
 
@@ -161,11 +168,29 @@ public class CompanyBoardController {
         return "companyBoard/edit";
     }
 
+    @GetMapping("comment/list")
+    @ResponseBody
+    public String getAllCommentListByNo()
+    {
 
+        return "김치먹자";
+    }
 
+    @PostMapping("comment/write")
+    @ResponseBody
+    public String writeCommentByNo(HttpSession session, CompanyBoardCommentVo companyBoardCommentVo) {
 
+        log.info("companyBoardCommentVo 내용물보기 ㅇㅇ" +  companyBoardCommentVo);
 
+        MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
+        if (loginUser != null) {
+            companyBoardCommentVo.setWriter(loginUser.getNo());
 
+            boardService.writeCommentByNo(companyBoardCommentVo);
+            return "success";
+        }else{
+            return "common/error";
+        }
 
-
+    }
 }

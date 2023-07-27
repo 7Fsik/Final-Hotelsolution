@@ -2,6 +2,7 @@ package com.hotelsolution.fire.board.service;
 
 import com.hotelsolution.fire.board.dao.CompanyBoardDaoImpl;
 import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
+import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,11 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     @Override
     public CompanyBoardVo getBoardInfoByNo(int no) {
         return dao.getBoardInfoByNo(sst,no);
+    }
+
+    @Override
+    public int writeCommentByNo(CompanyBoardCommentVo companyBoardCommentVo) {
+        return dao.writeCommentByNo(sst,companyBoardCommentVo);
     }
 
 

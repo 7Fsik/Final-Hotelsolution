@@ -10,7 +10,7 @@ public class CompanyBoardVo {
 
     private int no;
     private String categoryNo;
-    private int writerNo;
+    private String writerNo;
     private String title;
     private String content;
     private LocalDateTime enrollDate;
