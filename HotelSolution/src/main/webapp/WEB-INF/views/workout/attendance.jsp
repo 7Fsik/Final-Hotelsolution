@@ -7,10 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>Insert title here</title>
-	<link rel="stylesheet" href="${root}/resources/css/common/home.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<link rel="stylesheet" href="${root}/resources/css/common/home.css">
 <style>
     body{
         margin: 0;
@@ -181,6 +180,11 @@
 		position:relative;
 		top:23px;
     }
+
+	#startBtn{
+		position: relative;
+		right: 10px;
+	}
     
     
 </style>
@@ -209,7 +213,7 @@
 				               	</div>
 			               </div>
 			               	<div class="work-btn">
-				               	<div><button id="startBtn" onclick="startClock();" style="position:relative; right:10px;">출근</button></div>
+				               	<div><button id="startBtn" onclick="startClock(); getCurrentTime();">출근</button></div>
 				               	<div><button id="endBtn" onclick="stopClock();">퇴근</button></div>
 				               	<div class="text">버튼을 눌러 <br>출근시간을 기록하세요</div>
 			               	</div>
@@ -336,55 +340,100 @@
         
         //출근 그래프
 
-		//출근시간 기록하기
-		let startTime;
+		//출퇴근 버튼 작동하기
 		let interval;
-		
+		let startTime = null;
+
 		function startClock() {
-		  if (!startTime) {
-		    startTime = Date.now();
-		    localStorage.setItem("startTime", startTime);
-		  }
-		  interval = setInterval(updateClock, 1000);
-		}
-		
-		function updateClock() {
-		  const currentTime = Date.now() - startTime;
-		  const seconds = Math.floor(currentTime / 1000) % 60;
-		  const minutes = Math.floor(currentTime / 1000 / 60) % 60;
-		  const hours = Math.floor(currentTime / 1000 / 60 / 60);
-		
-		  document.getElementById("time").textContent = formatTime(hours);
-		  document.getElementById("min").textContent = formatTime(minutes);
-		  document.getElementById("sec").textContent = formatTime(seconds);
-		}
-		
-		function formatTime(time) {
-		  return time.toString().padStart(2, "0");
-		}
-		
-		function stopClock() {
-		  clearInterval(interval);
-		  startTime = null;
-		  localStorage.removeItem("startTime");
-		  document.getElementById("time").textContent = "00";
-		  document.getElementById("min").textContent = "00";
-		  document.getElementById("sec").textContent = "00";
-		}
-		
-		document.getElementById("startBtn").addEventListener("click", () => {
-		  startClock();
-		});
-		
-		document.getElementById("endBtn").addEventListener("click", () => {
-		  stopClock();
-		});
-		
-		if (localStorage.getItem("startTime")) {
-		  startTime = parseInt(localStorage.getItem("startTime"));
-		  startClock();
+			startTime = Date.now();
+			localStorage.setItem("startTime", startTime);
+			interval = setInterval(updateClock, 1000);
+			updateClock();
 		}
 
+		function updateClock() {
+			if (!startTime) return;
+
+			const currentTime = Date.now();
+			const elapsedTime = currentTime - startTime;
+			const seconds = Math.floor(elapsedTime / 1000) % 60;
+			const minutes = Math.floor(elapsedTime / 1000 / 60) % 60;
+			const hours = Math.floor(elapsedTime / 1000 / 60 / 60);
+
+			document.getElementById("time").textContent = formatTime(hours);
+			document.getElementById("min").textContent = formatTime(minutes);
+			document.getElementById("sec").textContent = formatTime(seconds);
+		}
+
+		function formatTime(time) {
+			return time.toString().padStart(2, "0");
+		}
+
+		function stopClock() {
+			clearInterval(interval);
+			startTime = null;
+			localStorage.removeItem("startTime");
+			document.getElementById("time").textContent = "00";
+			document.getElementById("min").textContent = "00";
+			document.getElementById("sec").textContent = "00";
+		}
+
+		document.getElementById("startBtn").addEventListener("click", () => {
+			startClock();
+		});
+
+		document.getElementById("endBtn").addEventListener("click", () => {
+			stopClock();
+		});
+
+		const storedStartTime = localStorage.getItem("startTime");
+		if (storedStartTime) {
+		// Resume the clock
+		startTime = parseInt(storedStartTime);
+		interval = setInterval(updateClock, 1000);
+		updateClock();
+		}
+
+		//출근버튼 눌렀을때 출근시간 DB에 인서트	
+		const startBtn = document.querySelector('#startBtn');
+		startBtn.addEventListener('click' , (event)=>{
+			$.ajax({
+				type : 'post',
+				url : '${root}/workout/recordStartTime',
+				data : {},
+				success : (data)=>{
+					if(data === "success"){
+						alert('출근처리 되었습니다.');
+					}else{
+						alert('출근 처리 오류');
+					}
+				},
+				error : (e)=>{
+					alert('통신 실패');
+				}
+			})
+		});
+
+		//퇴근버튼 눌렀을때 퇴근시간 DB에 업데이트
+		const endBtn = document.querySelector('#endBtn');
+		endBtn.addEventListener('click' , ()=>{
+			$.ajax({
+				type : 'post',
+				url : '${root}/workout/recordEndTime',
+				success : (data)=>{
+					if(data ==="success"){
+						console.log(data);
+						alert('퇴근처리 되었습니다.');
+					}else{
+						alert('퇴근 처리 오류');
+					}
+				},
+				error : (e)=>{
+					console.log(e);
+					alert('통신 실패');
+				}
+			});
+		});
 
     </script>
 

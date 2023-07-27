@@ -161,8 +161,8 @@ public class MemberController {
 								  , @RequestParam("code") String code) {
 		
 		String getCode = service.emailKeyRightOrNo(email);
-		System.out.println("[email] : " + email);
-		System.out.println("[code] : " +code );
+		log.info("email : {} " , email);
+		log.info("code : {} " , code);
 		
 		if(!getCode.equals(code)) {
 			return "fail";

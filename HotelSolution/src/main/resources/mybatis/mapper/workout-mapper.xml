@@ -13,8 +13,22 @@
 			WORK_START_TIME)
 		VALUES
 			(SEQ_COMMUTE_RECORD_NO.NEXTVAL
-			,4
+			,#{no}
 			,SYSDATE)
+	
+	</insert>
+	
+	<insert id="recordEndTime">
+	
+		INSERT INTO COMMUTE_RECORD 
+			(NO, 
+			USER_NO ,
+			WORK_END_TIME)
+		VALUES
+			(SEQ_COMMUTE_RECORD_NO.NEXTVAL
+			,#{no}
+			,SYSDATE)
+		
 	
 	</insert>
 
