@@ -19,4 +19,8 @@ public interface CompanyBoardDao {
     void increaseCompanyBoardHit(SqlSessionTemplate sst, int no);
 
     CompanyBoardVo getCompanyBoardDetailByNo(SqlSessionTemplate sst, int no);
+
+    int companyBoardDeleteByNo(SqlSessionTemplate sst, int no);
+
+    CompanyBoardVo getBoardInfoByNo(SqlSessionTemplate sst, int no);
 }

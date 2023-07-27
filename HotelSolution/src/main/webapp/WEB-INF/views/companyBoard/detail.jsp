@@ -18,7 +18,6 @@
     <%@ include file="/WEB-INF/views/common/main.jsp" %>
     <link rel="stylesheet" href="${root}/resources/css/companyboard/detail.css">
     <script src="${root}/resources/ckeditor/ckeditor.js"></script>
-    <script defer src="${root}/resources/js/companyboard/detail.js"></script>
     <div id="mainboard">
       <div class="main-content">
           <div class="main-content-wrap">

@@ -22,4 +22,8 @@ public interface CompanyBoardService {
     void increaseCompanyBoardHit(int no);
 
     CompanyBoardVo getCompanyBoardDetailByNo(int no);
+
+    int companyBoardDeleteByNo(int no);
+
+    CompanyBoardVo getBoardInfoByNo(int no);
 }
