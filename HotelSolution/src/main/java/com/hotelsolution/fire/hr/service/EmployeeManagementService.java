@@ -40,8 +40,11 @@ public class EmployeeManagementService {
 	}
 
 	public MemberVo getDetail(String memberNo) {
-		System.out.println("서비스");
 		return dao.getDetail(sst,memberNo);
+	}
+
+	public int edit(MemberVo vo) {
+		return dao.edit(sst,vo);
 	}
 
 }

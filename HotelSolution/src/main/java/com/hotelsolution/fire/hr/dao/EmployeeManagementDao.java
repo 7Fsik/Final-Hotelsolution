@@ -37,4 +37,10 @@ public class EmployeeManagementDao {
 		return sst.selectOne("member.getDetail", memberNo);
 	}
 
+	
+
+	public int edit(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.update("member.edit", vo);
+	}
+
 }

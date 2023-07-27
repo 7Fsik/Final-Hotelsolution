@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.EmployeeManagementService;
@@ -128,10 +130,56 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 		}
 		
 		@GetMapping("getDetail")
-		public void detail(Model model, String memberNo) {
+		public String detail(Model model, String memberNo) {
+			System.out.println(memberNo);
 			MemberVo vo = service.getDetail(memberNo);
+			System.out.println(vo);
 			model.addAttribute("vo", vo);
+			return "hr/em/getDetail";
 			
 		}
+		
+		@PostMapping("edit")
+		public String edit(MemberVo vo) {
+		    String teamName = vo.getTeamName();
+		    String positionName = vo.getPositionName();
+		    if ("호텔경영팀".equals(teamName)) {
+		        vo.setTeamNo("1");
+		    } else if ("프론트팀".equals(teamName)) {
+		        vo.setTeamNo("2");
+		    } else if ("식음팀".equals(teamName)) {
+		        vo.setTeamNo("3");
+		    } else if ("인사팀".equals(teamName)) {
+		        vo.setTeamNo("4");
+		    } else if ("구매팀".equals(teamName)) {
+		        vo.setTeamNo("5");
+		    }
+
+		    if ("사원".equals(positionName)) {
+		        vo.setPositionNo("1");
+		    } else if ("슈퍼바이저".equals(positionName)) {
+		        vo.setPositionNo("2");
+		    } else if ("팀장".equals(positionName)) {
+		        vo.setPositionNo("3");
+		    } else if ("매니저".equals(positionName)) {
+		        vo.setPositionNo("4");
+		    }
+
+		    int result = service.edit(vo);
+		    System.out.println("result: " + result);
+		    System.out.println("vo.getNo(): " + vo.getNo());
+
+		    if (result == 1) {
+		        // memberNo를 flash 속성으로 전달
+		    	 return "redirect:/hr/em/getDetail?memberNo="+vo.getNo();
+		    }else {
+		    	return "";
+		    }
+
+
+		    // "getDetail" 매핑으로 리다이렉트
+		   
+		}
+
 	
 	}

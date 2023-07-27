@@ -243,6 +243,18 @@
   	
   	</update>
 
+ 	<update id="edit" >
+  	
+  		UPDATE MEMBER SET 
+	    TEAM_NO = #{teamNo}
+	    ,POSITION_NO = #{positionNo}
+	    ,ID = #{id}
+	    ,NAME = #{name}
+	    ,EMAIL = #{email}
+	    ,SALARY = #{salary}
+		WHERE no = #{no}
+  	
+  	</update>
 
 
 
