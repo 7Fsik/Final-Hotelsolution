@@ -474,6 +474,8 @@
                                         
                     tbody.innerHTML = str;
                     price.innerHTML = total;
+
+                    totalPrice();
                     
                     } ,
                 error : function(x){
@@ -722,25 +724,23 @@
                 dataType : "json" ,
                 success : function(x){
 
-			    console.log("z");
-                    
                     // 받아온 정보로 table 채우기
                     const tbody = document.querySelector("#search-list2");
                     let str = "";
                 
-                for(let i = 0; i < x.length; i++){
-                    str +=		  "<tr class='food-list'>"
-                                + "<input type='hidden' value='"+x[i].foodNo+"' class='no'>"
-                                + "<td>" + x[i].name + "</td>"
-                                + "<td>" + x[i].pay + " 원 </td>"
-                                + "<td><input type='number' class='num' value='1'></td>"
-                                + "<td><i class='plus-food'>+</i></td>"
-                                + "</tr>";
-                }
-                                    
-                tbody.innerHTML = str;
+                    for(let i = 0; i < x.length; i++){
+                        str +=		  "<tr class='food-list'>"
+                                    + "<input type='hidden' value='"+x[i].foodNo+"' class='no'>"
+                                    + "<td>" + x[i].name + "</td>"
+                                    + "<td>" + x[i].pay + " 원 </td>"
+                                    + "<td><input type='number' class='num' value='1'></td>"
+                                    + "<td><i class='plus-food'>+</i></td>"
+                                    + "</tr>";
+                    }
+                                        
+                    tbody.innerHTML = str;
 
-                plusAtt2();
+                    plusAtt2();
                 
                 } ,
                 error : function(x){

@@ -8,16 +8,14 @@
 <title>Insert title here</title>
 </head>
 <style>
-     body{
+    body{
         background-color: rgba(217, 217, 217, 1);
         margin: 0px;
     }
-    main{
-        width: 73vw;
-        height: 86vh;
+    #mainboard{
+        border-radius: 10px;
         background-color: white;
     }
-    
 
     #title{
         font-size: 40px;
@@ -48,7 +46,7 @@
         position: relative;
         bottom: 2px;
     }
-    button{
+    .bb{
         border:0;
         background-color: rgba(59, 68, 75, 1);
         color: white;
@@ -70,35 +68,40 @@
 </style>
 <body>
 
-	<main>
+	<div id ="wrap">
 
-        <div id="time">
-            2023-07-17  20:05:40
-        </div>
-
-        <div id="title">
-            식당 테이블
-        </div>
-
-        <div id="table-area">
-            <c:forEach begin="1" end="21" var="i">
-                <div class="table-int" >
-                    <div class="table-num t-bold">
-                        ${i}
-                    </div>
-                    <div class="table-price">
-                        180000 원 
-                    </div>
-                    <div class="btn-area">
-                        <button>메뉴주문</button>
-                        <button>결제하기</button>
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
+        <%@ include file="/WEB-INF/views/common/main.jsp" %>
+     
+        <div id="mainboard">
+     
+           <div id="time">
+                 2023-07-17  20:05:40
+             </div>
+     
+             <div id="title">
+                 식당 테이블
+             </div>
+     
+             <div id="table-area">
+                 <c:forEach begin="1" end="21" var="i">
+                     <div class="table-int" >
+                         <div class="table-num t-bold">
+                             ${i}
+                         </div>
+                         <div class="table-price">
+                             180000 원 
+                         </div>
+                         <div class="btn-area">
+                             <button class="bb">메뉴주문</button>
+                             <button class="bb">결제하기</button>
+                         </div>
+                     </div>
+                 </c:forEach>
+             </div>
         
-
-    </main>
+        </div>
+     
+     </div>
 
 </body>
 </html>

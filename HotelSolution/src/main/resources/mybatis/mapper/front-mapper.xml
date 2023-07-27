@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="front">
+
+<select id="getItemList" resultType="ItemVo">
+
+	SELECT
+	M.ITEM_NO,
+	M.TYPE_NO,
+	M.TEAM_NO,
+	M.NAME,
+	M.COUNT,
+	M.PRICE,
+	T.NAME AS TYPE_NAME
+	FROM ITEM_MANAGER  M
+	JOIN ITEM_TYPE T ON T.ITEM_TYPE_NO = M.TYPE_NO
+	<where>
+		M.TEAM_NO = 2
+		<if test="searchTypeSelect == 2">
+				AND M.TYPE_NO = #{searchValueSelect}
+		</if>
+		<if test="searchTypeSelect == 1">
+				AND M.NAME LIKE ('%'||#{searchValueInput}||'%')
+		</if>
+	</where>
+	
+	
+
+
+</select>
+
+
+	
+	
+
+
+</mapper>
