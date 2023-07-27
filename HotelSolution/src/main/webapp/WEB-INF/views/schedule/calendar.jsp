@@ -27,9 +27,6 @@
 			font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 			font-size: 14px;
 		}
-		.fc-sticky{
-			color: white;
-		}
 		
 		/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
 		.fc-header-toolbar {
@@ -40,13 +37,13 @@
 
 		/* 일요일 날짜 빨간색 */
 		.fc-day-sun a {
-		color: red;
+		color: red !important;
 		text-decoration: none;
 		}
 
 		/* 토요일 날짜 파란색 */
 		.fc-day-sat a {
-		color: blue;
+		color: blue !important;
 		text-decoration: none;
 		}
 
@@ -107,7 +104,7 @@
 }
 #mainboard{
 
-background-color:  gray;
+background-color:  #3B444B;
 border-radius: 20px;
 }
 #calendar-container{
@@ -117,9 +114,10 @@ border-radius: 20px;
 .fc-event-time{
 	display:none;
 }
+.fc-toolbar-title{
+	color : white;
+}
 
-.fc-day-number.fc-sat.fc-past { color:#0000FF !important; }     /* 토요일 */
-.fc-day-number.fc-sun.fc-past { color:#FF0000 !important; }    /* 일요일 */
 </style>
 	
 </head>
@@ -272,7 +270,7 @@ border-radius: 20px;
 					      detailModal.modal('show');
 					    },
 					    error: function () {
-					      alert("없는일정입니다.");
+					      alert("수정 또는 삭제된 일정입니다.");
 					    }
 					  });
 					},
@@ -306,6 +304,7 @@ border-radius: 20px;
 					    },
 					    error: function () {
 					      alert("작성자만 수정이 가능합니다");
+					      location.reload();
 					    }
 					  });
 					},
@@ -339,6 +338,7 @@ border-radius: 20px;
 							},
 							error: function () {
 								alert("작성자만 삭제가 가능합니다");
+								location.reload();
 							}
 						});
 					}
