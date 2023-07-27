@@ -67,6 +67,8 @@
   font-size: 1.2rem;
 }
 
+
+
 .modal-body {
   padding: 20px;
 }
@@ -105,7 +107,7 @@
 }
 #mainboard{
 
-background-color:  white;
+background-color:  gray;
 border-radius: 20px;
 }
 #calendar-container{
@@ -115,7 +117,10 @@ border-radius: 20px;
 .fc-event-time{
 	display:none;
 }
-	</style>
+
+.fc-day-number.fc-sat.fc-past { color:#0000FF !important; }     /* 토요일 */
+.fc-day-number.fc-sun.fc-past { color:#FF0000 !important; }    /* 일요일 */
+</style>
 	
 </head>
 
@@ -361,7 +366,6 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        time: '${my.typeName}',
 					        backgroundColor: 'black'
 					        },
 					    </c:if>
@@ -370,7 +374,6 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        time: '${my.typeName}',
 					        backgroundColor: 'orange'
 					        },
 					    </c:if>
@@ -379,7 +382,6 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        time: '${my.typeName}',
 					        backgroundColor: 'red'
 					        },
 					    </c:if>
@@ -391,7 +393,6 @@ border-radius: 20px;
 						title: '${team.title}',
 						start: '${team.startDate}',
 						end: '${team.endDate}',
-						time: '${team.typeName}',
 						backgroundColor: 'blue'
 						},
 					</c:forEach>

@@ -38,8 +38,14 @@ public class ScheduleController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		List<ScheduleVo> myList;
 		myList= service.getMySchedule(loginMember.getNo());
+//		for (ScheduleVo schedule : myList) {
+//			schedule.setTitle(schedule.getTypeName() + " : " + schedule.getTitle());
+//		}
 		List<ScheduleVo> teamList;
 		teamList= service.getTeamSchedule(loginMember);
+//		for (ScheduleVo schedule : teamList) {
+//			schedule.setTitle(schedule.getTypeName() + " : " + schedule.getTitle());
+//		}
 		model.addAttribute("myList",myList);
 		model.addAttribute("teamList",teamList);
 	}
@@ -93,9 +99,14 @@ public class ScheduleController {
 	@PostMapping("calendar/detail")
 	@ResponseBody
 	public ScheduleVo detailSchedule(Model model,@RequestParam("params") String params) {
+		System.out.println("params" + params);
 		String[] data = new String[3];
 		Gson gson = new Gson();
 		String[] paramsArr = gson.fromJson(params, String[].class);
+//		System.out.println(paramsArr[0]);
+//		System.out.println(paramsArr[1]);
+//		System.out.println(paramsArr[2]);
+//		System.out.println(paramsArr[3]);
 		String startDate = Integer.toString(Integer.parseInt(paramsArr[2].substring(0, 10).replaceAll("-", ""))) ;
 		String endDate =Integer.toString(Integer.parseInt(paramsArr[3].substring(0, 10).replaceAll("-", "")));
 		data[0] = startDate;
@@ -108,9 +119,12 @@ public class ScheduleController {
 		ScheduleVo vo = service.detailSchedule(map);
 	
 		endDate = Integer.toString((Integer.parseInt(endDate))-1);
-
+		System.out.println(startDate);
+		System.out.println(endDate);
+		System.out.println(vo);
 		vo.setStartDate(startDate);
 		vo.setEndDate(endDate);
+		System.out.println(vo);
 		return vo;
 //		result = service.createSchedule(loginMember, data);		
 	}
