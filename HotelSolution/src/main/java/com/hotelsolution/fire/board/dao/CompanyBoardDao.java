@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.board.dao;
 
 import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
+import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,4 +24,6 @@ public interface CompanyBoardDao {
     int companyBoardDeleteByNo(SqlSessionTemplate sst, int no);
 
     CompanyBoardVo getBoardInfoByNo(SqlSessionTemplate sst, int no);
+
+    int writeCommentByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo);
 }

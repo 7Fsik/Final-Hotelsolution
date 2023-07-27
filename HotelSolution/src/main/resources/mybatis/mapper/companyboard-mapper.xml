@@ -95,6 +95,32 @@
 		where no= #{no}
 	</select>
 
+	<insert id="writeCommentByNo">
+		insert into
+		board_comment
+		(
+		comment_no
+		,board_no
+		,writer
+		,comment_content
+		,enroll_date
+		,status
+		,parent_comment_no
+		,comment_depth
+		)
+		values
+		(
+		seq_board_comment_no.nextval
+		,#{boardNo}
+		,#{writer}
+		,#{commentContent}
+		,sysdate
+		,default
+		,0
+		,0
+		)
+	</insert>
+
 
 
 </mapper>
