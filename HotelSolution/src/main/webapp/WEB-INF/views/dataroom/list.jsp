@@ -147,7 +147,8 @@
       .tt{
       	display:grid;
       	padding-left: 40px;
-      	grid-template-columns : 1fr 1fr 1fr 1fr 2fr;  
+      	grid-template-columns : 1fr 1fr 1fr 1fr 2fr; 
+      	color : black; 
         }
      .ttt{
         margin-left: 60px; 
@@ -198,14 +199,14 @@
             cursor: pointer;
             border: 1px solid transparent;
             border-radius: 0.25rem;
-            color:#6c757d;
+            color:#6c757d !important;;
             
         }
 
         /* Set the link color on hover */
         a.tcca:hover {
-            color: skyblue; /* Change to olive green (#28a745) on hover */
-            text-decoration: none; /* Remove underline on hover */
+            color: skyblue !important;; /* Change to olive green (#28a745) on hover */
+            text-decoration: none !important;; /* Remove underline on hover */
         }
 
 </style>
