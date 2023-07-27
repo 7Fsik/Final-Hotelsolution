@@ -175,8 +175,7 @@
                 console.log(pwd);
                 pwd.focus();
             }else{
-                errorMessage.textContent = '';
-                errorMessage.style.display = 'inline';
+                errorMessage.style.display = 'none';
             }
 
         }

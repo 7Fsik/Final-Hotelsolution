@@ -160,7 +160,7 @@
             
             <div class="join-area">
                  <label for="">ID</label> 
-                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11" oninput="checkId(this); " onblur="checkEmpty(this);">
+                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11" oninput="checkIdNumber(this); checkId(this);" onblur="checkId(this);">
                 <span class="errorMessage" style="display: none; color: red;">* 아이디를 입력하세요.</span>
             </div>
            
@@ -225,7 +225,7 @@
     <script>
         
         //아이디 숫자만 입력가능하게
-        function checkId(id) {
+        function checkIdNumber(id) {
             
             const value = id.value;
             const idRegex = /^[0-9]*$/;
@@ -251,6 +251,23 @@
 
         }
 
+        //아이디 (휴대폰번호 11자 다입력하게) 검사
+        function checkId(id) {
+            
+            const idValue = id.value;
+            const idRegex = /^[0-9]*$/;
+            const errorMessage = id.nextElementSibling;
+
+            if(idValue.length <= 10){
+                errorMessage.textContent = '* 전화번호를 입력하세요.';
+                errorMessage.style.display = 'inline';
+                id.focus();
+            }else{ 
+                errorMessage.textContent = '';
+            }
+
+        }
+
         //비밀번호 유효성 검사
         function checkPwd(pwd) {
             
@@ -258,12 +275,7 @@
             const pwdRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}$/;
             const errorMessage = pwd.nextElementSibling;
 
-            if(pwdValue==''){
-                errorMessage.textContent = "* 비밀번호를 입력하세요."
-                errorMessage.style.display = 'inline';
-                pwd.focus();
-            }
-            else if(!pwdRegex.test(pwdValue)){
+            if(!pwdRegex.test(pwdValue)){
                 errorMessage.textContent = '* 규칙에 맞게 작성하세요.';
                 errorMessage.style.display = 'inline';
                 pwd.focus();
@@ -305,8 +317,11 @@
                 return false;
             }
         }
-
+                alert('회원가입이 완료되었습니다.');
+                return true;
        }
+
+
        
     
 
