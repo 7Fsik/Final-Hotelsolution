@@ -21,12 +21,14 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
 
 
     @Override
-    public List<CompanyBoardVo> getAllCompanyBoardList(PageVo pv) {
+    public List<CompanyBoardVo> getAllCompanyBoardList(PageVo pv)
+    {
         return dao.getAllCompanyBoardList(sst, pv);
     }
 
     @Override
     public int getCompanyBoardCnt() {
+
         return dao.getCompanyBoardCnt(sst);
     }
 
@@ -49,6 +51,16 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     @Override
     public CompanyBoardVo getCompanyBoardDetailByNo(int no) {
         return dao.getCompanyBoardDetailByNo(sst,no);
+    }
+
+    @Override
+    public int companyBoardDeleteByNo(int no) {
+        return dao.companyBoardDeleteByNo(sst,no);
+    }
+
+    @Override
+    public CompanyBoardVo getBoardInfoByNo(int no) {
+        return dao.getBoardInfoByNo(sst,no);
     }
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
@@ -55,20 +56,9 @@ public class CompanyBoardController {
     }
 
     @PostMapping("post")
-    public String writeCompanyBoardPostByNo( HttpServletRequest request)
+    public String writeCompanyBoardPostByNo(HttpSession session, CompanyBoardVo companyBoardVo)
     {
-        String categoryNo = request.getParameter("categoryNo");
-        log.info("categoryNo" + categoryNo);
-        String title = request.getParameter("title"); // 요청으로부터 타이틀 값 받아오기
-        String content = request.getParameter("content"); // 요청으로부터 내용 값 받아오기
 
-
-        CompanyBoardVo companyBoardVo = new CompanyBoardVo();
-
-        companyBoardVo.setWriterNo(1);    // 라이터넘버를 1로 설정 (임시값)
-        companyBoardVo.setTitle(title);
-        companyBoardVo.setContent(content);   // 라이터넘버를 1로 설정
-        companyBoardVo.setCategoryNo(categoryNo);
         int result = boardService.writeCompanyBoardPost(companyBoardVo);
 
         if(result != 1){
@@ -148,6 +138,30 @@ public class CompanyBoardController {
         return "companyBoard/detail";
 
     }
+
+    @PostMapping("delete")
+    public String companyBoardDeleteByNo(@RequestParam int no)
+    {
+        int deleteResult = boardService.companyBoardDeleteByNo(no);
+
+        if(deleteResult != 1){
+          return "common/error";
+        }
+
+        return "redirect:/board/list/1";
+    }
+
+    @GetMapping ("edit")
+    public String companyBoardEditViewByNo(@RequestParam int no, Model model)
+    {
+        CompanyBoardVo companyBoardVo = boardService.getBoardInfoByNo(no);
+
+        model.addAttribute("companyBoardVo",companyBoardVo);
+
+        return "companyBoard/edit";
+    }
+
+
 
 
 

@@ -77,4 +77,24 @@
 		where b.no= #{no}
 	</select>
 
+	<update id="deleteByNo">
+		update board
+		set status = 'O'
+		where no=#{NO}
+	</update>
+
+	<select id="getBoardInfoByNo" resultType="CompanyBoardVo">
+		select
+		no
+		,category_no
+		,writer_no
+		,title
+		,content
+		,enroll_date
+		from board
+		where no= #{no}
+	</select>
+
+
+
 </mapper>
