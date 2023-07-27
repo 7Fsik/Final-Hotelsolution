@@ -160,13 +160,13 @@
             
             <div class="join-area">
                  <label for="">ID</label> 
-                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11" oninput="checkId(this); checkEmpty(this);" onblur="checkEmpty(this);">
+                <input name="id" type="text" placeholder="휴대폰번호로 가입하기" maxlength="11" oninput="checkId(this); " onblur="checkEmpty(this);">
                 <span class="errorMessage" style="display: none; color: red;">* 아이디를 입력하세요.</span>
             </div>
            
             <div class="join-area">
                  <label for="">PWD</label> 
-                <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16" oninput="checkPwd(this);" onblur="checkEmpty(this);">
+                <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16" oninput="checkPwd(this);" onblur="checkEmpty(this); checkPwd(this);">
                 <span class="errorMessage" style="display: none; color: red;">* 비밀번호를 입력하세요.</span>
             </div>
            

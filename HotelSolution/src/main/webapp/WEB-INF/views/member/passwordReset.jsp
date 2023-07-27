@@ -116,7 +116,7 @@
             <div class="passwordChange-area">
                  <label for="name">PWD</label>
                 <div class="input-area">
-                    <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16" oninput="checkPwd(this);" onblur="checkEmpty(this);">
+                    <input name="password" type="password" placeholder="8~16자 대문자+특수문자" maxlength="16" oninput="checkPwd(this);" onblur="checkEmpty(this); checkPwd(this);">
                     <div class="errorMessage" style="display: none; ">* 변경하실 비밀번호를 입력하세요.</div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
             <div class="passwordChange-area">
                  <label for="name">PWD-CHECK</label> 
                 <div class="input-area">
-                   <input name="passwordAgain" type="password" placeholder="다시한번 입력하세요" maxlength="16" oninput="duplicationCheck(this);" onblur="checkEmpty(this)">
+                   <input name="passwordAgain" type="password" placeholder="다시한번 입력하세요" maxlength="16" oninput="duplicationCheck(this);" onblur="checkEmpty(this); duplicationCheck(this);">
                    <div class="errorMessage" style="display: none; ">*  비밀번호를 다시 입력하세요.</div>
                 </div>
             </div>
@@ -152,12 +152,16 @@
 
             if (value === '') {
                 errorMessage.style.display = 'inline'; 
-                idEmpty.focus(); 
+                idEmpty.focus();
             } else {
                 errorMessage.style.display = 'none';
             }
 
+
+
         }
+
+
 
         //비밀번호 유효성 검사
         function checkPwd(pwd) {
@@ -169,46 +173,35 @@
                 errorMessage.textContent = '* 규칙에 맞게 작성하세요.';
                 errorMessage.style.display = 'inline';
                 console.log(pwd);
-                pwd.style.backgroundColor='red';
                 pwd.focus();
+            }else{
+                errorMessage.textContent = '';
+                errorMessage.style.display = 'inline';
             }
 
         }
 
         //비밀번호 중복검사
         function duplicationCheck(pwd) {
-            const x = document.querySelector('input[name=password]');
-            
+           
 
-            const pwdValue = x.value.trim();
+            const password = document.querySelector('input[name=password]').value;
+            const changePassword = document.querySelector('input[name=passwordAgain]').value;
+
+            
+            const pwdValue = pwd.value.trim();
             const pwdRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}$/;
-            const errorMessage = x.nextElementSibling;
+            const errorMessage = pwd.nextElementSibling;
             
-            if(!pwdRegex.test(pwdValue)){
-                errorMessage.textContent = '* 규칙에 맞게 작성하세요.';
+            if(password != changePassword){
+                errorMessage.textContent = "* 비밀번호가 일치하지 않습니다."
                 errorMessage.style.display = 'inline';
-                console.log(x);
-                x.style.backgroundColor='red';
-                x.focus();
-            }
-
-            // const password = document.querySelector('input[name=password]').value;
-            // const changePassword = document.querySelector('input[name=passwordAgain]').value;
-
-            
-            // const pwdValue = pwd.value.trim();
-            // const pwdRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}$/;
-            // const errorMessage = pwd.nextElementSibling;
-            
-            // if(password != changePassword){
-            //     errorMessage.textContent = "* 비밀번호가 일치하지 않습니다."
-            //     errorMessage.style.display = 'inline';
-            //     pwd.focus();
-            // }else{
-            //     errorMessage.textContent = "* 비밀번호가 일치합니다"
-            //     errorMessage.style.display = 'inline';
+                pwd.focus();
+            }else{
+                errorMessage.textContent = "* 비밀번호가 일치합니다"
+                errorMessage.style.display = 'inline';
                 
-            // }
+            }
 
         }
         
