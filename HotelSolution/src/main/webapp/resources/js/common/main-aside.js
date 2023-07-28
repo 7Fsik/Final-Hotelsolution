@@ -24,7 +24,7 @@ $(document).ready(function() {
         $(this).removeClass('active').find('ul').slideUp();
     });
 
-    $('a').css({
+    $('a.custom-link').css({
         'text-decoration': 'none',
         'color': '#ffffff'
     });

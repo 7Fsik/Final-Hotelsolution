@@ -50,9 +50,8 @@ public class CompanyBoardController {
     @GetMapping("post")
     public String showWriteForm( Model model) {
         List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
-
+        log.info("categoryList" + categoryList);
         model.addAttribute("categoryList",categoryList);
-
 
         return "companyBoard/post";
     }
