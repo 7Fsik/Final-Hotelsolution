@@ -236,4 +236,11 @@ public class SurveyController {
 	    System.out.println(totalSurveyCnt);
 	}
 	
+	public void getSurvey(HttpSession session) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		//설문지 질문목록 	설문지 답변(설문자 번호 여기서조인) 조인해서 답변없는 설문지랑 질문목록 가져온다.
+		//미답변 설문지 숫자 파악해서 헤더에 숫자로 알림 뜨기 
+		//가져와서 sdvo 만들어서 그거로 질문 다시 가져오기
+	}
 }

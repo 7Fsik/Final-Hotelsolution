@@ -115,7 +115,7 @@
 
 #mainboard{
 
-background-color:  #3B444B;
+background-color:  white;
 border-radius: 20px;
 }
 #calendar-container{
@@ -127,7 +127,7 @@ border-radius: 20px;
 	display:none;
 }
 .fc-toolbar-title{
-	color : white;
+	color : black;
 }
 .fc-event-title-container{
 	cursor: pointer;
@@ -551,7 +551,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'black'
+					        backgroundColor: 'coral'
 					        },
 					    </c:if>
 					    <c:if test="${my.scheduleTypeNo==3}">
@@ -559,7 +559,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'orange'
+					        backgroundColor: 'lightgray'
 					        },
 					    </c:if>
 				        <c:if test="${my.scheduleTypeNo==4}">
@@ -567,7 +567,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'red'
+					        backgroundColor: 'skyblue'
 					        },
 					    </c:if>
 					    <!-- 추가적인 조건에 따른 데이터 처리 -->
@@ -578,7 +578,7 @@ border-radius: 20px;
 						title: '${team.title}',
 						start: '${team.startDate}',
 						end: '${team.endDate}',
-						backgroundColor: 'blue'
+						backgroundColor: 'crimson'
 						},
 					</c:forEach>
 				]
