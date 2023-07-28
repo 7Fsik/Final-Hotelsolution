@@ -28,4 +28,9 @@ public class FrontServiceImpl implements FrontService{
 		return fd.getItemList(sst,paramMap);
 	}
 
+	@Override
+	public int edit(Map<String, String> paramMap) {
+		return fd.edit(sst,paramMap);
+	}
+
 }

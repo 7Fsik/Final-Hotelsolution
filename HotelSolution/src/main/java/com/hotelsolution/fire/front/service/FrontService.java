@@ -11,4 +11,7 @@ public interface FrontService {
 
 	List<ItemVo> getItemList(Map<String, String> paramMap);
 
+
+	int edit(Map<String, String> paramMap);
+
 }

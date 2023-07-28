@@ -25,11 +25,14 @@
 				AND M.NAME LIKE ('%'||#{searchValueInput}||'%')
 		</if>
 	</where>
-	
-	
-
 
 </select>
+
+<update id="edit">
+	UPDATE ITEM_MANAGER 
+	SET COUNT = #{count}
+	WHERE ITEM_NO= #{itemNo}
+</update>
 
 
 	

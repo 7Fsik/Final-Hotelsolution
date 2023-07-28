@@ -44,9 +44,17 @@ public class FrontController {
 		
 		List<ItemVo>getItemList = fs.getItemList(paramMap);
 		
-		System.out.println(paramMap);
-		
 		return getItemList;
+	}
+	
+	//물품 수정
+	@GetMapping("articleManage/edit")
+	@ResponseBody
+	public int edit(@RequestParam Map<String,String>paramMap) {
+		
+		int result = fs.edit(paramMap);
+		
+		return result;
 	}
 	
 	
