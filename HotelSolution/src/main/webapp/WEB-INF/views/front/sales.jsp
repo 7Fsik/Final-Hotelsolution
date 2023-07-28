@@ -5,36 +5,7 @@
 <html>
 <head>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
-    <script>
-
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-          ,start:'title'
-          ,locale: 'ko'
-          ,events: [
-          {
-            title: '1000000원',
-            start: '2023-07-15',
-           
-          },
-          {
-            title: '1000000원',
-            start: '2023-07-16',
-           
-          },
-          {
-            title: '1000000원',
-            start: '2023-07-17',
-           
-          }]
-
-        });
-        calendar.render();
-      });
-
-    </script>
+    
 <title>Insert title here</title>
 </head>
 <style>
@@ -54,32 +25,72 @@
         padding: 10px;
     }
     #calendar{
-      height: 85%;
-      border: 1px solid black;
+      height: 90%;
+      border: 3px solid black;
+      border-radius: 10px;
     }
     #area{
-        display: grid;
-        grid-template-columns: 1fr 3fr 1fr;
+        width: 100%;
+        height: 80%;
+        display: flex;
+        justify-content: space-around;
         align-items: center;
     }
     .month-area{
         width: 80%;
         height: 85%;
-        border: 1px solid black;
+        
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 0 auto;
+        
     }
     .name{
-        height: 10%;
-        text-align: center;
         font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .sales-area{
-        width: 70%;
-        margin-top: 10px;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .daySales{
+        width: 60%;
+    }
+    .monthSales{
+        width: 25%;
+        height: 90%;
+        border: 3px solid black;
+        display: grid;
+        grid-template-rows: 1fr 1fr 6fr;
+        justify-items: center;
+        border-radius: 10px;
+    }
+    .search-area input {
+        border-radius: 5px;
+        width: 60%;
+    }
+    .search-area{
+        display: grid;
+        grid-template-columns: 1.8fr 1.3fr 0.7fr;
+    }
+    #se-btn{
+        width: 95%;
+        height: 50%;
+        border: 0;
+        border-radius: 5px;
+        background-color: rgba(59, 68, 75, 1);
+        color: white;
+    }
+    .sales-con{
         border-top: 3px solid black;
+        width: 80%;
+        text-align: center;
     }
     
 </style>
@@ -97,39 +108,106 @@
      
      
              <div id="area">
-                 <div class="month-area">
-                     <div class="name">월 매출</div>
-                     <div class="search-area">
-                         <input type="date">
-                         <input type="submit" value="검색">
-                     </div>
-                     <div class="sales-area">
-                         <div> 2023년 1월</div>
-                         <div>총 매출 :</div>
-                         <div>81000000 원</div>
-                     </div>
+                 <div class="monthSales">
+                    <div class="name">월 매출</div>
+                    <div class="search-area">
+                        <div id="year">
+                            년도 : 
+                            <input type="number" id="searchYear" name="year" min="1900" max="9999"  value="2023">
+                        </div>
+                        <div id="month">
+                            월 : 
+                            <input type="number" id="searchMonth" name="month" min="1" max="12" value="7">
+                        </div>
+                        <button id="se-btn" onclick="getMonthSales();">검색</button>
+                    </div>
+                    <div class="sales-area" id="getMonthSales">
+                    </div>
                  </div>
      
-                 <div id='calendar'></div>
+                 <div id='calendar' class="daySales"></div>
      
-                 <div class="month-area">
-                     <div class="name">주 매출</div>
-                     <div class="search-area">
-                         <input type="date">
-                         <input type="submit" value="검색">
-                     </div>
-                     <div class="sales-area">
-                         <div> 2023년 1월</div>
-                         <div>총 매출 :</div>
-                         <div>81000000 원</div>
-                     </div>
-                 </div>
+                
              </div>
         
         </div>
      
      </div>
 
+
+<script>
+
+getMonthSales();
+
+    function getMonthSales(){
+
+        const year = document.querySelector("#searchYear").value;
+        const month = document.querySelector("#searchMonth").value;
+
+        $.ajax({
+            type : "get" ,
+            url : "${root}/front/sales/getMonthSales" ,
+            data : {
+                year:year,
+                month:month
+            } ,
+            dataType : "json" ,
+            success : function(x){
+
+                console.log(x.salesList[0].MONTH_SALES);
+
+                //받아온 정보로 div채우기
+                const months = document.querySelector("#getMonthSales");
+                let str = "";
+            
+                for(let i = 0; i < x.months.length; i++){
+                    str +=		  "<div class='sales-con'>"
+                                + "<div> "+x.years[i]+"년 "+ x.months[i]+"월</div>"
+                                + "<div>총 매출 :</div>"
+                                + "<div>"+ x.salesList[i].MONTH_SALES+" 원</div> "
+                                + "</div>"
+                }
+                                    
+                months.innerHTML = str;
+            
+            } ,
+            error : function(x){
+                alert("bad");
+                console.log(x);
+                } ,
+            
+        });
+
+
+
+
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+        ,start:'title'
+        ,locale: 'ko'
+        ,events: [
+        
+            <c:forEach items="${dayVo}" var="vo">
+						{
+						title: '${vo.totalPrice} 원',
+						start: '${vo.day}',
+						},
+			</c:forEach>
+            
+            
+        ]
+
+        });
+        calendar.render();
+    });
+
+</script>
     
 
 </body>
