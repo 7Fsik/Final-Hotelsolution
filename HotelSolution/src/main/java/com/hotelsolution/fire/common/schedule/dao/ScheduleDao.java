@@ -19,9 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ScheduleDao {
 
 	
-	
-	
-
 	public int createSchedule(SqlSessionTemplate sst, MemberVo loginMember, ScheduleVo vo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -29,6 +26,7 @@ public class ScheduleDao {
 		map.put("vo", vo);
 	    return sst.insert("schedule.create", map);
 	}
+	
 
 	public int modifySchedule(SqlSessionTemplate sst, MemberVo loginMember, String[] data) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -37,16 +35,8 @@ public class ScheduleDao {
 	    return sst.update("schedule.modify", map);
 	}
 
-	public int deleteSchedule(SqlSessionTemplate sst, MemberVo loginMember, String[] data) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("loginMember", loginMember);
-		map.put("data", data);
-	    return sst.delete("schedule.delete", map);
-	}
-////////////////////////////////////////////////////////////////////////////
 
 	public List<ScheduleVo> getMySchedule(SqlSessionTemplate sst, String no) {
-		System.out.println(no);
 		return sst.selectList("schedule.getMySchedule", no);
 	}
 
@@ -56,6 +46,13 @@ public class ScheduleDao {
 
 	public ScheduleVo detailSchedule(SqlSessionTemplate sst, Map<String, String> map) {
 		return sst.selectOne("schedule.detailSchedule",map);
+	}
+
+	public int deleteScheduleByNo(SqlSessionTemplate sst, MemberVo loginMember, String no) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("loginMember", loginMember);
+		map.put("no", no);
+	    return sst.delete("schedule.deleteScheduleByNo", map);
 	}
 	
 	

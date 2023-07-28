@@ -38,20 +38,14 @@ public class ScheduleController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		List<ScheduleVo> myList;
 		myList= service.getMySchedule(loginMember.getNo());
-//		for (ScheduleVo schedule : myList) {
-//			schedule.setTitle(schedule.getTypeName() + " : " + schedule.getTitle());
-//		}
 		List<ScheduleVo> teamList;
 		teamList= service.getTeamSchedule(loginMember);
-//		for (ScheduleVo schedule : teamList) {
-//			schedule.setTitle(schedule.getTypeName() + " : " + schedule.getTitle());
-//		}
 		model.addAttribute("myList",myList);
 		model.addAttribute("teamList",teamList);
 	}
 	
 	@PostMapping("calendar")
-	public String calendar (Model model,HttpSession session, @RequestParam("params") String params) {
+	public String calendar (Model model,HttpSession session, @RequestParam("params") String params, ScheduleVo vo) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String[] data = new String[3];
 		Gson gson = new Gson();
@@ -62,18 +56,9 @@ public class ScheduleController {
 		data[1] = endDate;
 		data[2] = paramsArr[1];
 		int result = 0;
-		System.out.println("1");
-		if(paramsArr[0].equals("write")) {
-			model.addAttribute("startDate",startDate);
-			model.addAttribute("endDate",endDate);
-			model.addAttribute("title",data[2]);
-			return "schedule/create";
-		} else if(paramsArr[0].equals("modify")) {
+		if(paramsArr[0].equals("modify")) {
 			result = service.modifySchedule(loginMember, data);
-		} else if(paramsArr[0].equals("delete")) {
-			System.out.println("4");
-			result = service.deleteSchedule(loginMember, data);
-		}
+		} 
 
 		if (result != 1) {
 			throw new RuntimeException("일정에서 자연스러운 에러");
@@ -81,10 +66,25 @@ public class ScheduleController {
 		return "redirect:/schedule/calendar" ;
 	}
 	
-	@GetMapping("create")
-	public void createSchedule(Model model) {
-		
+	@GetMapping("calendar/create")
+	@ResponseBody
+	public ScheduleVo create (Model model,HttpSession session, @RequestParam("params") String params) {
+		String[] data = new String[3];
+		Gson gson = new Gson();
+		String[] paramsArr = gson.fromJson(params, String[].class);
+		String startDate = Integer.toString(Integer.parseInt(paramsArr[2].substring(0, 10).replaceAll("-", ""))) ;
+		String endDate =Integer.toString(Integer.parseInt(paramsArr[3].substring(0, 10).replaceAll("-", "")));
+		data[0] = startDate;
+		data[1] = endDate;
+		data[2] = paramsArr[1];
+		ScheduleVo vo = new ScheduleVo();
+		vo.setTitle(data[2]);
+		vo.setStartDate(startDate);
+		vo.setEndDate(endDate);
+		return vo;
+	
 	}
+	
 	
 	@PostMapping("create")
 	public String createSchedule(ScheduleVo vo, HttpSession session) {
@@ -99,14 +99,9 @@ public class ScheduleController {
 	@PostMapping("calendar/detail")
 	@ResponseBody
 	public ScheduleVo detailSchedule(Model model,@RequestParam("params") String params) {
-		System.out.println("params" + params);
 		String[] data = new String[3];
 		Gson gson = new Gson();
 		String[] paramsArr = gson.fromJson(params, String[].class);
-//		System.out.println(paramsArr[0]);
-//		System.out.println(paramsArr[1]);
-//		System.out.println(paramsArr[2]);
-//		System.out.println(paramsArr[3]);
 		String startDate = Integer.toString(Integer.parseInt(paramsArr[2].substring(0, 10).replaceAll("-", ""))) ;
 		String endDate =Integer.toString(Integer.parseInt(paramsArr[3].substring(0, 10).replaceAll("-", "")));
 		data[0] = startDate;
@@ -119,14 +114,21 @@ public class ScheduleController {
 		ScheduleVo vo = service.detailSchedule(map);
 	
 		endDate = Integer.toString((Integer.parseInt(endDate))-1);
-		System.out.println(startDate);
-		System.out.println(endDate);
-		System.out.println(vo);
 		vo.setStartDate(startDate);
 		vo.setEndDate(endDate);
-		System.out.println(vo);
 		return vo;
-//		result = service.createSchedule(loginMember, data);		
+	}
+	
+	@PostMapping("calendar/delete")
+	@ResponseBody
+	public String delete(@RequestParam("no") String no, HttpSession session) {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		Gson gson = new Gson();
+		int result = service.deleteScheduleByNo(loginMember, no);
+		if(result ==1) {
+			return gson.toJson("삭제 성공!");
+		}
+		return gson.toJson("작성자가 아닙니다.");
 	}
 	
 	

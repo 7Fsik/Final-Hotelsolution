@@ -23,15 +23,6 @@ public class ScheduleService {
 	
 	private final SqlSessionTemplate sst;
 
-	
-//	public List<ScheduleVo> tgetFullCalendar(String lectureNo) throws SQLException {
-//		Connection conn = JDBCTemplate.getConnection();
-//		List<ScheduleVo> voList = dao.tgetTeamCalendar(conn, lectureNo);
-//		
-//		JDBCTemplate.close(conn);
-//		return voList;
-//	}
-
 	public int createSchedule(MemberVo loginMember, ScheduleVo vo)  {
 		
 		return dao.createSchedule(sst, loginMember, vo);
@@ -39,17 +30,10 @@ public class ScheduleService {
 
 	public int modifySchedule(MemberVo loginMember, String[] data) {
 		return dao.modifySchedule(sst, loginMember, data);
-		
-		
+				
 	}
 
-	public int deleteSchedule(MemberVo loginMember, String[] data) {
-		return dao.deleteSchedule(sst, loginMember, data);
 	
-		
-	}
-
-
 	public List<ScheduleVo> getMySchedule(String no) {
 		return dao.getMySchedule(sst,no);
 	}
@@ -60,6 +44,10 @@ public class ScheduleService {
 
 	public ScheduleVo detailSchedule(Map<String, String> map) {
 		return dao.detailSchedule(sst,map);
+	}
+
+	public int deleteScheduleByNo(MemberVo loginMember, String no) {
+		return dao.deleteScheduleByNo(sst, loginMember, no);
 	}
 
 	

@@ -102,6 +102,17 @@
 .modal-footer .btn-secondary:hover {
   background-color: #0056b3;
 }
+
+
+.modal-footer .btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal-footer .btn-danger:hover {
+  background-color: #c82333;
+}
+
 #mainboard{
 
 background-color:  #3B444B;
@@ -111,13 +122,114 @@ border-radius: 20px;
 	margin :10px;
 	
 }
+
 .fc-event-time{
 	display:none;
 }
 .fc-toolbar-title{
 	color : white;
 }
+.fc-event-title-container{
+	cursor: pointer;
+}
 
+
+
+ .create {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: 410px;
+  height: 510px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 8fr;
+  border: 5px solid #3B444B;
+  border-radius: 30px;
+  box-sizing: border-box;
+  background-color: #fff; /* 모달 배경색 추가 (기본값은 흰색) */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* 모달 그림자 효과 추가 */
+  visibility: hidden; /* 초기에 숨기기 위해 추가 */
+  opacity: 0; /* 초기에 투명도 0으로 설정하여 숨기기 위해 추가 */
+  transition: visibility 0s, opacity 0.3s; /* 모달 보이기/숨기기 시간 설정 */
+}
+
+    .logo img{
+        width: 360px;
+        height: 40px;
+    }
+
+    .create > div{
+        margin: 5px;
+    }
+    
+    .logo{
+        
+        text-align: center;
+    }
+
+    .textArea{
+        text-align: center;
+        font-weight: bold;
+        font-size: 30px;
+    }
+
+    .formArea{
+        height: 390px;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: 1fr 1fr 3fr 1fr;
+    }
+    form  div{
+        margin: 5px;
+    }
+
+    .scheduleDate{
+        text-align: center;
+        font-size: 20px;
+
+    }
+   
+    .scheduleType{
+        text-align: center;
+        
+    }
+    
+    .scheduleName{
+        
+        grid-column: span 2;
+    }
+
+    .scheduleTypeSelect{
+        margin: auto;
+        height: 30px;
+        background-color: #3B444B ;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .scheduleContentArea{
+        grid-column: span 2;
+        width: 380px;
+    }
+    .shcheduleContent{
+        margin: auto
+        
+    }
+    .scheduleSubmitBtn{
+        grid-column: span 2;
+        text-align: center;
+    }
+    .sbtn{
+        text-align: center;
+        width: 100px;
+        height: 50px;
+
+        background-color: #3B444B;
+        color: white;
+        border: 0px;
+    }
 </style>
 	
 </head>
@@ -151,18 +263,82 @@ border-radius: 20px;
 		        </div>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-		      </div>
+				 
+				 
+				</div>
 		    </div>
 		  </div>
 		</div>
-
-   </div>
+		<!-----------create----->
+		<div class="create">
+	        <div class="logo">
+	            <img src="${root}/resources/img/호텔솔루션.png" alt="로고입니다">
+	        </div>
+	        <div class="textArea">
+	            일정 등록
+	        </div>
+		        <form action="${root}/schedule/create" method="post" class="creatForm">
+		            <div class="formArea">
+		          
+		                <div class="scheduleDate">
+		                   
+		                    
+		                </div>
+		                <!-- ... 이전 코드 생략 ... -->
+		
+						<div class="scheduleType">
+						    <select name="scheduleTypeNo" class="scheduleTypeSelect" id="scheduleTypeSelect">
+						        <option disabled selected value="" class="disabled">일정타입</option>
+						        <option value="1">휴가</option>
+						        <option value="2">팀일정</option>
+						        <option value="3">업무일정</option>
+						        <option value="4">사생활</option>
+						    </select>
+						</div>
+						<div class="scheduleName">
+						    
+						</div>
+						<div class="scheduleContentArea">
+						    일정 내용 : <br> <textarea name="content" class="shcheduleContent" placeholder="일정 내용을 입력하세요" style="width: 370px; height: 150px; resize: none; overflow: auto;"></textarea>
+						</div>
+					
+						<div class="scheduleSubmitBtn">
+						    <button type="button" class="sbtn" id="submitButton">등록하기</button>
+							<button type="button" class="sbtn" id="closeButton">닫기</button>
+						</div>
+		
+		
+		
+		           
+		            </div>
+		        </form>
+        
+	
+	    </div>
+			
+	
+	   </div>
 
 </div>
 			
 <script>
-	
+	document.getElementById("submitButton").addEventListener("click", function () {
+	    // 선택한 일정 타입을 가져옴
+	    const selectedValue = document.querySelector("#scheduleTypeSelect").value;
+	    
+	    // 일정 타입이 선택되지 않은 경우 알림창 띄움
+	    if (selectedValue === "") {
+	        alert("일정 타입을 선택해주세요.");
+	    } else {
+	        // 일정 타입이 선택된 경우 폼을 제출
+	        document.querySelector(".creatForm").submit();
+	    }
+	});
+	document.getElementById('closeButton').addEventListener('click', function() {
+	    document.querySelector('.create').style.visibility = 'hidden';
+	    document.querySelector('.create').style.opacity = '0';
+	    location.reload();
+	  });
 	function getRandomColor() {
 		var letters = '0123456789ABCDEF';
 		var color = '#';
@@ -202,80 +378,8 @@ border-radius: 20px;
 				dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
 				locale: 'ko', // 한국어 설정
 				
-				eventAdd: function (obj) { // 이벤트 추가(드래그)
 				
-					let endDateString = obj.event.end;
-					let end = new Date(endDateString);
-					end.setDate(end.getDate() + 1);
-					
-					let startDateString = obj.event.start;
-					let start = new Date(startDateString);
-					start.setDate(start.getDate() + 1);
-				    const params = [];
-				    params.push("write");
-				    params.push(obj.event.title);
-				    params.push(start);
-				    params.push(end);
-
-				    // JSON 데이터를 숨겨진 input 요소에 설정
-				    document.querySelector("#paramsInput").value = JSON.stringify(params);
-
-				    // form을 제출하여 페이지 이동
-				    document.querySelector("#myForm").submit();
-				},
-
-				eventMouseLeave: function(obj) {
-					
-					let endDateString = obj.event.end;
-					let end = new Date(endDateString);
-					end.setDate(end.getDate() + 1);
-					
-					let startDateString = obj.event.start;
-					let start = new Date(startDateString);
-					start.setDate(start.getDate() + 1);
-					  const params = [];
-					  params.push("detail");
-					  params.push(obj.event.title);
-					  params.push(start);
-					    params.push(end);
-
-					  $.ajax({
-					    url: '${root}/schedule/calendar/detail',
-					    type: 'post',
-					    data: {
-					      params: JSON.stringify(params)
-					    },
-					    success: function (data) {
-					      // 성공적으로 데이터를 가져온 경우 모달에 내용을 채웁니다.
-					      const detailModal = $('#eventDetailModal');
-					      const detailContent = detailModal.find('.detail-content');
-					      let ostr = "";
-
-					      // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
-					     
-					        ostr += '<div class="memberVoList">' +
-					          '<div class="bbr" style="text-align:center; font-size:25px;">'+  data.startDate + '~'+ data.endDate+ '</div>' +
-					          '<div class="bbr">작성자 : '+ data.writerName + '</div>' +
-					          '<div class="bbr">타입 : '+  data.typeName +'</div>' +
-					          '<div class="bbr" >제목 : ' + data.title + '</div>' +
-					          '<div class="bbr" >내용 : ' + '<'+data.typeName+'>'+'</div>' +
-					          '<div class="dcontent" style="width:400px; height:300px; overflow: scroll; word-wrap: break-word; padding-left:20px;">   ' + data.content + '</div>' +
-					          '</div>';
-					   
-
-					      // 모달에 내용을 삽입합니다.
-					      detailContent.html(ostr);
-
-					      // 모달을 보여줍니다.
-					      detailModal.modal('show');
-					    },
-					    error: function () {
-					      alert("수정 또는 삭제된 일정입니다.");
-					    }
-					  });
-					},
-
-					
+			
 					
 				    
 				
@@ -309,39 +413,120 @@ border-radius: 20px;
 					  });
 					},
 
-				
-				eventClick: function (obj) { // 이벤트 삭제 (이벤트 클릭)
-					var result = confirm('이 일정을 삭제하시겠습니까?');
-
-					if (result == true) {
-						
-						const params = [];
+					eventAdd: function (obj) { // 이벤트 추가(드래그)
+					
 						let endDateString = obj.event.end;
 						let end = new Date(endDateString);
 						end.setDate(end.getDate() + 1);
 						
-						let startDateString = obj.event.start;
-						let start = new Date(startDateString);
-						start.setDate(start.getDate() + 1);
-						params.push("delete");
-						params.push(obj.event.title);
-						  params.push(start);
-						    params.push(end);
-						$.ajax({
-							url: '${root}/schedule/calendar',
-							type: 'post',
-							data: {
-								params: JSON.stringify(params)
-							},
-							success: function() {
-								location.reload();
-							},
-							error: function () {
-								alert("작성자만 삭제가 가능합니다");
-								location.reload();
-							}
-						});
-					}
+
+					
+					    let startDateString = obj.event.start;
+					    let start = new Date(startDateString);
+					    start.setDate(start.getDate() + 1);
+					
+					    const params = [];
+					    params.push("write");
+					    params.push(obj.event.title);
+					    params.push(start);
+					    params.push(end);
+					   
+			            
+					    // AJAX를 통해 서버로 데이터 전송
+					    $.ajax({
+					        url: '${root}/schedule/calendar/create',
+					        type: 'get',
+					        data: {
+					            params: JSON.stringify(params)
+					        },
+					        success: function (data) {
+					            // 성공적으로 데이터를 추가한 경우, 모달에 내용을 채웁니다.
+					            console.log(data);
+					             let scheduleDate = document.querySelector('.scheduleDate');
+					             let scheduleName = document.querySelector('.scheduleName');
+					          
+					            let ostr = "";
+					            let ostr2 = "";
+								let end = data.endDate-1;
+					            // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
+					            ostr+= '<div><input name="startDate" value="'+data.startDate+'" hidden> <input name="endDate" value="'+data.endDate+'" hidden>'+
+					            	data.startDate + "~" +end+"</div>";
+					            console.log(ostr);
+					            ostr2+='일정 이름 : <br><input type="text" name="title" placeholder="일정 이름을 입력하세요" value="'+data.title+'" style="width: 370px; height: 20px;">'
+					            // 모달에 내용을 삽입합니다.
+					         	scheduleDate.innerHTML = ostr;
+					            scheduleName.innerHTML = ostr2;
+					            // 모달을 보여줍니다.
+					            document.querySelector('.create').style.visibility = 'visible';
+								document.querySelector('.create').style.opacity = '1';
+								
+					        },
+					        error: function () {
+					            alert("이벤트 추가에 실패하였습니다.");
+					        }
+					    });
+		
+					    calendar.unselect()
+					  
+						
+						
+					},
+
+				eventClick: function (obj) { // 이벤트 삭제 (이벤트 클릭)
+
+					let endDateString = obj.event.end;
+					let end = new Date(endDateString);
+					end.setDate(end.getDate() + 1);
+					
+					let startDateString = obj.event.start;
+					let start = new Date(startDateString);
+					start.setDate(start.getDate() + 1);
+					  const params = [];
+					  params.push("detail");
+					  params.push(obj.event.title);
+					  params.push(start);
+					  params.push(end);
+
+					  $.ajax({
+					    url: '${root}/schedule/calendar/detail',
+					    type: 'post',
+					    data: {
+					      params: JSON.stringify(params)
+					    },
+					    success: function (data) {
+					      // 성공적으로 데이터를 가져온 경우 모달에 내용을 채웁니다.
+					      const detailModal = $('#eventDetailModal');
+					      const detailContent = detailModal.find('.detail-content');
+					      const modalFooter = detailModal.find('.modal-footer');
+					      let ostr = "";
+					      let ostr2 = "";
+
+					      // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
+					     
+					        ostr += '<div class="memberVoList">' +
+					          '<div class="bbr" style="text-align:center; font-size:25px;">'+  data.startDate + '~'+ data.endDate+ '</div>' +
+					          '<div class="bbr">작성자 : '+ data.writerName + '</div>' +
+					          '<div class="bbr">타입 : '+  data.typeName +'</div>' +
+					          '<div class="bbr" >제목 : ' + data.title + '</div>' +
+					          '<div class="bbr" >내용 : ' + '<'+data.typeName+'>'+'</div>' +
+					          '<div class="dcontent" style="width:400px; height:300px; overflow: scroll; word-wrap: break-word; padding-left:20px;">   ' + data.content + '</div>' +
+					          '</div>';
+					   		
+					        ostr2 += ' <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>'+
+					        	' <button type="button" class="btn btn-danger" id="deleteButton" onclick="deleteSchedule('+data.no 
+					        			+')">삭제</button>'
+
+					      // 모달에 내용을 삽입합니다.
+					      detailContent.html(ostr);
+					       modalFooter.html(ostr2);
+					      // 모달을 보여줍니다.
+					      detailModal.modal('show');
+					    },
+					    error: function () {
+					      alert("수정 또는 삭제된 일정입니다.");
+					    }
+					  });
+					
 				},
 
 				
@@ -406,6 +591,27 @@ border-radius: 20px;
 		});
 	})();
 	
+	function deleteSchedule(no) {
+		  $.ajax({
+		    url: '${root}/schedule/calendar/delete',
+		    type: 'post',
+		    data: {
+		      no: JSON.stringify(no)
+		    },
+		    dataType: 'json', // JSON 데이터로 처리하기 위한 설정
+		    success: function (x) {
+		    	alert(x);
+		      location.reload();
+		    },
+		    error: function (e) {
+		      alert('작성자만 삭제가 가능합니다');
+		      alert(e);
+		      location.reload();
+		    }
+		  });
+		}
+	
+
 </script>
 </body>
 
