@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="${root}/resources/css/common/home.css">
 <style>
@@ -141,12 +142,15 @@
     }
     
     .table-title{
-    	font-size:1.5em;
+    	font-size:1.2em;
 		font-weight:bold;
     }
     
     .table-content{
-    	color : #D9D9D9;
+    	color : #adb5bd;
+		font-size: 15px;
+		position:relative;
+		top:5px;
     }
     
     #three-menu{
@@ -185,7 +189,116 @@
 		position: relative;
 		right: 10px;
 	}
+
+	.blueCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #86C8DB;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+	
+	.skinCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #EBD1D1;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+
+	.grayCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #adb5bd;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+	
+	.circleContent{
+		font-size: 12px;
+		font-weight:bold;
+	}
+	
+	.CurworkTime{
+		width:80px;
+		height:20px;
+		border: 1px solid #bbe9f6;
+		text-align:center;
+		border-radius:20px;
+		background-color: #bbe9f6;
+		color: #86C8DB;
+		font-weight:bold;
+	}
+	
+	.CurworkTimeText{
+		color: #86C8DB;
+		font-weight:bold;
+	}
+	
+	.workTime{
+		width:100px;
+		height:20px;
+		border: 1px solid #6c8af7;
+		text-align:center;
+		border-radius:20px;
+		background-color: #6c8af7;
+		color: #2650E7;
+		font-weight:bold;
+	}
+	
+	.workTimeText{
+		color: #2650E7;
+		font-weight:bold;
+	}
+	
+	.graphEle{
+		display:flex;
+		justify-content: space-evenly;
+		align-items: center;
+		width: 650px;
+		margin: auto;
+	}
+
+	#chartJs{
+		display: flex;
+		height: 130px;
+		justify-content:space-evenly;
+	}
+	
+	#doughnut-chart{
+		position:relative;
+		bottom:20px;
+		width:160px;
+		height:160px;
+	}
+	
+	#myChart{
+		position:relative;
+		top:25px;
+	}
     
+	#commuteText{
+		position: relative;
+		top:15px;
+		left:20px
+	}
+
+	.center-text {
+	  position: absolute;
+	  top: 41%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  font-weight: bold;
+	  color:black;
+	  font-size:13px;
+	  width:120px;
+	  text-align:center;
+	}
+	
+	.number{
+		color: #86C8DB;
+		font-size:25px;
+	}
     
 </style>
 </head>
@@ -213,7 +326,7 @@
 				               	</div>
 			               </div>
 			               	<div class="work-btn">
-				               	<div><button id="startBtn" onclick="startClock(); getCurrentTime();">출근</button></div>
+				               	<div><button id="startBtn" onclick="startClock();">출근</button></div>
 				               	<div><button id="endBtn" onclick="stopClock();">퇴근</button></div>
 				               	<div class="text">버튼을 눌러 <br>출근시간을 기록하세요</div>
 			               	</div>
@@ -224,13 +337,37 @@
             	</div>
             </div>
             <div class="menu-bar">
-                <canvas id="myChart" width="100" height="100"></canvas>
+            	<div id="commuteText">
+	            	<div class="table-title">총 근무시간</div>
+					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>
+            	</div>
+            	
+            	<div id="chartJs">
+	                <canvas id="myChart" width="350" height="120"></canvas>
+					<div style="position: relative">
+						<canvas id="doughnut-chart"></canvas>
+						<div class="center-text">근무시간 <br><br><span class="number">00</span> 시간 <span class="number">00</span>분</div>
+					</div>
+            	</div>
+                <hr>
+				<div class="graphEle">
+					<div class="blueCircle"></div>
+					<div class="circleContent">근무시간</div>
+					<div class="skinCircle"></div>
+					<div class="circleContent">휴가</div>
+					<div class="grayCircle"></div>
+					<div class="circleContent">잔여 근무시간</div>
+					<div class="CurworkTime">근무시간</div>
+					<div class="CurworkTimeText">30시간 0분</div>
+					<div class="workTime">총 근무시간</div>
+					<div class="workTimeText">45시간 0분</div>
+				</div>
             </div>
             <div class="menu-bar">
 
 				<div id="three-menu">
 					<div class="table-title">주간 테이블</div>
-					<div class="table-content">김찬진 사원님의 근태관리 내역입니다.</div>				
+					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>				
 	                <table>
 	                    <thead>
 	                        <tr>
@@ -320,55 +457,35 @@
             getTime();
         }, 1000);
         
-        //아래 시계 만들기
-        // const clock2 = document.querySelector('.time');
-        
-        // function getTime2(params) {
-        //     const time2 = new Date();
-        //     const hour = String(time2.getHours()).padStart(2, "0");
-        //     const minutes = String(time2.getMinutes()).padStart(2, "0");
-        //     const seconds = String(time2.getSeconds()).padStart(2, "0");
-            
-        //     clock2.innerHTML = hour+":"+minutes+":"+seconds;
-        // }
-
-        // //아래 시계 실행
-        // getTime2();
-        // setInterval(() => {
-        //     getTime2();
-        // }, 1000);
-        
-        //출근 그래프
-
 		//출퇴근 버튼 작동하기
 		let interval;
 		let startTime = null;
-
+		
 		function startClock() {
 			startTime = Date.now();
 			localStorage.setItem("startTime", startTime);
 			interval = setInterval(updateClock, 1000);
 			updateClock();
 		}
-
+		
 		function updateClock() {
 			if (!startTime) return;
-
+			
 			const currentTime = Date.now();
 			const elapsedTime = currentTime - startTime;
 			const seconds = Math.floor(elapsedTime / 1000) % 60;
 			const minutes = Math.floor(elapsedTime / 1000 / 60) % 60;
 			const hours = Math.floor(elapsedTime / 1000 / 60 / 60);
-
+			
 			document.getElementById("time").textContent = formatTime(hours);
 			document.getElementById("min").textContent = formatTime(minutes);
 			document.getElementById("sec").textContent = formatTime(seconds);
 		}
-
+		
 		function formatTime(time) {
 			return time.toString().padStart(2, "0");
 		}
-
+		
 		function stopClock() {
 			clearInterval(interval);
 			startTime = null;
@@ -381,60 +498,156 @@
 		document.getElementById("startBtn").addEventListener("click", () => {
 			startClock();
 		});
-
+		
 		document.getElementById("endBtn").addEventListener("click", () => {
 			stopClock();
 		});
-
+		
 		const storedStartTime = localStorage.getItem("startTime");
 		if (storedStartTime) {
-		// Resume the clock
-		startTime = parseInt(storedStartTime);
-		interval = setInterval(updateClock, 1000);
-		updateClock();
+			startTime = parseInt(storedStartTime);
+			interval = setInterval(updateClock, 1000);
+			updateClock();
 		}
-
+		
 		//출근버튼 눌렀을때 출근시간 DB에 인서트	
+		let isStarted = false;
+		
 		const startBtn = document.querySelector('#startBtn');
 		startBtn.addEventListener('click' , (event)=>{
-			$.ajax({
-				type : 'post',
-				url : '${root}/workout/recordStartTime',
-				data : {},
-				success : (data)=>{
-					if(data === "success"){
-						alert('출근처리 되었습니다.');
-					}else{
-						alert('출근 처리 오류');
+			if(!isStarted){
+				startBtn.disabled = true;
+				endBtn.disabled = false;
+				$.ajax({
+					type : 'post',
+					url : '${root}/workout/recordStartTime',
+					data : {},
+					success : (data)=>{
+						if(data === "success"){
+							alert('출근처리 되었습니다.');
+						}else{
+							alert('출근 처리 오류');
+						}
+					},
+					error : (e)=>{
+						alert('통신 실패');
 					}
-				},
-				error : (e)=>{
-					alert('통신 실패');
-				}
-			})
+				})
+			}
 		});
-
-		//퇴근버튼 눌렀을때 퇴근시간 DB에 업데이트
+		
+		//퇴근버튼 눌렀을때 퇴근시간 DB에 인서트
 		const endBtn = document.querySelector('#endBtn');
 		endBtn.addEventListener('click' , ()=>{
-			$.ajax({
-				type : 'post',
-				url : '${root}/workout/recordEndTime',
-				success : (data)=>{
-					if(data ==="success"){
-						console.log(data);
-						alert('퇴근처리 되었습니다.');
-					}else{
-						alert('퇴근 처리 오류');
+			if(!isStarted){
+				startBtn.disabled = false;
+				endBtn.disabled = true;
+				$.ajax({
+					type : 'post',
+					url : '${root}/workout/recordEndTime',
+					data : {},
+					success : (data)=>{
+						if(data ==="success"){
+							console.log(data);
+							alert('퇴근처리 되었습니다.');
+						}else{
+							alert('퇴근 처리 오류');
+						}
+					},
+					error : (e)=>{
+						console.log(e);
+						alert('통신 실패');
 					}
-				},
-				error : (e)=>{
-					console.log(e);
-					alert('통신 실패');
-				}
-			});
+				});
+			};
 		});
+		endBtn.disabled = true;
+		
+		//출근 그래프
+		const labels = [
+			'월요일',
+			'화요일',
+			'수요일',
+			'목요일',
+			'금요일',
+			'토요일',
+			'일요일',
+		];
 
+		const data = {
+			labels: labels,
+			datasets: [{
+			label: '근무시간',
+			backgroundColor: '#86C8DB',
+			borderColor: '#86C8DB',
+			data: [8, 8, 8, 8, 8, 8, 8],
+			}]
+		};
+
+		const config = {
+			type: 'bar',
+			data: data,
+			options: {
+				responsive:false,
+				scales: {
+				  /*  x: {
+					display: false, // Hide the x-axis scale and labels
+				  },   */
+				  y: {
+					display: false, // Hide the y-axis scale and labels
+					
+				  } 
+				},
+				 plugins: {
+				  legend: {
+					display: false, // Hide the legend (dataset label)
+					padding: 10,
+				 },
+				}, 
+				barPercentage: 0.7,       // Adjust the width of the bars (0.8 means 80% width of the available space)
+                categoryPercentage: 0.5,
+			}
+		};
+			const myChart = new Chart(document.getElementById('myChart'),config);
+
+			
+		//출근도넛 차트
+		new Chart(document.getElementById("doughnut-chart"), {
+			type: 'doughnut',
+			data: {
+				labels: ["총 근무시간", "잔여근무 시간"],
+				datasets: [
+					{
+						backgroundColor: ["#86C8DB", "#adb5bd"],
+						data: [40,5]
+					}
+				]
+			},
+			options: {
+				responsive:false,
+				cutout: '80%',
+				plugins: {
+					legend: {
+						display: false, // Hide the legend (dataset label)
+					},
+				},
+				afterDraw: function(chart) {
+					const ctx = chart.ctx;
+					const width = chart.chart.width;
+					const height = chart.chart.height;
+
+					ctx.restore();
+					ctx.font = "16px Arial";
+					ctx.fillStyle = "black";
+					ctx.textAlign = "center";
+					ctx.textBaseline = "middle";
+					const text = "Center Text"; // Replace this with your desired text
+					ctx.fillText(text, width / 2, height / 2);
+					ctx.save();
+					}  
+			}
+		});
+			
     </script>
 
 </body>
