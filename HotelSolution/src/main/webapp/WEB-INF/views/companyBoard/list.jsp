@@ -49,8 +49,8 @@
                                     <tr class="clickable-row" data-no="${board.no}"  data-root="${root}">
                                         <td>${board.no}</td>
                                         <td>${board.title}</td>
-                                        <td>부서</td>
-                                        <td>작성자</td>
+                                        <td>${board.teamName}</td>
+                                        <td>${board.writerName}</td>
                                         <td>${board.hit}</td>
                                         <td>${board.enrollDate}</td>
                                     </tr>

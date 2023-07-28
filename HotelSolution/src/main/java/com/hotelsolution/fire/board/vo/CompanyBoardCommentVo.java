@@ -13,7 +13,7 @@ public class CompanyBoardCommentVo {
     private String commentContent;
     private LocalDateTime enrollDate;
     private String status;
-    private int parentComment_no ;
+    private int parentCommentNo;
     private int commentDepth;
     private int commentGroupNo;
 

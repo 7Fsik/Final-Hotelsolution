@@ -29,10 +29,8 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
 
     @Override
     public int getCompanyBoardCnt() {
-
         return dao.getCompanyBoardCnt(sst);
     }
-
 
     @Override
     public List<CompanyBoardCategoryVo> getCategoryList() {
@@ -40,8 +38,8 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     }
 
     @Override
-    public int writeCompanyBoardPost(CompanyBoardVo companyBoardVo) {
-        return dao.writeCompanyBoardPost(sst, companyBoardVo);
+    public int CompanyBoardPostByNo(CompanyBoardVo companyBoardVo) {
+        return dao.CompanyBoardPostByNo(sst, companyBoardVo);
     }
 
     @Override
@@ -67,6 +65,21 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     @Override
     public int writeCommentByNo(CompanyBoardCommentVo companyBoardCommentVo) {
         return dao.writeCommentByNo(sst,companyBoardCommentVo);
+    }
+
+    @Override
+    public int companyBoardEditByNo(CompanyBoardVo companyBoardVo) {
+        return dao.companyBoardEditByNo(sst, companyBoardVo);
+    }
+
+    @Override
+    public List<CompanyBoardCommentVo> getAllCommentListByNo(int no, PageVo pageVo) {
+        return dao.getAllCommentListByNo(sst, no);
+    }
+
+    @Override
+    public int getBoardCommentCnt() {
+        return dao.getBoardCommentCnt(sst);
     }
 
 
