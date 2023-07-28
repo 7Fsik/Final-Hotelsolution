@@ -202,7 +202,6 @@
                     searchValueSelect:searchValueSelect
                 },
                 success: function(x) {
-                    alert("z");
                     console.log(x);
                     // 받아온 정보로 table 채우기
                     const tbody = document.querySelector("#bbb");
@@ -218,8 +217,45 @@
                                     + "<td class='bl'><input type='button' class='edit' value='수정'></td>"
                                     + "</tr>";
                     }
-                                        
                     tbody.innerHTML = str;
+
+                    //수정버튼 활성화
+                    const edits = document.querySelectorAll(".edit");
+                    const itemNos = document.querySelectorAll(".itemNo");
+                    const counts = document.querySelectorAll(".count");
+                    //클릭하면 itemNo,count 가져와서 ajax 돌리기
+                    edits.forEach(function(edit, index) {
+                        edit.addEventListener('click', function() {
+
+                            const itemNo = itemNos[index].textContent;
+                            const count = counts[index].value;
+
+                            $.ajax({
+                                type : "get" ,
+                                url : "${root}/front/articleManage/edit" ,
+                                data : {
+                                    itemNo:itemNo,
+                                    count:count
+                                } ,
+                                success : function(x){
+                                    getItemList();
+                                } ,
+                                error : function(x){
+                                    alert("bad");
+                                    console.log(x);
+                                    } ,
+                                
+                            });
+
+
+                        })
+                    })
+    
+
+
+
+
+                    
                 },
                 error: function(error) {
                     // 에러 처리
@@ -230,38 +266,6 @@
 
     }
     
-    
-    
-    
-    
-    
-    const edits = document.querySelectorAll(".edit");
-    const itemNos = document.querySelectorAll(".itemNo");
-    const counts = document.querySelectorAll(".count");
-
-
-
-    //////////////////////////
-    edits.forEach(function(edit, index) {
-            edit.addEventListener('click', function() {
-
-                $.ajax({
-                    type: "POST",
-                    url: "/editItem",
-                    data: {
-                        itemNo: itemNo
-                    },
-                    success: function(response) {
-                        // 서버로부터 받은 응답에 대한 동작
-                        // ...
-                    },
-                    error: function(error) {
-                        // 에러 처리
-                        // ...
-                    }
-                });
-            });
-        });
 
 </script>
     

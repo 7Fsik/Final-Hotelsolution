@@ -13,4 +13,6 @@ public interface FrontDao {
 
 	List<ItemVo> getItemList(SqlSessionTemplate sst, Map<String, String> paramMap);
 
+	int edit(SqlSessionTemplate sst, Map<String, String> paramMap);
+
 }

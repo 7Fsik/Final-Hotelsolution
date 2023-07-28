@@ -21,4 +21,9 @@ public class FrontDaoImpl implements FrontDao{
 		return sst.selectList("front.getItemList", paramMap);
 	}
 
+	@Override
+	public int edit(SqlSessionTemplate sst, Map<String, String> paramMap) {
+		return sst.update("front.edit",paramMap);
+	}
+
 }
