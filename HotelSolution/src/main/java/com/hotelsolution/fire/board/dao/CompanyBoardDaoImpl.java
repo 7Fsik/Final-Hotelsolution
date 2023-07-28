@@ -34,7 +34,7 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
 
     @Override
     public void increaseCompanyBoardHit(SqlSessionTemplate sst, int no) {
-        sst.selectOne("companyBoard.increaseHit",no);
+        sst.selectOne("companyBoard.increaseCompanyBoardHit",no);
     }
 
     @Override
@@ -57,8 +57,23 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
         return sst.insert("companyBoard.writeCommentByNo",companyBoardCommentVo);
     }
 
+    @Override
+    public int CompanyBoardPostByNo(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo) {
+        return sst.insert("companyBoard.CompanyBoardPostByNo",companyBoardVo);
+    }
 
-    public int writeCompanyBoardPost(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo) {
-        return sst.insert("companyBoard.writeCompanyBoardPost",companyBoardVo);
+    @Override
+    public int companyBoardEditByNo(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo) {
+        return sst.update("companyBoard.companyBoardEditByNo",companyBoardVo);
+    }
+
+    @Override
+    public List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no) {
+        return sst.selectList("companyBoard.getAllCommentListByNo",no);
+    }
+
+    @Override
+    public int getBoardCommentCnt(SqlSessionTemplate sst) {
+        return sst.selectOne("companyBoard.getBoardCommentCnt");
     }
 }

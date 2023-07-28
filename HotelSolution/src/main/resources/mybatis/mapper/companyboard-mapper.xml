@@ -6,17 +6,23 @@
 
 	<select id="getAllCompanyBoardList" resultType="CompanyBoardVo">
 
-		select
-		no
-		,category_no,
-		writer_no
-		,title
-		,content
-		,enroll_date
-		,hit
-		,status
-		from board
-		where status = 'N'
+		SELECT
+		b.no
+		,b.category_no
+		,b.writer_no
+		,m.name as writerName
+		,b.title
+		,b.content
+		,b.enroll_date
+		,b.hit
+		,b.status
+		,t.team_name as teamName
+		FROM board b
+		LEFT JOIN member m
+		ON b.writer_no = m.no
+		LEFT JOIN team t
+		ON m.position_no = t.team_no
+		WHERE b.status = 'N'
 
 	</select>
 
@@ -29,12 +35,12 @@
 
 	<select id="getBoardCategoryList" resultType="CategoryVo">
 		select
-		no
+		no as categoryNo
 		,category_name
 		from board_category
 	</select>
 
-	<insert id="writeCompanyBoardPost" parameterType="CompanyBoardVo">
+	<insert id="CompanyBoardPostByNo" parameterType="CompanyBoardVo">
 		insert into board
 		(
 			no
@@ -42,7 +48,8 @@
 			,writer_no
 			,title
 			,content
-			,enroll_date)
+			,enroll_date
+		)
 		values
 		(
 			seq_board_no.nextval,
@@ -54,7 +61,7 @@
 		)
 	</insert>
 
-	<select id="increaseHit" resultType="int">
+	<select id="increaseCompanyBoardHit" resultType="int">
 		update board
 		set hit = hit + 1
 		where no = #{no}
@@ -120,6 +127,42 @@
 		,0
 		)
 	</insert>
+
+	<update id="companyBoardEditByNo" parameterType="CompanyBoardVo">
+		update board
+		set
+		category_no = #{categoryNo}
+		,title = #{title}
+		,content = #{content}
+		,enroll_date = sysdate
+		where no = #{no}
+	</update>
+
+	<select id="getAllCommentListByNo" resultType="BoardCommentVo">
+		select
+		b.comment_no
+		,b.board_no
+		,b.writer
+		,b.comment_content
+		,b.enroll_date
+		,b.status
+		,b.parent_comment_no
+		,b.comment_depth
+		,b.comment_group_no
+		,m.name
+		from board_comment b
+		left join member m
+		on b.writer = m.no
+		where b.board_no = #{boardNo}
+	</select>
+
+	<select id="getBoardCommentCnt" resultType="int">
+
+		select count(comment_no)
+		from board_comment
+		where board_no = #{no}
+
+	</select>
 
 
 

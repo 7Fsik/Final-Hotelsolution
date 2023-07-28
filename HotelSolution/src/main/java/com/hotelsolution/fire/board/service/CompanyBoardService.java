@@ -18,7 +18,7 @@ public interface CompanyBoardService {
 
     List<CompanyBoardCategoryVo> getCategoryList();
 
-    int writeCompanyBoardPost(CompanyBoardVo companyBoardVo);
+    int CompanyBoardPostByNo(CompanyBoardVo companyBoardVo);
 
     void increaseCompanyBoardHit(int no);
 
@@ -29,4 +29,10 @@ public interface CompanyBoardService {
     CompanyBoardVo getBoardInfoByNo(int no);
 
     int writeCommentByNo(CompanyBoardCommentVo companyBoardCommentVo);
+
+    int companyBoardEditByNo(CompanyBoardVo companyBoardVo);
+
+    List<CompanyBoardCommentVo> getAllCommentListByNo(int no, PageVo pageVo);
+
+    int getBoardCommentCnt();
 }

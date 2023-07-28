@@ -78,13 +78,15 @@
 <script>
 
     function companyBoardEdit(){
-        window.location.href= "${root}/board/drop";
+        window.location.href= "${root}/board/edit?no=${companyBoardVo.no}";
     }
 
     function companyBoardDrop(){
-        alert("삭제하시겠습니까?");
-        window.location.href= "${root}/board/delete"
+        if(confirm("삭제하시겠습니까?")){
+            window.location.href= "${root}/board/drop?no=${companyBoardVo.no}"
+        }else{
 
+        }
     }
 
 
@@ -120,12 +122,15 @@
 
     function loadBoardCommentList(){
         $.ajax({
-            type : "get",
-            url : "${root}/board/comment/list",
-            data : {"no": $("no").val()},
-            success : function (data){
-                let html = "";
-                const count = data.list.lenth;
+            type : "get"
+            ,url: "${root}/board/comment/list"
+            ,data:{
+                boardNo: "${companyBoardVo.no}"
+                ,page : 1
+            }
+            ,success : function (data){
+                let commentList = data;
+                console.log(commentList);
             }
 
 
@@ -140,6 +145,7 @@
         }
     });
 
+    loadBoardCommentList();
 
 
 </script>

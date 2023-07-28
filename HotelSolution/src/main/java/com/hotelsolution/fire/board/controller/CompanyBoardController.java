@@ -2,6 +2,7 @@ package com.hotelsolution.fire.board.controller;
 
 import com.google.gson.JsonObject;
 import com.hotelsolution.fire.board.service.CompanyBoardService;
+import com.hotelsolution.fire.board.vo.CommentResponse;
 import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
@@ -11,6 +12,7 @@ import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.lang.reflect.Member;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +51,7 @@ public class CompanyBoardController {
         return "companyBoard/list";
     }
     @GetMapping("post")
-    public String showWriteForm( Model model) {
+    public String showWriteForm(Model model) {
         List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
         log.info("categoryList" + categoryList);
         model.addAttribute("categoryList",categoryList);
@@ -57,20 +60,17 @@ public class CompanyBoardController {
     }
 
     @PostMapping("post")
-    public String writeCompanyBoardPostByNo(@ModelAttribute("loginMember") MemberVo loginMember, CompanyBoardVo companyBoardVo) {
+    public String CompanyBoardPostByNo(HttpSession session, CompanyBoardVo companyBoardVo) {
+
+        MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
         if(loginMember != null){
             companyBoardVo.setWriterNo(loginMember.getNo());
-            int result = boardService.writeCompanyBoardPost(companyBoardVo);
+            int result = boardService.CompanyBoardPostByNo(companyBoardVo);
             if(result != 1){
                 return "redirect:/error";
             }
         }
         return "redirect:/board/list/1";
-    }
-
-    @ModelAttribute("loginMember")
-    public MemberVo getLoginMember(HttpSession session) {
-        return (MemberVo) session.getAttribute("loginMember");
     }
 
 
@@ -145,7 +145,7 @@ public class CompanyBoardController {
 
     }
 
-    @PostMapping("delete")
+    @GetMapping("drop")
     public String companyBoardDeleteByNo(@RequestParam int no)
     {
         int deleteResult = boardService.companyBoardDeleteByNo(no);
@@ -157,29 +157,61 @@ public class CompanyBoardController {
         return "redirect:/board/list/1";
     }
 
-    @GetMapping ("edit")
+    @GetMapping("edit")
     public String companyBoardEditViewByNo(@RequestParam int no, Model model)
     {
-        CompanyBoardVo companyBoardVo = boardService.getBoardInfoByNo(no);
 
-        model.addAttribute("companyBoardVo",companyBoardVo);
+        CompanyBoardVo companyBoardVo = boardService.getBoardInfoByNo(no);
+        List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
+        model.addAttribute("companyBoardVo", companyBoardVo);
+        model.addAttribute("categoryList", categoryList);
 
         return "companyBoard/edit";
     }
 
+
+    @PostMapping("edit")
+    public String companyBoardEditByNo(
+            HttpSession session
+            ,CompanyBoardVo companyBoardVo
+        )
+    {
+        MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+        if(loginMember != null){
+            String loginMemberNo = loginMember.getNo();
+            companyBoardVo.setWriterNo(loginMemberNo);
+            companyBoardVo.setEnrollDate(LocalDateTime.now());
+            log.info("수정후 넘어오는데이터 {} ", companyBoardVo);
+            int result = boardService.companyBoardEditByNo(companyBoardVo);
+            if(result != 1){
+                return "redirect:/common/error";
+            }
+        }
+        session.setAttribute("alertMsg","수정완료됨");
+        return "redirect:/board/list/1";
+    }
+
     @GetMapping("comment/list")
     @ResponseBody
-    public String getAllCommentListByNo()
+    public ResponseEntity<CommentResponse> getAllCommentListByNo(@RequestParam (name="page",defaultValue = "1") int commentPage, @RequestParam int boardNo)
     {
+        int commentlistCnt = boardService.getBoardCommentCnt();
+        int currentPage = commentPage;
+        int companyBoardCommentPageLimit = FireConstPool.COMPANY_BOARD_COMMENT_PAGE_LIMIT;
+        int companyBoardCommentLimit = FireConstPool.COMPANY_BOARD_COMMENT_LIMIT;
+        PageVo pageVo = new PageVo(commentlistCnt, currentPage, companyBoardCommentPageLimit, companyBoardCommentLimit);
+        List<CompanyBoardCommentVo> companyBoardCommentVo = boardService.getAllCommentListByNo(boardNo, pageVo);
 
-        return "김치먹자";
+        CommentResponse commentResponse = new CommentResponse();
+        commentResponse.setCommentrList(companyBoardCommentVo);
+        commentResponse.setPageVo(pageVo);
+        return ResponseEntity.ok().body(commentResponse);
     }
 
     @PostMapping("comment/write")
     @ResponseBody
     public String writeCommentByNo(HttpSession session, CompanyBoardCommentVo companyBoardCommentVo) {
 
-        log.info("companyBoardCommentVo 내용물보기 ㅇㅇ" +  companyBoardCommentVo);
 
         MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
         if (loginUser != null) {
@@ -192,4 +224,8 @@ public class CompanyBoardController {
         }
 
     }
+
+
+
+
 }
