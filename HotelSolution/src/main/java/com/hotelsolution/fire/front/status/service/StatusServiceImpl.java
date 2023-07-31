@@ -21,8 +21,8 @@ public class StatusServiceImpl implements StatusService{
 	private final SqlSessionTemplate sst;
 	
 	@Override
-	public List<StatusVo> list(PageVo pv, String searchType ,String searchValue) {
-		return sd.list(sst,pv,searchType ,searchValue);
+	public List<StatusVo> list(PageVo pv, String searchType ,String searchValue,String checkSelect) {
+		return sd.list(sst,pv,searchType ,searchValue,checkSelect);
 	}
 
 	@Override

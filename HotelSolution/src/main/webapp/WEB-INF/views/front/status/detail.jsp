@@ -107,6 +107,11 @@
     form{
         display: contents;
     }
+    .img>img{
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+    }
 </style>
 <body>
 
@@ -131,12 +136,12 @@
                 </div>
     
                 <div class="img">
-                    <img src="" alt="">
+                    <img src="${root}/resources/img/front/${sv.img}" >
                 </div>
-                <form action="/fire/front/status/edit" method="get" enctype="multipart/form-data">
+                <form action="/fire/front/status/edit" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="roomIntNo" value="${sv.roomIntNo}">
                     <div id="img-file">
-                        <input type="file" name="img" value="사진 수정하기">
+                        <input type="file" name="img" value="" accept="*">
                     </div>
                     <div id="userdate-area">
                         <div class="line font-25">객실 소개</div>

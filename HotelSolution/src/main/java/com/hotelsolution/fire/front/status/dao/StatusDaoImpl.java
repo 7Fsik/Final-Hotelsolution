@@ -20,10 +20,11 @@ public class StatusDaoImpl implements StatusDao{
 	
 	
 	@Override
-	public List<StatusVo> list(SqlSessionTemplate sst, PageVo pv, String searchType ,String searchValue) {
+	public List<StatusVo> list(SqlSessionTemplate sst, PageVo pv, String searchType ,String searchValue,String checkSelect) {
 		 Map<String, Object> search = new HashMap<>();
 		 search.put("searchType", searchType);
 		 search.put("searchValue", searchValue);
+		 search.put("checkSelect", checkSelect);
 		 
 		 RowBounds rb = new RowBounds(pv.getOffset() , pv.getBoardLimit());
 		

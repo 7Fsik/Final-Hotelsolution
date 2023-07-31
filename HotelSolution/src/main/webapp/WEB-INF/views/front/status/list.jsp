@@ -47,7 +47,7 @@
         height: 95%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 50% 50%;
         align-items: center;
         justify-items: center;
     }
@@ -91,6 +91,14 @@
         color: white;
         border-radius: 5px;
     }
+    .img>img{
+        height: 90%;
+        width: 90%;
+        border-radius: 5px;
+    }
+    #checkSelect{
+        display: none;
+    }
     
 
 </style>
@@ -107,15 +115,18 @@
     
             <div id="search-area">
                 <div id="search">
-                    <form action="/fire/front/status/list">
+                    <form action="${root}/front/status/list">
                         <input type="hidden" name="page" value="1">
-                        <select name="searchType" >
+                        <select name="searchType" id="searchType">
                             <option value="roomNo">방 호수</option>
                             <option value="statusNo">객실상태</option>
                             <option value="typeName">객실이름</option>
                         </select>
-                        
-                        <input type="text" name="searchValue">
+                        <input type="text" name="searchValue" id="searchValue" value="${searchValue}" style="display: inline-block;">
+                        <select name="checkSelect" id="checkSelect" style="display: none;">
+                            <option value="1">사용가능</option>
+                            <option value="2">수리중</option>
+                        </select>
                         <input type="submit" value="검색">
                     </form>
                 </div>
@@ -127,7 +138,7 @@
                     <c:forEach items="${svList}" var="svList">
                         <div class="att" onclick="location.href='/fire/front/status/detail?no='+${svList.roomIntNo}">
                         <div class="img">
-                                <img src="/fire/static/img/front/room001.jpg">
+                                <img src="${root}/resources/img/front/${svList.img}">
                             </div>
                             <div>
                                 <div class="name">${svList.typeName}</div>
@@ -141,23 +152,40 @@
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/status/list?page=1"> << </a>
-                        <a href="/fire/front/status/list?page=${pv.currentPage - 1}"> < </a>
+                        <a href="/fire/front/status/list?page=1&searchType=${searchType}&searchValue=${searchValue}"> << </a>
+                        <a href="/fire/front/status/list?page=${pv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
-                        <a href="/fire/front/status/list?page= ${i}">${i}</a>
+                        <a href="/fire/front/status/list?page= ${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/status/list?page=${pv.maxPage}"> >> </a>            
-                        <a href="/fire/front/status/list?page=${pv.currentPage + 1}"> > </a>
+                        <a href="/fire/front/status/list?page=${pv.maxPage}&searchType=${searchType}&searchValue=${searchValue}"> >> </a>            
+                        <a href="/fire/front/status/list?page=${pv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}"> > </a>
                     </c:if>
                 </div>
             </div>
         </div>
     
     </div>
+
+    <script>
+        document.getElementById('searchType').addEventListener('change', function () {
+            var checkSelect = document.getElementById('checkSelect');
+            var searchValue = document.getElementById('searchValue');
+    
+            if (this.value === 'statusNo') {
+                checkSelect.style.display = 'inline-block';
+                searchValue.style.display = 'none';
+                searchValue.disabled = true;
+            } else {
+                checkSelect.style.display = 'none';
+                searchValue.style.display = 'inline-block';
+                searchValue.disabled = false;
+            }
+        });
+    </script>
 
     
 
