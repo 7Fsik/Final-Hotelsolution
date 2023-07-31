@@ -1,5 +1,7 @@
 package com.hotelsolution.fire.front.status.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
