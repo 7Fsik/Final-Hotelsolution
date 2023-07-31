@@ -16,6 +16,31 @@
 
   
   </select>
+  <select id="newTitleList" resultType="SurveyDocVo" parameterType="java.util.Map">
+  
+  						
+	           SELECT DISTINCT SD.NO, SD.TITLE, TO_CHAR(SD.ENROLL_DATE, 'YYYY"년" MM"월" DD"일"') AS ENROLL_DATE
+				FROM SURVEY_DOCUMENT SD
+				JOIN SURVEY_QUESTION SQ ON SD.NO = SQ.SURVEY_NO
+				WHERE (SD.NO, SQ.NO) NOT IN (
+				    SELECT SD.NO, SQ.NO
+				    FROM SURVEY_DOCUMENT SD
+				    JOIN SURVEY_QUESTION SQ ON SD.NO = SQ.SURVEY_NO
+				    JOIN ANSWER A ON SQ.NO = A.QUESTION_NO
+				    WHERE A.Answerer = #{no}
+				    <if test="searchValue != null and searchValue != '' ">
+									and SD.TITLE LIKE ('%'|| #{searchValue}|| '%')
+				
+						</if>
+				)
+				 <if test="searchValue != null and searchValue != '' ">
+									and SD.TITLE LIKE ('%'|| #{searchValue}|| '%')
+				
+						</if>
+				ORDER BY NO DESC
+	
+  
+  </select>
   
    <select id="getRecentSurveyQnAList" resultType="SurveyDocVo">
 	    SELECT NO, TITLE, TO_CHAR(ENROLL_DATE, 'YY.MM.DD') AS ENROLL_DATE
@@ -24,11 +49,40 @@
 
   
   </select>
+ <select id="getNewQuestionList" resultType="SurveyQuestionVo" parameterType="java.util.Map">
+    SELECT DISTINCT SQ.NO AS NO
+    , SQ.SURVEY_NO AS SURVEYNO
+    , SQ.QUESTION AS QUESTION
+    , SD.TITLE AS TITLE
+    FROM SURVEY_QUESTION SQ
+    JOIN SURVEY_DOCUMENT SD
+    ON SQ.SURVEY_NO = SD.NO
+    WHERE (SQ.NO, SQ.SURVEY_NO) NOT IN (
+        SELECT SQ.NO, SQ.SURVEY_NO
+	    FROM SURVEY_QUESTION SQ
+	    JOIN ANSWER A ON SQ.NO = A.QUESTION_NO
+        WHERE A.ANSWERER = #{loginMemberNo}
+        <if test="surveyDocNo != null and surveyDocNo != ''">
+            AND SQ.SURVEY_NO = #{surveyDocNo}
+        </if>
+    )
+    <if test="surveyDocNo != null and surveyDocNo != ''">
+        AND SQ.SURVEY_NO = #{surveyDocNo}
+    </if>
+    ORDER BY SQ.NO
+</select>
+
+
  
 
     <insert id="insertDocument" parameterType="java.util.Map">
     
         INSERT INTO survey_document (no, title) VALUES (SEQ_SURVEY_DOCUMENT_NO.NEXTVAL, #{title})
+       
+    </insert>
+    <insert id="write" parameterType="java.util.Map">
+    
+        INSERT INTO answer (no, question_no,answerer,answer) VALUES (SEQ_answer_NO.NEXTVAL, #{no},#{loginMember.no},#{answer})
        
     </insert>
 	<insert id="insertQuestions">
@@ -63,7 +117,7 @@
 		    FROM ANSWER A
 		    JOIN SURVEY_QUESTION SQ ON A.QUESTION_NO = SQ.NO
 		    JOIN SURVEY_DOCUMENT SD ON SQ.SURVEY_NO = SD.NO
-		    WHERE SD.NO = #{NO}
+		    WHERE A.ANSWERER = #{NO}
 	  	
   		
   	</select>

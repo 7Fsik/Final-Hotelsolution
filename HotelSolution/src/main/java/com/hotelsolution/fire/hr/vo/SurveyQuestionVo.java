@@ -7,5 +7,6 @@ public class SurveyQuestionVo {
 	private String no;
 	private String surveyNO;
 	private String question;
+	private String title;
 
 }
