@@ -68,6 +68,21 @@ public class SurveyServiceImpl implements SurveyService {
 		return dao.getSurveySelectQnaTotalList(sst,no);
 	}
 
+	@Override
+	public List<SurveyDocVo> newTitleList(PageVo pv,String searchValue, String no) {
+		return dao.newTitleList(sst , pv, searchValue, no);
+	}
+
+	@Override
+	public List<SurveyQuestionVo> getNewQuestionList(String no, String no2) {
+		return dao.getNewQuestionList(sst,no,no2);
+	}
+
+	@Override
+	public int write(Map<String, Object> map) {
+		return dao.write(sst,map);
+	}
+
 
 	
 

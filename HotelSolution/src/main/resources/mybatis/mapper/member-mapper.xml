@@ -127,27 +127,30 @@
 
   	<select id="getDetail" resultType="MemberVo">
 	  	SELECT 
-		    u.NO,
-		    u.TEAM_NO,
-		    p.name AS POSITIONNAME,
-		    u.ID,
-		    u.PASSWORD,
-		    u.NAME,
-		    u.EMAIL,
-		    u.IMAGE,
-		    u.ENROLL_DATE,
-		    u.STATUS,
-		    u.CONTRACT_WORK_TIME,
-		    u.CONTRACT_WORK_END_TIME,
-		    u.SALARY,
-		    t.TEAM_NAME AS TEAMNAME,
-		     t.TEAM_ADDRESS AS TEAMADDRESS
-		FROM 
-		    member u
-		JOIN 
-		    POSITION p ON u.POSITION_NO = p.NO
-		JOIN 
-		    TEAM t ON u.TEAM_NO = t.TEAM_NO
+		   u.NO
+  			,u.TEAM_NO TEAMNO
+  			,u.POSITION_NO AS POSITIONNO
+  			,p.name AS POSITIONNAME
+  			,u.ID,u.PASSWORD
+  			,u.NAME
+  			,u.EMAIL
+  			,u.IMAGE
+  			,u.ENROLL_DATE
+  			,u.STATUS
+  			,u.CONTRACT_WORK_TIME
+  			,u.CONTRACT_WORK_END_TIME
+  			,u.SALARY
+  			,u.CHANGE_IMAGE AS CHANGEIMAGE
+  			,t.TEAM_NAME AS TEAMNAME
+  			,t.TEAM_ADDRESS AS TEAMADDRESS
+  			
+  			FROM
+  			member u
+  			JOIN POSITION p
+  			ON u.POSITION_NO = p.NO
+  			JOIN TEAM t 
+  			ON u.TEAM_NO = t.TEAM_NO
+		
 		 WHERE u.NO = #{memberNo}
   	
 	</select>

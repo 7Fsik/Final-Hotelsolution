@@ -251,7 +251,19 @@
 	}
 
 
+.notification-menu {
+    display: none;
+    position: absolute;
+    top: 50px; /* 메뉴 탭이 이미지 아래에 표시되도록 조절 */
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
 
+/* 클릭 시 보여지도록 */
+.header-notification.active .notification-menu {
+    display: block;
+}
 
 
 
@@ -275,11 +287,16 @@
                             <img class="header-chatimg" src="${root}/resources/img/일단넣음.png" alt="채팅이미지">
                         </a>
                     </div>
-                    <div class="header-notification">
-                        <a href="/fire/">
-                            <img class="header-notification-img" src="${root}/resources/img/종모양아이콘.png" alt="채팅이미지">
-                        </a>
-                    </div>
+                   <div class="header-notification">
+				        <img class="header-notification-img" src="${root}/resources/img/종모양아이콘.png" alt="채팅이미지">
+					    <!-- 여러 개의 메뉴 탭 -->
+					    <ul class="notification-menu">
+					        <li><a href="${root}/hr/survey/write"><span class="notification-count">설문지 : </span></a></li>
+					        <li><a href="#">채팅 : </a></li>
+					        <!-- 추가적인 메뉴 탭들을 원하는 만큼 추가할 수 있습니다. -->
+					    </ul>
+
+					</div>
                     <div class="header-profile">
                         <a href="/fire/" >
                             <img class="header-profile-img" src="${root}/resources/img/증명사진.png" alt="채팅이미지">
@@ -424,14 +441,14 @@
                 </c:if>
                 <c:if test="${sessionScope.loginMember.teamNo == 4}">
                     <div class="team-title">인사팀</div>
+                    <br>
                     <div class="mail-box">
                         <div class="sub-menu">
-                            <div class="sub-menu-title">메일함</div>
-                            <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="#">보낸메일함</a></li>
-                                <li><a class="custom-link" href="#">받은메일함</a></li>
-                                <li><a class="custom-link" href="#">휴지통</a></li>
-                            </ul>
+                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/survey/create">설문조사</a></div>
+                            <br>
+                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/em/list">직원관리</a></div>
+                            <br>
+                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/vacation/vaclist">휴가내역</a></div>
                         </div>
                     </div>
                 </c:if>
@@ -492,6 +509,44 @@
 	function goWorkOutByAside(){
 		window.location.href = "${root}/workout/attendance";
 	}
+	$(document).ready(function() {
+        // 문서가 준비되면 surveyAlert 함수를 호출합니다.
+        surveyAlert();
+
+        // "header-notification" 클래스를 클릭했을 때 메뉴를 전환하는 이벤트 핸들러입니다.
+        $(".header-notification").on("click", function() {
+            $(this).toggleClass("active");
+        });
+    });
+	//미완료 설문지 갯수
+	 function surveyAlert() {
+        // 서버 측 Java 코드에 AJAX 요청 보내기
+        $.ajax({
+            type: "POST",
+            url: "${root}/hr/survey/alert", // Java 컨트롤러의 엔드포인트 URL
+            dataType: "json",
+            success: function(response) {
+                // 응답에는 Java 코드에서 반환한 카운트가 포함됩니다.
+                var cnt = response;
+				
+                // HTML에서 알림 카운트를 업데이트(필요한 경우)
+                $(".notification-count").text('설문지 : '+cnt);
+
+                // 카운트에 따라 알림 요소를 표시/숨기기(필요한 경우)
+                if (cnt > 0) {
+                    $(".notification-count").css("display", "inline");
+                } else {
+                    $(".notification-count").css("display", "none");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("설문 조사 알림 가져오기 오류: " + status);
+            }
+        });
+    }
+	
+
+
 
 </script>
 </html>

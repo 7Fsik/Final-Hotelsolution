@@ -278,7 +278,7 @@
 							</div>
 							 <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/em/list?memberListpagee=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/em/list?memberListpage=${pv.currentPage - 1}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">

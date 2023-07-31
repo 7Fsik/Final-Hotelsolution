@@ -1,4 +1,4 @@
-c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    
@@ -198,7 +198,8 @@ c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	 a{
    	width: 50px;
    }
-	  .main {
+
+  .main {
     width: 100%;
     height: 100%;
 }
@@ -210,16 +211,17 @@ c<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     display: flex;
 } 
 #img1{
-	height:20px;
+	height:20px; 
+	
 }
 </style>
 </head>
 <body>
-		<div id ="wrap">
-		
-		   <%@ include file="/WEB-INF/views/common/main.jsp" %>
-		
-		   <div id="mainboard">
+	<div id ="wrap">
+
+   <%@ include file="/WEB-INF/views/common/main.jsp" %>
+
+   <div id="mainboard">
 		
 		      <div class="hrBody">
 		

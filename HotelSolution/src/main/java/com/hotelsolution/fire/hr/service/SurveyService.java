@@ -27,4 +27,10 @@ public interface SurveyService {
 
 	List<SurveyAnswerVo> getSurveySelectQnaTotalList(String no);
 
+	List<SurveyDocVo> newTitleList(PageVo pv, String searchValue, String no);
+
+	List<SurveyQuestionVo> getNewQuestionList(String no, String no2);
+
+	int write(Map<String, Object> map);
+
 }
