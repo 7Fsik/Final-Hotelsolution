@@ -195,7 +195,8 @@ public class CompanyBoardController {
     @ResponseBody
     public ResponseEntity<CommentResponse> getAllCommentListByNo(@RequestParam (name="page",defaultValue = "1") int commentPage, @RequestParam int boardNo)
     {
-        int commentlistCnt = boardService.getBoardCommentCnt();
+        int commentlistCnt = boardService.getBoardCommentCnt(boardNo); // 여기에 boardNo를 전달하도록 수정합니다.
+        System.out.println(commentlistCnt);
         int currentPage = commentPage;
         int companyBoardCommentPageLimit = FireConstPool.COMPANY_BOARD_COMMENT_PAGE_LIMIT;
         int companyBoardCommentLimit = FireConstPool.COMPANY_BOARD_COMMENT_LIMIT;
@@ -203,7 +204,7 @@ public class CompanyBoardController {
         List<CompanyBoardCommentVo> companyBoardCommentVo = boardService.getAllCommentListByNo(boardNo, pageVo);
 
         CommentResponse commentResponse = new CommentResponse();
-        commentResponse.setCommentrList(companyBoardCommentVo);
+        commentResponse.setCommentList(companyBoardCommentVo);
         commentResponse.setPageVo(pageVo);
         return ResponseEntity.ok().body(commentResponse);
     }
@@ -215,7 +216,7 @@ public class CompanyBoardController {
 
         MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
         if (loginUser != null) {
-            companyBoardCommentVo.setWriter(loginUser.getNo());
+            companyBoardCommentVo.setWriterNo(loginUser.getNo());
 
             boardService.writeCommentByNo(companyBoardCommentVo);
             return "success";
@@ -223,6 +224,21 @@ public class CompanyBoardController {
             return "common/error";
         }
 
+    }
+
+    @GetMapping("comment/list")
+    @ResponseBody
+    public String deleteCommentOneByNo(HttpSession session, @RequestParam int boardNo)
+    {
+        MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
+        if (loginUser != null) {
+            String commentWriterNo = loginUser.getNo();
+
+            boardService.deleteCommentOneByNo(commentWriterNo);
+            return "success";
+        }else{
+            return "common/error";
+        }
     }
 
 

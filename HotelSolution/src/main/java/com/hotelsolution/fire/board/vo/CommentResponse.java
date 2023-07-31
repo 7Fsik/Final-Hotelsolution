@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 public class CommentResponse {
-    private List<CompanyBoardCommentVo> commentrList;
+    private List<CompanyBoardCommentVo> commentList;
     private PageVo pageVo;
 }
