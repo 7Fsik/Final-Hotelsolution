@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vacationDoc">
+  
+ 
+	<select id="getSubmitList" resultType="VacationDocVo" parameterType="java.util.Map">
+		  SELECT 
+		  	AD.NO,
+		  	AD.TITLE,
+		  	AD.CONTENT,
+		  	AD.ENROLL_DATE AS ENROLLDATE,
+		  	AD.USER_NO AS USERNO,
+		  	VA.VACATION_START AS VACATIONSTART,
+		  	VA.VACATION_END AS VACATIONEND,
+		  	M.NAME AS NAME,
+		  	M.ID AS ID,
+		  	M.CHANGE_IMAGE AS IMAGE,
+		  	M.STATUS,
+		  	P.NAME AS POSITIONNAME,
+		  	T.TEAM_NAME AS TEAMNAME
+		  FROM APPROVAL_DOCUMENT AD
+		  JOIN APPROVER AP
+		  ON AD.NO = AP.APPROVAL_DOC_NO
+		  JOIN APPROVAL_STATUS APS
+		  ON AP.STATUS_NO = APS.NO
+		  JOIN VACATION_APPLY VA
+		  ON AD.NO = VA.APP_NO
+		  JOIN MEMBER M
+		  ON AD.USER_NO = M.NO
+		  JOIN POSITION P 
+		  ON M.POSITION_NO = P.NO
+		  JOIN TEAM T
+		  ON M.TEAM_NO = T.TEAM_NO
+		  WHERE APS.NO = 1
+		  AND M.STATUS !=2
+	  			 <if test="searchType == 'teamName'">
+			        AND t.TEAM_NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'positionName'">
+			        AND p.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'name'">
+			        AND m.NAME LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+			    <if test="searchType == 'id'">
+			        AND '0' || m.ID LIKE ('%'|| #{searchValue} || '%')
+			    </if>
+  </select>
+ 
+
+<select id="getSubmitListCnt"  resultType="int" parameterType="java.util.Map">
+	  	SELECT COUNT(NO)
+			FROM (
+			  SELECT 
+			    AD.NO,
+			    AD.TITLE,
+			    AD.CONTENT,
+			    AD.ENROLL_DATE AS ENROLLDATE,
+			    AD.USER_NO AS USERNO,
+			    VA.VACATION_START AS VACATIONSTART,
+			    VA.VACATION_END AS VACATIONEND,
+			    M.NAME AS NAME,
+			    M.ID AS ID,
+			    M.CHANGE_IMAGE AS IMAGE,
+			    M.STATUS,
+			    P.NAME AS POSITIONNAME,
+			    T.TEAM_NAME AS TEAMNAME,
+			    COUNT(*) AS LISTCNT
+			  FROM APPROVAL_DOCUMENT AD
+			  JOIN APPROVER AP ON AD.NO = AP.APPROVAL_DOC_NO
+			  JOIN APPROVAL_STATUS APS ON AP.STATUS_NO = APS.NO
+			  JOIN VACATION_APPLY VA ON AD.NO = VA.APP_NO
+			  JOIN MEMBER M ON AD.USER_NO = M.NO
+			  JOIN POSITION P ON M.POSITION_NO = P.NO
+			  JOIN TEAM T ON M.TEAM_NO = T.TEAM_NO
+			  WHERE APS.NO = 1
+			    AND M.STATUS != 2
+			  <if test="searchType == 'teamName'">
+			    AND T.TEAM_NAME LIKE ('%' || #{searchValue} || '%')
+			  </if>
+			  <if test="searchType == 'positionName'">
+			    AND P.NAME LIKE ('%' || #{searchValue} || '%')
+			  </if>
+			  <if test="searchType == 'name'">
+			    AND M.NAME LIKE ('%' || #{searchValue} || '%')
+			  </if>
+			  <if test="searchType == 'id'">
+			    AND '0' || M.ID LIKE ('%' || #{searchValue} || '%')
+			  </if>
+			  GROUP BY AD.NO,
+			    AD.TITLE,
+			    AD.CONTENT,
+			    AD.ENROLL_DATE,
+			    AD.USER_NO ,
+			    VA.VACATION_START ,
+			    VA.VACATION_END ,
+			    M.NAME,
+			    M.ID ,
+			    M.CHANGE_IMAGE,
+			    M.STATUS,
+			    P.NAME,
+			    T.TEAM_NAME
+			) 
+
+  	</select>
+  
+
+ 
+
+
+
+
+</mapper>
