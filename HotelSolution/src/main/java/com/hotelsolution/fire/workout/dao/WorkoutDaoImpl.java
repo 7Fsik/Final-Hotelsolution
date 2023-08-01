@@ -7,7 +7,6 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.hotelsolution.fire.work.session.WorkSession;
 import com.hotelsolution.fire.workout.vo.WorkoutVo;
 
 @Repository
@@ -15,14 +14,14 @@ public class WorkoutDaoImpl implements WorkoutDao{
 
 	@Override
 	//출근시간 기록
-	public int recordStartTime(SqlSessionTemplate sst, String no) {
-		return sst.insert("workout.recordStartTime" , no);
+	public int recordStartTime(SqlSessionTemplate sst, Map<String,Object> map) {
+		return sst.insert("workout.recordStartTime" , map);
 	}
 
 	@Override
 	//퇴근시간 기록
-	public int recordEndTime(SqlSessionTemplate sst, String workoutNo) {
-		return sst.update("workout.recordEndTime" , workoutNo);
+	public int recordEndTime(SqlSessionTemplate sst, Map<String,Object> map) {
+		return sst.update("workout.recordEndTime" , map);
 	}
 
 	@Override
@@ -44,8 +43,14 @@ public class WorkoutDaoImpl implements WorkoutDao{
 	}
 
 	@Override
-	public int updateTotalWorkHours(SqlSessionTemplate sst, String workoutNo) {
-		return sst.update("workout.updateTotalWorkHours" , workoutNo);
+	//근무시간 기록
+	public int updateTotalWorkHours(SqlSessionTemplate sst, Map<String, String> params) {
+		return sst.update("workout.totalWorkHours" , params);
+	}
+
+	@Override
+	public List<WorkoutVo> getWorkOutVoListByWeek(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectList("workout.getWorkOutVoListByWeek" , map);
 	}
 
 	

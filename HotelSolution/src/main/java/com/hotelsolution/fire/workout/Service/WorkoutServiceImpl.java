@@ -9,7 +9,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hotelsolution.fire.work.session.WorkSession;
 import com.hotelsolution.fire.workout.dao.WorkoutDao;
 import com.hotelsolution.fire.workout.vo.WorkoutVo;
 
@@ -25,14 +24,14 @@ public class WorkoutServiceImpl implements WorkoutService{
 	
 	@Override
 	//출근시간 기록
-	public int recordStartTime(String no) {
-		return dao.recordStartTime(sst,no);
+	public int recordStartTime(Map<String,Object> map) {
+		return dao.recordStartTime(sst,map);
 	}
 
 	@Override
 	//퇴근시간 기록
-	public int recordEndTime(String workoutNo) {
-		return dao.recordEndTime(sst,workoutNo);
+	public int recordEndTime(Map<String,Object> map) {
+		return dao.recordEndTime(sst,map);
 	}
 
 	@Override
@@ -48,14 +47,22 @@ public class WorkoutServiceImpl implements WorkoutService{
 	}
 
 	@Override
+	//기록 번호 가져오기
 	public WorkoutVo getCommuteRecordNo(String no) {
 		return dao.getCommuteRecordNo(sst,no);
 	}
 
 	@Override
-	public int updateTotalWorkHours(String workoutNo) {
-		return dao.updateTotalWorkHours(sst,workoutNo);
+	//근무시간 기록
+	public int updateTotalWorkHours(Map<String, String> params) {
+		return dao.updateTotalWorkHours(sst, params);
 	}
+
+	@Override
+	public List<WorkoutVo> getWorkOutVoListByWeek(Map<String, Object> map) {
+		return dao.getWorkOutVoListByWeek(sst, map);
+	}
+
 
 
 }

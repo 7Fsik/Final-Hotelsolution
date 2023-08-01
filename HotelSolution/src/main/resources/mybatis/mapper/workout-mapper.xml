@@ -5,7 +5,7 @@
 <mapper namespace="workout">
   
   
-	<insert id="recordStartTime">
+	<insert id="recordStartTime" parameterType="java.util.Map">
 			
 			INSERT INTO COMMUTE_RECORD 
 			(NO, 
@@ -15,8 +15,8 @@
 		VALUES
 			(SEQ_COMMUTE_RECORD_NO.NEXTVAL
 			,#{no}
-			,SYSDATE
-            ,TO_CHAR(SYSDATE,'DAY'))
+			,#{currentTimestamp}
+            ,#{currentDayOfWeek})
 	
 	</insert>
 	
@@ -29,45 +29,45 @@
 	
 	</select>
 	
-	<update id="recordEndTime">
+	<update id="recordEndTime" parameterType="java.util.Map">
 	
 		UPDATE COMMUTE_RECORD SET
-		WORK_END_TIME = SYSDATE
+		WORK_END_TIME = #{currentTimestamp}
 		WHERE NO = #{workoutNo}
 	</update>
 	
 	<select id="getStartTime" resultType="java.util.Date">
-	    SELECT WORK_START_TIME , DAY_OF_WEEK
+	    SELECT WORK_START_TIME
 	    FROM COMMUTE_RECORD
-	    WHERE USER_NO = #{no}
+	    WHERE NO = #{workoutNo}
 	    AND WORK_START_TIME IS NOT NULL
-        AND DAY_OF_WEEK IS NOT NULL
 	    ORDER BY WORK_START_TIME DESC
 	    FETCH FIRST ROW ONLY
 	</select>
 
 	<select id="getEndTime" resultType="java.util.Date">
-	    SELECT WORK_END_TIME , DAY_OF_WEEK
+	    SELECT WORK_END_TIME
 	    FROM COMMUTE_RECORD
-	    WHERE USER_NO = #{no}
+	    WHERE NO = #{workoutNo}
 	    AND WORK_END_TIME IS NOT NULL
-	    AND DAY_OF_WEEK IS NOT NULL
 	    ORDER BY WORK_END_TIME DESC
 	    FETCH FIRST ROW ONLY
 	</select>
 	
-	<select id="getAllWorkSession" resultType="com.hotelsolution.fire.work.session.WorkSession">
-        SELECT *
-        FROM COMMUTE_RECORD
-        WHERE USER_NO = #{userNo}
-    </select>
+	<update id="totalWorkHours" parameterType="java.util.Map">
 	
-	<select id="getDayOfWeek" resultType="java.lang.String">
-		SELECT DAY_OF_WEEK
-		FROM COMMUTE_RECORD
-		WHERE USER_NO = #{no}
-		ORDER BY WORK_START_TIME DESC
-		FETCH FIRST ROW ONLY
+		UPDATE COMMUTE_RECORD SET
+		TOTAL_WORK_HOURS = #{tworkM}
+		WHERE NO = #{workoutNo}
+	
+	</update>
+	
+	<select id="getWorkOutVoListByWeek" resultType="com.hotelsolution.fire.workout.vo.WorkoutVo" parameterType="java.util.Map">
+		select * from commute_record 
+       where USER_NO = #{no}
+       AND WORK_END_TIME <![CDATA[ <= ]]>  #{currentTimestamp}
+       AND WORK_START_TIME <![CDATA[ >= ]]>  #{sevenDaysAgoTimestamp}
+      
 	</select>
 
 
