@@ -314,7 +314,7 @@
                     <span>채팅</span>
                 </div>
                 <div class="aside-icon">
-                    <img src="${root}/resources/img/결재.png" alt="아이콘6">
+                    <img src="${root}/resources/img/결재.png" alt="아이콘6" onclick="goApprovalByAside();">
                     <span>결재</span>
                 </div>
                 <div class="aside-icon">
@@ -491,6 +491,10 @@
 	//근태관리 페이지 이동
 	function goWorkOutByAside(){
 		window.location.href = "${root}/workout/attendance";
+	}
+	
+	function goApprovalByAside(){
+		window.location.href = "${root}/approval/approvalFirstPage"
 	}
 
 </script>

@@ -255,6 +255,23 @@
 		WHERE no = #{no}
   	
   	</update>
+  	
+  	<select id="getAllMembers" resultType="MemberVo">
+		SELECT
+  			u.NO
+  			,u.TEAM_NO TEAMNO
+  			,u.POSITION_NO AS POSITIONNO
+  			,p.name AS POSITIONNAME
+  			,u.NAME
+  			,u.STATUS
+  			,t.TEAM_NAME AS TEAMNAME
+  			FROM
+  			member u
+  			JOIN POSITION p
+  			ON u.POSITION_NO = p.NO
+  			JOIN TEAM t 
+  			ON u.TEAM_NO = t.TEAM_NO
+	</select>
 
 
 

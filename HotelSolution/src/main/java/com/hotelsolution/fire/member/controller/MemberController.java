@@ -98,13 +98,15 @@ public class MemberController {
 	//로그인
 	@PostMapping("login")
 	@ResponseBody
-	public String login(MemberVo vo , HttpSession session){
+	public String login(MemberVo vo , HttpSession session , Model model){
 		
 		MemberVo loginMember = service.login(vo);
 		log.info("로그인멤버 : {}" , loginMember);
+		List<MemberVo> members = service.getAllMembers(vo);
 		
 		if(loginMember != null) {
 			session.setAttribute("loginMember", loginMember);
+			session.setAttribute("members", members);
 			return "success";
 			
 		}else {
@@ -196,6 +198,8 @@ public class MemberController {
 		return "redirect:/member/login";
 		
 	}//passwordReset
+	
+	//모든 구성원 가져오기
 	
 
 

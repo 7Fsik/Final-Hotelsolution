@@ -9,5 +9,7 @@ public class WorkoutVo {
 	private String userNo;
 	private String workStartTime;
 	private String workEndTime;
+	private String totalWorkHours;
+	private String DayOfWeek;
 
 }

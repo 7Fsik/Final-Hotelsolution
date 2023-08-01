@@ -1,8 +1,15 @@
 package com.hotelsolution.fire.approval.controller;
 
+import java.lang.reflect.Member;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.hotelsolution.fire.approval.service.ApprovalService;
+import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("approval")
 @RequiredArgsConstructor
 public class ApprovalController {
+	
+	private final ApprovalService service;
 
 	//결재 첫화면
 	@GetMapping("approvalFirstPage")
@@ -73,7 +82,7 @@ public class ApprovalController {
 	
 	//결재선 정하기(화면)
 	@GetMapping("approvalLine")
-	public void approvalLine() {
+	public void approvalLine(Model model , MemberVo vo) {
 		
 	}
 	

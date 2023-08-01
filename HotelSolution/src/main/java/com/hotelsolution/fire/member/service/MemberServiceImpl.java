@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.member.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -96,6 +97,11 @@ public class MemberServiceImpl implements MemberService{
 		
 		
 		return dao.passwordReset(sst,params);
+	}
+
+	@Override
+	public List<MemberVo> getAllMembers(MemberVo vo) {
+		return dao.getAllMembers(sst,vo);
 	}
 
 }//class
