@@ -54,8 +54,8 @@ public class SurveyServiceImpl implements SurveyService {
 	}
 
 	@Override
-	public int getAnswerCnt(String no) {
-		return dao.getAnswerCnt(sst,no);
+	public int getAnswerCnt(Map<String, String> map2) {
+		return dao.getAnswerCnt(sst,map2);
 	}
 
 	@Override

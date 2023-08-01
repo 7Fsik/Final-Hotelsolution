@@ -92,8 +92,9 @@ public class SurveyController {
 	
 	//질분 답변 리스트 페이지
 	@GetMapping("survey/answerList")
-	public String surveyOneDetail(Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage, String searchValue){
+	public String surveyOneDetail(HttpSession session, Model model, SurveyDocVo sdvo , String titleListpage, String answerListpage, String searchValue){
 		//우측 설문 제목 리스트
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 		Map<String, Object> map = titleList(titleListpage, searchValue);
 		model.addAttribute("titleList",map.get("titleList"));
 		model.addAttribute("pv",map.get("pv"));
@@ -103,7 +104,10 @@ public class SurveyController {
 		model.addAttribute("list", list);
 		model.addAttribute("searchValue", searchValue);
 		//질문 답변 페이징
-		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
+		Map<String, String> map2 = new HashMap();
+		map2.put("no", loginMember.getNo());
+		map2.put("surveyNo", sdvo.getNo());
+		int listCount = service.getAnswerCnt(map2)/4;
 		if(answerListpage == null) {
 			answerListpage = "1";
 		}
@@ -164,9 +168,13 @@ public class SurveyController {
 	
 	//디테일 리스트(detail 에서 목록으로버튼 or answerList 에서 상세보기 클릭시)
 	@GetMapping("survey/detailList")
-	public String surveySelectQnaTotalList(Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage, String searchValue, String answerer) {
-
-		int listCount = service.getAnswerCnt(sdvo.getNo())/4;
+	public String surveySelectQnaTotalList(HttpSession session,Model model, SurveyDocVo sdvo,  String titleListpage, String detailListpage, String searchValue, String answerer) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		Map<String, String> map2 = new HashMap();
+		map2.put("no", loginMember.getNo());
+		map2.put("surveyNo", sdvo.getNo());
+		int listCount = service.getAnswerCnt(map2)/4;
+		System.out.println("listCount"+listCount);
 		if(detailListpage == null) {
 			detailListpage = "1";
 		}
@@ -175,13 +183,16 @@ public class SurveyController {
 		int pageLimit = 5;
 	
 		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		System.out.println("detailListPv"+detailListPv);
 		int realPage = (detailListPv.getListCount()-1)/boardLimit+1;
+		System.out.println("realPage"+realPage);
 		if(realPage<=detailListPv.getPageLimit()) {
 			detailListPv.setEndPage(realPage);
 		}
 		if(realPage<=detailListPv.getEndPage()) {
 			detailListPv.setEndPage(realPage);
 		}
+		System.out.println(detailListPv);
 		model.addAttribute("detailListPv",detailListPv);
 		
 		
@@ -216,7 +227,10 @@ public class SurveyController {
 	public void surveyWrite(HttpSession session,Model model, String titleListpage,  String searchValue, String surveyNo) {
 		
 		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-		int memberSurveyCnt = service.getAnswerCnt(loginMember.getNo())/4;
+		Map<String, String> map2 = new HashMap();
+		map2.put("no", loginMember.getNo());
+		map2.put("surveyNo", "");
+		int memberSurveyCnt = service.getAnswerCnt(map2)/4;
 	    int totalSurveyCnt = service.getSurveyCnt("");
 	    int listCount = totalSurveyCnt-memberSurveyCnt;
 		if (titleListpage == null || titleListpage.isEmpty()) {
@@ -287,7 +301,10 @@ public class SurveyController {
 	@ResponseBody
 	public int surveyAlert(HttpSession session) {
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-	    int memberSurveyCnt = service.getAnswerCnt(loginMember.getNo())/4;
+	    Map<String, String> map2 = new HashMap();
+		map2.put("no", loginMember.getNo());
+		map2.put("surveyNo", "");
+	    int memberSurveyCnt = service.getAnswerCnt(map2)/4;
 	    int totalSurveyCnt = service.getSurveyCnt("");
 	    int cnt = totalSurveyCnt-memberSurveyCnt;
 	    System.out.println(memberSurveyCnt);

@@ -49,8 +49,6 @@ public class DataRoomController {
 	public void write(Model model,HttpServletRequest req, String categoryNo) {
 		
 	    HttpSession session = req.getSession();
-	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-	    model.addAttribute("loginMember", loginMember);
 	    model.addAttribute("categoryNo",categoryNo);
 	}
 	
@@ -64,10 +62,7 @@ public class DataRoomController {
 		List<DataRoomFileVo> drfvoList = new ArrayList<DataRoomFileVo>(); // 이 위치로 이동
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-//	    String loginMemberNo = ""; // 실행위에 임시코드
-//	    if(loginMember!=null) {
-//	    	loginMemberNo = loginMember.getNo();
-//	    }//임시코드
+
 	    drvo.setWriterNo(loginMember.getNo());
 	    drvo.setCategoryNo(categoryNo);
 	    for (int i = 0; i < fList.size(); i++) {
@@ -101,14 +96,10 @@ public class DataRoomController {
 	
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
-	public void list(Model model,String categoryNo, String dataRoomListPage, HttpServletRequest req,String searchType, String searchValue) {
+	public void list(Model model,String categoryNo, String dataRoomListPage, String searchType, String searchValue) {
 		Map<String,Object> map = new HashMap();
 		map.put("searchType", searchType);
 		map.put("searchValue", searchValue);
-		HttpSession session = req.getSession();
-	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-	    System.out.println("list loginmember"+loginMember);
-	    model.addAttribute("loginMember", loginMember);
 		//초기 카테고리는 개인으로
 		if(categoryNo == null) {
 			categoryNo = "0";

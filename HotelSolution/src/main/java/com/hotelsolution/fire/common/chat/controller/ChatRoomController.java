@@ -35,18 +35,11 @@ public class ChatRoomController {
     //채팅방 목록 조회
     @GetMapping("rooms")
     public void rooms(Model model,  HttpSession session){
-    	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-    	String no = "1";
-    	if(loginMember!=null) {
-    		
-    		no = loginMember.getNo();
-    	}
-    	
-        log.info("# All Chat Rooms");
-        
-        List<ChatRoomVo> list = service.findAllRooms(no);
-        System.out.println(list);
-        model.addAttribute("list",list);
+//    	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+//    	String no = loginMember.getNo();
+//        List<ChatRoomVo> list = service.findAllRooms(no);
+////        System.out.println(list);
+//        model.addAttribute("list",list);
 
     }
 

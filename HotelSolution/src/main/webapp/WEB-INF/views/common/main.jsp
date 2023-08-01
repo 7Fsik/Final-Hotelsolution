@@ -326,7 +326,7 @@
                     <img src="${root}/resources/img/게시판.png" alt="아이콘4">
                     <span>게시판</span>
                 </div>
-                <div id="board-icon" class="aside-icon">
+                <div id="board-icon" class="aside-icon" onclick="goChatList()">
                     <img src="${root}/resources/img/채팅.png" alt="아이콘5">
                     <span>채팅</span>
                 </div>
@@ -550,7 +550,15 @@
         });
     }
 	
+	 function goChatList() {
+		 const width = 517;
+		 const height = 820;
+		 const left = (window.innerWidth / 2) - (width / 2);
+		 const top = 100;
+	  	window.open('${root}/chat/rooms', '','width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
 
+
+	};
 
 
 </script>
