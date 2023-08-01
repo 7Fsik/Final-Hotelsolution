@@ -73,12 +73,12 @@ public class ChatRoomController {
   //채팅방 조회
     @GetMapping("room")
     public void getRoom(String roomNo, Model model){
-    	
-        log.info("# get Chat Room, roomNo : " + roomNo);
-        ChatRoomVo room = service.findRoomByNo(roomNo);
-        room.setUser1Name("1번");
-        room.setUser2Name("2번");
-        System.out.println(room);
-        model.addAttribute("room", room);
+//    	
+//        log.info("# get Chat Room, roomNo : " + roomNo);
+//        ChatRoomVo room = service.findRoomByNo(roomNo);
+//        room.setUser1Name("1번");
+//        room.setUser2Name("2번");
+//        System.out.println(room);
+//        model.addAttribute("room", room);
     }
 }
