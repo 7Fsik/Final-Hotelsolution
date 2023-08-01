@@ -220,7 +220,7 @@
 	}
 	
 	.CurworkTime{
-		width:70px;
+		width:90px;
 		height:20px;
 		border: 1px solid #bbe9f6;
 		text-align:center;
@@ -229,6 +229,9 @@
 		color: #86C8DB;
 		font-weight:bold;
 		font-size: 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	
 	.CurworkTimeText{
@@ -246,6 +249,9 @@
 		color: #2650E7;
 		font-weight:bold;
 		font-size: 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	
 	.workTimeText{
@@ -348,7 +354,7 @@
 	                <canvas id="myChart" width="350" height="120"></canvas>
 					<div style="position: relative">
 						<canvas id="doughnut-chart"></canvas>
-						<div class="center-text">누적 근무시간 <br><br><span class="number">${totalWorkHours}</span> 시간 <span class="number">${totalWorkMinutes}</span>분</div>
+						<div class="center-text">주간 근무시간 <br><br><span id="hours" class="number"></span> 시간 <span class="number">${min%60}</span>분</div>
 					</div>
             	</div>
                 <hr>
@@ -359,8 +365,8 @@
 					<div class="circleContent">휴가</div>
 					<div class="grayCircle"></div>
 					<div class="circleContent">잔여 근무시간</div>
-					<div class="CurworkTime">근무시간</div>
-					<div class="CurworkTimeText">${totalWorkHours}시간 ${totalWorkMinutes}분</div>
+					<div class="CurworkTime">주간 근무시간</div>
+					<div class="CurworkTimeText"><span id="hour"></span>시간 ${min%60}분</div>
 					<div class="workTime">총 근무시간</div>
 					<div class="workTimeText">40시간 0분</div>
 				</div>
@@ -370,49 +376,42 @@
 				<div id="three-menu">
 					<div class="table-title">주간 테이블</div>
 					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>				
-	                <table>
+					<table>
 	                    <thead>
 	                        <tr>
 	                            <td>일자(요일)</td>
-	                            <td>07/03(월)</td>
-	                            <td>07/04(화)</td>
-	                            <td>07/05(수)</td>
-	                            <td>07/06(목)</td>
-	                            <td>07/07(금)</td>
-	                            <td>07/08(토)</td>
-	                            <td>07/09(일)</td>
+	                            
+	                            <td>${workEndDayList[1]}(월)</td>
+	                            <td>${workEndDayList[2]}(화)</td>
+	                            <td>${workEndDayList[3]}(수)</td>
+	                            <td>${workEndDayList[4]}(목)</td>
+	                            <td>${workEndDayList[5]}(금)</td>
 	                        </tr>
 	                    </thead>
 	                    <tbody>
 	                    	<tr>
-	                    		<td>근무시간</td>
-	                    		<td>08:00</td>
-	                    		<td>08:00</td>
-	                    		<td>08:00</td>
-	                    		<td>08:00</td>
-	                    		<td>08:00</td>
-	                    		<td>-</td>
-	                    		<td>-</td>
+	                    		<td>출근시간</td>
+	                    		<td>${workStartTimeList[1]}</td>
+	                    		<td>${workStartTimeList[2]}</td>
+	                    		<td>${workStartTimeList[3]}</td>
+	                    		<td>${workStartTimeList[4]}</td>
+	                    		<td>${workStartTimeList[5]}</td>
 	                    	</tr>
 	                    	<tr>
-	                    		<td>연장근무시간</td>
-	                    		<td>03:00</td>
-	                    		<td>03:00</td>
-	                    		<td>03:00</td>
-	                    		<td>03:00</td>
-	                    		<td>03:00</td>
-	                    		<td>-</td>
-	                    		<td>-</td>
+	                    		<td>퇴근시간</td>
+	                    		<td>${workEndTimeList[1]}</td>
+	                    		<td>${workEndTimeList[2]}</td>
+	                    		<td>${workEndTimeList[3]}</td>
+	                    		<td>${workEndTimeList[4]}</td>
+	                    		<td>${workEndTimeList[5]}</td>
 	                    	</tr>
 	                    	<tr>
-	                    		<td>총 근무시간</td>
-	                    		<td>11:30</td>
-	                    		<td>11:30</td>
-	                    		<td>11:30</td>
-	                    		<td>11:30</td>
-	                    		<td>11:30</td>
-	                    		<td>-</td>
-	                    		<td>-</td>
+	                    		<td>오늘 근무시간</td>
+	                    		<td>${workMinuteList[1]/60}</td>
+	                    		<td>${workMinuteList[2]}</td>
+	                    		<td>${workMinuteList[3]}</td>
+	                    		<td>${workMinuteList[4]}</td>
+	                    		<td>${workMinuteList[5]}</td>
 	                    	</tr>
 	                    	<tr id="YN">
 	                    		<td>상태</td>
@@ -421,8 +420,6 @@
 	                    		<td>정상처리</td>
 	                    		<td>정상처리</td>
 	                    		<td>정상처리</td>
-	                    		<td></td>
-	                    		<td></td>
 	                    	</tr>
 	                    </tbody>
 	                </table>
@@ -576,8 +573,8 @@
 			dayNames[3],
 			dayNames[4],
 			dayNames[5],
-			'토요일',
-			'일요일',
+			dayNames[6],
+			dayNames[0],
 		];
 
 		
@@ -585,10 +582,12 @@
 			labels: labels,
 			datasets: [{
 			label: '근무시간',
-			backgroundColor: '#86C8DB',
-			borderColor: '#86C8DB',
-			data: ['${totalWorkMinutes}',]
-			}]
+			backgroundColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' , '#86C8DB' , "#e9ecef" , "#e9ecef"],
+			borderColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' ,'#86C8DB' , "#e9ecef" , "#e9ecef"],
+			data: [
+				'${workMinuteList[1]}'/60,'${workMinuteList[2]}'/60,'${workMinuteList[3]}'/60,'${workMinuteList[4]}'/60,'${workMinuteList[5]}'/60 , 15 , 15]
+			}],
+
 		};
 
 		const config = {
@@ -605,16 +604,26 @@
 					
 				  } 
 				},
-				 plugins: {
-				  legend: {
-					display: false, // Hide the legend (dataset label)
-					padding: 10,
-				 },
-				}, 
-				barPercentage: 0.7,       // Adjust the width of the bars (0.8 means 80% width of the available space)
-                categoryPercentage: 0.5,
-			}
-		};
+				plugins: {
+      legend: {
+        display: false, // Hide the legend (dataset label)
+        padding: 10,
+      },
+      tooltip: {
+        filter: function (tooltipItem) {
+          // Hide tooltip for Saturday and Sunday (6 and 0 are indices for Saturday and Sunday respectively)
+          return tooltipItem.dataIndex !== 5 && tooltipItem.dataIndex !== 6;
+        },
+      },
+    },
+    tooltips: {
+      mode: 'index',
+      intersect: false,
+    },
+    barPercentage: 0.7, // Adjust the width of the bars (0.8 means 80% width of the available space)
+    categoryPercentage: 0.5,
+  },
+};
 			const myChart = new Chart(document.getElementById('myChart'),config);
 
 			
@@ -626,7 +635,7 @@
 				datasets: [
 					{
 						backgroundColor: ["#86C8DB", "#adb5bd"],
-						data: [40,5]
+						data: ['${min}'/60,'${lastM}'/60]
 					}
 				]
 			},
@@ -654,6 +663,21 @@
 					}  
 			}
 		});
+
+		//도넛 시간 나타내기
+		const a = Math.floor('${min}' / 60);
+		const hoursElement = document.getElementById('hours');
+		console.log(hoursElement);
+		hoursElement.innerHTML = a;
+
+		//밑에 근무시간 나타내기
+		const b = Math.floor('${min}' / 60);
+		const hour = document.getElementById('hour');
+		console.log(hour);
+		hour.innerHTML = b;
+
+		//테이블 근무시간 나타내기
+
 			
     </script>
 
