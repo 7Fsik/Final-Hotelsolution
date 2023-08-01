@@ -31,7 +31,7 @@ public interface CompanyBoardDao {
 
     int companyBoardEditByNo(SqlSessionTemplate sst, CompanyBoardVo companyBoardVo);
 
-    List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no);
+    List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no, PageVo pv);
 
-    int getBoardCommentCnt(SqlSessionTemplate sst);
+    int getBoardCommentCnt(SqlSessionTemplate sst, int boardNo);
 }

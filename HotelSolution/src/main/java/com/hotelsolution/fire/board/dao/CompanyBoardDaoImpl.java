@@ -1,6 +1,5 @@
 package com.hotelsolution.fire.board.dao;
 
-import com.hotelsolution.fire.board.service.CompanyBoardService;
 import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
@@ -17,7 +16,6 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
 
     @Override
     public List<CompanyBoardVo> getAllCompanyBoardList(SqlSessionTemplate sst, PageVo pv) {
-
         RowBounds rb = new RowBounds(pv.getOffset(),pv.getBoardLimit());
         return sst.selectList("companyBoard.getAllCompanyBoardList",null,rb);
     }
@@ -68,12 +66,15 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
     }
 
     @Override
-    public List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no) {
-        return sst.selectList("companyBoard.getAllCommentListByNo",no);
+    public List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no, PageVo pv) {
+
+        RowBounds rowBounds = new RowBounds(pv.getOffset(), pv.getBoardLimit());
+        return sst.selectList("companyBoard.getAllCommentListByNo",no,rowBounds);
     }
 
+
     @Override
-    public int getBoardCommentCnt(SqlSessionTemplate sst) {
-        return sst.selectOne("companyBoard.getBoardCommentCnt");
+    public int getBoardCommentCnt(SqlSessionTemplate sst, int boardNo) {
+        return sst.selectOne("companyBoard.getBoardCommentCnt",boardNo);
     }
 }

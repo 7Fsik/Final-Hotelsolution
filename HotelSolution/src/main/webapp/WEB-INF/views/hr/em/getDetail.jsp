@@ -51,6 +51,7 @@
     padding-left: 20px;
     padding-top: 20px;
     border: 1px solid black;
+    height: 55px;
   }
 
   input {
@@ -61,6 +62,10 @@
     background-color: rgba(59, 68, 75, 0.5);
     cursor: pointer;
   }
+  #pf{
+  	height: 10px;
+  	
+  }
 </style>
 </head>
 <body>
@@ -70,16 +75,18 @@
       <div class="detailWrap">
         <div class="detailTop">
           <form action="${root}/hr/em/edit" method="post" onsubmit="return totalCheck()">
-            <input name="no" value="${vo.no}" hidden>
+            <input class="userNo" name="no" value="${vo.no}" hidden>
             <table class="detailTable">
               <tr>
-                <td rowspan="4" style="text-align: center; border: 1px solid black;">${vo.image}</td>
-                <td class="" style="text-align: center; border: 1px solid black;">이름</td>
+                <td rowspan="4" style="text-align: center; border: 1px solid black; height: 230px;">
+                	<img id="pf" src="${root}/resources/img/member/profile/${vo.changeImage}" alt="${vo.image}"> 
+                </td>
+                <td class="" style="text-align: center; border: 1px solid black; ">이름</td>
                 <td class="dttd">소속 : <input class="tn" type="text" name="teamName" value="${vo.teamName}" readonly></td>
                 <td class="dttd">사번 : ${vo.no}</td>
               </tr>
               <tr>
-                <td rowspan="2" style="text-align: center; border: 1px solid black;"><input class="rd" type="text" name="name" value="${vo.name}" readonly style="width: 100px; text-align: center;"></td>
+                <td rowspan="2" style="text-align: center; border: 1px solid black; height: 110px;"><input class="rd" type="text" name="name" value="${vo.name}" readonly style="width: 100px; text-align: center;"></td>
                 <td style="width: 350px" class="dttd">가입일 : ${vo.enrollDate}</td>
                 <td class="dttd">이메일 : <input type="text" class="em" name="email" value="${vo.email}" readonly></td>
               </tr>
@@ -212,6 +219,45 @@
 		  };
 		}, true);
 	
+	 
+	 function getCommuteRecord() {
+		 const userNo = document.querySelector(".userNo").innerText;
+			$.ajax({
+				url: "${root}/hr/em/commute",
+			    method: "POST",
+			    data: {
+			    	userNo: userNo,
+		        },
+			    dataType: "json",
+			    success: function (x) {
+			        console.log(x);
+			
+			        const otbody = document.querySelector(".aj");
+			        let ostr = "";
+
+			        for (let i = 0; i < x.length; i++) {
+			        	ostr += '<div class="memberVoList" onclick="goDetail('+x[i].no +')">'+
+		                ' <div class="bbr" style="padding-left: 10px;">'+ x[i].teamName + '</div>'+
+		                ' <div class="bbr" style="padding-left: 20px;">'+ x[i].positionName + '</div>' +
+		                ' <div class="bbr">'+ x[i].name + '</div>' +
+		                ' <div class="bbr" style="padding-left: 30px;">0'+x[i].id + '</div>' +
+		                ' <div class="bbr">'+x[i].email + '</div>' +
+		                ' <div>'+x[i].enrollDate + '</div>'
+		                +'</div>'
+		                ;
+					   
+			        }
+						ostr +='</div>';
+			
+			        otbody.innerHTML = ostr;
+			    },
+			    error: function (e) {
+			        console.log(e);
+			    },
+			});
+			
+		}
+		
 
 	 
   </script>

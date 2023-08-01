@@ -19,7 +19,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 	<!-- Bootstrap JS 및 팝업 기능을 사용하기 위한 jQuery -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-		
+		<title>일정</title>
 	<style>
 		/* body 스타일 */
 		html,
@@ -115,7 +115,7 @@
 
 #mainboard{
 
-background-color:  #3B444B;
+background-color:  white;
 border-radius: 20px;
 }
 #calendar-container{
@@ -127,7 +127,7 @@ border-radius: 20px;
 	display:none;
 }
 .fc-toolbar-title{
-	color : white;
+	color : black;
 }
 .fc-event-title-container{
 	cursor: pointer;
@@ -359,10 +359,10 @@ border-radius: 20px;
 			var calendarEl = $('#calendar')[0];
 			// full-calendar 생성하기
 			var calendar = new FullCalendar.Calendar(calendarEl, {
-				height: '700px', // calendar 높이 설정
+				height: '800px', // calendar 높이 설정
 				expandRows: true, // 화면에 맞게 높이 재설정
-				slotMinTime: '08:00', // Day 캘린더에서 시작 시간
-				slotMaxTime: '20:00', // Day 캘린더에서 종료 시간
+				slotMinTime: '10:00', // Day 캘린더에서 시작 시간
+				slotMaxTime: '18:00', // Day 캘린더에서 종료 시간
 				// 해더에 표시할 툴바
 				headerToolbar: {
 					left: 'prev,next today',
@@ -551,7 +551,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'black'
+					        backgroundColor: 'coral'
 					        },
 					    </c:if>
 					    <c:if test="${my.scheduleTypeNo==3}">
@@ -559,7 +559,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'orange'
+					        backgroundColor: 'lightgray'
 					        },
 					    </c:if>
 				        <c:if test="${my.scheduleTypeNo==4}">
@@ -567,7 +567,7 @@ border-radius: 20px;
 					        title: '${my.title}',
 					        start: '${my.startDate}',
 					        end: '${my.endDate}',
-					        backgroundColor: 'red'
+					        backgroundColor: 'skyblue'
 					        },
 					    </c:if>
 					    <!-- 추가적인 조건에 따른 데이터 처리 -->
@@ -578,7 +578,7 @@ border-radius: 20px;
 						title: '${team.title}',
 						start: '${team.startDate}',
 						end: '${team.endDate}',
-						backgroundColor: 'blue'
+						backgroundColor: 'crimson'
 						},
 					</c:forEach>
 				]

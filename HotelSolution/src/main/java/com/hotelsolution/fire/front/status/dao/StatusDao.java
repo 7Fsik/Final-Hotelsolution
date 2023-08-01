@@ -10,7 +10,7 @@ import com.hotelsolution.fire.front.status.vo.StatusVo;
 public interface StatusDao {
 	
 	// 객실 리스트
-	List<StatusVo> list(SqlSessionTemplate sst, PageVo pv, String searchType ,String searchValue);
+	List<StatusVo> list(SqlSessionTemplate sst, PageVo pv, String searchType ,String searchValue, String checkSelect);
 	//객실 갯수 
 	int getRoomCnt(SqlSessionTemplate sst);
 	//객실 detail

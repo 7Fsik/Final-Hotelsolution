@@ -74,12 +74,17 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
 
     @Override
     public List<CompanyBoardCommentVo> getAllCommentListByNo(int no, PageVo pageVo) {
-        return dao.getAllCommentListByNo(sst, no);
+        return dao.getAllCommentListByNo(sst, no,pageVo);
     }
 
     @Override
-    public int getBoardCommentCnt() {
-        return dao.getBoardCommentCnt(sst);
+    public int getBoardCommentCnt(int boardNo) {
+        return dao.getBoardCommentCnt(sst,boardNo);
+    }
+
+    @Override
+    public int deleteCommentOneByNo(String commentWriterNo) {
+        return 0;
     }
 
 

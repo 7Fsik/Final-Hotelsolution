@@ -119,7 +119,7 @@
 		(
 		seq_board_comment_no.nextval
 		,#{boardNo}
-		,#{writer}
+		,#{writerNo}
 		,#{commentContent}
 		,sysdate
 		,default
@@ -142,14 +142,14 @@
 		select
 		b.comment_no
 		,b.board_no
-		,b.writer
+		,b.writer as writerNo
 		,b.comment_content
 		,b.enroll_date
 		,b.status
 		,b.parent_comment_no
 		,b.comment_depth
 		,b.comment_group_no
-		,m.name
+		,m.name as writerName
 		from board_comment b
 		left join member m
 		on b.writer = m.no
@@ -158,9 +158,9 @@
 
 	<select id="getBoardCommentCnt" resultType="int">
 
-		select count(comment_no)
+		select count(comment_no) as listCount
 		from board_comment
-		where board_no = #{no}
+		where board_no = #{boardNo}
 
 	</select>
 

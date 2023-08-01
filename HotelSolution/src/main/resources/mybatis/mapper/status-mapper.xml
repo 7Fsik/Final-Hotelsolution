@@ -41,7 +41,7 @@
 				F.ROOM_NO LIKE ('%'||#{searchValue}||'%')
 			</if>
 			<if test="searchType == 'statusNo'">
-				F.STATUS_NO LIKE ('%'||#{searchValue}||'%')
+				F.STATUS_NO LIKE ('%'||#{checkSelect}||'%')
 			</if>
 			<if test="searchType == 'typeName'">
 				F.TYPE_NAME LIKE('%'||#{searchValue}||'%')
@@ -84,7 +84,7 @@
 	<update id="edit">
 	
 		UPDATE ROOM_INTRODUCE
-		SET STATUS_NO = #{statusNo}, INTRODUCE = #{introduce} , IMG = #{img}
+		SET STATUS_NO = #{statusNo}, INTRODUCE = #{introduce}   <if test="img != null">,IMG = #{img}</if> 
 		WHERE ROOM_INT_NO = #{roomIntNo}
 	
 	</update>

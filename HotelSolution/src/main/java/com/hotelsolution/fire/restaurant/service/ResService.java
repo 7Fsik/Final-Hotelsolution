@@ -1,4 +1,4 @@
-package com.hotelsolution.fire.front.service;
+package com.hotelsolution.fire.restaurant.service;
 
 import java.util.List;
 import java.util.Map;
@@ -6,19 +6,14 @@ import java.util.Map;
 import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
 
-public interface FrontService {
+public interface ResService {
 
-//	List<ItemVo> itemList(Map<String, String> paramMap);
-
+	//물품
 	List<ItemVo> getItemList(Map<String, String> paramMap);
-
-
 	int edit(Map<String, String> paramMap);
-
-
-	List<String> getMonthSales(Map<String, Object> paramMap);
-
-
+	
+	//매출
 	List<DaySalesVo> getDaySales();
+	List<String> getMonthSales(Map<String, Object> paramMap);
 
 }

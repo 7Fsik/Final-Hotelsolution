@@ -79,6 +79,48 @@ public class SurveyDaoImpl implements SurveyDao{
 		return sst.selectList("survey.getSurveySelectQnaTotalList",no);
 	}
 
+	@Override
+	public List<SurveyDocVo> newTitleList(SqlSessionTemplate sst, PageVo pv,String searchValue, String no) {
+		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
+		Map<String, Object>map = new HashMap<String, Object>();
+		
+		map.put("searchValue",searchValue);
+		map.put("no", no);
+		System.out.println(map);
+		return sst.selectList("survey.newTitleList",map,rb);
+	}
+
+	@Override
+	public List<SurveyQuestionVo> getNewQuestionList(SqlSessionTemplate sst, String no, String no2) {
+		Map<String, Object>map = new HashMap<String, Object>();
+		int offset = 0;
+	    int limit = 4;
+	    RowBounds rb = new RowBounds(offset, limit);
+		map.put("loginMemberNo",no);
+		map.put("surveyDocNo", no2);
+		System.out.println(map);
+		return sst.selectList("survey.getNewQuestionList",map,rb);
+	}
+
+	@Override
+	public int write(SqlSessionTemplate sst, Map<String, Object> map) {
+		List<String>list = (List<String>) map.get("answers"); 
+		List<String>list2 = (List<String>) map.get("nos"); 
+		int result = 0;
+		Map<String, Object>map2 = new HashMap<String, Object>();
+		for (int i = 0 ; i < 4 ; i ++) {
+			String answer = list.get(i);
+			String no = list2.get(i);
+			map2.put("answer", answer);
+			map2.put("no", no);
+			map2.put("loginMember", map.get("loginMember"));
+			result = sst.insert("survey.write", map2);
+			
+		}
+		
+		return result;
+	}
+
 	
 	
 	

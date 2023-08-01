@@ -1,8 +1,20 @@
 package com.hotelsolution.fire.restaurant.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hotelsolution.fire.front.vo.DaySalesVo;
+import com.hotelsolution.fire.front.vo.ItemVo;
+import com.hotelsolution.fire.restaurant.service.ResService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("restaurant")
 public class RestaurantController {
+	
+	private final ResService rs;
 	
 	///////////////////////// 식당 테이블
 	@GetMapping("table")
@@ -50,16 +64,82 @@ public class RestaurantController {
 	public String articleManage() {
 		return"restaurant/articleManage";
 	}
+	
+	@GetMapping("articleManage/getItemList")
+	@ResponseBody
+	public List<ItemVo> getItemList( Model model ,@RequestParam Map<String, String> paramMap) {
+		
+		List<ItemVo>getItemList = rs.getItemList(paramMap);
+		
+		return getItemList;
+	}
+	
+	//물품 수정
+	@GetMapping("articleManage/edit")
+	@ResponseBody
+	public int edit(@RequestParam Map<String,String>paramMap) {
+		
+		int result = rs.edit(paramMap);
+		
+		return result;
+	}
+	
 	////////////////////////////////
 	
 	
 	//////////////////////////////매출관리
+	/////////////////////////////매출관리 
 	@GetMapping("sales")
-	public String slaes() {
-		return "restaurant/sales";
+	public String sales(Model model) {
+	
+		List<DaySalesVo>dayVo = rs.getDaySales();
+		
+		
+		model.addAttribute("dayVo",dayVo);
+		
+		return"restaurant/sales";
+	}
+	
+	/////////////////////////////매출관리 
+	@GetMapping("sales/getMonthSales")
+	@ResponseBody
+	public Map<String, Object> getMonthSales(String year,String month) {
+	
+		List<Integer> months = new ArrayList();
+		List<Integer> years = new ArrayList();
+		
+		for(int i =0 ; i<6; i++) {
+			int mm = Integer.parseInt(month)-i;
+			int yy = Integer.parseInt(year);
+			if(mm==0) {mm=12; yy=yy-1;}
+			if(mm==-1) {mm=11; yy=yy-1;}
+			if(mm==-2) {mm=10 ; yy=yy-1;}
+			if(mm==-3) {mm=9; yy=yy-1;}
+			if(mm==-4) {mm=8; yy=yy-1;}
+			if(mm==-5) {mm=7; yy=yy-1;}
+			months.add(mm);
+			years.add(yy);
+		}
+	
+		Map<String , Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("months", months);
+		paramMap.put("years", years);
+		
+		
+		List<String> salesList = rs.getMonthSales(paramMap);
+		
+		System.out.println(salesList);
+		
+		
+		Map<String ,Object> salesMap = new HashMap<String,Object>();
+		salesMap.put("salesList", salesList);
+		salesMap.put("months", months);
+		salesMap.put("years", years);
+		
+		
+		return salesMap ;
 	}
 	///////////////////////////////////
-	
 	
 	
 	

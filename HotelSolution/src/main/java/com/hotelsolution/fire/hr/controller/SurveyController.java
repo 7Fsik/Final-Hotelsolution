@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.SurveyService;
@@ -212,28 +213,93 @@ public class SurveyController {
 	
 	//사원들이 설문조사 작성 -- 미완성 알람창에 ( 인터셉터로 창 이동시마다 검색)
 	@GetMapping("survey/write")
-	public void surveyWrite(Model model, SurveyDocVo sdvo) {
+	public void surveyWrite(HttpSession session,Model model, String titleListpage,  String searchValue, String surveyNo) {
 		
-		//질문 4개 리스트 가져오기
-		List<SurveyQuestionVo> list = service.geteQuestionList(sdvo.getNo());
-		model.addAttribute("sdvo",sdvo);
-		//설문지 번호에 맞는 질문 답변 질문별로 가져오기
-		List<List<SurveyAnswerVo>> answerLists = new ArrayList<>();
-		for (SurveyQuestionVo vo : list) {
-		    List<SurveyAnswerVo> answerList = service.getSurveySelectQnaTotalList(vo.getNo());
-		    answerLists.add(answerList);
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		int memberSurveyCnt = service.getAnswerCnt(loginMember.getNo())/4;
+	    int totalSurveyCnt = service.getSurveyCnt("");
+	    int listCount = totalSurveyCnt-memberSurveyCnt;
+		if (titleListpage == null || titleListpage.isEmpty()) {
+			titleListpage = "1";
 		}
+		int currentPage = Integer.parseInt(titleListpage);
+		int boardLimit = 7;
+		int pageLimit = 5;
+		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		int realPage = (pv.getListCount()-1)/boardLimit+1;
+		if(realPage<=pv.getPageLimit()) {
+			pv.setEndPage(realPage);
+		}
+		if(realPage<=pv.getEndPage()) {
+			pv.setEndPage(realPage);
+		}
+		System.out.println(pv);
+		System.out.println(searchValue);
+		System.out.println(loginMember.getNo());
 		
-		model.addAttribute("list", list);
-		model.addAttribute("answerLists", answerLists);
+	
+		List<SurveyDocVo> titleList =  service.newTitleList(pv,searchValue,loginMember.getNo());
+		System.out.println("tl"+titleList);
+		String no = "";
+		if(surveyNo !=null) {
+			no = surveyNo;
+		}
+		List<SurveyQuestionVo> questionList = service.getNewQuestionList(loginMember.getNo(),no);
+		System.out.println("ql"+questionList);
+		Map<String, Object>map = new HashMap<String, Object>();
+		map.put("newFirst", titleList.get(0));
+		map.put("titleList",titleList);
+		map.put("questionList",questionList);
+		map.put("pv", pv);
+		model.addAttribute("titleList",map.get("titleList"));
+		model.addAttribute("newFirst",map.get("newFirst"));
+		model.addAttribute("searchValue",searchValue);
+		model.addAttribute("pv",map.get("pv"));
+		model.addAttribute("questionList",questionList);
+		
+	
 		
 	}
-	public void surveyAlert(HttpSession session) {
+	@PostMapping("survey/write")
+	public String surveyWrite(HttpSession session, String[] answer, String title,String[] no) {
+		System.out.println("answer"+answer);
+		System.out.println("title"+title);
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		List<String> answers = Arrays.asList(answer);
+		List<String> nos = Arrays.asList(no);
+		Map<String, Object>map = new HashMap<String, Object>();
+		System.out.println(answers);
+		map.put("nos", nos);
+		map.put("answers", answers);
+		map.put("loginMember",loginMember);
+		map.put("title",title);
+		System.out.println(map);
+		int result = service.write(map);
+	    if (result != 1) {
+	        throw new RuntimeException();
+	    }
+	    return "redirect:/";
+		//질문 4개 리스트 가져오기
+		
+		
+	}
+	@PostMapping("survey/alert")
+	@ResponseBody
+	public int surveyAlert(HttpSession session) {
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 	    int memberSurveyCnt = service.getAnswerCnt(loginMember.getNo())/4;
 	    int totalSurveyCnt = service.getSurveyCnt("");
+	    int cnt = totalSurveyCnt-memberSurveyCnt;
 	    System.out.println(memberSurveyCnt);
 	    System.out.println(totalSurveyCnt);
+	    return cnt;
 	}
 	
+	public void getSurvey(HttpSession session) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		//설문지 질문목록 	설문지 답변(설문자 번호 여기서조인) 조인해서 답변없는 설문지랑 질문목록 가져온다.
+		//미답변 설문지 숫자 파악해서 헤더에 숫자로 알림 뜨기 
+		//가져와서 sdvo 만들어서 그거로 질문 다시 가져오기
+	}
 }

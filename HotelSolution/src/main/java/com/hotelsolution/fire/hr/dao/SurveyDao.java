@@ -30,5 +30,11 @@ public interface SurveyDao {
 
 	List<SurveyAnswerVo> getSurveySelectQnaTotalList(SqlSessionTemplate sst, String no);
 
+	List<SurveyDocVo> newTitleList(SqlSessionTemplate sst, PageVo pv, String searchValue, String no);
+
+	List<SurveyQuestionVo> getNewQuestionList(SqlSessionTemplate sst, String no, String no2);
+
+	int write(SqlSessionTemplate sst, Map<String, Object> map);
+
 
 }
