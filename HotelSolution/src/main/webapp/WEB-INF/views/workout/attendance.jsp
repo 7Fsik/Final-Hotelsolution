@@ -220,7 +220,7 @@
 	}
 	
 	.CurworkTime{
-		width:80px;
+		width:70px;
 		height:20px;
 		border: 1px solid #bbe9f6;
 		text-align:center;
@@ -228,6 +228,7 @@
 		background-color: #bbe9f6;
 		color: #86C8DB;
 		font-weight:bold;
+		font-size: 13px;
 	}
 	
 	.CurworkTimeText{
@@ -236,7 +237,7 @@
 	}
 	
 	.workTime{
-		width:100px;
+		width:80px;
 		height:20px;
 		border: 1px solid #6c8af7;
 		text-align:center;
@@ -244,6 +245,7 @@
 		background-color: #6c8af7;
 		color: #2650E7;
 		font-weight:bold;
+		font-size: 13px;
 	}
 	
 	.workTimeText{
@@ -285,7 +287,7 @@
 
 	.center-text {
 	  position: absolute;
-	  top: 41%;
+	  top: 45%;
 	  left: 50%;
 	  transform: translate(-50%, -50%);
 	  font-weight: bold;
@@ -346,7 +348,7 @@
 	                <canvas id="myChart" width="350" height="120"></canvas>
 					<div style="position: relative">
 						<canvas id="doughnut-chart"></canvas>
-						<div class="center-text">근무시간 <br><br><span class="number">00</span> 시간 <span class="number">00</span>분</div>
+						<div class="center-text">누적 근무시간 <br><br><span class="number">${totalWorkHours}</span> 시간 <span class="number">${totalWorkMinutes}</span>분</div>
 					</div>
             	</div>
                 <hr>
@@ -358,9 +360,9 @@
 					<div class="grayCircle"></div>
 					<div class="circleContent">잔여 근무시간</div>
 					<div class="CurworkTime">근무시간</div>
-					<div class="CurworkTimeText">30시간 0분</div>
+					<div class="CurworkTimeText">${totalWorkHours}시간 ${totalWorkMinutes}분</div>
 					<div class="workTime">총 근무시간</div>
-					<div class="workTimeText">45시간 0분</div>
+					<div class="workTimeText">40시간 0분</div>
 				</div>
             </div>
             <div class="menu-bar">
@@ -563,24 +565,29 @@
 		});
 		endBtn.disabled = true;
 		
+		const time = new Date();
+		const day = time.getDay();
+		const dayNames = ["일요일" , "월요일" , "화요일" , "수요일" ,"목요일" , "금요일" , "토요일"]
+		const currentDay = dayNames[day];
 		//출근 그래프
 		const labels = [
-			'월요일',
-			'화요일',
-			'수요일',
-			'목요일',
-			'금요일',
+			dayNames[1],
+			dayNames[2],
+			dayNames[3],
+			dayNames[4],
+			dayNames[5],
 			'토요일',
 			'일요일',
 		];
 
+		
 		const data = {
 			labels: labels,
 			datasets: [{
 			label: '근무시간',
 			backgroundColor: '#86C8DB',
 			borderColor: '#86C8DB',
-			data: [8, 8, 8, 8, 8, 8, 8],
+			data: ['${totalWorkMinutes}',]
 			}]
 		};
 

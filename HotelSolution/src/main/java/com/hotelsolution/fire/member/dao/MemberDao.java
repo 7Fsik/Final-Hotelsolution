@@ -1,5 +1,6 @@
 package com.hotelsolution.fire.member.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -19,6 +20,8 @@ public interface MemberDao {
 	int updateMailKey(SqlSessionTemplate sst, Map<String, Object> emailKey);
 
 	String emailKeyRightOrNo(SqlSessionTemplate sst, String email);
+
+	List<MemberVo> getAllMembers(SqlSessionTemplate sst, MemberVo vo);
 
 
 }

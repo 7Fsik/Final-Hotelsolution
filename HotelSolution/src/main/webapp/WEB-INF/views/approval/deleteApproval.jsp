@@ -149,7 +149,7 @@
  <div id="approval">
         
         		
-					<h1>결재</h1>
+					<h1>삭제된 결재</h1>
         		<div class="approval-menu">
 		        	<div class="approval-list">
 		        		<a href="${root}/approval/approvalFirstPage">나의 결재</a>

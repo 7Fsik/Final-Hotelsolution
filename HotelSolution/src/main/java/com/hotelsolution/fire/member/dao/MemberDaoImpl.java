@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.member.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -48,6 +49,11 @@ public class MemberDaoImpl implements MemberDao{
 	//비밀번호 재설정
 	public int passwordReset(SqlSessionTemplate sst, Map<String, String> params) {
 		return sst.update("member.changePwd", params);
+	}
+
+	@Override
+	public List<MemberVo> getAllMembers(SqlSessionTemplate sst, MemberVo vo) {
+		return sst.selectList("member.getAllMembers" , vo);
 	}
 
 

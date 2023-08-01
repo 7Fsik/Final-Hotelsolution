@@ -101,6 +101,9 @@
 		margin:15px;
     }
     
+	.approval-menu a.active {
+		color: red; /* Change this to the desired text color for the active link */
+	}
     
 </style>
 </head>
@@ -118,16 +121,16 @@
 					<h1>결재</h1>
         		<div class="approval-menu">
 		        	<div class="approval-list">
-		        		<a href="${root}/approval/approvalFirstPage">나의 결재</a>
+		        		<a href="${root}/approval/approvalFirstPage" class="">나의 결재</a>
 		        		<a href="${root}/approval/getApproval">내가 받은 결재</a>
 		        		<a href="${root}/approval/deleteApproval">삭제된 결재</a>
 		        		<a href="${root}/approval/referrerApproval">참조 결재</a>
 		        	</div>
 		        	
 		        	<div class="approval-write">
-		        		<a href="#">휴가 신청서</a>
-		        		<a href="#">지출 결의서</a>
-		        		<a href="#">업무 보고서</a>
+		        		<a href="${root}/approval/vaction">휴가 신청서</a>
+		        		<a href="${root}/approval/expenditure">지출 결의서</a>
+		        		<a href="${root}/approval/report">업무 보고서</a>
 		        	</div>
         		</div>
         		
@@ -235,6 +238,18 @@
 
 
 	<script>
+
+		const currentPathname = window.location.pathname;
+
+		// Get all the links in the approval menu
+		const links = document.querySelectorAll(".approval-menu a");
+
+		// Loop through the links and set the "active" class to the link whose href matches the current URL pathname
+		links.forEach(link => {
+		if (link.getAttribute("href") === currentPathname) {
+		link.classList.add("active");
+			}
+		});
 	
 	
 	</script>
