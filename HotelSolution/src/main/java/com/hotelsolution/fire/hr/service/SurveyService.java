@@ -21,7 +21,7 @@ public interface SurveyService {
 
 	List<SurveyAnswerVo> answerByOneQuestion(String no, PageVo answerListPv);
 
-	int getAnswerCnt(String no);
+	int getAnswerCnt(Map<String, String> map2);
 
 	List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer);
 

@@ -62,8 +62,8 @@ public class SurveyDaoImpl implements SurveyDao{
 	}
 
 	@Override
-	public int getAnswerCnt(SqlSessionTemplate sst, String no) {
-		return sst.selectOne("survey.getAnswerCnt" ,no);
+	public int getAnswerCnt(SqlSessionTemplate sst, Map<String, String> map2) {
+		return sst.selectOne("survey.getAnswerCnt" ,map2);
 	}
 
 	@Override
