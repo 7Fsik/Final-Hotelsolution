@@ -83,8 +83,13 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
     }
 
     @Override
-    public int deleteCommentOneByNo(String commentWriterNo) {
-        return 0;
+    public int deleteCommentOneByNo(CompanyBoardCommentVo companyBoardCommentVo) {
+        return dao.deleteCommentOneByNo(sst, companyBoardCommentVo);
+    }
+
+    @Override
+    public int editCommentOneByNo(CompanyBoardCommentVo companyBoardCommentVo) {
+        return dao.editCommentOneByNo(sst, companyBoardCommentVo);
     }
 
 

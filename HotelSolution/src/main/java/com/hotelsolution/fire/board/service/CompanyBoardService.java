@@ -36,5 +36,8 @@ public interface CompanyBoardService {
 
     int getBoardCommentCnt(int boardNo);
 
-    int deleteCommentOneByNo(String commentWriterNo);
+    int deleteCommentOneByNo(CompanyBoardCommentVo companyBoardCommentVo);
+
+    int editCommentOneByNo(CompanyBoardCommentVo companyBoardCommentVo);
+
 }

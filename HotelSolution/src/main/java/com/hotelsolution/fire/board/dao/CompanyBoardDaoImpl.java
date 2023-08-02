@@ -4,6 +4,7 @@ import com.hotelsolution.fire.board.vo.CompanyBoardCategoryVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+@Slf4j
 public class CompanyBoardDaoImpl implements CompanyBoardDao{
 
 
@@ -76,5 +78,17 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
     @Override
     public int getBoardCommentCnt(SqlSessionTemplate sst, int boardNo) {
         return sst.selectOne("companyBoard.getBoardCommentCnt",boardNo);
+    }
+
+    @Override
+    public int deleteCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo) {
+
+        return sst.delete("companyBoard.deleteCommentOneByNo", companyBoardCommentVo);
+
+    }
+
+    @Override
+    public int editCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo) {
+        return sst.update("companyBoard.editCommentOneByNo",companyBoardCommentVo);
     }
 }
