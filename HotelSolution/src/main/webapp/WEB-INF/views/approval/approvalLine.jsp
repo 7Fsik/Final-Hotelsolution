@@ -23,8 +23,8 @@
     }
     
     #box{
-        width: 700px;
-        height: 600px;
+        width: 1000px;
+        height: 800px;
         border: 1px solid #3B444B;
         border-radius: 10px;
         margin: 0 auto;
@@ -66,7 +66,7 @@
 	}
 	
 	#employee{
-		height:350px;
+		height:550px;
 		border:1px solid lightgray;
 	}
 	
@@ -82,6 +82,36 @@
 	.teamName{
 		padding:7px 0px;
 		margin-left :7px;
+		font-size:14px;
+	}
+	
+	.position{
+		font-size:13px;
+		font-weight:bold;
+	}
+
+	.iii{
+		font-size: 13px;
+	}
+
+	#iconHr.opened::before {
+    	transform: rotate(45deg); 
+	}
+	
+	#iconFinance.opened::before {
+    	transform: rotate(45deg); 
+	}
+	
+	#iconMange.opened::before {
+    	transform: rotate(45deg); 
+	}
+	
+	#iconFront.opened::before {
+    	transform: rotate(45deg); 
+	}
+	
+	#iconFood.opened::before {
+    	transform: rotate(45deg); 
 	}
 	
    
@@ -103,55 +133,55 @@
             <div id="search-area">
             	<div class="lineText">결재선 설정</div>
             	<div id="search-bar">
-	            	<input type="text" name="search" placeholder="이름,부서 검색">
+	            	<input type="text" name="search" placeholder="이름 검색">
 	            	<button>검색</button>
 	            	<div id="employee">
 	            		<div class="team-container">
 			            	<div class="team">조직도</div>
 							${members}
-							<div onclick="openHr" class="teamName"><i class="bi bi-plus-circle-fill"></i>인사팀</div>
+							<div onclick="openHr();" class="teamName"><i id="iconHr" class="bi bi-plus-circle-fill iii"></i>인사팀</div>
 							<div id="hrTeam" style="display:none">
-								<c:forEach items="${members}" var="members">
-									<c:if test="${members.positionNo == 4}">
-										${members.teamName} ${members.positionName} ${members.name}
-									</c:if>
-								</c:forEach>
+								<div class="position">
+									<div>사원</div>
+									<div>슈퍼바이저</div>
+									<div>팀장</div>
+								</div>
 							</div>
 							
-							<div onclick="openFinance" class="teamName"><i class="bi bi-plus-circle-fill"></i>구매/재무팀</div>
+							<div onclick="openFinance();" class="teamName"><i id="iconFinance" class="bi bi-plus-circle-fill iii"></i>구매/재무팀</div>
 							<div id="financeTeam" style="display:none">
-								<c:forEach items="${members}" var="members">
-									<c:if test="${members.positionNo == 5}">
-										${members.teamName} ${members.positionName} ${members.name}
-									</c:if>
-								</c:forEach>
+								<div class="position">
+									<div>사원</div>
+									<div>슈퍼바이저</div>
+									<div>팀장</div>
+								</div>
 							</div>
 							
-							<div onclick="openManage" class="teamName"><i class="bi bi-plus-circle-fill"></i>경영지원팀</div>
+							<div onclick="openManage();" class="teamName"><i id="iconMange" class="bi bi-plus-circle-fill iii"></i>경영지원팀</div>
 							<div id="manageTeam" style="display:none">
-								<c:forEach items="${members}" var="members">
-									<c:if test="${members.positionNo == 1}">
-										${members.teamName} ${members.positionName} ${members.name}
-									</c:if>
-								</c:forEach>
+								<div class="position">
+									<div>사원</div>
+									<div>슈퍼바이저</div>
+									<div>팀장</div>
+								</div>
 							</div>
 							
-							<div onclick="openFront" class="teamName"><i class="bi bi-plus-circle-fill"></i>프론트/시설관리팀</div>
+							<div onclick="openFront();" class="teamName"><i id="iconFront" class="bi bi-plus-circle-fill iii"></i>프론트/시설관리팀</div>
 							<div id="frontTeam" style="display:none">
-								<c:forEach items="${members}" var="members">
-									<c:if test="${members.positionNo == 2}">
-										${members.teamName} ${members.positionName} ${members.name}
-									</c:if>
-								</c:forEach>
+								<div class="position">
+									<div>사원</div>
+									<div>슈퍼바이저</div>
+									<div>팀장</div>
+								</div>
 							</div>
 							
-							<div onclick="openFood" class="teamName"><i class="bi bi-plus-circle-fill"></i>식음팀</div>
+							<div onclick="openFood();" class="teamName"><i id="iconFood" class="bi bi-plus-circle-fill iii"></i>식음팀</div>
 							<div id="foodTeam" style="display:none">
-								<c:forEach items="${members}" var="members">
-									<c:if test="${members.positionNo == 3}">
-										${members.teamName} ${members.positionName} ${members.name}
-									</c:if>
-								</c:forEach>
+								<div class="position">
+									<div>사원</div>
+									<div>슈퍼바이저</div>
+									<div>팀장</div>
+								</div>
 							</div>
 	            		</div>
 	            	</div>
@@ -171,6 +201,74 @@
     </div>
 
     <script>
+
+		
+
+		function openHr(params) {
+			const hrTeam = document.getElementById('hrTeam');
+			const iconHr = document.querySelector('#iconHr');
+			console.log(iconHr);
+			if(hrTeam.style.display == 'none' || hrTeam.style.display == ''){
+				hrTeam.style.display = 'inline';
+				iconHr.classList.add('opened');
+			}else{
+				hrTeam.style.display = 'none';
+				iconHr.classList.remove('opened');
+			}
+			
+		}
+
+		function openFinance(params) {
+			const financeTeam = document.getElementById('financeTeam');
+			const iconFinance = document.querySelector('#iconFinance');
+			if(financeTeam.style.display == 'none' || financeTeam.style.display == ''){
+				financeTeam.style.display = 'inline';
+				iconFinance.classList.add('opened');
+			}else{
+				financeTeam.style.display = 'none';
+				iconFinance.classList.remove('opened');
+			}
+			
+		}
+		
+		function openManage(params) {
+			const manageTeam = document.getElementById('manageTeam');
+			const iconMange = document.querySelector('#iconMange');
+			if(manageTeam.style.display == 'none' || manageTeam.style.display == ''){
+				manageTeam.style.display = 'inline';
+				iconMange.classList.add('opened');
+			}else{
+				manageTeam.style.display = 'none';
+				iconMange.classList.remove('opened');
+			}
+			
+		}
+
+		function openFront(params) {
+			const frontTeam = document.getElementById('frontTeam');
+			const iconFront = document.querySelector('#iconFront');
+			if(frontTeam.style.display == 'none' || frontTeam.style.display == ''){
+				frontTeam.style.display = 'inline';
+				iconFront.classList.add('opened');
+			}else{
+				frontTeam.style.display = 'none';
+				iconFront.classList.remove('opened');
+			}
+			
+		}
+
+		function openFood(params) {
+			const foodTeam = document.getElementById('foodTeam');
+			const iconFood = document.querySelector('#iconFood');
+			if(foodTeam.style.display == 'none' || foodTeam.style.display == ''){
+				foodTeam.style.display = 'inline';
+				iconFood.classList.add('opened');
+			}else{
+				foodTeam.style.display = 'none';
+				iconFood.classList.remove('opened');
+			}
+			
+		}
 
 
     </script>

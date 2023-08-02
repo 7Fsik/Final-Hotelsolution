@@ -407,11 +407,11 @@
 	                    	</tr>
 	                    	<tr>
 	                    		<td>오늘 근무시간</td>
-	                    		<td>${workMinuteList[1]/60}</td>
-	                    		<td>${workMinuteList[2]}</td>
-	                    		<td>${workMinuteList[3]}</td>
-	                    		<td>${workMinuteList[4]}</td>
-	                    		<td>${workMinuteList[5]}</td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
 	                    	</tr>
 	                    	<tr id="YN">
 	                    		<td>상태</td>
@@ -665,19 +665,25 @@
 		});
 
 		//도넛 시간 나타내기
-		const a = Math.floor('${min}' / 60);
-		const hoursElement = document.getElementById('hours');
-		console.log(hoursElement);
-		hoursElement.innerHTML = a;
+		const doughnutWorkTime = Math.floor('${min}' / 60);
+		const hours = document.getElementById('hours');
+		hours.innerHTML = doughnutWorkTime;
 
 		//밑에 근무시간 나타내기
-		const b = Math.floor('${min}' / 60);
+		const weekWorkTime = Math.floor('${min}' / 60);
 		const hour = document.getElementById('hour');
-		console.log(hour);
-		hour.innerHTML = b;
+		hour.innerHTML = weekWorkTime;
 
 		//테이블 근무시간 나타내기
-
+		const tableWork =  document.querySelectorAll('.tableWorkTime');
+		console.log(tableWork);
+		for(let i = 0; i<= tableWork.length; i++){
+			const workMinuteList = '${workMinuteList}'
+			const workMinuteListArr = JSON.parse(workMinuteList);
+			const tableWorkTime = Math.floor(workMinuteListArr[i + 1] / 60);
+			const tableWorkMinute = Math.floor(workMinuteListArr[i + 1] % 60);
+			tableWork[i].innerHTML = tableWorkTime +'시간' +tableWorkMinute +'분';
+		}
 			
     </script>
 
