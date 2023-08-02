@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="teamChat">
+
+	
+	<select id="getHsChatList" resultType="com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo">
+		 SELECT 
+			TC.NO AS NO, 
+			TC.SENDER_NO AS SENDERNO,
+			TC.TEAM_CHAT_NO AS TEAMCHAT,
+			TC.CONTENT AS CONTENT,
+			TC.ENROLL_DATE AS ENROLLDATE,
+			TCR.TEAM_CHAT_NO AS TEAMCHATROOMNO,
+			TCR.NAME AS TEAMCHATROOMNAME,
+			M.NAME AS SENDERNAME
+			
+	    FROM TEAM_CHAT TC
+	    JOIN TEAM_CHAT_ROOM TCR 
+	    ON TC.TEAM_CHAT_NO = TCR.TEAM_CHAT_NO
+	    JOIN MEMBER M
+	    ON TC.SENDER_NO=M.NO
+	    WHERE TC.TEAM_CHAT_NO = 0
+	    order by no desc
+	</select>
+	
+	<select id="getTeamChatList" resultType="com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo">
+		 SELECT 
+			TC.NO AS NO, 
+			TC.SENDER_NO AS SENDERNO,
+			TC.TEAM_CHAT_NO AS TEAMCHAT,
+			TC.CONTENT AS CONTENT,
+			TC.ENROLL_DATE AS ENROLLDATE,
+			TCR.TEAM_CHAT_NO AS TEAMCHATROOMNO,
+			TCR.NAME AS TEAMCHATROOMNAME,
+			M.NAME AS SENDERNAME
+			
+	    FROM TEAM_CHAT TC
+	    JOIN TEAM_CHAT_ROOM TCR 
+	    ON TC.TEAM_CHAT_NO = TCR.TEAM_CHAT_NO
+	    JOIN MEMBER M
+	    ON TC.SENDER_NO=M.NO
+	    WHERE TC.TEAM_CHAT_NO = #{teamNo}
+	    order by no desc
+	</select>
+	
+	<insert id="setHsChatList" parameterType="java.util.Map">
+	    INSERT INTO TEAM_CHAT (
+	      	NO,
+			SENDER_NO,
+			TEAM_CHAT_NO,
+			CONTENT,
+			ENROLL_DATE
+			
+	    )
+	    VALUES (
+	        SEQ_TEAM_CHAT_NO.NEXTVAL
+	        ,#{senderNo}
+	        ,#{teamChatNo}
+	        ,#{content}
+	        ,SYSDATE
+	    )
+	</insert>
+	
+
+</mapper>
