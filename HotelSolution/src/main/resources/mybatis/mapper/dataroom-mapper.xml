@@ -30,7 +30,8 @@
 		    JOIN DATAROOM_FILE DF ON D.DATA_NO = DF.DATA_NO
 		    JOIN DATAROOM_CATEGORY DC ON D.CATEGORY_NO = DC.NO
 		    JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
-		    WHERE CATEGORY_NO = #{categoryNo}
+		    WHERE D.DELETE_YN = 'N'
+		    AND CATEGORY_NO = #{categoryNo}
 		    <if test="searchType == 'title'">
 		      AND TITLE LIKE ('%'|| #{searchValue}|| '%')
 		    </if>

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hotelsolution.fire.common.chat.dao.ChatRoomDao;
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
+import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,6 +45,24 @@ public class ChatRoomService {
 
 	public ChatRoomVo getCreateChatRoomVo(Map<String, String> map) {
 		return dao.getCreateChatRoomVo(sst,map);
+	}
+
+
+
+	public List<TeamChatMessageVo> getHsChatList() {
+		return dao.getHsChatList(sst);
+	}
+
+
+
+	public int setHsChatList(Map<String, String> map) {
+		return dao.setHsChatList(sst,map);
+	}
+
+
+
+	public List<TeamChatMessageVo> getTeamChatList(String teamNo) {
+		return dao.getTeamChatList(sst,teamNo);
 	}
 
 }
