@@ -108,6 +108,8 @@
             writeCommentBtn();
         });
 
+
+
     });
 
 
@@ -259,35 +261,100 @@
                 commentInfoArea.appendChild(commentPageArea);
                 updatePagination(pageVo);
 
+                $('.comment-delete-btn').on('click',function (){
+                    let commentNo = document.querySelector('.comment-writer-no').textContent;
+
+                    $.ajax({
+                        url : "${root}/board/comment/delete"
+                        ,type : "POST"
+                        ,data : {
+                            boardNo : ${companyBoardVo.no} //게시글번호
+                            ,commentNo : commentNo,
+                        }
+                        ,success: (x) => {
+                            console.log(x);
+                            if (x === 'success') {
+                                alert('댓글 삭제성공');
+                                loadBoardCommentList(1); // 댓글을 작성한 후 목록을 새로 고침합니다.
+                            } else {
+                                alert("댓글 삭제실패");
+                            }
+                        },
+                        error: (x) => {
+                            console.log(x);
+                        }
+                    });
+                });
+
+                $(".comment-edit-btn").on("click", function () {
+                    // 수정할 댓글의 번호와 내용을 가져옵니다.
+                    const commentNo = document.querySelector('.comment-writer-no').textContent;
+                    const commentContent = $(this).siblings(".comment-content");
+
+                    // 댓글 수정 입력창이 있는지 검사하고 없으면 생성���니다.
+                    if (!$("#comment-edit-input").length) {
+                        const commentEditInput = $("<input>").attr({ type: "text", id: "comment-edit-input" }).val(commentContent.text());
+                        const commentEditSubmitBtn = $("<button>").addClass("btn btn-primary comment-edit-submit-btn").text("완료");
+                        const commentEditCancelBtn = $("<button>").addClass("btn btn-secondary comment-edit-cancel-btn").text("취소");
+
+                        // 수정 입력창, 완료 및 취소 버튼 추가
+                        commentContent.after(commentEditInput);
+                        commentEditInput.after(commentEditSubmitBtn);
+                        commentEditSubmitBtn.after(commentEditCancelBtn);
+
+                        // 수정 완료 버튼 클릭 이벤트
+                        commentEditSubmitBtn.on("click", function () {
+                            const updatedCommentContent = $("#comment-edit-input").val();
+
+                            // 여기에 댓글 수정을 처리하는 AJAX 요청을 추가하세요.
+                            $.ajax({
+                                url : "${root}/board/comment/edit"
+                                ,type : "POST"
+                                ,data : {
+                                    boardNo : ${companyBoardVo.no} //게시글번호
+                                    ,commentNo : commentNo
+                                    ,commentContent : updatedCommentContent
+                                }
+                                ,success: (x) => {
+                                    console.log(x);
+                                    if (x === 'success') {
+                                        alert('댓글 수정성공');
+                                        loadBoardCommentList(1); // 댓글을 작성한 후 목록을 새로 고침합니다.
+                                    } else {
+                                        alert("댓글 수정실패");
+                                    }
+                                },
+                                error: (x) => {
+                                    console.log(x);
+                                }
+                            });
+
+                            // 댓글이 수정되면 수정 입력창과 버튼을 제거하고 새로 고침합니다.
+                            commentContent.text(updatedCommentContent);
+                            commentEditInput.remove();
+                            commentEditSubmitBtn.remove();
+                            commentEditCancelBtn.remove();
+                        });
+
+                        // 수정 취소 버튼 클릭 이벤트
+                        commentEditCancelBtn.on("click", function () {
+                            commentEditInput.remove();
+                            commentEditSubmitBtn.remove();
+                            commentEditCancelBtn.remove();
+                        });
+                    }
+                });
 
             },
         });
 
-            $('.comment-edit-btn').on('click',function (){
-                $.ajax({
-                    url : "${root}/board/comment/delete"
-                    ,type : "POST"
-                    ,data : {
-                        boardNo : ${companyBoardVo.no} //게시글번호
-                    }
-                    ,success: (x) => {
-                        console.log(x);
-                        if (x === 'success') {
-                            alert('댓글 삭제성공');
 
-                            loadBoardCommentList(1); // 댓글을 작성한 후 목록을 새로 고침합니다.
-                        } else {
-                            alert("댓글 작성실패");
-                        }
-                    },
-                    error: (x) => {
-                        console.log(x);
-                    }
-                });
-            });
 
 
     }
+
+
+
 
 
 
@@ -298,6 +365,7 @@
             writeCommentBtn();
         }
     });
+
 
     loadBoardCommentList(1);
 

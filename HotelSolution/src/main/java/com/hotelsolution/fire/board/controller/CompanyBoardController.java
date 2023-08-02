@@ -12,6 +12,7 @@ import com.hotelsolution.fire.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -226,20 +227,46 @@ public class CompanyBoardController {
 
     }
 
-    @GetMapping("comment/list")
+    @PostMapping ("comment/delete")
     @ResponseBody
-    public String deleteCommentOneByNo(HttpSession session, @RequestParam int boardNo)
+    public String deleteCommentOneByNo(HttpSession session, CompanyBoardCommentVo companyBoardCommentVo )
     {
         MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
         if (loginUser != null) {
-            String commentWriterNo = loginUser.getNo();
+            companyBoardCommentVo.setWriterNo(loginUser.getNo());
 
-            boardService.deleteCommentOneByNo(commentWriterNo);
-            return "success";
+            int UpdateResult = boardService.deleteCommentOneByNo(companyBoardCommentVo);
+            if(UpdateResult == 1) {
+                return "success";
+            }else{
+                return "fail";
+            }
         }else{
             return "common/error";
         }
     }
+
+    @PostMapping ("comment/edit")
+    @ResponseBody
+    public String editCommentOneByNo(HttpSession session, CompanyBoardCommentVo companyBoardCommentVo )
+    {
+        MemberVo loginUser = (MemberVo) session.getAttribute("loginMember");
+        if (loginUser != null) {
+            companyBoardCommentVo.setWriterNo(loginUser.getNo());
+
+            int updateResult = boardService.editCommentOneByNo(companyBoardCommentVo);
+            System.out.println(updateResult);
+            if(updateResult == 1) {
+                return "success";
+            }else{
+                return "fail";
+            }
+        }else{
+            return "common/error";
+        }
+    }
+
+
 
 
 

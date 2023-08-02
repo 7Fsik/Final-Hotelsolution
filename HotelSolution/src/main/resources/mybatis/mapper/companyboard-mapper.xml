@@ -153,7 +153,7 @@
 		from board_comment b
 		left join member m
 		on b.writer = m.no
-		where b.board_no = #{boardNo}
+		where b.board_no = #{boardNo} and b.status = 'N'
 	</select>
 
 	<select id="getBoardCommentCnt" resultType="int">
@@ -163,6 +163,27 @@
 		where board_no = #{boardNo}
 
 	</select>
+
+	<delete id="deleteCommentOneByNo" parameterType="BoardCommentVo">
+
+		delete
+		from board_comment
+		where comment_no = #{commentNo} and board_no = #{boardNo} and writer = #{writerNo}
+
+	</delete>
+
+	<update id="editCommentOneByNo" parameterType="BoardCommentVo">
+
+		update board_comment
+		set
+		comment_content = #{commentContent}
+		,enroll_date = sysdate
+		where board_no = #{boardNo}
+		and comment_no = #{commentNo}
+		and writer = #{writerNo}
+
+
+	</update>
 
 
 

@@ -34,4 +34,8 @@ public interface CompanyBoardDao {
     List<CompanyBoardCommentVo> getAllCommentListByNo(SqlSessionTemplate sst, int no, PageVo pv);
 
     int getBoardCommentCnt(SqlSessionTemplate sst, int boardNo);
+
+    int deleteCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo);
+
+    int editCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo);
 }
