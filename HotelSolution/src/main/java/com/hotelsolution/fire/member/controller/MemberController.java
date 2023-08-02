@@ -102,11 +102,11 @@ public class MemberController {
 		
 		MemberVo loginMember = service.login(vo);
 		log.info("로그인멤버 : {}" , loginMember);
-		List<MemberVo> members = service.getAllMembers(vo);
+		//List<MemberVo> members = service.getAllMembers(vo);
 		
 		if(loginMember != null) {
 			session.setAttribute("loginMember", loginMember);
-			session.setAttribute("members", members);
+			//session.setAttribute("members", members);
 			return "success";
 			
 		}else {
