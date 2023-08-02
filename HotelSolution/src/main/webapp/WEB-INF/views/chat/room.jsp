@@ -19,7 +19,7 @@
 </head>
 <style>
 	.chatWrap{
-	    background-color: #3B444B;
+	    background-color: white;
 	    margin: auto;
 	    width: 350px;
 	    height : 500px;
@@ -61,11 +61,11 @@
 	/* 스크롤바 스타일 설정 */
 	::-webkit-scrollbar {
 		width: 10px;
-		background-color: #E0F2FE; /* 연한 하늘색 배경색 */
+		background-color: #3B444B; /* 연한 하늘색 배경색 */
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: #64B5F6; /* 연한 하늘색 스크롤바 색상 */
+		background-color: #3B444B; /* 연한 하늘색 스크롤바 색상 */
 		border-radius: 5px; /* 스크롤바를 둥글게 보이도록 설정 */
 	}
 
@@ -115,12 +115,12 @@
 <body>
 	<div class="chatWrap">
         <div class="container">
-        	<c:if test="${loginMember.nick == vo.chattingUser2Nick}">
-        		<div class="item">${vo.chattingUserNick }님과의 대화방</div>
+        	<%-- <c:if test="${loginMember.nick == vo.chattingUser2Nick}">
+        		<div class="item">{vo.chattingUserNick }님과의 대화방</div>
        		</c:if>
              <c:if test="${loginMember.nick != vo.chattingUser2Nick}">
-        		<div class="item">${vo.chattingUser2Nick }님과의 대화방</div>
-       		</c:if>
+        		<div class="item">{vo.chattingUser2Nick }님과의 대화방</div>
+       		</c:if> --%>
              <input id="toggleButton" type="button" value="〓" onclick="toggleChat()">
             
         </div>  
@@ -132,8 +132,8 @@
            
 		<div class= "write-area-btn" id="ta">
 		
-						<textarea  name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸." onkeydown="handleEnter(event)" ></textarea>
-						<input id ="wc" type="button" value="채팅작성" onclick="writeChat()" disabled>
+						<textarea  name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸." ></textarea>
+						<input id ="wc" type="button" value="채팅작성" onclick="f01()">
 		</div>
 		<div class = "submit-out-btn" id="out">
 				<input id="submit" type="button" value="🤝" onclick="submitChat()">
@@ -147,6 +147,55 @@
        
     </div>
 
+
+	
+	
+	
+	
+	
+	<script>
+		const resultDiv = document.querySelector(".receive-chat-area");
+		
+		//웹소켓 만들기
+		let ws = new WebSocket("ws://192.168.0.238:8888/fire/hsSock");
+		
+		ws.onopen = funcOpen;
+		ws.onclose = funcClose;
+		ws.onerror = funcError;
+		ws.onmessage = funcMessage;
+	
+		function funcOpen() {
+			console.log("소켓연결됨 ~ !");
+		}
+		function funcClose() {
+			console.log("소켓닫힘 ~ !");
+		}
+		function funcError() {
+			console.log("소켓 에러남 ~ !");
+		}
+		
+		
+		
+		function funcMessage(event) {
+			console.log("소켓 통해서 메세지 받음 ~ !");
+			const obj = JSON.parse(event.data);
+			console.log(obj);
+			resultDiv.innerHTML += '<div>' 
+								+ "<strong>[" + obj.nick + "]</strong>" 
+								+ "<span> " + obj.msg + " </span>" 
+								+ "<sub>" + obj.time + "</sub>" 
+								+ '</div>';
+		}
+		
+		
+		function f01(){
+			const userMsg = document.querySelector("#chatInput").value;
+			ws.send(userMsg);
+			document.querySelector("#chatInput").value="";
+		}
+		
+		
+	</script>
 
 
 
