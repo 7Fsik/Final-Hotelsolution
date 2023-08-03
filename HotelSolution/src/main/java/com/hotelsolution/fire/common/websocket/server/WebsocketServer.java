@@ -65,11 +65,8 @@ public class WebsocketServer extends TextWebSocketHandler {
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(vo);
 		
-		System.out.println(jsonStr);
-		System.out.println(sessionSet);
 		for (WebSocketSession s : sessionSet) {
 			s.sendMessage(new TextMessage(jsonStr));
-			System.out.println(s);
 		}
 	}
 	

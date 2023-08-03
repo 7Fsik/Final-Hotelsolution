@@ -43,7 +43,7 @@
 	  
 	    padding: 10px;
 	}
-		.receive-chat-area{
+	.receive-chat-area{
 	    
 	  	overflow-y: scroll;
 	    gap: 10px;
@@ -58,7 +58,6 @@
 	  padding: 10px; /* 원하는 간격 설정 */
 	  border-bottom: 1px solid lightgray; /* 아래에 경계선 추가 */
 	}
-	
 	 
 	.chat-area {
 	display: grid;
@@ -119,9 +118,6 @@
 		border: 3px solid lightgray;
 		font-weight: bold;
 	}
-	.chatmessage{
-	
-	}
 	 #topnothing{
         height: 80px;
         padding-top: 30px;
@@ -139,26 +135,27 @@
    }
 </style>
 <body>
- 		<div id="topnothing">
+
+	 <div id="topnothing">
           
-	            
-	        <div id="search">
-	        	<div  class="search-area">
-	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
-	        	</div>
-				<div  class="search-area">
-					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
-				</div>
-				<div class="search-area">
-	           		${loginMember.name}채팅방
-	            </div>
-	           
-	        </div>
+            
+        <div id="search">
+        	<div  class="search-area">
+        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+        	</div>
+			<div  class="search-area">
+				<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+			</div>
+			<div class="search-area">
+           		${loginMember.name}채팅방
+            </div>
+           
         </div>
-         <hr style="background-color: rgb(214, 248, 246);">
+        </div>
+        <hr style="background-color: rgb(214, 248, 246);">
 	<div class="chatWrap">
 			<div class="receive-chat-area">
-				<c:forEach items="${voList}" var="vo">
+				<c:forEach items="${tvoList}" var="vo">
 			    	<div>
 				    	<strong>[${vo.senderName}]</strong>
 				    	<span>${vo.content}</span>
@@ -172,7 +169,7 @@
 		
 				<form id="chatForm" method="post">
 				    <textarea name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸."></textarea>
-				    <input id="wc" type="button" value="채팅작성" onclick="f01()">
+				    <input id="wc" type="button" value="채팅작성" onclick="f01(${loginMember.teamNo})">
 				</form>
 
 		</div>
@@ -216,14 +213,14 @@
 			console.log("소켓 통해서 메세지 받음 ~ !");
 			const obj = JSON.parse(event.data);
 			console.log(obj);
-			resultDiv.innerHTML += '<div class="chatmessage">' 
+			resultDiv.innerHTML += '<div>' 
 								+ "<strong>[" + obj.senderName + "]</strong>" 
 								+ "<span> " + obj.content + " </span>" 
 								+ "<sub>" + obj.sendTime + "</sub>" 
 								+ '</div>';
 			$.ajax({
 		        type: "POST",
-		        url: "${root}/chat/hsroom",
+		        url: "${root}/chat/troom",
 		        data: JSON.stringify({
 		            content: obj.content,
 		            senderNo: obj.senderNo
@@ -242,8 +239,9 @@
 		
 		
 		
-		function f01(){
-			const userMsg = "0"+ document.querySelector("#chatInput").value;
+		function f01(no){
+			console.log("room tyno"+no);
+			const userMsg = no + document.querySelector("#chatInput").value;
 			ws.send(userMsg);
 			document.querySelector("#chatInput").value="";
 			

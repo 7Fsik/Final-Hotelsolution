@@ -52,6 +52,6 @@ public class ChatRoomDao {
 	}
 
 	public List<TeamChatMessageVo> getTeamChatList(SqlSessionTemplate sst, String teamNo) {
-		return sst.selectList("teamChat.getTeamChatList");
+		return sst.selectList("teamChat.getTeamChatList",teamNo);
 	}
 }
