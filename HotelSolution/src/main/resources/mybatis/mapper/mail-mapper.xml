@@ -4,7 +4,80 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Mail">
 
+    <select id="getMailListCnt">
+        select count (email_no)
+        from email
+        where sender_emp_no = #{senderEmpNo}
+    </select>
 
+
+
+    <insert id="sendMail">
+        insert
+        into email
+        (
+        email_no
+        ,sender_emp_no
+        ,title
+        ,enroll_date
+        ,content
+        )
+        values
+        (
+        seq_email_no.nextval
+        ,#{senderEmpNo}
+        , #{title}
+        , sysdate
+        ,#{content}
+        )
+    </insert>
+
+    <select id="mailDetailViewByNo">
+        SELECT
+        mail.email_no,
+        mail.sender_emp_no,
+        mail.title,
+        mail.content,
+        mail.enroll_date,
+        m.name,
+        m.email
+        FROM email mail
+        JOIN member m ON mail.sender_emp_no = m.no
+        WHERE (
+        mail.sender_emp_no = #{senderEmpNo} OR
+        mail.email_no IN (
+        SELECT email_no FROM email_receiver WHERE receiver_emp_no = #{receiverEmpNo} AND drop_yn = 'N'
+        ) OR
+        mail.email_no IN (
+        SELECT email_no FROM email_cc WHERE cc_emp_no = #{receiverEmpNo} AND drop_yn = 'N'
+        )
+        )
+
+    </select>
+
+    <insert id="insertEmailReceiver" parameterType="map">
+        INSERT INTO email_receiver (email_no, receiver_email)
+        VALUES (#{emailNo}, #{receiverEmail})
+    </insert>
+
+    <insert id="insertEmailCC" parameterType="map">
+        INSERT INTO email_cc (email_no, cc_email)
+        VALUES (#{emailNo}, #{ccEmail})
+    </insert>
+
+
+    <select id="viewAllContractMember" resultType="ContractMember">
+        SELECT
+        team.TEAM_NO,
+        team.TEAM_NAME,
+        POSITION.NO as POSITION_NO,
+        POSITION.NAME as POSITION_NAME,
+        NVL(member.NAME, '') as MEMBER_NAME,
+        member.email as email
+        FROM TEAM team
+        LEFT JOIN MEMBER member ON team.TEAM_NO = member.TEAM_NO
+        LEFT JOIN POSITION ON member.POSITION_NO = POSITION.NO
+    </select>
 
 
 </mapper>

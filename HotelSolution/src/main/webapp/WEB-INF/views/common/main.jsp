@@ -310,7 +310,7 @@
         <!--어사이드바-->
         <aside class="aside">
             <div class="aside-icons">
-                <div id="mail-icon" class="aside-icon" onclick="gotoMail('${root}/mail/list')">
+                <div id="mail-icon" class="aside-icon" onclick="gotoList();">
                     <img src="${root}/resources/img/메일.png" alt="아이콘1">
                     <span>메일</span>
                 </div>
@@ -322,7 +322,7 @@
                     <img src="${root}/resources/img/자료실.png" alt="아이콘3" onclick="goDataroomByAside()">
                     <span>자료실</span>
                 </div>
-                <div id="board=icon" onclick="gotoBoard('${root}/board/list/1')" class="aside-icon">
+                <div id="board=icon" onclick="gotoBoardList();" class="aside-icon">
                     <img src="${root}/resources/img/게시판.png" alt="아이콘4">
                     <span>게시판</span>
                 </div>
@@ -559,6 +559,14 @@
 
 
 	};
+
+     function gotoBoardList() {
+         window.location.href = "${root}/board/list/1";
+     }
+
+     function gotoList(){
+         window.location.href = "${root}/mail/list";
+     }
 
 
 </script>

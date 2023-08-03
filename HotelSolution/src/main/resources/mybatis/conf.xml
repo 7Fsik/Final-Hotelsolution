@@ -33,7 +33,7 @@
         <typeAlias type="com.hotelsolution.fire.member.vo.MemberVo" alias="MemberVo"/>
         <typeAlias type="com.hotelsolution.fire.board.vo.CompanyBoardCommentVo" alias="BoardCommentVo"/>
 		<typeAlias type="com.hotelsolution.fire.hr.vo.VacationDocVo" alias="VacationDocVo"/>
-
+        <typeAlias type="com.hotelsolution.fire.mail.vo.ContractMember" alias="ContractMember"/>
 
        
        
