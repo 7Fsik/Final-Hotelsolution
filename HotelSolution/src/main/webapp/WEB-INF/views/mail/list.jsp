@@ -6,8 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>메일함</title>
-    <link rel="stylesheet" href="${root}/resources/css/mail/list.css">
-    <script defer src="${root}/resources/js/mail/list.js"></script>
+
     <style>
 
     </style>
@@ -18,6 +17,8 @@
 <div id="wrap">
 
     <%@ include file="/WEB-INF/views/common/main.jsp" %>
+        <link rel="stylesheet" href="${root}/resources/css/mail/list.css">
+        <script defer src="${root}/resources/js/mail/list.js"></script>
         <div id="mainboard">
 
             <div class="main-content">
