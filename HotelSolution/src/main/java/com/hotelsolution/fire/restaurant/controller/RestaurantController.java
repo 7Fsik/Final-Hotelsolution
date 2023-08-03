@@ -17,6 +17,7 @@ import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
 import com.hotelsolution.fire.restaurant.service.ResService;
 import com.hotelsolution.fire.restaurant.vo.MenuVo;
+import com.hotelsolution.fire.restaurant.vo.RoomServiceVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,6 +48,29 @@ public class RestaurantController {
 	@GetMapping("roomOrder")
 	public String roomOrder() {
 		return "restaurant/roomOrder";
+	}
+	//룸서비스 리스트
+	@PostMapping("roomOrderList")
+	@ResponseBody
+	public List<RoomServiceVo> roomOrderList(){
+		
+		List<RoomServiceVo>voList = rs.roomOrderList();
+		
+		return voList;
+	}
+	//룸서비스 완료 
+	@PostMapping("finishChange")
+	@ResponseBody
+	public int change(String listNo) {
+		
+		int result = rs.change(listNo);
+		
+		if(result==1) {
+			return result ; 
+		}else {
+			throw new RuntimeException("완료로 안바뀜");
+		}
+	
 	}
 	
 	///////////////////////////////////////////

@@ -10,6 +10,7 @@ import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
 import com.hotelsolution.fire.restaurant.dao.ResDao;
 import com.hotelsolution.fire.restaurant.vo.MenuVo;
+import com.hotelsolution.fire.restaurant.vo.RoomServiceVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,6 +59,16 @@ public class ResServiceImpl implements ResService{
 	@Override
 	public int plusMenu(Map<String, String> paramMap) {
 		return rd.plusMenu(sst,paramMap);
+	}
+
+	@Override
+	public List<RoomServiceVo> roomOrderList() {
+		return rd.roomOrderList(sst);
+	}
+
+	@Override
+	public int change(String listNo) {
+		return rd.change(sst,listNo);
 	}
 
 }

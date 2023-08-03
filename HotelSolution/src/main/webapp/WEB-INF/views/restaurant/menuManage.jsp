@@ -286,8 +286,6 @@
             } ,
             success : function(x){
 
-                console.log(x);
-
                 const tbody = document.querySelector("#menuList");
                     let str = "";
                 
@@ -338,7 +336,6 @@
                 const menuPay = menuPays[index].value;
                 const foodNo = foodNos[index].textContent;
 
-
                 $.ajax({
                     type : "get",
                     url :"${root}/restaurant/edit" ,
@@ -349,7 +346,7 @@
                         foodNo:foodNo
 
                     } ,
-                    succees :function(x){   
+                    success :function(x){   
                         console.log(x);
                         menuList();
 
@@ -357,9 +354,7 @@
                     error : function(x){
                         alert("bad");
                     },
-
                 });
-
             });
         });
     }
@@ -383,14 +378,13 @@
                         foodNo:foodNo
 
                     } ,
-                    succees :function(x){   
+                    success :function(x){   
                         console.log(x);
                         
                     } ,
                     error : function(x){
                         alert("bad");
                     },
-
                 });
 
                 menuList();
@@ -421,8 +415,6 @@
     //메뉴추가 
     function plusMenu(){
 
-        alert('z');
-
         const menuType = document.querySelector("#menuType").value;
         const menuName = document.querySelector("#menuName").value;
         const menuPrice = document.querySelector("#menuPrice").value;
@@ -436,7 +428,7 @@
                 menuName:menuName,
                 menuPrice:menuPrice
             } ,
-            succees :function(x){   
+            success :function(x){   
                 console.log(x);
                 alert("메뉴 추가 완료");
                 
