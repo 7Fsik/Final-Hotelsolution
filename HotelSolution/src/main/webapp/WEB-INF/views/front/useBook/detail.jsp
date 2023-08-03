@@ -115,7 +115,7 @@
                 객실 이용 / 예약
             </div>
             <div id="re">
-                <a href="">돌아가기</a>
+                <a href="#" onclick="goBack();">돌아가기</a>
             </div>
     
             <div id="int-area">
@@ -168,6 +168,10 @@
         </div>
     
     </div>
-
+<script>
+    function goBack() {
+             window.history.back();
+        }
+</script>
 </body>
 </html>

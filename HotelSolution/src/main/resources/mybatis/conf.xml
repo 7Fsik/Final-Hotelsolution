@@ -28,6 +28,7 @@
         <typeAlias type="com.hotelsolution.fire.front.vo.ItemVo" alias="ItemVo"/>
         <typeAlias type="com.hotelsolution.fire.restaurant.vo.ItemVo" alias="RItemVo"/>
         <typeAlias type="com.hotelsolution.fire.restaurant.vo.MenuVo" alias="MenuVo"/>
+        <typeAlias type="com.hotelsolution.fire.restaurant.vo.RoomServiceVo" alias="RoomServiceVo"/>
         <typeAlias type="com.hotelsolution.fire.front.vo.DaySalesVo" alias="DaySalesVo"/>
 
         <typeAlias type="com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo" alias="DataRoomFileVo"/>

@@ -420,7 +420,7 @@
                         <div class="sub-menu">
                             <div class="sub-menu-title">룸 서비스</div>
                             <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="${root}/restaurant/">룸 서비스 주문 내역</a></li>
+                                <li><a class="custom-link" href="${root}/restaurant/roomOrder">룸 서비스 주문 내역</a></li>
                             </ul>
                             <div class="sub-menu-title">식당관리</div>
                             <ul class="sub-menu-list">
