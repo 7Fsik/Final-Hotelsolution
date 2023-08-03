@@ -80,6 +80,49 @@
 </select>
 
 
+<select id="menuList" resultType="MenuVo">
+
+	SELECT 
+	M.FOOD_NO
+	,M.NAME
+	,M.PAY
+	,M.FOOD_TYPE
+	,T.FOOD_TYPE AS TYPE_NAME
+	FROM FOOD_MENU M
+   	JOIN FOOD_TYPE T ON M.FOOD_TYPE = T.NO
+	<where>
+		<if test="searchType == 2 and searchValue !=''">
+			M.NAME LIKE ('%'||#{searchValue}||'%')
+		</if>
+		<if test="searchType == 1">
+			M.FOOD_TYPE = #{selectValue}
+		</if>
+	</where>
+	
+
+</select>
+
+<update id="menuEdit">
+
+	UPDATE FOOD_MENU SET NAME = #{menuName} , PAY=#{menuPay}
+	WHERE FOOD_NO = #{foodNo}
+
+</update>
+
+<delete id="menuRemove">
+
+	DELETE FROM FOOD_MENU WHERE FOOD_NO = #{foodNo}
+	
+</delete>
+
+<insert id="plusMenu">
+	
+	INSERT INTO FOOD_MENU (FOOD_NO,FOOD_TYPE,NAME,PAY)
+	VALUES(SEQ_FOOD_MENU_NO.NEXTVAL,#{menuType},#{menuName},#{menuPrice})
+
+</insert>
+
+
 
 	
 	

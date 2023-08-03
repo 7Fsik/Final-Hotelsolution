@@ -119,12 +119,6 @@
         position: relative;
         left: 45%;
     }
-    .logo{
-        
-    }
-    .int{
-        
-    }
     .model-btn{
         height: 15%;
     }
@@ -183,39 +177,39 @@
                          </div>
                      </div>
      
-                     <div class="model">
-                         <div class="model-delete">
-                             X
-                         </div>
-                         <div class="logo">
-                             로고이미지
-                         </div>
-                         <div class="table-num">
-                             ${i}테이블 예약
-                         </div>
-                         <div class="int">
-                             <div>
-                                 손님 이름 : <input type="text">
-                             </div>
-                             <div>
-                                 핸드폰 번호 : <input type="text">
-                             </div>
-                             <div>
-                                 예약 인원 : <input type="text">
-                             </div>
-                             <div>
-                                 예약 시간 : <input type="time">
-                             </div>
-                         </div>
-                         <div class="model-btn">
-                             <button>예약하기</button>
-                         </div>
-                     </div>
-                 </c:forEach>
-             </div>
-     
-             
-             <div id="overlay"></div>
+                    <div class="model">
+                        <div class="model-delete">
+                            X
+                        </div>
+                        <div class="logo">
+                            로고이미지
+                        </div>
+                        <div class="table-num">
+                            ${i}테이블 예약
+                        </div>
+                        <div class="int">
+                            <div>
+                                손님 이름 : <input type="text">
+                            </div>
+                            <div>
+                                핸드폰 번호 : <input type="text">
+                            </div>
+                            <div>
+                                예약 인원 : <input type="text">
+                            </div>
+                            <div>
+                                예약 시간 : <input type="time">
+                            </div>
+                        </div>
+                        <div class="model-btn">
+                            <button>예약하기</button>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+    
+            
+            <div id="overlay"></div>
         
         </div>
      

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
 import com.hotelsolution.fire.restaurant.service.ResService;
+import com.hotelsolution.fire.restaurant.vo.MenuVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -128,9 +130,6 @@ public class RestaurantController {
 		
 		List<String> salesList = rs.getMonthSales(paramMap);
 		
-		System.out.println(salesList);
-		
-		
 		Map<String ,Object> salesMap = new HashMap<String,Object>();
 		salesMap.put("salesList", salesList);
 		salesMap.put("months", months);
@@ -140,6 +139,56 @@ public class RestaurantController {
 		return salesMap ;
 	}
 	///////////////////////////////////
+	
+	
+	/////////////식당 룸 서비스 관리 
+	@GetMapping("restaurant/roomService")
+	public String roomService() {
+		return"restaurant/roomService";
+	}
+	
+
+	@GetMapping("menuList")
+	@ResponseBody
+	public List<MenuVo> menuList(String searchType , String searchValue , String selectValue){
+		
+		Map<String,String> paramMap = new HashMap<>();
+		paramMap.put("searchValue", searchValue);
+		paramMap.put("searchType", searchType);
+		paramMap.put("selectValue", selectValue);
+		
+		List <MenuVo> menuList = rs.menuList(paramMap);
+		
+		return menuList ;
+	}
+	
+	@GetMapping("edit")
+	@ResponseBody
+	public int menuEdit(@RequestParam Map<String,String>paramMap) {
+		
+		int result = rs.menuEdit(paramMap);
+		
+		return result ;
+	}
+	
+	@GetMapping("menuRemove")
+	@ResponseBody
+	public int menuRemove(String foodNo) {
+		
+		int result =  rs.menuRemove(foodNo);
+		
+		return result ;
+	}
+	
+	
+	@PostMapping("plusMenu")
+	@ResponseBody
+	public int plusMenu(@RequestParam Map<String,String>paramMap) {
+		
+		int result = rs.plusMenu(paramMap);
+		
+		return result ;
+	}
 	
 	
 	
