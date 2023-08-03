@@ -21,12 +21,7 @@
 
 </head>
 <style>
-    #topnothing{
-        height: 80px;
-        padding-top: 30px;
-        background-color: #3B444B;
-        
-    }
+    
     .chatlist{
         display: grid;
         grid-template-rows: 1fr 1fr;
@@ -57,12 +52,6 @@
          margin: auto;
          display: flex;
          justify-content: space-evenly; 
-   }
-    #search{
-       display: grid;
-      	margin-right:20px;
-       text-align:right;
-      
    }
     #searchValue{
        background-color: white;
@@ -105,14 +94,35 @@
    		width:80px;
    		height:100px;
    }
+   #topnothing{
+        height: 80px;
+        padding-top: 30px;
+        background-color: #3B444B;
+        
+    }
+       #search{
+       display: grid;
+	grid-template-columns: 1fr 1fr 1fr;       
+      
+   }
+   
+   .search-area{
+   text-align: center;
+   }
 </style>
 <body>
         <div id="topnothing">
           
+            
         <div id="search">
-
-            <div id="search-area">
-           		${loginMember.teamName}채팅방
+        	<div  class="search-area">
+        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+        	</div>
+			<div  class="search-area">
+				<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+			</div>
+			<div class="search-area">
+           		${loginMember.name}채팅방
             </div>
            
         </div>
@@ -123,7 +133,7 @@
     	<div >
           
                
-			<c:forEach items="${ roomList }" var="room"  >
+		<%-- <c:forEach items="${ roomList }" var="room"  >
 				<div  class= "list-wrap">
                    	<div hidden>
                  	   ${room.chattingRoomNo}
@@ -160,7 +170,7 @@
                     
 		     	   
                  	<hr>
-               </c:forEach>
+               </c:forEach> --%>
                
 
     	</div>
@@ -171,23 +181,6 @@
         
     </div>
   
-        <div id="page-area">
-               <c:if test="${pv.currentPage > 1}">
-                  <a class="btn btn-primary btn-sm" href="${root}/chat/room/list/open?page=${pv.currentPage - 1}&searchType=${searchVo.searchType}&searchValue=${searchVo.searchValue}">이전</a>
-               </c:if>
-                  <c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
-                     <c:if test="${pv.currentPage != i}">
-                        <a "btn btn-primary btn-sm"  href="${root}/chat/room/list/open?page=${i}&searchType=${searchVo.searchType}&searchValue=${searchVo.searchValue}">${i}</a>
-                     </c:if>
-                     <c:if test="${pv.currentPage == i}">
-                        <a "btn btn-primary btn-sm"  >${i}</a>
-                     </c:if>
-                  </c:forEach>
-               <c:if test="${pv.currentPage < pv.maxPage}">
-               		
-                  <a class="btn btn-primary btn-sm" href="${root}/chat/room/list/open?page=${pv.currentPage + 1}&searchType=${searchVo.searchType}&searchValue=${searchVo.searchValue}">다음</a>
-               </c:if>
-            </div>
 <script>
 	/* function openOldChatByRoomNo(e,o,t){
 		 const windowFeatures = `
