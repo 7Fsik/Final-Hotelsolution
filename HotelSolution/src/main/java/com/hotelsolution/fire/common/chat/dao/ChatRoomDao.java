@@ -12,6 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
+import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
 
 @Repository
 public class ChatRoomDao {
@@ -24,7 +25,6 @@ public class ChatRoomDao {
     	if(no==null) {
     		no="1";
     	}//로그린 없어서 임시 리터럴
-    	System.out.println(no);
        return sst.selectList("chatRoom.findAllRooms",no );
     }
 
@@ -41,5 +41,17 @@ public class ChatRoomDao {
 
 	public ChatRoomVo getCreateChatRoomVo(SqlSessionTemplate sst, Map<String, String> map) {
 		return sst.selectOne("chatRoom.getCreateChatRoomVo",map);
+	}
+
+	public List<TeamChatMessageVo> getHsChatList(SqlSessionTemplate sst) {
+		return sst.selectList("teamChat.getHsChatList");
+	}
+
+	public int setHsChatList(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.insert("teamChat.setHsChatList",map);
+	}
+
+	public List<TeamChatMessageVo> getTeamChatList(SqlSessionTemplate sst, String teamNo) {
+		return sst.selectList("teamChat.getTeamChatList");
 	}
 }

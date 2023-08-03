@@ -80,6 +80,106 @@
 </select>
 
 
+<select id="menuList" resultType="MenuVo">
+
+	SELECT 
+	M.FOOD_NO
+	,M.NAME
+	,M.PAY
+	,M.FOOD_TYPE
+	,T.FOOD_TYPE AS TYPE_NAME
+	FROM FOOD_MENU M
+   	JOIN FOOD_TYPE T ON M.FOOD_TYPE = T.NO
+	<where>
+		<if test="searchType == 2 and searchValue !=''">
+			M.NAME LIKE ('%'||#{searchValue}||'%')
+		</if>
+		<if test="searchType == 1">
+			M.FOOD_TYPE = #{selectValue}
+		</if>
+	</where>
+	
+
+</select>
+
+<update id="menuEdit">
+
+	UPDATE FOOD_MENU SET NAME = #{menuName} , PAY=#{menuPay}
+	WHERE FOOD_NO = #{foodNo}
+
+</update>
+
+<delete id="menuRemove">
+
+	DELETE FROM FOOD_MENU WHERE FOOD_NO = #{foodNo}
+	
+</delete>
+
+<insert id="plusMenu">
+	
+	INSERT INTO FOOD_MENU (FOOD_NO,FOOD_TYPE,NAME,PAY)
+	VALUES(SEQ_FOOD_MENU_NO.NEXTVAL,#{menuType},#{menuName},#{menuPrice})
+
+</insert>
+
+
+<select id="roomOrderList" resultType="RoomServiceVo">
+	SELECT
+	M.LIST_NO
+	,M.ROOM_USE_NO
+	,M.FINISH_YN
+	,M.FOOD_NO
+	,M.COUNT
+	,M.NAME
+	,M.PAY
+	,M.BOOK_NO
+	,M.NO
+	,M.ROOM_INT_NO
+	,I.ROOM_NO
+	FROM (SELECT
+	M.LIST_NO
+	,M.ROOM_USE_NO
+	,M.FINISH_YN
+	,M.FOOD_NO
+	,M.COUNT
+	,M.NAME
+	,M.PAY
+	,M.BOOK_NO
+	,L.NO
+	,L.ROOM_INT_NO
+	FROM(SELECT 
+	M.LIST_NO
+	,M.ROOM_USE_NO
+	,M.FINISH_YN
+	,M.FOOD_NO
+	,M.COUNT
+	,M.NAME
+	,M.PAY
+	,U.BOOK_NO
+	FROM(SELECT 
+	L.LIST_NO
+	,L.ROOM_USE_NO
+	,L.FINISH_YN
+	,L.FOOD_NO
+	,L.COUNT
+	,M.NAME
+	,(M.PAY)*(L.COUNT) AS PAY
+	FROM FOOD_ORDER_LIST L
+	JOIN FOOD_MENU M ON L.FOOD_NO = M.FOOD_NO) M
+	JOIN ROOM_USE U
+	ON U.ROOM_USE_NO = M.ROOM_USE_NO)M 
+	JOIN BOOK_LIST L ON L.NO = M.BOOK_NO)M
+	JOIN ROOM_INTRODUCE I ON M.ROOM_INT_NO = I.ROOM_INT_NO
+	ORDER BY M.FINISH_YN ASC
+</select>
+
+<update id="change">
+	UPDATE FOOD_ORDER_LIST
+	SET FINISH_YN = 'Y' 
+	WHERE LIST_NO= #{listNo}
+</update>
+
+
 
 	
 	

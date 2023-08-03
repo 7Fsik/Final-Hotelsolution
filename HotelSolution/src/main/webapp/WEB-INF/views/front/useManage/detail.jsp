@@ -259,7 +259,7 @@
                 객실 이용내역
             </div>
             <div id="re">
-                <a href="">돌아가기</a>
+                <a href="#" onclick="goBack();">돌아가기</a>
             </div>
     
             <div id="int-area">
@@ -418,6 +418,11 @@
     
 
     <script>
+
+        function goBack() {
+             window.history.back();
+        }
+
         const openModals = document.querySelectorAll('.order-btn');
         const closeModals = document.querySelectorAll('.close');
         const modals = document.querySelectorAll('.room-modal');

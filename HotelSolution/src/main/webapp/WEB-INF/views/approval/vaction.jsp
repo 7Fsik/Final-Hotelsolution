@@ -333,8 +333,8 @@
 	<script>
 
         function approvalLineWindow(){
-            const width = 730;
-            const height = 600;
+            const width = 1200;
+            const height = 1200;
             const left = (screen.width/2) - (width/2);
 			const top = 0;
             const newWindow = window.open('${root}/approval/approvalLine', '_blank', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top + ', noopener');

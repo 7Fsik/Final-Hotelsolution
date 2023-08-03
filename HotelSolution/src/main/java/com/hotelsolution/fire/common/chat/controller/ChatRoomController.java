@@ -1,5 +1,6 @@
 package com.hotelsolution.fire.common.chat.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +14,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.hotelsolution.fire.common.chat.service.ChatRoomService;
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
+import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
@@ -70,15 +75,70 @@ public class ChatRoomController {
         return "redirect:/chat/rooms";
     }
 
-  //채팅방 조회
-    @GetMapping("room")
-    public void getRoom(String roomNo, Model model){
-//    	
-//        log.info("# get Chat Room, roomNo : " + roomNo);
-//        ChatRoomVo room = service.findRoomByNo(roomNo);
-//        room.setUser1Name("1번");
-//        room.setUser2Name("2번");
-//        System.out.println(room);
-//        model.addAttribute("room", room);
+  //전체채팅방 조회
+    @GetMapping("hsroom")
+    public void getRoom(Model model){
+//    	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");//로그인 사용자 정보
+//    	  TeamChatMessageVo vo = new TeamChatMessageVo();
+//    	  vo.setContent(loginMember.getName());
+    	  List<TeamChatMessageVo> voList = service.getHsChatList();
+//    	  Gson gson = new Gson();
+//    	  String jsonStr = gson.toJson(voList);
+    	  System.out.println("처음 겟에서 voList" + voList);
+    	  model.addAttribute("voList",voList);// 전체 채팅방 모든 메세지 조회
     }
+    
+    @PostMapping("hsroom")
+    @ResponseBody
+    public int getRoom(Model model, HttpSession session, @RequestBody Map<String, Object> jsonData) {
+        System.out.println("POST content: " + jsonData);
+
+        MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+        String senderNo = loginMember.getNo();
+        String content = (String) jsonData.get("content");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
+        Map<String, String> map = new HashMap<>();
+        map.put("enrollDate", formattedDate);
+        map.put("senderNo", senderNo);
+        map.put("content", content);
+        map.put("teamChatNo", "0");
+
+        int result = service.setHsChatList(map);
+        System.out.println(result);
+        return result;
+    }
+    
+    @GetMapping("troom")
+    public void getTeamRoom(Model model,HttpSession session){
+    	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");//로그인 사용자 정보
+//    	  TeamChatMessageVo vo = new TeamChatMessageVo();
+//    	  vo.setContent(loginMember.getName());
+    	  List<TeamChatMessageVo> voList = service.getTeamChatList(loginMember.getTeamNo());
+//    	  Gson gson = new Gson();
+//    	  String jsonStr = gson.toJson(voList);
+    	  model.addAttribute(voList);// 전체 채팅방 모든 메세지 조회
+    }
+    
+    @PostMapping("troom")
+    @ResponseBody
+    public int getTeamRoom(Model model, HttpSession session, @RequestBody Map<String, Object> jsonData) {
+        System.out.println("POST content: " + jsonData);
+
+        MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+        String senderNo = loginMember.getNo();
+        String content = (String) jsonData.get("content");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
+        Map<String, String> map = new HashMap<>();
+        map.put("enrollDate", formattedDate);
+        map.put("senderNo", senderNo);
+        map.put("content", content);
+        map.put("teamChatNo", "0");
+
+        int result = service.setHsChatList(map);
+        System.out.println(result);
+        return result;
+    }
+  
 }

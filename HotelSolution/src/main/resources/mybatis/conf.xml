@@ -27,13 +27,16 @@
         <typeAlias type="com.hotelsolution.fire.front.useManage.vo.FoodOrderVo" alias="FoodOrderVo"/>
         <typeAlias type="com.hotelsolution.fire.front.vo.ItemVo" alias="ItemVo"/>
         <typeAlias type="com.hotelsolution.fire.restaurant.vo.ItemVo" alias="RItemVo"/>
+        <typeAlias type="com.hotelsolution.fire.restaurant.vo.MenuVo" alias="MenuVo"/>
+        <typeAlias type="com.hotelsolution.fire.restaurant.vo.RoomServiceVo" alias="RoomServiceVo"/>
         <typeAlias type="com.hotelsolution.fire.front.vo.DaySalesVo" alias="DaySalesVo"/>
 
         <typeAlias type="com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo" alias="DataRoomFileVo"/>
         <typeAlias type="com.hotelsolution.fire.member.vo.MemberVo" alias="MemberVo"/>
         <typeAlias type="com.hotelsolution.fire.board.vo.CompanyBoardCommentVo" alias="BoardCommentVo"/>
-		<typeAlias type="com.hotelsolution.fire.hr.vo.VacationDocVo" alias="VacationDocVo"/>
         <typeAlias type="com.hotelsolution.fire.mail.vo.ContractMember" alias="ContractMember"/>
+        <typeAlias type="com.hotelsolution.fire.hr.vo.VacationDocVo" alias="VacationDocVo"/>
+
 
        
        

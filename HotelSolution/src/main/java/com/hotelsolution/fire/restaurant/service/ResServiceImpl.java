@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
 import com.hotelsolution.fire.restaurant.dao.ResDao;
+import com.hotelsolution.fire.restaurant.vo.MenuVo;
+import com.hotelsolution.fire.restaurant.vo.RoomServiceVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,6 +39,36 @@ public class ResServiceImpl implements ResService{
 	@Override
 	public List<String> getMonthSales(Map<String, Object> paramMap) {
 		return rd.getMonthSales(sst,paramMap);
+	}
+
+	@Override
+	public List<MenuVo> menuList(Map<String, String> paramMap) {
+		return rd.menuList(sst,paramMap);
+	}
+
+	@Override
+	public int menuEdit(Map<String, String> paramMap) {
+		return rd.menuEdit(sst,paramMap);
+	}
+
+	@Override
+	public int menuRemove(String foodNo) {
+		return rd.menuRemove(sst,foodNo);
+	}
+
+	@Override
+	public int plusMenu(Map<String, String> paramMap) {
+		return rd.plusMenu(sst,paramMap);
+	}
+
+	@Override
+	public List<RoomServiceVo> roomOrderList() {
+		return rd.roomOrderList(sst);
+	}
+
+	@Override
+	public int change(String listNo) {
+		return rd.change(sst,listNo);
 	}
 
 }
