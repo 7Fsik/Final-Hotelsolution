@@ -430,7 +430,7 @@
                             <div class="sub-menu-title">재고관리</div>
                             <ul class="sub-menu-list">
                                 <li><a class="custom-link" href="${root}/restaurant/articleManage">재고 수량 관리</a></li>
-                                <li><a class="custom-link" href="${root}/restaurant/">메뉴 관리</a></li>
+                                <li><a class="custom-link" href="${root}/restaurant/menuManage">메뉴 관리</a></li>
                             </ul>
                             <div class="sub-menu-title">매출관리</div>
                             <ul class="sub-menu-list">

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.hotelsolution.fire.front.vo.DaySalesVo;
 import com.hotelsolution.fire.front.vo.ItemVo;
+import com.hotelsolution.fire.restaurant.vo.MenuVo;
 
 public interface ResService {
 
@@ -15,5 +16,13 @@ public interface ResService {
 	//매출
 	List<DaySalesVo> getDaySales();
 	List<String> getMonthSales(Map<String, Object> paramMap);
+	
+	//메뉴관리 
+	List<MenuVo> menuList(Map<String, String> paramMap);
+	//수정
+	int menuEdit(Map<String, String> paramMap);
+	int menuRemove(String foodNo);
+	//메뉴추가 
+	int plusMenu(Map<String, String> paramMap);
 
 }
