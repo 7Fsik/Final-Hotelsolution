@@ -58,6 +58,8 @@ public class WebsocketServer extends TextWebSocketHandler {
 		vo.setSenderName(loginMember.getName());
 		vo.setSenderNo(loginMember.getNo());
 		vo.setTeamChatNo(roomTypeNo);
+		vo.setSenderPositionName(loginMember.getPositionName());
+		vo.setSenderTeamName(loginMember.getTeamName());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 		String formattedDate = dateFormat.format(new Date());
 		vo.setSendTime(formattedDate.substring(6,21));

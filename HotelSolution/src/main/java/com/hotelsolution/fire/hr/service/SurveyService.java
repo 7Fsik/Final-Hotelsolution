@@ -33,4 +33,6 @@ public interface SurveyService {
 
 	int write(Map<String, Object> map);
 
+	int getAnswerCnt2(Map<String, String> map2);
+
 }

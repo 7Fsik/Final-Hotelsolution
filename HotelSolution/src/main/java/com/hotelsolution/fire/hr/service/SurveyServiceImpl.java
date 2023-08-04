@@ -57,6 +57,10 @@ public class SurveyServiceImpl implements SurveyService {
 	public int getAnswerCnt(Map<String, String> map2) {
 		return dao.getAnswerCnt(sst,map2);
 	}
+	@Override
+	public int getAnswerCnt2(Map<String, String> map2) {
+		return dao.getAnswerCnt2(sst,map2);
+	}
 
 	@Override
 	public List<SurveyAnswerVo> answerByOneQuestionByUser(String no, String answerer) {
@@ -82,6 +86,7 @@ public class SurveyServiceImpl implements SurveyService {
 	public int write(Map<String, Object> map) {
 		return dao.write(sst,map);
 	}
+
 
 
 	

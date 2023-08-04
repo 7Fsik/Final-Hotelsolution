@@ -318,7 +318,7 @@
 					    <!-- 여러 개의 메뉴 탭 -->
 					    <ul class="notification-menu">
 					        <li><a href="${root}/hr/survey/write"><span class="notification-count">설문지 : </span></a></li>
-					        <li><a href="#">채팅 : </a></li>
+					        <li onclick="goChatList(${loginMember.no})">채팅 : </li>
 					        <!-- 추가적인 메뉴 탭들을 원하는 만큼 추가할 수 있습니다. -->
 					    </ul>
 
@@ -352,7 +352,7 @@
                     <img src="${root}/resources/img/게시판.png" alt="아이콘4">
                     <span>게시판</span>
                 </div>
-                <div id="board-icon" class="aside-icon" onclick="goChatList()">
+                <div id="board-icon" class="aside-icon" onclick="goChatList(${loginMember.no})">
                     <img src="${root}/resources/img/채팅.png" alt="아이콘5">
                     <span>채팅</span>
                 </div>
@@ -411,7 +411,7 @@
                             <div class="sub-menu-title">메일함</div>
                             <ul class="sub-menu-list">
                                 <li><a class="custom-link" href="#">보낸메일함</a></li>
-                                <li><a class="custom-link" href="#">받은메일함</a></li>
+                                <li><a class="	" href="#">받은메일함</a></li>
                                 <li><a class="custom-link" href="#">휴지통</a></li>
                             </ul>
                         </div>
@@ -470,11 +470,11 @@
                     <br>
                     <div class="mail-box">
                         <div class="sub-menu">
-                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/survey/create">설문조사</a></div>
+                            <div class="sub-menu-title" onclick="goSurvey()">설문조사</div>
                             <br>
-                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/em/list">직원관리</a></div>
+                            <div class="sub-menu-title" onclick="goEm()">직원관리</div>
                             <br>
-                            <div class="sub-menu-title"><a class="custom-link" href="${root}/hr/vacation/vaclist">휴가내역</a></div>
+                            <div class="sub-menu-title" onclick="goVac()">휴가내역</div>
                         </div>
                     </div>
                 </c:if>
@@ -535,7 +535,16 @@
 	function goWorkOutByAside(){
 		window.location.href = "${root}/workout/attendance";
 	}
-
+	
+	function goSurvey(){
+		window.location.href = "${root}/hr/survey/create";
+	}
+	function goEm(){
+		window.location.href =  "${root}/hr/em/list";
+	}
+	function goVac(){
+		window.location.href =  "${root}/hr/vacation/vaclist";
+	}
 	
 	function goApprovalByAside(){
 		window.location.href = "${root}/approval/approvalFirstPage"
@@ -575,16 +584,14 @@
             }
         });
     }
-	
-	 function goChatList() {
-		 const width = 517;
-		 const height = 820;
-		 const left = (window.innerWidth / 2) - (width / 2);
-		 const top = 100;
-	  	window.open('${root}/chat/rooms', '','width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
 
-
-	};
+	 function goChatList(no) {
+		    const width = 517;
+		    const height = 820;
+		    const left = (window.innerWidth / 2) - (width / 2);
+		    const top = 100;
+		    window.open('${root}/chat/rooms?no=' + no, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+		}
 
      function gotoBoardList() {
          window.location.href = "${root}/board/list/1";

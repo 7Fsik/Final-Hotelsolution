@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.common.chat.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,8 @@ import com.hotelsolution.fire.common.chat.service.ChatRoomService;
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
+import com.hotelsolution.fire.member.vo.PositionVo;
+import com.hotelsolution.fire.member.vo.TeamVo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +43,15 @@ public class ChatRoomController {
     //채팅방 목록 조회
     @GetMapping("rooms")
     public void rooms(Model model,  HttpSession session){
-//    	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-//    	String no = loginMember.getNo();
-//        List<ChatRoomVo> list = service.findAllRooms(no);
-////        System.out.println(list);
-//        model.addAttribute("list",list);
-
+    	List<TeamVo> tvo = service.getTvo();
+    	List<PositionVo> pvo = 	service.getPvo();
+    	System.out.println(tvo + " // " + pvo);
+    	Gson gson = new Gson();
+    	String pvoJson = gson.toJson(pvo);
+    	
+    	model.addAttribute("tvo",tvo);
+    	model.addAttribute("pvo",pvoJson);
+    
     }
 
 //    //채팅방 개설
@@ -75,24 +81,33 @@ public class ChatRoomController {
 
   //전체채팅방 조회
     @GetMapping("hsroom")
-    public void getRoom(Model model){
+    public void getRoom(Model model, HttpSession session ){
+    	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
     	  List<TeamChatMessageVo> voList = service.getHsChatList();
+    	  System.out.println("hsroom get"+ voList);
     	  model.addAttribute("voList",voList);// 전체 채팅방 모든 메세지 조회
+    	  
     }
     
     @PostMapping("hsroom")
     @ResponseBody
     public int getRoom(Model model, HttpSession session, @RequestBody Map<String, Object> jsonData) {
         MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+        System.out.println("jsonData"+jsonData);
         String senderNo = loginMember.getNo();
         String content = (String) jsonData.get("content");
-        String postno = (String) jsonData.get("senderNo");
+        String x = jsonData.get("senderNo").toString(); // senderNo를 문자열로 가져옴
+        int dotIndex = x.indexOf(".");
+        String postno = senderNo.substring(0, dotIndex);
+        System.out.println(content+"dd"+"kk"+x+"xx"+"index : "+ dotIndex + "dd"+"postno" +postno);
+        
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
         Map<String, String> map = new HashMap<>();
         map.put("enrollDate", formattedDate);
         map.put("senderNo", senderNo);
         map.put("content", content);
+       
         map.put("teamChatNo", "0");
         int result = 0;
         
@@ -104,12 +119,9 @@ public class ChatRoomController {
     
     @GetMapping("troom")
     public void getTeamRoom(Model model, HttpSession session){
-    	System.out.println("trget");
     	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");//로그인 사용자 정보
-    	  System.out.println(loginMember);
     	  String teamNo = loginMember.getTeamNo();
     	  List<TeamChatMessageVo> tvoList = service.getTeamChatList(teamNo);
-    	  System.out.println("여기서 문제" +tvoList);
     	  model.addAttribute("tvoList",tvoList);// 팀 채팅방 모든 메세지 조회
     }
     

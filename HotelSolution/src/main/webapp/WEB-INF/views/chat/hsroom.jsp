@@ -21,43 +21,49 @@
 	.chatWrap{
 	    background-color: white;
 	    margin: auto;
-	    width: 350px;
+	    width: 500px;
 	    height : 500px;
 	  border-radius: 10px;
 	  
 	}
-	.container {
-	    font-size: 20px;
-	    margin: auto;
-	  display: grid;
-	  grid-template-columns: 9fr 1fr ;
-	  background-color: white;
-	  gap: 10px;
-	  width: 350px;
-	  height: 40px;
-	  
-	}
 	
-	.item {
-	    text-align: center;
-	  
-	    padding: 10px;
-	}
+	
 		.receive-chat-area{
 	    
 	  	overflow-y: scroll;
 	    gap: 10px;
-	    height : 450px;
+	    width:500px;
+	    height : 600px;
 	     display: flex;
 	   flex-direction: column; /* 아이템들을 세로로 배치 */
 	   
 	}
 	
 	
-	.receive-chat-area > div {
-	  padding: 10px; /* 원하는 간격 설정 */
-	  border-bottom: 1px solid lightgray; /* 아래에 경계선 추가 */
+	.write-area-btn{
+		
+		width : 500px;
+		height : 55px;
 	}
+	.receive-chat-area > div {
+	 word-wrap: break-word;
+    overflow-wrap: break-word; 
+	width : 480px;
+	height : 200px;
+	  padding: 10px; 
+	  border-bottom: 1px solid lightgray;
+	}
+	
+	#chatForm{
+		display : grid;
+		grid-template-columns: 5fr 1fr;
+	}
+	.item {
+	    text-align: center;
+	  
+	    padding: 10px;
+	}
+	
 	
 	 
 	.chat-area {
@@ -81,12 +87,6 @@
 		background-color: #1976D2; /* 마우스 오버 시 스크롤바 색상 변경 */
 	}
 
-	.write-area-btn{
-		display : grid;
-		grid-template-columns: 5fr 1fr;
-		wirdth : 350px;
-		height : 55px;
-	}
 
 	.content{
 		overflow: visible;
@@ -150,7 +150,7 @@
 					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
 				</div>
 				<div class="search-area">
-	           		${loginMember.name}채팅방
+	           		<a href="${root}/chat/rooms">${loginMember.name}채팅방</a>
 	            </div>
 	           
 	        </div>
@@ -160,8 +160,8 @@
 			<div class="receive-chat-area">
 				<c:forEach items="${voList}" var="vo">
 			    	<div>
-				    	<strong>[${vo.senderName}]</strong>
-				    	<span>${vo.content}</span>
+				    	<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}] : </strong>
+				    	${vo.content}
 				    	<sub>${vo.enrollDate}</sub>
 			    	</div>
 				</c:forEach>
@@ -172,7 +172,7 @@
 		
 				<form id="chatForm" method="post">
 				    <textarea name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸."></textarea>
-				    <input id="wc" type="button" value="채팅작성" onclick="f01()">
+				    <input id="wc" type="button" value="채팅작성" onclick="f01(${loginMember.no})">
 				</form>
 
 		</div>
@@ -200,14 +200,17 @@
 		ws.onclose = funcClose;
 		ws.onerror = funcError;
 		ws.onmessage = funcMessage;
-	
+	  
 		function funcOpen() {
 			console.log("소켓연결됨 ~ !");
 			resultDiv.innerHTML += '<div style="text-align:center;"> 환영합니다</div>'
+			resultDiv.scrollTop = resultDiv.scrollHeight;
 		}
+		
 		function funcClose() {
 			console.log("소켓닫힘 ~ !");
 		}
+		
 		function funcError() {
 			console.log("소켓 에러남 ~ !");
 		}
@@ -217,36 +220,39 @@
 			const obj = JSON.parse(event.data);
 			console.log(obj);
 			resultDiv.innerHTML += '<div class="chatmessage">' 
-								+ "<strong>[" + obj.senderName + "]</strong>" 
+								+ "<strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
 								+ "<span> " + obj.content + " </span>" 
 								+ "<sub>" + obj.sendTime + "</sub>" 
 								+ '</div>';
+			
+		   resultDiv.scrollTop = resultDiv.scrollHeight;
+						            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
+		}
+		
+			
+		
+		
+		function f01(no){
+			const userMsg = "0"+ document.querySelector("#chatInput").value;
+			const content = document.querySelector("#chatInput").value;
+			ws.send(userMsg);
+			document.querySelector("#chatInput").value="";
 			$.ajax({
 		        type: "POST",
 		        url: "${root}/chat/hsroom",
 		        data: JSON.stringify({
-		            content: obj.content,
-		            senderNo: obj.senderNo
+		            content: content,
+		            senderNo: no
 		        }),
 		        contentType: "application/json",
 		        success: function (response) {
 		        	 resultDiv.scrollTop = resultDiv.scrollHeight;
-		            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
+			            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
 		        },
 		        error: function (xhr, status, error) {
 		            console.error("Error:", error);
 		        }
 		    });
-			
-		}
-		
-		
-		
-		function f01(){
-			const userMsg = "0"+ document.querySelector("#chatInput").value;
-			ws.send(userMsg);
-			document.querySelector("#chatInput").value="";
-			
 			 // jQuery를 이용한 Ajax POST 요청
 	        
 			
