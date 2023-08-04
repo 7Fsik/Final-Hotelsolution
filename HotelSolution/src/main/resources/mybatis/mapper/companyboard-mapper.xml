@@ -196,19 +196,21 @@
 	</update>
 
 	<select id="weekTopBoardList" resultType="CompanyBoardVo">
-		SELECT
-		b.no,
-		b.category_no,
-		b.writer_no,
-		b.title,
-		m.name as writerName,
-		b.content
-		FROM BOARD b
-		left join member m
-		on b.writer_no = m.no
-		WHERE b.STATUS = 'N'
-		ORDER BY b.HIT DESC
-		FETCH FIRST 6 ROWS ONLY
+		<![CDATA[
+			SELECT
+				b.no,
+				b.category_no,
+				b.writer_no,
+				b.title,
+				m.name as writerName,
+    			SUBSTR(REGEXP_REPLACE(REGEXP_REPLACE(b.content, '<img[^>]*>', ''), '<br([^>]*)>', ' '), 1, 30) as content
+			FROM BOARD b
+			LEFT JOIN member m
+			  ON b.writer_no = m.no
+			WHERE b.STATUS = 'N'
+			ORDER BY b.HIT DESC
+			FETCH FIRST 6 ROWS ONLY
+		]]>
 	</select>
 
 
