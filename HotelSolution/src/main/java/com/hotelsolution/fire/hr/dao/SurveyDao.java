@@ -36,5 +36,7 @@ public interface SurveyDao {
 
 	int write(SqlSessionTemplate sst, Map<String, Object> map);
 
+	int getAnswerCnt2(SqlSessionTemplate sst, Map<String, String> map2);
+
 
 }

@@ -96,15 +96,22 @@ public class DataRoomController {
 	
 	//no 는 카테고리로 공용은 0 부서별은 본인 부서번호 개인은100
 	@GetMapping("list")
-	public void list(Model model,String categoryNo, String dataRoomListPage, String searchType, String searchValue) {
+	public void list(Model model,String categoryNo, String dataRoomListPage, String searchType, String searchValue, HttpSession session) {
+		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 		Map<String,Object> map = new HashMap();
 		map.put("searchType", searchType);
 		map.put("searchValue", searchValue);
 		//초기 카테고리는 개인으로
+		System.out.println("first cn "+categoryNo);
 		if(categoryNo == null) {
 			categoryNo = "0";
 		}
+		System.out.println("lastCn"+categoryNo);
 		map.put("categoryNo" , categoryNo);
+		if("100".equals(categoryNo)) {
+			map.put("memberNo",loginMember.getNo());
+		}
+		System.out.println("map"+map);
 		//자료실 카운트
 		int listCount = service.getDataRoomCnt(map);
 		if(dataRoomListPage == null) {
@@ -127,10 +134,10 @@ public class DataRoomController {
 		map.put("dataRoomListPv", dataRoomListPv);
 		map.put("categoryNo" , categoryNo);
 		List<DataRoomVo> dataVoList = service.getDataRoomList(map); 
-		if(dataVoList ==null) {
-			dataVoList.get(0).setCategoryName("개인"); 
-			}
+		
 		map.put("dataVoList" , dataVoList);
+		System.out.println("map"+map);
+		System.out.println("mdataVoListap"+dataVoList);
 		model.addAttribute("map" , map);
 	}
 	

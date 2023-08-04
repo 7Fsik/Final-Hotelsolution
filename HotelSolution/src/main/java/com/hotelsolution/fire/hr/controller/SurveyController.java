@@ -173,7 +173,7 @@ public class SurveyController {
 		Map<String, String> map2 = new HashMap();
 		map2.put("no", loginMember.getNo());
 		map2.put("surveyNo", sdvo.getNo());
-		int listCount = service.getAnswerCnt(map2)/4;
+		int listCount = service.getAnswerCnt2(map2)/4;
 		System.out.println("listCount"+listCount);
 		if(detailListpage == null) {
 			detailListpage = "1";

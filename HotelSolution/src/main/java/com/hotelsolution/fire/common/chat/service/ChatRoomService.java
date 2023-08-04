@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hotelsolution.fire.common.chat.dao.ChatRoomDao;
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
+import com.hotelsolution.fire.member.vo.PositionVo;
+import com.hotelsolution.fire.member.vo.TeamVo;
 
 import lombok.RequiredArgsConstructor;
 
@@ -63,6 +65,19 @@ public class ChatRoomService {
 
 	public List<TeamChatMessageVo> getTeamChatList(String teamNo) {
 		return dao.getTeamChatList(sst,teamNo);
+	}
+
+
+
+	public List<TeamVo> getTvo() {
+		return dao.getTvo(sst);
+	}
+
+
+
+	public List<PositionVo> getPvo() {
+		
+		return dao.getPvo(sst);
 	}
 
 }

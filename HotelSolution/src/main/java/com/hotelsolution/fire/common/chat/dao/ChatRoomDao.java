@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
+import com.hotelsolution.fire.member.vo.PositionVo;
+import com.hotelsolution.fire.member.vo.TeamVo;
 
 @Repository
 public class ChatRoomDao {
@@ -53,5 +55,15 @@ public class ChatRoomDao {
 
 	public List<TeamChatMessageVo> getTeamChatList(SqlSessionTemplate sst, String teamNo) {
 		return sst.selectList("teamChat.getTeamChatList",teamNo);
+	}
+
+	public List<TeamVo> getTvo(SqlSessionTemplate sst) {
+		
+		return sst.selectList("teamChat.getTvo");
+	}
+
+	public List<PositionVo> getPvo(SqlSessionTemplate sst) {
+		// TODO Auto-generated method stub
+		return sst.selectList("teamChat.getPvo");
 	}
 }

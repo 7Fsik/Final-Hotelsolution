@@ -59,6 +59,7 @@
 		    MAX(D.HIT) AS HIT,
 		    MAX(D.DELETE_YN) AS DELETE_YN,
 		    MAX(U.NAME) AS WRITERNAME,
+		     MAX(U.NO) AS WRITERNO,
 		    MAX(U.TEAM_NO) AS TEAM_NO,
 		    MAX(T.TEAM_NAME) AS WRITERTEAM,
 		    MAX(DF.FILE_NAME) AS FIRSTFILE,
@@ -73,6 +74,10 @@
 		  JOIN POSITION P ON D.SECURITY_LEVEL = P.P_LEVEL
 		  WHERE D.CATEGORY_NO = #{categoryNo}
 		  AND D.DELETE_YN = 'N'
+		   <if test="memberNo !=null">
+		    AND U.NO = #{memberNo}
+
+		  </if>
 		  <if test="searchType == 'title'">
 		    AND TITLE LIKE ('%'|| #{searchValue}|| '%')
 

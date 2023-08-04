@@ -109,6 +109,44 @@
    .search-area{
    text-align: center;
    }
+   /* 모달 스타일링 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    height : 600px;
+    border-radius: 5px;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+   
 </style>
 <body>
         <div id="topnothing">
@@ -132,122 +170,88 @@
 
     	<div >
           
+     
                
-		<%-- <c:forEach items="${ roomList }" var="room"  >
-				<div  class= "list-wrap">
-                   	<div hidden>
-                 	   ${room.chattingRoomNo}
-                   	</div>
-                    	<c:if test="${room.chattingUser2Nick == loginMember.nick}">
-	                    	 <div  class = "imgdiv">
-    		                   	<img class="chatlistImg" src="${root}/static/img/member/profile/${room.chattingUserProfile}" alt=""  onclick="goProfile(${room.chattingUserNo})">
-    		                   	<div id = "rcnt${room.chattingRoomNo}" style="text-align:center; color:red;"></div>
-            	        	 </div>
-                       	</c:if>
-                	   <c:if test="${room.chattingUserNick == loginMember.nick}">
-                    	   <div class = "imgdiv">
-                       			<img class="chatlistImg" src="${root}/static/img/member/profile/${room.chattingUser2Profile}" alt="" onclick="goProfile(${room.chattingUser2No})">
-                       			<div id = "rcnt${room.chattingRoomNo}" style="text-align:center; color:red;"></div>
-                       		</div>
-						</c:if>     
-                        <div class="list-text">
+			<div>
+		    <button id="openModalBtn">생성</button>
+			</div>
+			
+			<!-- 모달 엘리먼트 -->
+			<!-- 모달 엘리먼트 -->
+			<div id="myModal" class="modal">
+			    <div class="modal-content">
+			        <span class="close">&times;</span>
+			        <div id="teamContainer" style="display: grid; grid-template-columns:1fr 1fr; grid-gap:10px;">
+			            <c:forEach items="${tvo}" var="vo">
+			                <div class="team" onclick="goPosition()">${vo.teamName}</div>
+							<div id="positionContainer" class="positionContainer">
+								
+							</div>
 
-                            <div>[${room.boardCategoryName}]${room.boardTitle}</div>
-                            <div class="list-text2">
-	                            <c:if test="${room.chattingUserNick == loginMember.nick}">
-	                                
-	                                <div>${room.chattingUser2Id}(${room.chattingUser2Nick}) </div>
-	                            </c:if>
-	                            <c:if test="${room.chattingUser2Nick == loginMember.nick}">
-	                                
-	                                <div>${room.chattingUserId}(${room.chattingUserNick}) </div>
-	                            </c:if>
-		                        <div class="go-room"><button class="openOldChatByRoomNo"   onclick="openOldChatByRoomNo(${room.chattingRoomNo},${room.chattingUserNo},${room.chattingUser2No})">들어가기</button></div>
-                            </div>
-                        </div>                  
-					</div>
-                                           
-                    
-		     	   
-                 	<hr>
-               </c:forEach> --%>
-               
+			            </c:forEach>
+			            <div id="detailsContainer"></div>
+			        </div>
+			    </div>
+			</div>
 
-    	</div>
        
   
         
       
         
     </div>
+   </div>
   
 <script>
-	/* function openOldChatByRoomNo(e,o,t){
-		 const windowFeatures = `
-			    width=370,
-			    height=600,
-			    left=(screen.width / 2) - 275,
-			    top=0,
-			    toolbar=no,
-			    location=no,
-			    status=no,
-			    menubar=no,
-			    resizable=no`;
+const openModalBtn = document.getElementById('openModalBtn');
+const modal = document.getElementById('myModal');
+const modalContent = modal.querySelector('.modal-content');
+const closeBtn = modal.querySelector('.close');
 
-        //const chattingRoomNo = e.target.parentNode.parentNode.children[0].innerText;
- 
-        const newWindow = window.open('${root}/chat/room/open?chattingRoomNo='+e +'&chattingUserNo='+o +'&chattingUser2No='+t +'&type=old', '', windowFeatures);
-        window.close();
-        
-        	
+// 모달 열기 버튼 클릭 시
+openModalBtn.addEventListener('click', function() {
+    modal.style.display = 'block';
+});
+
+// 모달 닫기 버튼 클릭 시
+closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        modal.style.display = 'none';
     }
+});
 
-    function goProfile(e){
-    	   const width = 650;
-    	   const height = 800;
-    	   const left = (screen.width / 2) - (width / 2);
-    	   const top = 0;
-         window.open('${root}/click/profile?selectMemberNo='+e, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
-         
+let detailsVisible = false;
 
-    }
-
+function goPosition(clickedDiv) {
+    const detailsContainer = document.querySelector('.details-container');
+    const positionContainer = document.querySelector('.positionContainer');
     
-    function cntNewMessage(roomNo){
-    	$.ajax({
-    				url : "${root}/chat/room/list/open",
-    				type : "POST",
-    				dataType :"json",
-    				data : {
-    					chattingRoomNo : roomNo.trim(),
-    				},
-    				success: function(data){
-    					let cnt = JSON.parse(data);
-    					if(cnt >0){
-    						let rcnt =document.querySelector("#rcnt"+roomNo.trim() );				
-    						let str = "";
-    						str+= '<div style="text-align:center; color:red;">'+cnt+'</div>';
-    						rcnt.innerHTML+=str;
-    						
-    						
-    					}else {
-    					}
-    				},
-    				error: ()=>{
-    					console.log("에러요 로드 실패...");
-    				} ,
-    			});
-        	
-    };
-    document.addEventListener("DOMContentLoaded", function (event) {
-        // 화면이 켜질 때 모든 div에 대해 cntNewMessage 함수 호출
-        let divList = document.querySelectorAll(".list-wrap");
-        divList.forEach(function (div) {
-            let roomNo = div.querySelector("div[hidden]").textContent.trim();
-            cntNewMessage(roomNo);
-        });
-    }); */
+    // 이미 존재하는 상세 정보 삭제
+    positionContainer.innerHTML = '';
 
+    if (!detailsVisible) {
+        const pvoList = ${pvo}; // pvo는 JSTL로 받아온 데이터
+
+        if (pvoList && pvoList.length > 0) {
+            pvoList.forEach(pvoItem => {
+                const pvoInnerDiv = document.createElement('div');
+                pvoInnerDiv.textContent = pvoItem.name;
+                positionContainer.appendChild(pvoInnerDiv);
+            });
+
+            detailsVisible = true;
+        }
+    } else {
+        detailsVisible = false;
+    }
+}
+
+	
 </script>
 	
 </body>

@@ -14,5 +14,7 @@ public class TeamChatMessageVo {
 	private String teamChatRoomName;
 	private String senderName;
 	private String sendTime;
+	private String senderTeamName;
+	private String senderPositionName;
 
 }

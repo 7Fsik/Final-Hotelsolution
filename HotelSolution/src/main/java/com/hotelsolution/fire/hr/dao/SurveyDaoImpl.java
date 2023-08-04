@@ -65,6 +65,10 @@ public class SurveyDaoImpl implements SurveyDao{
 	public int getAnswerCnt(SqlSessionTemplate sst, Map<String, String> map2) {
 		return sst.selectOne("survey.getAnswerCnt" ,map2);
 	}
+	@Override
+	public int getAnswerCnt2(SqlSessionTemplate sst, Map<String, String> map2) {
+		return sst.selectOne("survey.getAnswerCnt2" ,map2);
+	}
 
 	@Override
 	public List<SurveyAnswerVo> answerByOneQuestionByUser(SqlSessionTemplate sst, String no, String answerer) {
@@ -120,6 +124,7 @@ public class SurveyDaoImpl implements SurveyDao{
 		
 		return result;
 	}
+
 
 	
 	

@@ -126,6 +126,20 @@
   		
   	</select>
   	
+  	<select id="getAnswerCnt2" resultType="int" parameterType="java.util.Map">
+	  SELECT COUNT(A.NO)
+		    FROM ANSWER A
+		    JOIN SURVEY_QUESTION SQ ON A.QUESTION_NO = SQ.NO
+		    JOIN SURVEY_DOCUMENT SD ON SQ.SURVEY_NO = SD.NO
+		    
+		   <if test="surveyNo != null and surveyNo != '' ">
+				WHERE SD.NO = #{surveyNo}
+
+		</if>
+	  	
+  		
+  	</select>
+  	
   	<select id="geteQuestionList" resultType="SurveyQuestionVo">
   		 SELECT * 
 		 FROM SURVEY_QUESTION
