@@ -18,4 +18,5 @@ public class CompanyBoardVo {
     private String status;
     private String writerName;
     private String teamName;
+    private String commentCount;
 }

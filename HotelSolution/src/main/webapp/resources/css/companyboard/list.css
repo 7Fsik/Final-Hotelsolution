@@ -27,6 +27,8 @@ table tbody .clickable-row td {
 
 }
 
-
+.form-control{
+    width: 500px; !important;
+}
 
 

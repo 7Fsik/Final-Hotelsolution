@@ -23,6 +23,7 @@
 		LEFT JOIN team t
 		ON m.position_no = t.team_no
 		WHERE b.status = 'N'
+		order by b.no desc
 
 	</select>
 
@@ -69,19 +70,27 @@
 
 
 	<select id="getCompanyBoardDetailByNo" resultType="CompanyBoardVo">
-		select
-		b.no
-		,b.category_no
-		,b.writer_no
-		,b.title
-		,b.content
-		,b.enroll_date
-		,b.hit
-		,m.name as writerName
-		from board b
-		left join member m
-		on b.no = m.no
-		where b.no= #{no}
+		SELECT
+		b.no,
+		b.category_no,
+		b.writer_no,
+		b.title,
+		b.content,
+		b.enroll_date,
+		b.hit,
+		NVL(COUNT(bc.comment_no), 0) AS commentCount,
+		m.name AS writerName
+		FROM
+		board b
+		LEFT JOIN
+		member m ON b.writer_no = m.no
+		LEFT JOIN
+		board_comment bc ON bc.board_no = b.no
+		WHERE
+		b.no =  #{no}
+		GROUP BY
+		b.no, b.category_no, b.writer_no, b.title, b.content, b.enroll_date, b.hit, m.name
+
 	</select>
 
 	<update id="deleteByNo">
@@ -154,6 +163,7 @@
 		left join member m
 		on b.writer = m.no
 		where b.board_no = #{boardNo} and b.status = 'N'
+		order by b.comment_no desc
 	</select>
 
 	<select id="getBoardCommentCnt" resultType="int">
@@ -185,7 +195,38 @@
 
 	</update>
 
+	<select id="weekTopBoardList" resultType="CompanyBoardVo">
+		SELECT
+		b.no,
+		b.category_no,
+		b.writer_no,
+		b.title,
+		m.name as writerName,
+		b.content
+		FROM BOARD b
+		left join member m
+		on b.writer_no = m.no
+		WHERE b.STATUS = 'N'
+		ORDER BY b.HIT DESC
+		FETCH FIRST 6 ROWS ONLY
+	</select>
 
+
+	<select id="getBoardList" resultType="CompanyBoardVo">
+		SELECT
+		b.no,
+		b.category_no,
+		b.writer_no,
+		b.title,
+		m.name as writerName,
+		b.content
+		FROM BOARD b
+		left join member m
+		on b.writer_no = m.no
+		WHERE b.STATUS = 'N'
+		ORDER BY b.no DESC
+		FETCH FIRST 5 ROWS ONLY
+	</select>
 
 
 

@@ -2,8 +2,8 @@ $(document).ready(function() {
     // 서브메뉴 타이틀에 호버 이벤트를 추가합니다.
     $('.sub-menu-title').mouseenter(function() {
         // 현재 호버된 서브메뉴 타이틀과 그에 해당하는 서브메뉴를 찾습니다.
-        var subMenuTitle = $(this);
-        var subMenu = subMenuTitle.next('ul');
+        const subMenuTitle = $(this);
+        const subMenu = subMenuTitle.next('ul');
 
         // 다른 활성화된 서브메뉴들은 숨김 처리하고 클래스를 제거합니다.
         $('.sub-menu').not(subMenu).removeClass('active').find('ul').slideUp();
@@ -28,4 +28,8 @@ $(document).ready(function() {
         'text-decoration': 'none',
         'color': '#ffffff'
     });
+
+
+
+
 });

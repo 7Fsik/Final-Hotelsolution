@@ -22,9 +22,17 @@
                 <div class="main-content-list">
                     <nav>
                         <div class="input-group mb-3">
-                            <label>
-                                <input type="text" placeholder="검색" class="form-control">
-                            </label>
+
+                            <span>
+                              <select class="btn btn-secondary" name="searchType">
+                                    <option value="title">제목</option>
+                                    <option value="content">내용</option>
+                                </select>
+                               <label>
+                                <input id="board-search-input" type="text" placeholder="검색할내용을입력해주세요" class="form-control">
+                                </label>
+                                <input class="btn btn-primary" type="submit" value="검색">
+                            </span>
                         </div>
                         <button id="writeBtn2" data-root="${root}" class="btn btn-primary">글쓰기</button>
                     </nav>
@@ -82,6 +90,7 @@
 
                         <div class="weekly-board-list">
                             <h3>주간 인기 게시글</h3>
+                            <div id="weekly-board-list"></div>
                         </div>
 
 
@@ -94,4 +103,40 @@
 
 </body>
 </html>
+
+<script>
+    $(document).ready(function () {
+        function getWeeklyTopBoardList() {
+            $.ajax({
+                url: "${root}/board/week",
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    $('#weekly-board-list').empty();
+                    $.each(data, function (index, item) {
+                        let hiddenNo = '<input type="hidden" value="' + item.no + '">';
+                        let title = '<div class="post-title mb-2"><a href="' + "${root}" + '/board/detail?no=' + item.no + '" class="text-decoration-none text-dark">' + item.title + '</a></div>';
+                        let content = '<div class="post-content mb-3">' + item.content + '</div>';
+                        let postWrapper = '<div class="single-post-wrapper border rounded p-3 mb-4" data-url="' + "${root}" + '/board/detail?no=' + item.no + '">' + hiddenNo + title + content + '</div>';
+                        $('#weekly-board-list').append(postWrapper);
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+
+        getWeeklyTopBoardList();
+        setInterval(getWeeklyTopBoardList, 300000); // 5 minutes = 300000 milliseconds
+
+        $(document).on('click', '.single-post-wrapper', function () {
+            window.location.href = $(this).data('url');
+        });
+    });
+</script>
+
+
+
 

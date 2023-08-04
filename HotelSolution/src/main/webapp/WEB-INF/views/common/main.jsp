@@ -122,8 +122,33 @@
         align-items: center;
         justify-content: flex-start;
     }
+    .mailbox-content .mail-detail {
+        text-align: left;
+    }
 
-    
+    .mail-box{
+        width: 100%;
+        height: 90%;
+
+    }
+    .sub-menu{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /*배경*/
 
@@ -191,6 +216,7 @@
     .sub-menu{
         padding-bottom: 20px;
     }
+
 
 
 

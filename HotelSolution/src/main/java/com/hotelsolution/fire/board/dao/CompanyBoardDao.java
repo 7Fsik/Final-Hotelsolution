@@ -38,4 +38,7 @@ public interface CompanyBoardDao {
     int deleteCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo);
 
     int editCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo);
+
+    List<CompanyBoardVo> getBoardList(SqlSessionTemplate sst);
+
 }
