@@ -40,4 +40,8 @@ public interface CompanyBoardService {
 
     int editCommentOneByNo(CompanyBoardCommentVo companyBoardCommentVo);
 
+    List<CompanyBoardVo> weekTopBoardList();
+
+    List<CompanyBoardVo> getBoardList();
+
 }

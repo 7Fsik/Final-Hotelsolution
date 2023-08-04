@@ -92,5 +92,15 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
         return dao.editCommentOneByNo(sst, companyBoardCommentVo);
     }
 
+    @Override
+    public List<CompanyBoardVo> weekTopBoardList() {
+        return dao.weekTopBoardList(sst);
+    }
+
+    @Override
+    public List<CompanyBoardVo> getBoardList() {
+        return dao.getBoardList(sst);
+    }
+
 
 }

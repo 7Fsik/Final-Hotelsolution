@@ -24,7 +24,6 @@
               <div class="writer-container">
                   <div class="titleAndWriterDate">
                       <span class="detail-title">
-                          제목
                           ${companyBoardVo.title}
                       </span>
                       <span>
@@ -49,7 +48,7 @@
                   ${companyBoardVo.content}
               </div>
               <div class="comment-box">
-                  <div class="comment-cnt">0개의 댓글</div>
+                  <div class="comment-cnt">${companyBoardVo.commentCount}개의 댓글</div>
                   <div class="comment-write-container">
                           <span class="comment-writer-text">
                           <input type="hidden" name="no" value="${companyBoardVo.no}">
@@ -223,7 +222,6 @@
 
                     const enrollDate = document.createElement("span");
                     enrollDate.className = "comment-date";
-                    enrollDate.textContent = comment.enrollDate;
 
                     const commentContent = document.createElement("div");
                     commentContent.className = "comment-content";

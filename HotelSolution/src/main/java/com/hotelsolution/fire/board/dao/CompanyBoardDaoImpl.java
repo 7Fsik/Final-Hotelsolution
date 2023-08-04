@@ -91,4 +91,15 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
     public int editCommentOneByNo(SqlSessionTemplate sst, CompanyBoardCommentVo companyBoardCommentVo) {
         return sst.update("companyBoard.editCommentOneByNo",companyBoardCommentVo);
     }
+
+    @Override
+    public List<CompanyBoardVo> getBoardList(SqlSessionTemplate sst) {
+        return sst.selectList("companyBoard.getBoardList");
+    }
+
+    public List<CompanyBoardVo> weekTopBoardList(SqlSessionTemplate sst) {
+        return sst.selectList("companyBoard.weekTopBoardList",sst);
+    }
+
+
 }

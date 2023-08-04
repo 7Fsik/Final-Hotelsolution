@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import oracle.jdbc.proxy.annotation.Post;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +39,12 @@ public class CompanyBoardController {
 
     private final CompanyBoardService boardService;
     @GetMapping("list/{page}")
-    public String getAllCompanyBoardList(@PathVariable("page") int page, Model model) {
+    public String getAllCompanyBoardList
+            (
+            @PathVariable("page") int page,
+            Model model
+            )
+    {
 
         int listCount = boardService.getCompanyBoardCnt();
         int currentPage = page;
@@ -138,6 +144,7 @@ public class CompanyBoardController {
         boardService.increaseCompanyBoardHit(no);
 
         CompanyBoardVo companyBoardVo  = boardService.getCompanyBoardDetailByNo(no);
+        System.out.println(companyBoardVo);
 
 
         model.addAttribute("companyBoardVo",companyBoardVo);
@@ -266,7 +273,21 @@ public class CompanyBoardController {
         }
     }
 
+    @ResponseBody
+    @GetMapping("week")
+    public ResponseEntity <List<CompanyBoardVo>> weekTopBoardList(){
 
+        List<CompanyBoardVo> companyBoardVoList = boardService.weekTopBoardList();
+
+
+        return new ResponseEntity<>(companyBoardVoList, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping("getList")
+    public List<CompanyBoardVo> getBoardList() {
+        return boardService.getBoardList();
+    }
 
 
 
