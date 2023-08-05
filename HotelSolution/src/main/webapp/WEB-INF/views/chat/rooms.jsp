@@ -147,6 +147,23 @@
     cursor: pointer;
 }
    
+   .team{
+   		cursor: pointer;
+   }
+   .teamhover:hover{
+   	background-color: lightgray;
+   }
+   .teamContainer:hover{
+   	background-color: lightgray;
+   }
+   #teamWrap{
+   		display: grid;
+   		grid-template-columns: 2fr 1fr;
+   }
+   .list:hover{
+   		background-color: lightgray;
+   		cursor: pointer;
+   }
 </style>
 <body>
         <div id="topnothing">
@@ -168,7 +185,13 @@
         <hr style="background-color: rgb(214, 248, 246);">
 	<div class="chatlistWrap">
 
-    	<div >
+    	<div>
+    	
+    		<c:forEach items="${voList}" var="vo">
+    			<div>
+    				${vo }
+    			</div>
+    		</c:forEach>
           
      
                
@@ -181,15 +204,24 @@
 			<div id="myModal" class="modal">
 			    <div class="modal-content">
 			        <span class="close">&times;</span>
-			        <div id="teamContainer" style="display: grid; grid-template-columns:1fr 1fr; grid-gap:10px;">
-			            <c:forEach items="${tvo}" var="vo">
-			                <div class="team" onclick="goPosition()">${vo.teamName}</div>
-							<div id="positionContainer" class="positionContainer">
+			        <div id="teamWrap" style="height:500px;">
+		            	<div>
+				            <c:forEach items="${tvo}" var="tvo">
+				                <div class="team" onclick="goPosition(this)" style="height: 100px; display:grid; grid-template-columns:1fr 1fr"><span style="height: 22px"  class="teamhover">${tvo.teamName}</span>
+				                	<div id="positionContainer" class="positionContainer"  style="display: none;">
+									  <c:forEach items="${pvo}" var="pvo">
+									  		<div class="teamContainer" onclick="searchMember(${tvo.teamNo},${pvo.no})">
+									  			${pvo.name}	
+									  		</div>
+									  </c:forEach>
+								</div>
+				                	
+				                </div>
 								
-							</div>
-
-			            </c:forEach>
-			            <div id="detailsContainer"></div>
+				            </c:forEach>
+			            </div>
+			            <div id="detailsContainer">
+			            </div>
 			        </div>
 			    </div>
 			</div>
@@ -227,31 +259,70 @@ window.addEventListener('click', function(event) {
 
 let detailsVisible = false;
 
-function goPosition(clickedDiv) {
-    const detailsContainer = document.querySelector('.details-container');
-    const positionContainer = document.querySelector('.positionContainer');
+function goPosition(clickedTeam) {
+    const positionContainer = clickedTeam.querySelector('.positionContainer');
+    const firstTeamContainer = positionContainer.children[0]; // 첫 번째 자식 요소 선택
     
-    // 이미 존재하는 상세 정보 삭제
-    positionContainer.innerHTML = '';
-
-    if (!detailsVisible) {
-        const pvoList = ${pvo}; // pvo는 JSTL로 받아온 데이터
-
-        if (pvoList && pvoList.length > 0) {
-            pvoList.forEach(pvoItem => {
-                const pvoInnerDiv = document.createElement('div');
-                pvoInnerDiv.textContent = pvoItem.name;
-                positionContainer.appendChild(pvoInnerDiv);
-            });
-
-            detailsVisible = true;
-        }
+    if (positionContainer.style.display === 'none') {
+        positionContainer.style.display = 'block';
     } else {
-        detailsVisible = false;
+        positionContainer.style.display = 'none';
     }
+    
+    // firstTeamContainer를 여기서 사용할 수 있습니다.
 }
 
-	
+function searchMember(teamNo, positionNo) {
+    $.ajax({
+        url: "${root}/chat/searchMember",
+        method: 'POST',
+        data: {
+            teamNo: teamNo,
+            positionNo: positionNo
+        },
+        dataType: 'json', 
+        success: function(data) {
+            let str = "";
+            const length = data.length;
+            const div = document.querySelector("#detailsContainer");
+            for (let i = 0; i < length; i++) {
+                // 문자열 연결 연산자 사용
+                div.innerHTML += '<div class="list" onclick="createChat(' +data[i].no + ')">' + data[i].name + '</div>';
+            }
+            
+          
+        },
+        error: function(error) {
+            // AJAX 요청이 실패했을 때 처리
+        }
+    });
+}
+
+function createChat(no) {
+    $.ajax({
+        url: "${root}/chat/room",
+        method: 'POST',
+        data: {
+            selectMemberNo: no,
+        },
+        success: function(data) {
+        	let x = JSON.parse(data);
+        	
+        	goChatRoom(x.user1No,x.user2No,x.no);
+            
+        },
+        error: function(error) {
+            // AJAX 요청이 실패했을 때 처리
+        }
+    });
+}
+
+function goChatRoom(user1No,user2No,chatRoomNo){
+	window.location.href = "${root}/chat/room?selectMemberNo=" + user2No+"&user1No="+user1No+"&chatRoomNo="+chatRoomNo;
+}
+
+
+
 </script>
 	
 </body>

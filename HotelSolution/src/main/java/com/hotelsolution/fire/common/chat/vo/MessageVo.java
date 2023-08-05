@@ -9,4 +9,11 @@ public class MessageVo {
 	private String chatRoomNo;
 	private String content;
 	private String enrollDate;
+	///////////////////
+	private String senderName;
+	private String senderTeamName;
+	private String senderPositionName;
+	private String user1No;
+	private String user2No;
+	
 }

@@ -49,7 +49,6 @@
 	 word-wrap: break-word;
     overflow-wrap: break-word; 
 	width : 480px;
-	height : 200px;
 	  padding: 10px; 
 	  border-bottom: 1px solid lightgray;
 	}
@@ -150,16 +149,16 @@
 					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
 				</div>
 				<div class="search-area">
-	           		<a href="${root}/chat/rooms">${loginMember.name}채팅방</a>
+	           		<a href="${root}/chat/rooms" >${loginMember.name}채팅방</a>
 	            </div>
-	           
+	           <input type="hidden" class="memberName" value="${loginMember.name }">
 	        </div>
         </div>
          <hr style="background-color: rgb(214, 248, 246);">
 	<div class="chatWrap">
 			<div class="receive-chat-area">
 				<c:forEach items="${voList}" var="vo">
-			    	<div>
+			    	<div class="chatmessage">
 				    	<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}] : </strong>
 				    	${vo.content}
 				    	<sub>${vo.enrollDate}</sub>
@@ -194,7 +193,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
+		let ws = new WebSocket("ws://192.168.0.238:8888/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
@@ -202,8 +201,10 @@
 		ws.onmessage = funcMessage;
 	  
 		function funcOpen() {
+			const membernameDiv = document.querySelector(".membername");
+			const memberName = membernameDiv.value;
 			console.log("소켓연결됨 ~ !");
-			resultDiv.innerHTML += '<div style="text-align:center;"> 환영합니다</div>'
+			resultDiv.innerHTML += '<div style="text-align:center;">'+ memberName+'님 환영합니다</div>'
 			resultDiv.scrollTop = resultDiv.scrollHeight;
 		}
 		
@@ -233,9 +234,12 @@
 		
 		
 		function f01(no){
-			const userMsg = "0"+ document.querySelector("#chatInput").value;
 			const content = document.querySelector("#chatInput").value;
-			ws.send(userMsg);
+			const dataToSend = {
+					content: content,
+			        teamChatNo: "0",
+			    };
+			ws.send(JSON.stringify(dataToSend));
 			document.querySelector("#chatInput").value="";
 			$.ajax({
 		        type: "POST",
@@ -258,6 +262,8 @@
 			
 			
 		}
+		
+		
 		
 		
 	</script>
