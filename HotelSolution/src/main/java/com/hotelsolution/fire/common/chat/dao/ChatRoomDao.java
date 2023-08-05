@@ -12,7 +12,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
+import com.hotelsolution.fire.common.chat.vo.MessageVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
+import com.hotelsolution.fire.member.vo.MemberVo;
 import com.hotelsolution.fire.member.vo.PositionVo;
 import com.hotelsolution.fire.member.vo.TeamVo;
 
@@ -65,5 +67,25 @@ public class ChatRoomDao {
 	public List<PositionVo> getPvo(SqlSessionTemplate sst) {
 		// TODO Auto-generated method stub
 		return sst.selectList("teamChat.getPvo");
+	}
+
+	public List<MemberVo> searchMember(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectList("teamChat.searchMember",map);
+	}
+
+	public List<MessageVo> getMessage(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectList("message.getMessage",map);
+	}
+
+	public int updateTime(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.update("chatRoom.updateTime",map);
+	}
+
+	public int setMessageList(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.insert("message.setMessageList", map);
+	}
+
+	public List<ChatRoomVo> getChatRoomList(SqlSessionTemplate sst, String no) {
+		return sst.selectList("chatRoom.getChatRoomList",no);
 	}
 }

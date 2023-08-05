@@ -138,30 +138,29 @@
    }
 </style>
 <body>
-
-	 <div id="topnothing">
+ 		<div id="topnothing">
           
-            
-        <div id="search">
-        	<div  class="search-area">
-        		<a href="${root}/chat/hsroom">공용 채팅방</a>
-        	</div>
-			<div  class="search-area">
-				<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
-			</div>
-			<div class="search-area">
-           		<a href="${root}/chat/rooms">${loginMember.name}채팅방</a>
-            </div>
-               <input type="hidden" class="memberName" value="${loginMember.name }">
-               <input type="hidden" class="teamNo" value="${loginMember.teamNo }">
+	            
+	        <div id="search">
+	        	<div  class="search-area">
+	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        	</div>
+				<div  class="search-area">
+					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+				</div>
+				<div class="search-area">
+	           		<a href="${root}/chat/rooms" >${loginMember.name}채팅방</a>
+	            </div>
+	           <input type="hidden" class="memberName" value="${loginMember.name}">
+	           <input type="hidden" class="chatRoomNo" value="${chatRoomNo}">
+	        </div>
         </div>
-        </div>
-        <hr style="background-color: rgb(214, 248, 246);">
+         <hr style="background-color: rgb(214, 248, 246);">
 	<div class="chatWrap">
 			<div class="receive-chat-area">
-				<c:forEach items="${tvoList}" var="vo">
-			    	<div  class="chatmessage">
-				    	<strong>[${vo.senderPositionName}][${vo.senderName}]</strong>
+				<c:forEach items="${voList}" var="vo">
+			    	<div class="chatmessage">
+				    	<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}] : </strong>
 				    	${vo.content}
 				    	<sub>${vo.enrollDate}</sub>
 			    	</div>
@@ -173,10 +172,11 @@
 		
 				<form id="chatForm" method="post">
 				    <textarea name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸."></textarea>
-				    <input id="wc" type="button" value="채팅작성" onclick="f01(${loginMember.no},${loginMember.teamNo})">
+				    <input id="wc" type="button" value="채팅작성" onclick="f01(${loginMember.no},${user2No},${chatRoomNo})">
 				</form>
 
 		</div>
+		
 		<br>
 		<br>
            
@@ -200,18 +200,19 @@
 		ws.onclose = funcClose;
 		ws.onerror = funcError;
 		ws.onmessage = funcMessage;
-	
+	  
 		function funcOpen() {
 			const membernameDiv = document.querySelector(".membername");
 			const memberName = membernameDiv.value;
-			
 			console.log("소켓연결됨 ~ !");
 			resultDiv.innerHTML += '<div style="text-align:center;">'+ memberName+'님 환영합니다</div>'
 			resultDiv.scrollTop = resultDiv.scrollHeight;
 		}
+		
 		function funcClose() {
 			console.log("소켓닫힘 ~ !");
 		}
+		
 		function funcError() {
 			console.log("소켓 에러남 ~ !");
 		}
@@ -220,16 +221,11 @@
 			console.log("소켓 통해서 메세지 받음 ~ !");
 			const obj = JSON.parse(event.data);
 			console.log(obj);
-			const teamNoDiv = document.querySelector(".teamNo");
-			const teamNo = teamNoDiv.value;
-			if(obj.teamChatNo==teamNo){
-				resultDiv.innerHTML += '<div class="chatmessage">' 
-									+ "<strong>[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
-									+ "<span> " + obj.content + " </span>" 
-									+ "<sub>" + obj.sendTime + "</sub>" 
-									+ '</div>';
-				}
-				
+			resultDiv.innerHTML += '<div class="chatmessage">' 
+								+ "<strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
+								+ "<span> " + obj.content + " </span>" 
+								+ "<sub>" + obj.sendTime + "</sub>" 
+								+ '</div>';
 			
 		   resultDiv.scrollTop = resultDiv.scrollHeight;
 						            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
@@ -238,20 +234,23 @@
 			
 		
 		
-		function f01(senderNo,no){
+		function f01(user1No,user2No,chatRoomNo){
 			const content = document.querySelector("#chatInput").value;
 			const dataToSend = {
 					content: content,
-			        teamChatNo: no,
+			        senderNo: user1No,
+			        
 			    };
-			ws.send(JSON.stringify(dataToSend));
+			/* ws.send(JSON.stringify(dataToSend)); */
+			ws.send(dataToSend);
 			document.querySelector("#chatInput").value="";
 			$.ajax({
 		        type: "POST",
-		        url: "${root}/chat/troom",
+		        url: "${root}/chat/sendMessage",
 		        data: JSON.stringify({
 		            content: content,
-		            senderNo: senderNo
+		            senderNo: user1No,
+		            chatRoomNo:chatRoomNo
 		        }),
 		        contentType: "application/json",
 		        success: function (response) {
@@ -267,6 +266,8 @@
 			
 			
 		}
+		
+		
 		
 		
 	</script>

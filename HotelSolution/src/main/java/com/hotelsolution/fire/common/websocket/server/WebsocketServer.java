@@ -15,8 +15,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.hotelsolution.fire.common.chat.controller.ChatRoomController;
 import com.hotelsolution.fire.common.chat.service.ChatRoomService;
+import com.hotelsolution.fire.common.chat.vo.MessageVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
 
@@ -46,26 +49,35 @@ public class WebsocketServer extends TextWebSocketHandler {
 	@Override
 
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String roomTypeNo = message.getPayload().substring(0,1);
+//		String roomTypeNo = message.getPayload().substring(0,1);
 		log.info("handleTextMessage 호출됨 ...");
 		log.info("handleTextMessage 호출됨 ... : {}", message);
-		
+     
 		MemberVo loginMember = (MemberVo) session.getAttributes().get("loginMember");
-		
-		System.out.println(message);
-		TeamChatMessageVo vo = new TeamChatMessageVo();
-		vo.setContent(message.getPayload().substring(1));
-		vo.setSenderName(loginMember.getName());
-		vo.setSenderNo(loginMember.getNo());
-		vo.setTeamChatNo(roomTypeNo);
-		vo.setSenderPositionName(loginMember.getPositionName());
-		vo.setSenderTeamName(loginMember.getTeamName());
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
-		String formattedDate = dateFormat.format(new Date());
-		vo.setSendTime(formattedDate.substring(6,21));
-		System.out.println("서버 vo"+vo);
+		System.out.println(message.getPayload());
 		Gson gson = new Gson();
-		String jsonStr = gson.toJson(vo);
+	    TeamChatMessageVo vo = gson.fromJson(message.getPayload(), TeamChatMessageVo.class);
+	    MessageVo mvo = gson.fromJson(message.getPayload(), MessageVo.class);
+	    String jsonStr="";
+		if(vo.getTeamChatNo() != null) {
+			System.out.println("rewal?"+vo);
+			vo.setSenderName(loginMember.getName());
+			vo.setSenderNo(loginMember.getNo());
+			vo.setSenderPositionName(loginMember.getPositionName());
+			vo.setSenderTeamName(loginMember.getTeamName());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+			String formattedDate = dateFormat.format(new Date());
+			vo.setSendTime(formattedDate.substring(6,21));
+			System.out.println("팀별단체채팅 vo"+vo);
+			jsonStr = gson.toJson(vo);
+		}else {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+			String formattedDate = dateFormat.format(new Date());
+			mvo.setEnrollDate(formattedDate.substring(6,21));
+			System.out.println("mvo"+mvo);
+			jsonStr = gson.toJson(mvo);
+			System.out.println("mjsonvo"+jsonStr);
+		}
 		
 		for (WebSocketSession s : sessionSet) {
 			s.sendMessage(new TextMessage(jsonStr));

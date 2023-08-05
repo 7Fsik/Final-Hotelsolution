@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="message">
+
+	
+	<select id="getMessage" resultType="com.hotelsolution.fire.common.chat.vo.MessageVo" parameterType="java.util.Map">
+	    SELECT 
+	        M.NO
+	        ,M.CHAT_ROOM_NO AS CHATROOMNO
+	        ,M.SENDER_NO AS SENDERNO
+	        ,M.CONTENT 
+	        ,M.ENROLL_DATE AS ENROLLDATE
+	        ,CR.NO
+	        ,CR.USER1_NO AS USER1NO
+	        ,CR.USER2_NO AS USER2NO
+	        ,CR.UPDATE_TIME AS UPDATETIME
+	        ,U.NO 
+	        ,U.TEAM_NO TEAMNO
+	        ,U.POSITION_NO POSITIONNO
+	        ,U.NAME AS SENDERNAME
+	        ,P.NAME AS SENDERPOSITIONNAME
+	        ,T.TEAM_NO AS SENDERTEAMNAME
+	    FROM MESSAGE M 
+	    JOIN CHAT_ROOM CR
+	    ON M.CHAT_ROOM_NO = CR.NO
+	    JOIN MEMBER U
+	    ON M.SENDER_NO=U.NO
+	    JOIN POSITION P
+	    ON U.POSITION_NO=P.NO
+	    JOIN TEAM T
+	    ON U.TEAM_NO=T.TEAM_NO
+	    WHERE     
+	  (CR.USER1_NO=#{user1No} AND CR.USER2_NO=#{user2No}) 
+	        OR (CR.USER1_NO=#{user2No} AND CR.USER2_NO=#{user1No}) 
+	    ORDER BY M.ENROLL_DATE ASC
+	</select>
+		
+	<insert id="setMessageList" parameterType="java.util.Map">
+		    INSERT INTO MESSAGE (
+		      	NO
+				,CHAT_ROOM_NO
+				,SENDER_NO
+				,CONTENT
+				,ENROLL_DATE
+				
+		    )
+		    VALUES (
+		        SEQ_MESSAGE_NO.NEXTVAL
+		        ,#{chatRoomNo}
+		        ,#{senderNo}
+		        ,#{content}
+		        ,SYSDATE
+		        
+		    )
+	</insert>
+	
+</mapper>

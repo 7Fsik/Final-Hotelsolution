@@ -21,15 +21,16 @@
 		    )
 	</insert>
 	<select id="getCreateChatRoomVo" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo" parameterType="java.util.Map">
-		 SELECT 
-	    	NO
-			,USER1_NO AS USER1NO
-			,USER2_NO AS USER2NO
-			,UPDATE_TIME AS UPDATETIME
-	    
-	    FROM CHAT_ROOM
-	    WHERE USER1_NO = #{user1No}
-	    AND USER2_NO = #{user2No}
+		SELECT 
+		    NO
+		    ,USER1_NO AS USER1NO
+		    ,USER2_NO AS USER2NO
+		    ,UPDATE_TIME AS UPDATETIME
+		    
+		FROM CHAT_ROOM
+		WHERE (USER1_NO = #{user1No} AND USER2_NO = #{user2No})
+		    OR (USER1_NO = #{user2No} AND USER2_NO = #{user1No})
+
 	</select>
 
 	<select id="findAllRooms" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo">
@@ -54,4 +55,23 @@
 	    FROM CHAT_ROOM
 	    WHERE NO = #{roomId}
 	</select>
+	<update id="updateTime">
+		UPDATE CHAT_ROOM
+		SET UPDATE_TIME = SYSDATE
+		  WHERE (USER1_NO=#{user1No} AND USER2_NO=#{user2No}) 
+	        OR (USER1_NO=#{user2No} AND USER2_NO=#{user1No})
+	</update>
+	
+	<select id="getChatRoomList" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo" parameterType="java.util.Map">
+		SELECT 
+		    NO
+		    ,USER1_NO AS USER1NO
+		    ,USER2_NO AS USER2NO
+		    ,UPDATE_TIME AS UPDATETIME
+		    
+		FROM CHAT_ROOM
+		WHERE USER1_NO = #{no} or USER2_NO = #{no}
+
+	</select>
+	
 </mapper>

@@ -84,9 +84,54 @@
 	
 	</select>
 	
-		<select id="getPvo" resultType="com.hotelsolution.fire.member.vo.PositionVo">
+	<select id="getPvo" resultType="com.hotelsolution.fire.member.vo.PositionVo">
 		select * from Position
 	
+	</select>
+	
+	<select id="searchMember" resultType="MemberVo"   parameterType="java.util.Map">
+		select 
+			u.NO
+  			,u.TEAM_NO TEAMNO
+  			,u.POSITION_NO AS POSITIONNO
+  			,p.name AS POSITIONNAME
+  			,u.ID
+  			,u.PASSWORD
+  			,u.NAME
+  			,u.EMAIL
+  			,u.IMAGE
+  			,u.ENROLL_DATE
+  			,u.STATUS
+  			,u.CONTRACT_WORK_TIME
+  			,u.CONTRACT_WORK_END_TIME
+  			,u.SALARY
+  			,u.CHANGE_IMAGE AS CHANGEIMAGE
+  			,t.TEAM_NAME AS TEAMNAME
+  			,t.TEAM_ADDRESS AS TEAMADDRESS
+  			
+  			FROM
+  			member u
+  			JOIN POSITION p
+  			ON u.POSITION_NO = p.NO
+  			JOIN TEAM t 
+  			ON u.TEAM_NO = t.TEAM_NO
+  			where u.status != 0
+	  <choose>
+  		<when test="teamNo !=null and positionNo != null">
+			        AND u.TEAM_NO = #{teamNo} AND u.POSITION_NO = #{positionNo}
+	  </when>
+	  
+  		<when test="searchType == 'POSITIONNAME'">
+			        AND p.name LIKE ('%'|| #{searchValue} || '%')
+		</when>
+		
+	    <when test="searchType == 'teamName'">
+			        AND t.TEAM_NAME LIKE ('%'|| #{searchValue} || '%')
+	    </when>
+	    <when test="searchType == 'name'">
+			        AND u.NAME LIKE ('%'|| #{searchValue} || '%')
+	    </when>
+	    </choose>
 	</select>
 
 </mapper>

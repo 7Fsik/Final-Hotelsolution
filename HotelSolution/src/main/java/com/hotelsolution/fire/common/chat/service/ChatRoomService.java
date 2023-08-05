@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hotelsolution.fire.common.chat.dao.ChatRoomDao;
 import com.hotelsolution.fire.common.chat.vo.ChatRoomVo;
+import com.hotelsolution.fire.common.chat.vo.MessageVo;
 import com.hotelsolution.fire.common.chat.vo.TeamChatMessageVo;
+import com.hotelsolution.fire.member.vo.MemberVo;
 import com.hotelsolution.fire.member.vo.PositionVo;
 import com.hotelsolution.fire.member.vo.TeamVo;
 
@@ -80,4 +82,33 @@ public class ChatRoomService {
 		return dao.getPvo(sst);
 	}
 
+
+
+	public List<MemberVo> searchMember(Map<String, String> map) {
+		return dao.searchMember(sst,map);
+	}
+
+
+
+	public List<MessageVo> getMessage(Map<String, String> map) {
+		return dao.getMessage(sst,map);
+	}
+
+
+
+	public int updateTime(Map<String, String> map) {
+		return dao.updateTime(sst,map);
+	}
+
+
+
+	public int setMessageList(Map<String, String> map) {
+		return dao.setMessageList(sst,map);
+	}
+
+
+
+	public List<ChatRoomVo> getChatRoomList(String no) {
+		return dao.getChatRoomList(sst,no);
+	}
 }
