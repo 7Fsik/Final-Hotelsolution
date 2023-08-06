@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="table">
+
+	<select id="getTableInt" resultType="TableIntVo">
+		
+		SELECT TABLE_NO,USER_NUM 
+		FROM RESTAURANT_TABLE
+	
+	</select>
+	
+	<select id="getBook" resultType="TableBookVo">
+	
+		SELECT 
+		NO,
+		TABLE_NO,
+		NAME,
+		PHONE_NUMBER,
+		BOOK_TIME,
+		TO_CHAR(USE_TIME,'HH24:MI') AS USE_TIME,
+		BOOKED_EMPLOYEE,
+		PRICE_YN,
+		BOOK_PEOPLE,
+		CHECK_YN,
+		TOTAL_PRICE
+		FROM RESTAURANT_BOOK_LIST
+		WHERE USE_TIME &gt;= #{startDateTime} AND USE_TIME &lt;= #{endDateTime}
+		AND CHECK_YN = 'N'
+		ORDER BY USE_TIME
+	
+	</select>
+	
+	
+	<update id="checkOk">
+	
+		UPDATE RESTAURANT_BOOK_LIST SET CHECK_YN = 'Y' 
+		WHERE NO = #{NO}
+	
+	</update>
+	
+	<delete id="cancel">
+	
+		DELETE FROM RESTAURANT_BOOK_LIST WHERE NO=#{num}
+	
+	</delete>
+	
+	<insert id="useBook">
+	
+	INSERT INTO RESTAURANT_BOOK_LIST
+	(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE)
+	VALUES
+	(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,SYSDATE,#{memberNo},#{bookpp},'Y',0)
+	
+	
+	</insert>
+	
+	<insert id="book">
+	
+	INSERT INTO RESTAURANT_BOOK_LIST(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE)
+	VALUES(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,#{bookDate},#{memberNo},#{bookpp},'N',0)
+	
+	
+	</insert>
+	
+
+
+</mapper>

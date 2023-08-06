@@ -74,9 +74,9 @@
      
         <div id="mainboard">
      
-           <div id="time">
+           <span id="time">
                  2023-07-17  20:05:40
-             </div>
+             </span>
      
              <div id="title">
                  식당 테이블
