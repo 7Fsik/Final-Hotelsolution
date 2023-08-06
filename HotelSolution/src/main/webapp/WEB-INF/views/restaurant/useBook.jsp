@@ -147,7 +147,7 @@
              <div id="search-area">
                  <div id="search">
                      예약 날짜 : 
-                     <input type="date">
+                     <input type="date" id="dateInput" >
                  </div>
              </div>
      
@@ -218,6 +218,19 @@
         
         
 <script>
+
+    // JavaScript 코드
+    const dateInput = document.getElementById('dateInput');
+    const today = new Date();
+    // 오늘 날짜를 YYYY-MM-DD 형식으로 변환
+    const formattedDate = today.toISOString().split('T')[0];
+    // 기본값으로 설정
+    dateInput.value = formattedDate;
+
+
+    
+
+
     const openModals = document.querySelectorAll('.btn-area>button');
     const closeModals = document.querySelectorAll('.model-delete');
     const modals = document.querySelectorAll('.model');
@@ -236,6 +249,60 @@
             overlay.style.display = "none";
         });
     });
+
+    // 날짜 가져와서 에약 구하기 
+    function getBook(){
+
+        const day = document.querySelector("#dateInput").value;
+
+
+        console.log(1);
+
+        $.ajax({
+            type : "post" ,
+            url : "${root}/restaurant/table/getBook" ,
+            data : {
+                day:day
+            } ,
+            dataType : "json" ,
+            success : function(x){
+
+                console.log(x);
+                
+                // 받아온 정보로 table 채우기
+                // const tbody = document.querySelector("#foodList");
+                // let str = "";
+                // let total = 0 ;
+            
+                // for(let i = 0; i < x.length; i++){
+                //     str +=		;
+                // }
+                                    
+                // tbody.innerHTML = str;
+            
+            } ,
+            error : function(x){
+                alert("bad");
+                console.log(x);
+            } ,
+        
+        });
+
+    }
+
+    getBook();
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 

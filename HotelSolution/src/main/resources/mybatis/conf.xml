@@ -30,6 +30,8 @@
         <typeAlias type="com.hotelsolution.fire.restaurant.vo.MenuVo" alias="MenuVo"/>
         <typeAlias type="com.hotelsolution.fire.restaurant.vo.RoomServiceVo" alias="RoomServiceVo"/>
         <typeAlias type="com.hotelsolution.fire.front.vo.DaySalesVo" alias="DaySalesVo"/>
+        <typeAlias type="com.hotelsolution.fire.restaurant.table.vo.TableIntVo" alias="TableIntVo"/>
+        <typeAlias type="com.hotelsolution.fire.restaurant.table.vo.TableBookVo" alias="TableBookVo"/>
 
         <typeAlias type="com.hotelsolution.fire.common.dataroom.vo.DataRoomFileVo" alias="DataRoomFileVo"/>
         <typeAlias type="com.hotelsolution.fire.member.vo.MemberVo" alias="MemberVo"/>

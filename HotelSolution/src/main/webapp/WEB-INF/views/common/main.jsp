@@ -450,8 +450,8 @@
                             </ul>
                             <div class="sub-menu-title">식당관리</div>
                             <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="${root}/restaurant/useBook">식당 이용 / 예약</a></li>
-                                <li><a class="custom-link" href="${root}/restaurant/table">식당 테이블</a></li>
+                                <li><a class="custom-link" href="${root}/restaurant/table/useBook">식당 이용 / 예약</a></li>
+                                <li><a class="custom-link" href="${root}/restaurant/table/pos">식당 테이블</a></li>
                             </ul>
                             <div class="sub-menu-title">재고관리</div>
                             <ul class="sub-menu-list">

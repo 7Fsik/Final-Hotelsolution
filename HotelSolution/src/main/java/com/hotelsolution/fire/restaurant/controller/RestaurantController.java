@@ -28,22 +28,6 @@ public class RestaurantController {
 	
 	private final ResService rs;
 	
-	///////////////////////// 식당 테이블
-	@GetMapping("table")
-	public String table() {
-		return "restaurant/table";
-	}
-
-	/////////////////////////////
-	
-	/////////////////////////식당 이용예약
-	@GetMapping("useBook")
-	public String useBook() {
-		return"restaurant/useBook";
-	}
-	////////////////////////////////////
-	
-	
 	//////////////////////////////룸서비스 주문내역
 	@GetMapping("roomOrder")
 	public String roomOrder() {
@@ -204,7 +188,6 @@ public class RestaurantController {
 		return result ;
 	}
 	
-	
 	@PostMapping("plusMenu")
 	@ResponseBody
 	public int plusMenu(@RequestParam Map<String,String>paramMap) {
@@ -213,7 +196,5 @@ public class RestaurantController {
 		
 		return result ;
 	}
-	
-	
 	
 }//class
