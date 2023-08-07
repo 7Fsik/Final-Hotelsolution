@@ -54,6 +54,7 @@
 				<div class="board-box">
 					<div class="quick-mail-title">
 						<h1>게시판</h1>
+						<div id="board-list"></div>
 					</div>
 				</div>
 			</div>
@@ -65,3 +66,35 @@
 
 </body>
 </html>
+
+<script>
+	$(document).ready(function () {
+		function getTopBoardList() {
+			$.ajax({
+				url: "${root}/board/getList",
+				type: "GET",
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					$('#board-list').empty();
+					$.each(data, function (index, item) {
+						let hiddenNo = '<span class="hidden-no" style="display:none;">' + item.no + '</span>';
+						let title = '<span class="title">' + item.title + '</span>';
+						let content = '<span class="content ml-3">' + item.content + '</span>';
+
+						let postWrapper = '<div class="single-post-wrapper border rounded p-3 mb-4 d-flex" data-url="' + "YOUR_ROOT_URL" + '/board/detail?no=' + item.no + '">' + hiddenNo + title + content + '</div>';
+						$('#board-list').append(postWrapper);
+					});
+					$('#board-list > div').css({ 'width' : '550px','height': '25px', 'line-height': '15px', 'overflow': 'hidden' ,'font-size' : '15px' });
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(textStatus, errorThrown);
+				}
+			});
+		}
+
+		getTopBoardList();
+		setInterval(getTopBoardList, 300000);
+	});
+	// 5 minutes = 300000 milliseconds
+</script>

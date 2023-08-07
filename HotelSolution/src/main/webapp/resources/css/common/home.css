@@ -77,3 +77,10 @@
     border-radius: 10px;
 }
 
+.book-list{
+    width: 100%;
+}
+
+#board-list > div{
+    height: 30px !important;
+}

@@ -22,17 +22,18 @@
                 <div class="main-content-list">
                     <nav>
                         <div class="input-group mb-3">
-
-                            <span>
-                              <select class="btn btn-secondary" name="searchType">
-                                    <option value="title">제목</option>
-                                    <option value="content">내용</option>
-                                </select>
-                               <label>
-                                <input id="board-search-input" type="text" placeholder="검색할내용을입력해주세요" class="form-control">
-                                </label>
-                                <input class="btn btn-primary" type="submit" value="검색">
-                            </span>
+                            <form action="${root}/board/list/1" method="get">
+                                 <span>
+                                  <select class="btn btn-secondary" name="searchType">
+                                        <option value="title">제목</option>
+                                        <option value="content">내용</option>
+                                  </select>
+                                   <label>
+                                    <input id="board-search-input" type="text" placeholder="검색할내용을입력해주세요" class="form-control" name="searchValue">
+                                    </label>
+                                    <input class="btn btn-primary" type="submit" value="검색">
+                                </span>
+                            </form>
                         </div>
                         <button id="writeBtn2" data-root="${root}" class="btn btn-primary">글쓰기</button>
                     </nav>
@@ -41,11 +42,12 @@
                     <div class="main-board-list">
 
                         <div class="container">
-                            <table class="table table-striped table-responsive">
+                            <table class="table table-striped table-responsive table-hover">
                                 <thead>
                                 <tr>
                                     <th>번호</th>
                                     <th>제목</th>
+                                    <th>내용</th>
                                     <th>부서</th>
                                     <th>작성자</th>
                                     <th>조회수</th>
@@ -57,6 +59,7 @@
                                     <tr class="clickable-row" data-no="${board.no}"  data-root="${root}">
                                         <td>${board.no}</td>
                                         <td>${board.title}</td>
+                                        <td>${board.content}</td>
                                         <td>${board.teamName}</td>
                                         <td>${board.writerName}</td>
                                         <td>${board.hit}</td>
@@ -67,12 +70,12 @@
                             </table>
                             <div class="page-area">
                                 <c:if test="${pv.currentPage > 1}">
-                                    <a class="btn btn-primary" href="${root}/board/list/${pv.currentPage - 1}">이전</a>
+                                    <a class="btn btn-primary" href="${root}/board/list/${pv.currentPage - 1}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">이전</a>
                                 </c:if>
                                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
                                     <c:choose>
                                         <c:when test="${pv.currentPage != i}">
-                                            <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}">${i}</a>
+                                            <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">${i}</a>
                                         </c:when>
                                         <c:otherwise>
                                             <a class="btn btn-primary btn-sm">${i}</a>
@@ -80,10 +83,9 @@
                                     </c:choose>
                                 </c:forEach>
                                 <c:if test="${pv.currentPage < pv.maxPage}">
-                                    <a class="btn btn-primary btn-sm" href="${root}/board/list/${pv.currentPage + 1}">다음</a>
+                                    <a class="btn btn-primary btn-sm" href="${root}/board/list/${pv.currentPage + 1}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">다음</a>
                                 </c:if>
                             </div>
-
                         </div>
 
 
@@ -135,6 +137,20 @@
             window.location.href = $(this).data('url');
         });
     });
+
+    let searchValueTag = document.querySelector("input[name=searchValue]");
+    searchValueTag.value = '${paramMap.searchValue}';
+
+    const searchTypeTagArr = document.querySelectorAll("select[name=searchType] > option");
+
+    const  x = '${paramMap.searchType}';
+
+    if(x === 'title'){
+        searchTypeTagArr[0].selected = true;
+    }else if( x === 'content'){
+        searchTypeTagArr[1].selected = true;
+    }
+
 </script>
 
 

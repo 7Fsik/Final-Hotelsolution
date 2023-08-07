@@ -41,20 +41,22 @@ public class CompanyBoardController {
     @GetMapping("list/{page}")
     public String getAllCompanyBoardList
             (
-            @PathVariable("page") int page,
-            Model model
+            @PathVariable("page") int page
+            ,@RequestParam Map<String,String> paramMap
+            ,Model  model
             )
     {
 
-        int listCount = boardService.getCompanyBoardCnt();
+        int listCount = boardService.getCompanyBoardCnt(paramMap);
         int currentPage = page;
         int pageLimit = FireConstPool.COMPANY_BOARD_PAGE_LIMIT;
         int boardLimit = FireConstPool.COMPANY_BOARD_LIMIT;
         PageVo pv = new PageVo(listCount,currentPage,pageLimit,boardLimit);
 
-        List<CompanyBoardVo> allCompanyBoardList = boardService.getAllCompanyBoardList(pv);
+        List<CompanyBoardVo> allCompanyBoardList = boardService.getAllCompanyBoardList(pv, paramMap);
         model.addAttribute("allCompanyBoardList",allCompanyBoardList);
         model.addAttribute("pv",pv);
+        model.addAttribute("paramMap",paramMap);
         return "companyBoard/list";
     }
     @GetMapping("post")
@@ -288,8 +290,5 @@ public class CompanyBoardController {
     public List<CompanyBoardVo> getBoardList() {
         return boardService.getBoardList();
     }
-
-
-
 
 }

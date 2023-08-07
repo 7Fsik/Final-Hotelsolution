@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Slf4j
@@ -17,14 +18,14 @@ public class CompanyBoardDaoImpl implements CompanyBoardDao{
 
 
     @Override
-    public List<CompanyBoardVo> getAllCompanyBoardList(SqlSessionTemplate sst, PageVo pv) {
+    public List<CompanyBoardVo> getAllCompanyBoardList(SqlSessionTemplate sst, PageVo pv, Map<String, String> paramMap) {
         RowBounds rb = new RowBounds(pv.getOffset(),pv.getBoardLimit());
-        return sst.selectList("companyBoard.getAllCompanyBoardList",null,rb);
+        return sst.selectList("companyBoard.getAllCompanyBoardList",paramMap,rb);
     }
 
     @Override
-    public int getCompanyBoardCnt(SqlSessionTemplate sst) {
-        return sst.selectOne("companyBoard.getAllCompanyBoardCnt");
+    public int getCompanyBoardCnt(SqlSessionTemplate sst, Map<String, String> paramMap) {
+        return sst.selectOne("companyBoard.getAllCompanyBoardCnt",paramMap);
     }
 
     @Override
