@@ -7,12 +7,13 @@ import com.hotelsolution.fire.common.page.vo.PageVo;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CompanyBoardDao {
 
-    List<CompanyBoardVo> getAllCompanyBoardList(SqlSessionTemplate sst, PageVo pv);
+    List<CompanyBoardVo> getAllCompanyBoardList(SqlSessionTemplate sst, PageVo pv, Map<String, String> paramMap);
 
-    int getCompanyBoardCnt(SqlSessionTemplate sst);
+    int getCompanyBoardCnt(SqlSessionTemplate sst, Map<String, String> paramMap);
 
 
     List<CompanyBoardCategoryVo> getCategoryList(SqlSessionTemplate sst);

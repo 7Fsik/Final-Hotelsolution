@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -22,14 +23,15 @@ public class CompanyBoardServiceImpl implements CompanyBoardService {
 
 
     @Override
-    public List<CompanyBoardVo> getAllCompanyBoardList(PageVo pv)
+    public List<CompanyBoardVo> getAllCompanyBoardList(PageVo pv, Map<String, String> paramMap)
     {
-        return dao.getAllCompanyBoardList(sst, pv);
+        return dao.getAllCompanyBoardList(sst, pv, paramMap);
     }
 
     @Override
-    public int getCompanyBoardCnt() {
-        return dao.getCompanyBoardCnt(sst);
+    public int getCompanyBoardCnt(Map<String, String> paramMap) {
+
+        return dao.getCompanyBoardCnt(sst, paramMap);
     }
 
     @Override

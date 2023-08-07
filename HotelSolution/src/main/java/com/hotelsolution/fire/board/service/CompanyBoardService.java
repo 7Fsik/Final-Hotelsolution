@@ -6,13 +6,14 @@ import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CompanyBoardService {
 
     // 전체 사내 게시글 조회
-    List<CompanyBoardVo> getAllCompanyBoardList (PageVo pv);
+    List<CompanyBoardVo> getAllCompanyBoardList (PageVo pv, Map<String, String> paramMap);
 
-    int getCompanyBoardCnt();
+    int getCompanyBoardCnt(Map<String, String> paramMap);
 
 
 
