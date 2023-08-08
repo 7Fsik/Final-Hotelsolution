@@ -100,15 +100,18 @@ public class ChatRoomController {
     	Map<String,String>map = new HashMap<String, String>();
     	map.put("user1No", loginMember.getNo());
     	map.put("user2No", selectMemberNo);
+    	System.out.println("roompost map"+map);
     	ChatRoomVo vo = service.getCreateChatRoomVo(map);
     	int result =0;
     	if(vo==null) {
     		result = service.createChatRoomVo(map);
     		vo = service.getCreateChatRoomVo(map);
+    		System.out.println(result);
+    		System.out.println(vo);
     	} else {
-    		result = service.updateTime(map);
     		
     	}
+//    	result = service.updateTime(map);
 //    	;
     	Gson gson = new Gson();
     	String a = gson.toJson(vo);

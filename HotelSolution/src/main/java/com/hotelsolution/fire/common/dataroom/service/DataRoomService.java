@@ -20,4 +20,6 @@ public interface DataRoomService {
 
 	int getDataRoomCnt(Map<String, Object> map);
 
+	int deleteDate(String dataNo);
+
 }

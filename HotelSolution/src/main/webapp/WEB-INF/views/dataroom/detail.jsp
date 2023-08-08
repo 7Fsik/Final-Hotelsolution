@@ -211,8 +211,12 @@
 			<div class="dataroomBody">
 				
 					    <div class="dataroomWrap">
-					    	
-			           			<div class= "topNameText" >${drvo.title}  <p style="text-align: right; margin-right: 40px; font-size: 30px; color:#3b444b ">(${drvo.categoryName}자료실)</p></div>
+					    		<div style="display:flex; justify-content: space-between; margin-right: 50px;">
+			           			<div class= "topNameText" >${drvo.title} 
+			           			</div>
+			           				 	<div style="margin-top:60px;">
+			           				 	<button style="width: 70px; height:30px; border: #3B444B; background-color: #3B444B; color: white;border-radius: 20px;font-size: 12px;"onclick="deleteData(${drvo.dataNo})">삭제하기</button></div>
+			           			</div>
 					        <div class="writeDataroomWrap">
 					           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
 									<input type="hidden" name="writerNo" value="1">
@@ -274,6 +278,22 @@
 	function goList(categoryNo) {
 		window.location.href = '${root}/dataroom/list?categoryNo=' + categoryNo;
 		
+	}
+	
+	function deleteData(dataNo)() {
+		$.ajax({
+	        type: "POST",
+	        url: "${root}/dataroom/list",
+	        data: {
+	        	dataNo: dataNo,
+	        	
+	        },
+	        success: function (response) {
+	        },
+	        error: function (xhr, status, error) {
+	            console.error("Error:", error);
+	        }
+	    });
 	}
 </script>
  
