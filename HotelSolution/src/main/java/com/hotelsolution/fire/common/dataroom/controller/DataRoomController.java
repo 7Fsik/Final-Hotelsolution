@@ -178,6 +178,10 @@ public class DataRoomController {
 	            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + encodedFileName)
 	            .body(resource);
 	}
+	@PostMapping("delete")
+	public void deleteData(String dataNo) {
+		int result = service.deleteDate(dataNo);
+	}
 
 
 }

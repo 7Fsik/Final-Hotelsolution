@@ -33,7 +33,7 @@
 	  	overflow-y: scroll;
 	    gap: 10px;
 	    width:500px;
-	    height : 600px;
+	    height : 580px;
 	     display: flex;
 	   flex-direction: column; /* 아이템들을 세로로 배치 */
 	   
