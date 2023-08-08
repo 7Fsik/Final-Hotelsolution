@@ -35,9 +35,7 @@ public class WebsocketServer extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		log.info("afterConnectionEstablished 호출됨 ...");
-		System.out.println(session);
 		sessionSet.add(session);
-		System.out.println(sessionSet);
 	}
 
 	@Override
@@ -54,13 +52,14 @@ public class WebsocketServer extends TextWebSocketHandler {
 		log.info("handleTextMessage 호출됨 ... : {}", message);
      
 		MemberVo loginMember = (MemberVo) session.getAttributes().get("loginMember");
-		System.out.println(message.getPayload());
 		Gson gson = new Gson();
+		
 	    TeamChatMessageVo vo = gson.fromJson(message.getPayload(), TeamChatMessageVo.class);
 	    MessageVo mvo = gson.fromJson(message.getPayload(), MessageVo.class);
+	    System.out.println("팀채팅으로"+vo);
+	    System.out.println("1:1채팅으로"+mvo);
 	    String jsonStr="";
 		if(vo.getTeamChatNo() != null) {
-			System.out.println("rewal?"+vo);
 			vo.setSenderName(loginMember.getName());
 			vo.setSenderNo(loginMember.getNo());
 			vo.setSenderPositionName(loginMember.getPositionName());
@@ -68,18 +67,19 @@ public class WebsocketServer extends TextWebSocketHandler {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 			String formattedDate = dateFormat.format(new Date());
 			vo.setSendTime(formattedDate.substring(6,21));
-			System.out.println("팀별단체채팅 vo"+vo);
 			jsonStr = gson.toJson(vo);
 		}else {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
 			String formattedDate = dateFormat.format(new Date());
 			mvo.setEnrollDate(formattedDate.substring(6,21));
-			System.out.println("mvo"+mvo);
+			mvo.setSenderName(loginMember.getName());
+			mvo.setSenderNo(loginMember.getNo());
+			mvo.setSenderPositionName(loginMember.getPositionName());
+			mvo.setSenderTeamName(loginMember.getTeamName());
 			jsonStr = gson.toJson(mvo);
-			System.out.println("mjsonvo"+jsonStr);
 		}
 		
-		for (WebSocketSession s : sessionSet) {
+		for (WebSocketSession s : sessionSet) {	
 			s.sendMessage(new TextMessage(jsonStr));
 		}
 	}

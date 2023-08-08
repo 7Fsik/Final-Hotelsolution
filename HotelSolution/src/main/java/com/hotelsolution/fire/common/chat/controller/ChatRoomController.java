@@ -1,5 +1,6 @@
 package com.hotelsolution.fire.common.chat.controller;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,40 +49,50 @@ public class ChatRoomController {
     	List<TeamVo> tvo = service.getTvo();
     	 tvo.remove(0);
     	List<PositionVo> pvo = 	service.getPvo();
-    	System.out.println(tvo + " // " + pvo);
     	Gson gson = new Gson();
-    	String pvoJson = gson.toJson(pvo);
+//    	String pvoJson = gson.toJson(pvo);
     	List<ChatRoomVo>voList = service.getChatRoomList(loginMember.getNo());
+    	session.setAttribute("voList", voList);
     	model.addAttribute("tvo",tvo);
     	model.addAttribute("pvo",pvo);
-    	model.addAttribute("voList",voList);
-//    	 ChatRoomVo roomName = service.getCreateChatRoomVo(map);
-//         roomName.setUser1Name("1번");
-//         roomName.setUser2Name("2번");
-//         rttr.addFlashAttribute("roomName", roomName);
-//         return "redirect:/chat/rooms";
-    
+    	
+
     }
     //1:1 채팅방 입장!
     @GetMapping("room")
-    public void goRoom(String selectMemberNo,String user1No,Model model,String chatRoomNo) {
-    	System.out.println(selectMemberNo);
-    	System.out.println(user1No);
-    	System.out.println(chatRoomNo);
+    public void goRoom(String selectMemberNo,String user1No,Model model,String chatRoomNo, HttpSession session) {
+    	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
     	String user2No = selectMemberNo;
     	 Map<String,String>map = new HashMap<String, String>();
          map.put("user1No", user1No);
          map.put("user2No", selectMemberNo);
          map.put("chatRoomNo", chatRoomNo);
-         System.out.println("room get map" +map);
+          map.put("loginMemberNo", loginMember.getNo());
          List<MessageVo> voList= service.getMessage(map); 
-         System.out.println("room get map" +voList);
-         model.addAttribute("voList",voList);
+         int result = updateTime(map);
          model.addAttribute("user1No", user1No);
          model.addAttribute("user2No", selectMemberNo);
          model.addAttribute("chatRoomNo", chatRoomNo);
+         model.addAttribute("voList",voList);
     	
     }
+    
+    @PostMapping("updateTime")
+    @ResponseBody
+    public int updateTime(@RequestBody Map<String, String> data) {
+        String user1No = data.get("user1No");
+        String user2No = data.get("user2No");
+        String chatRoomNo = data.get("chatRoomNo");
+        String loginMemberNo = data.get("loginMemberNo");
+
+
+        // 이후에 필요한 로직을 추가하고 결과를 반환하는 등의 작업 수행
+        int result = service.updateTime(data);
+
+        return result;
+    }
+
+    
     @PostMapping("room")
     @ResponseBody
     public String create(Model model,String selectMemberNo, HttpSession session){
@@ -90,21 +101,17 @@ public class ChatRoomController {
     	map.put("user1No", loginMember.getNo());
     	map.put("user2No", selectMemberNo);
     	ChatRoomVo vo = service.getCreateChatRoomVo(map);
-    	System.out.println("todtjdehls coxldqkd vo"+vo);
     	int result =0;
     	if(vo==null) {
     		result = service.createChatRoomVo(map);
     		vo = service.getCreateChatRoomVo(map);
     	} else {
-    		System.out.println("채팅방 존재함 참여시간만 update");
     		result = service.updateTime(map);
     		
     	}
-    	System.out.println("roompost vo "+vo);
 //    	;
     	Gson gson = new Gson();
     	String a = gson.toJson(vo);
-    	System.out.println(a);
     	return a;
     	
     	
@@ -115,14 +122,12 @@ public class ChatRoomController {
     public int sendMessage(HttpSession session, @RequestBody Map<String, Object> jsonData) {
     	
         MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-        System.out.println("jsonData"+jsonData);
         String senderNo = loginMember.getNo();
         String content = (String) jsonData.get("content");
         String chatRoomNo = jsonData.get("chatRoomNo").toString();
         String x = jsonData.get("senderNo").toString(); // senderN
         int dotIndex = x.indexOf(".");
         String postno = senderNo.substring(0, dotIndex);
-        System.out.println(content+"dd"+"kk"+x+"xx"+"index : "+ dotIndex + "dd"+"postno" +postno + "chatRoomNo : "+ chatRoomNo);
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시mm분");
         String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
@@ -146,7 +151,6 @@ public class ChatRoomController {
     public void getRoom(Model model, HttpSession session ){
     	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
     	  List<TeamChatMessageVo> voList = service.getHsChatList();
-    	  System.out.println("hsroom get"+ voList);
     	  model.addAttribute("voList",voList);// 전체 채팅방 모든 메세지 조회
     	  
     }
@@ -155,13 +159,11 @@ public class ChatRoomController {
     @ResponseBody
     public int getRoom(Model model, HttpSession session, @RequestBody Map<String, Object> jsonData) {
         MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-        System.out.println("jsonData"+jsonData);
         String senderNo = loginMember.getNo();
         String content = (String) jsonData.get("content");
         String x = jsonData.get("senderNo").toString(); // senderNo를 문자열로 가져옴
         int dotIndex = x.indexOf(".");
         String postno = senderNo.substring(0, dotIndex);
-        System.out.println(content+"dd"+"kk"+x+"xx"+"index : "+ dotIndex + "dd"+"postno" +postno);
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시mm분");
         String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
@@ -191,13 +193,11 @@ public class ChatRoomController {
     @ResponseBody
     public int getTeamRoom(Model model, HttpSession session, @RequestBody Map<String, Object> jsonData) {
     	 MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-         System.out.println("jsonData"+jsonData);
          String senderNo = loginMember.getNo();
          String content = (String) jsonData.get("content");
          String x = jsonData.get("senderNo").toString(); // senderNo를 문자열로 가져옴
          int dotIndex = x.indexOf(".");
          String postno = senderNo.substring(0, dotIndex);
-         System.out.println("티룸 "+content+"dd"+"kk"+x+"xx"+"index : "+ dotIndex + "dd"+"postno" +postno);
          
          SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시mm분");
          String formattedDate = dateFormat.format(new Date()); // 현재 시간을 원하는 형식으로 변환
@@ -226,9 +226,35 @@ public class ChatRoomController {
     	List<MemberVo> memberVoList = service.searchMember(map);
     	Gson gson = new Gson();
     	String voList = gson.toJson(memberVoList);
-    	System.out.println("json 전 ㅣㅑㄴㅅ"+memberVoList);
-    	System.out.println(voList);
     	return voList;
     	
     }
+    
+    //1:1 채팅방 미확인 채팅 수 가져오기
+    @PostMapping("checkCnt")
+    @ResponseBody
+    public List<String> checkCnt(HttpSession session) {
+    	 Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
+    	 MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+         // Map에 넣기
+    	List<ChatRoomVo> voList = (List<ChatRoomVo>) session.getAttribute("voList");
+    	List<String> checkCntList = new ArrayList<String>();
+    	Map<String,Object> map = new HashMap();
+    	 for (ChatRoomVo vo : voList) {
+    		 map.put("loginMemberNo",loginMember.getNo());
+	    	map.put("currentTimestamp", currentTimeStamp);
+	    	map.put("user1No",vo.getUser1No());
+	    	map.put("user2No",vo.getUser2No());
+	    	map.put("updateTime1",vo.getUpdateTime1());
+	    	map.put("updateTime2",vo.getUpdateTime2());
+	    	map.put("chatRoomNo",vo.getNo());
+	    	
+           int cnt = service.checkCnt(map);
+           String checkCnt = String.valueOf(cnt);
+           checkCntList.add(checkCnt);
+       }
+    	 return checkCntList;
+    }
+
+// 
 }

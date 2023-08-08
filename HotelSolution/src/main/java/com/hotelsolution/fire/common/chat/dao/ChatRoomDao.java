@@ -33,7 +33,6 @@ public class ChatRoomDao {
     }
 
     public ChatRoomVo findRoomByNo(SqlSessionTemplate sst, String roomId){
-    	System.out.println(roomId);
         return sst.selectOne("chatRoom.findRoomByNo",roomId);
     }
 
@@ -87,5 +86,9 @@ public class ChatRoomDao {
 
 	public List<ChatRoomVo> getChatRoomList(SqlSessionTemplate sst, String no) {
 		return sst.selectList("chatRoom.getChatRoomList",no);
+	}
+
+	public int checkCnt(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectOne("message.checkCnt",map);
 	}
 }
