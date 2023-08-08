@@ -33,7 +33,7 @@
 	  	overflow-y: scroll;
 	    gap: 10px;
 	    width:500px;
-	    height : 600px;
+	    height : 580px;
 	     display: flex;
 	   flex-direction: column; /* 아이템들을 세로로 배치 */
 	   
@@ -122,9 +122,7 @@
 	
 	}
 	 #topnothing{
-        height: 80px;
-        padding-top: 30px;
-        background-color: #3B444B;
+        padding-top: 20px;
         
     }
        #search{
@@ -138,21 +136,26 @@
    }
 </style>
 <body>
- 		<div id="topnothing">
-          
+ 		  <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"> 
+        <div id="topnothing">
+           
+                    
 	            
 	        <div id="search">
+	        	<div class="search-area">
+	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	            </div>
+	            <div  class="search-area">
+					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+				</div>
 	        	<div  class="search-area">
 	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
 	        	</div>
-				<div  class="search-area">
-					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
-				</div>
-				<div class="search-area">
-	           		<a href="${root}/chat/rooms" >${loginMember.name}채팅방</a>
-	            </div>
 	           <input type="hidden" class="memberName" value="${loginMember.name}">
+	           <input type="hidden" class="loginMemberNo" value="${loginMember.no}">
 	           <input type="hidden" class="chatRoomNo" value="${chatRoomNo}">
+	           <input type="hidden" class="user2No" value="${user2No}">
+	           <input type="hidden" class="user1No" value="${user1No}">
 	        </div>
         </div>
          <hr style="background-color: rgb(214, 248, 246);">
@@ -194,7 +197,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://192.168.0.238:8888/fire/hsSock");
+		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
@@ -202,14 +205,39 @@
 		ws.onmessage = funcMessage;
 	  
 		function funcOpen() {
+			
 			const membernameDiv = document.querySelector(".membername");
 			const memberName = membernameDiv.value;
+			
 			console.log("소켓연결됨 ~ !");
 			resultDiv.innerHTML += '<div style="text-align:center;">'+ memberName+'님 환영합니다</div>'
 			resultDiv.scrollTop = resultDiv.scrollHeight;
+			const user1No = document.querySelector(".user1No").value;
+			const user2No = document.querySelector(".user2No").value;
+			const chatRoomNo = document.querySelector(".chatRoomNo").value;
+			const loginMemberNo = document.querySelector(".loginMemberNo").value;
+			$.ajax({
+		        type: "POST",
+		        url: "${root}/chat/updateTime",
+		        data: JSON.stringify({
+		        	user1No: user1No,
+		        	user2No: user2No,
+		            chatRoomNo:chatRoomNo,
+		            loginMemberNo:loginMemberNo
+		        }),
+		        contentType: "application/json",
+		        success: function (response) {
+			            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
 		}
 		
+		
 		function funcClose() {
+							
 			console.log("소켓닫힘 ~ !");
 		}
 		
@@ -220,18 +248,77 @@
 		function funcMessage(event) {
 			console.log("소켓 통해서 메세지 받음 ~ !");
 			const obj = JSON.parse(event.data);
+			const chatRoomNo = document.querySelector(".chatRoomNo").value;
 			console.log(obj);
+			console.log(obj.chatRoomNo);
+			console.log(chatRoomNo);
+			
+			if(obj.chatRoomNo==chatRoomNo){
 			resultDiv.innerHTML += '<div class="chatmessage">' 
 								+ "<strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
 								+ "<span> " + obj.content + " </span>" 
 								+ "<sub>" + obj.sendTime + "</sub>" 
 								+ '</div>';
-			
+			}
 		   resultDiv.scrollTop = resultDiv.scrollHeight;
+		   const user1No = document.querySelector(".user1No").value;
+			const user2No = document.querySelector(".user2No").value;
+			const loginMemberNo = document.querySelector(".loginMemberNo").value;
+			$.ajax({
+		        type: "POST",
+		        url: "${root}/chat/updateTime",
+		        data: JSON.stringify({
+		        	user1No: user1No,
+		        	user2No: user2No,
+		            chatRoomNo:chatRoomNo,
+		            loginMemberNo:loginMemberNo
+		        }),
+		        contentType: "application/json",
+		        success: function (response) {
+			            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
 						            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
 		}
 		
-			
+		 window.addEventListener("beforeunload", function(event) {
+			 const user1No = document.querySelector(".user1No").value;
+               const user2No = document.querySelector(".user2No").value;
+               const chatRoomNo = document.querySelector(".chatRoomNo").value;
+               const loginMemberNo = document.querySelector(".loginMemberNo").value;
+               
+			  $.ajax({
+                  type: "POST",
+                  url: "${root}/chat/updateTime",
+                  data: JSON.stringify({
+                      user1No: user1No,
+                      user2No: user2No,
+                      chatRoomNo: chatRoomNo,
+                      loginMemberNo: loginMemberNo
+                  }),
+                  contentType: "application/json",
+                  success: function (response) {
+                	
+      	               
+						  console.log("updateTime success");
+			                      
+			                      // funcClose 함수 호출
+                      funcClose();
+      	                // 서버의 updateTime 함수 호출
+      	              
+      	            
+                      
+                    
+                  },
+                  error: function (xhr, status, error) {
+                      console.error("Error:", error);
+                  }
+              });
+	           
+	        });
 		
 		
 		function f01(user1No,user2No,chatRoomNo){
@@ -239,10 +326,12 @@
 			const dataToSend = {
 					content: content,
 			        senderNo: user1No,
+			        chatRoomNo : chatRoomNo,
+			        user2No : user2No
 			        
 			    };
 			/* ws.send(JSON.stringify(dataToSend)); */
-			ws.send(dataToSend);
+			ws.send(JSON.stringify(dataToSend));
 			document.querySelector("#chatInput").value="";
 			$.ajax({
 		        type: "POST",

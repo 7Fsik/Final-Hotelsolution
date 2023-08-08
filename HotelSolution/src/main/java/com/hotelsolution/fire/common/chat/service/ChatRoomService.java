@@ -111,4 +111,10 @@ public class ChatRoomService {
 	public List<ChatRoomVo> getChatRoomList(String no) {
 		return dao.getChatRoomList(sst,no);
 	}
+
+
+
+	public int checkCnt(Map<String, Object> map) {
+		return dao.checkCnt(sst,map);
+	}
 }

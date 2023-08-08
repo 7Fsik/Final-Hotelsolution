@@ -9,7 +9,8 @@
 		      	NO
 				,USER1_NO
 				,USER2_NO
-				,UPDATE_TIME
+				,UPDATE_TIME1
+				,UPDATE_TIME2
 				
 		    )
 		    VALUES (
@@ -17,59 +18,102 @@
 		        ,#{user1No}
 		        ,#{user2No}
 		        ,SYSDATE
+		        ,SYSDATE
 		        
 		    )
 	</insert>
 	<select id="getCreateChatRoomVo" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo" parameterType="java.util.Map">
 		SELECT 
-		    NO
-		    ,USER1_NO AS USER1NO
-		    ,USER2_NO AS USER2NO
-		    ,UPDATE_TIME AS UPDATETIME
+		    CR.NO
+		    ,CR.USER1_NO AS USER1NO
+		    ,CR.USER2_NO AS USER2NO
+		    ,CR.UPDATE_TIME1 AS UPDATETIME1
+            ,M.NO
+            ,U.NO
+            ,M.POSITION_NO
+            ,U.POSITION_NO
+             ,M.NAME AS USER1NAME
+            ,U.NAME AS USER2NAME
+            ,M.CHANGE_IMAGE AS USER1IMAGE
+            ,U.CHANGE_IMAGE AS USER2IMAGE
+            ,M.TEAM_NO
+            ,U.TEAM_NO
+            ,P1.NAME AS USER1POSITIONNAME
+            ,P2.NAME AS USER2POSITIONNAME
+            ,T1.TEAM_NAME AS USER1TEAMNAME
+            ,T2.TEAM_NAME AS USER2TEAMNAME
+            
 		    
-		FROM CHAT_ROOM
+		FROM CHAT_ROOM CR
+        JOIN MEMBER M
+        ON M.NO = CR.USER1_NO
+        JOIN MEMBER U
+        ON U.NO = CR.USER2_NO
+        JOIN POSITION P1
+        ON M.POSITION_NO= P1.NO
+        JOIN POSITION P2 
+        ON U.POSITION_NO =P2.NO 
+        JOIN TEAM T1
+        ON M.TEAM_NO=T1.TEAM_NO
+        JOIN TEAM T2
+        ON U.TEAM_NO = T2.TEAM_NO
 		WHERE (USER1_NO = #{user1No} AND USER2_NO = #{user2No})
 		    OR (USER1_NO = #{user2No} AND USER2_NO = #{user1No})
 
 	</select>
 
-	<select id="findAllRooms" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo">
-		SELECT 
-	    	NO
-			,USER1_NO AS USER1NO
-			,USER2_NO AS USER2NO
-			,UPDATE_TIME AS UPDATETIME
-	    
-	    FROM CHAT_ROOM
-	    WHERE USER1_NO = #{no}
-	    OR USER2_NO = #{no}
-	</select>
-	
-	<select id="findRoomByNo" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo">
-		SELECT 
-	    	NO
-			,USER1_NO AS USER1NO
-			,USER2_NO AS USER2NO
-			,UPDATE_TIME AS UPDATETIME
-	    
-	    FROM CHAT_ROOM
-	    WHERE NO = #{roomId}
-	</select>
+
 	<update id="updateTime">
 		UPDATE CHAT_ROOM
-		SET UPDATE_TIME = SYSDATE
-		  WHERE (USER1_NO=#{user1No} AND USER2_NO=#{user2No}) 
-	        OR (USER1_NO=#{user2No} AND USER2_NO=#{user1No})
+		 <choose>
+		        <when test="user1No == loginMemberNo">
+		            SET UPDATE_TIME1 = SYSDATE
+		        </when>
+		        <when test="user2No == loginMemberNo">
+		            SET UPDATE_TIME2 = SYSDATE
+		        </when>
+		    </choose>
+		  WHERE no = #{chatRoomNo}
+		  
+		
 	</update>
 	
 	<select id="getChatRoomList" resultType="com.hotelsolution.fire.common.chat.vo.ChatRoomVo" parameterType="java.util.Map">
 		SELECT 
-		    NO
-		    ,USER1_NO AS USER1NO
-		    ,USER2_NO AS USER2NO
-		    ,UPDATE_TIME AS UPDATETIME
+		    CR.NO
+		    ,CR.USER1_NO AS USER1NO
+		    ,CR.USER2_NO AS USER2NO
+		    ,CR.UPDATE_TIME1 AS UPDATETIME1
+		    ,CR.UPDATE_TIME2 AS UPDATETIME2
+            ,M.NO
+            ,U.NO
+            ,M.NAME AS USER1NAME
+            ,U.NAME AS USER2NAME
+            ,M.CHANGE_IMAGE AS USER1IMAGE
+            ,U.CHANGE_IMAGE AS USER2IMAGE
+            ,M.POSITION_NO
+            ,U.POSITION_NO
+            ,M.TEAM_NO
+            ,U.TEAM_NO
+            ,P1.NAME AS USER1POSITIONNAME
+            ,P2.NAME AS USER2POSITIONNAME
+            ,T1.TEAM_NAME AS USER1TEAMNAME
+            ,T2.TEAM_NAME AS USER2TEAMNAME
+            
 		    
-		FROM CHAT_ROOM
+		FROM CHAT_ROOM CR
+        JOIN MEMBER M
+        ON M.NO = CR.USER1_NO
+        JOIN MEMBER U
+        ON U.NO = CR.USER2_NO
+        JOIN POSITION P1
+        ON M.POSITION_NO= P1.NO
+        JOIN POSITION P2 
+        ON U.POSITION_NO =P2.NO 
+        JOIN TEAM T1
+        ON M.TEAM_NO=T1.TEAM_NO
+        JOIN TEAM T2
+        ON U.TEAM_NO = T2.TEAM_NO
 		WHERE USER1_NO = #{no} or USER2_NO = #{no}
 
 	</select>

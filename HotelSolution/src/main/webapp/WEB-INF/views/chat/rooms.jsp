@@ -95,9 +95,7 @@
    		height:100px;
    }
    #topnothing{
-        height: 80px;
-        padding-top: 30px;
-        background-color: #3B444B;
+        padding-top: 20px;
         
     }
        #search{
@@ -164,67 +162,124 @@
    		background-color: lightgray;
    		cursor: pointer;
    }
+    .scrollable-container {
+    height:600px;
+        max-height: 600px; /* 원하는 높이로 조정하세요 */
+        overflow-y: auto;
+        border: 1px solid #ccc; /* 스크롤 가능한 컨테이너를 감싸는 테두리를 추가합니다 */
+    }
+    .uimage{
+    	text-align: center;
+    	align-content: center;
+    	align-items: center;
+    }
+    .uImage > img{
+    	width: 72px;
+    	height: 72px;
+    	border-radius: 10px;
+    	
+    }
+    .currentMsg{
+  	text-align: right; 
+  	padding-right:10px; 
+  	color: red; 
+    }
+    .chatRoomList{
+    	cursor: pointer;
+    }
 </style>
 <body>
+              <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"> 
         <div id="topnothing">
-          
-            
-        <div id="search">
-        	<div  class="search-area">
-        		<a href="${root}/chat/hsroom">공용 채팅방</a>
-        	</div>
-			<div  class="search-area">
-				<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
-			</div>
-			<div class="search-area">
-           		${loginMember.name}채팅방
-            </div>
-           
-        </div>
+           <input type="hidden" id="loginMemberNo" value="${loginMember.no}">
+                    
+	            
+	        <div id="search">
+	        	<div class="search-area">
+	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	            </div>
+	            <div  class="search-area">
+					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+				</div>
+	        	<div  class="search-area">
+	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        	</div>
+				
+				
+	           
+	        </div>
         </div>
         <hr style="background-color: rgb(214, 248, 246);">
 	<div class="chatlistWrap">
 
-    	<div>
-    	
-    		<c:forEach items="${voList}" var="vo">
-    			<div>
-    				${vo }
-    			</div>
-    		</c:forEach>
-          
-     
-               
-			<div>
+	    <div class="scrollable-container">
+		    <c:forEach items="${voList}" var="vo">
+		    	<c:if test="${vo.user1No eq (loginMember.no)}">
+		  
+			       <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;" onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})"> <!-- 수정된 부분 -->
+					    <div class="uImage"><img alt="" src="${root}/resources/img/member/profile/${vo.user2Image}"></div>
+					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
+					        <div style="padding-left: 20px;">${vo.user2Name} ${vo.user2PositionName} (${vo.user2TeamName})</div>
+					        <div class="currentMsg" ></div>
+					        <input type="hidden" class="teamChatNo" value="${vo.no}">
+					       
+					    </div>
+					</div>
+					<br>
+				</c:if>
+				<c:if test="${vo.user2No eq (loginMember.no)}">
+				
+			     <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;"onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})">
+					    <div class="uImage">  	<img alt="" src="${root}/resources/img/member/profile/${vo.user1Image}"></div>
+					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
+					        <div  style="padding-left: 20px;">${vo.user1Name} ${vo.user1PositionName} (${vo.user1TeamName})</div>
+					        <div class="currentMsg" > </div>
+						    <input type="hidden" class="teamChatNo" value="${vo.no}">
+					    </div>
+					</div>
+					<br>
+				</c:if>
+
+		    </c:forEach>
+		</div>
+	</div>
 		    <button id="openModalBtn">생성</button>
-			</div>
 			
-			<!-- 모달 엘리먼트 -->
-			<!-- 모달 엘리먼트 -->
-			<div id="myModal" class="modal">
-			    <div class="modal-content">
-			        <span class="close">&times;</span>
-			        <div id="teamWrap" style="height:500px;">
-		            	<div>
-				            <c:forEach items="${tvo}" var="tvo">
-				                <div class="team" onclick="goPosition(this)" style="height: 100px; display:grid; grid-template-columns:1fr 1fr"><span style="height: 22px"  class="teamhover">${tvo.teamName}</span>
-				                	<div id="positionContainer" class="positionContainer"  style="display: none;">
-									  <c:forEach items="${pvo}" var="pvo">
-									  		<div class="teamContainer" onclick="searchMember(${tvo.teamNo},${pvo.no})">
-									  			${pvo.name}	
-									  		</div>
-									  </c:forEach>
-								</div>
-				                	
-				                </div>
-								
-				            </c:forEach>
-			            </div>
-			            <div id="detailsContainer">
-			            </div>
-			        </div>
-			    </div>
-			</div>
+				<!-- 모달 엘리먼트 -->
+				<!-- 모달 엘리먼트 -->
+				<div id="myModal" class="modal">
+				    <div class="modal-content">
+				    <div id="searchArea">
+		                    <select id="searchType">
+		                        <option value="name">이름</option>
+		                        <option value="positionName">직책</option>
+		                        <option value="teamName">부서</option>
+		                    </select>
+		                    <input type="text" id="searchValue" placeholder="검색할 값을 입력하세요">
+		                    <button id="searchButton" onclick="performSearch()">검색</button>
+               		 </div>
+				        <span class="close">&times;</span>
+				        <div id="teamWrap" style="height:500px;">
+			            	<div>
+					            <c:forEach items="${tvo}" var="tvo">
+					                <div class="team" onclick="goPosition(this)" style="height: 100px; display:grid; grid-template-columns:1fr 1fr"><span style="height: 22px"  class="teamhover">${tvo.teamName}</span>
+					                	<div id="positionContainer" class="positionContainer"  style="display: none;">
+										  <c:forEach items="${pvo}" var="pvo">
+										  		<div class="teamContainer" onclick="searchMember(${tvo.teamNo},${pvo.no})">
+										  			${pvo.name}	
+										  		</div>
+										  </c:forEach>
+									</div>
+					                	
+					                </div>
+									
+					            </c:forEach>
+				            </div>
+				            <div id="detailsContainer">
+				            </div>
+				        </div>
+				    </div>
+				</div>
 
        
   
@@ -271,6 +326,34 @@ function goPosition(clickedTeam) {
     
     // firstTeamContainer를 여기서 사용할 수 있습니다.
 }
+function performSearch() {
+	
+    const searchType = document.querySelector("#searchType").value; // 검색 조건 가져오기
+    const searchValue = document.querySelector("#searchValue").value; // 검색 값을 가져오기
+
+    $.ajax({
+        url: "${root}/chat/searchMember",
+        method: 'POST',
+        data: {
+            searchType: searchType,
+            searchValue: searchValue // 변수명 수정
+        },
+        dataType: 'json', 
+        success: function(data) {
+            let str = "";
+            const length = data.length;
+            const div = document.querySelector("#detailsContainer");
+            div.innerHTML = ""; // #detailsContainer 내용 비우기
+            let loginMemberNo = document.querySelector("#loginMemberNo").value;
+            for (let i = 0; i < length; i++) {
+                div.innerHTML += '<div class="list" onclick="createChat(' + data[i].no + ',' + loginMemberNo + ')">' + '('+data[i].teamName+')'+ data[i].name + '</div>';
+            }
+        },
+        error: function(error) {
+            // AJAX 요청이 실패했을 때 처리
+        }
+    });
+}
 
 function searchMember(teamNo, positionNo) {
     $.ajax({
@@ -285,9 +368,11 @@ function searchMember(teamNo, positionNo) {
             let str = "";
             const length = data.length;
             const div = document.querySelector("#detailsContainer");
+            div.innerHTML = ""; // #detailsContainer 내용 비우기
+            let loginMemberNo = document.querySelector("#loginMemberNo").value;
             for (let i = 0; i < length; i++) {
-                // 문자열 연결 연산자 사용
-                div.innerHTML += '<div class="list" onclick="createChat(' +data[i].no + ')">' + data[i].name + '</div>';
+            	
+            	div.innerHTML += '<div class="list" onclick="createChat(' + data[i].no + ',' + loginMemberNo + ')">' + '('+data[i].teamName+')'+ data[i].name + '</div>';
             }
             
           
@@ -298,7 +383,12 @@ function searchMember(teamNo, positionNo) {
     });
 }
 
-function createChat(no) {
+function createChat(no,loginMemberNo) {
+	  if (no === loginMemberNo) {
+	        alert("본인과의 채팅은 불가능 합니다."); // 메시지 표시
+	        return; // 실행 중단
+	    }
+
     $.ajax({
         url: "${root}/chat/room",
         method: 'POST',
@@ -321,8 +411,43 @@ function goChatRoom(user1No,user2No,chatRoomNo){
 	window.location.href = "${root}/chat/room?selectMemberNo=" + user2No+"&user1No="+user1No+"&chatRoomNo="+chatRoomNo;
 }
 
+noneCheckCnt;
+function noneCheckCnt() {
+ 
+
+    // AJAX 요청을 보냅니다.
+	// class명이 currentMsg인 요소들을 가져옵니다.
+	const currentMsgElements = document.querySelectorAll('.currentMsg');
+
+	$.ajax({
+	    url: "${root}/chat/checkCnt", // 실제 서버의 URL 주소로 대체해야 합니다.
+	    method: 'POST', // 또는 GET 등 HTTP 메서드를 선택합니다.
+	    dataType: 'json',
+	    success: function(response) {
+	        console.log("서버 응답:", response);
+	        // response는 배열 형태의 데이터일 것이므로, 배열의 각 요소를 순회합니다.
+	        for (let i = 0; i < response.length; i++) {
+	            // 현재 반복하는 요소의 innerText 값을 가져옵니다.
+	            if(response[i]!=0){
+	            	
+	            currentMsgElements[i].innerText = response[i];
+	            }
+	            
+	            // 가져온 innerText와 response 값을 조합하여 작업을 수행합니다.
+	        }
+	    },
+	    error: function(error) {
+	        // AJAX 요청이 실패했을 때 처리하는 로직
+	        console.error("에러:", error);
+	    }
+	});
 
 
+}
+
+	
+	//함수 호출로 "teamChatNo" 값을 서버로 전송합니다.
+	noneCheckCnt();
 </script>
 	
 </body>

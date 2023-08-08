@@ -122,9 +122,7 @@
 	
 	}
 	 #topnothing{
-        height: 80px;
-        padding-top: 30px;
-        background-color: #3B444B;
+        padding-top: 20px;
         
     }
        #search{
@@ -139,19 +137,21 @@
 </style>
 <body>
 
-	 <div id="topnothing">
-          
-            
-        <div id="search">
-        	<div  class="search-area">
-        		<a href="${root}/chat/hsroom">공용 채팅방</a>
-        	</div>
-			<div  class="search-area">
-				<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
-			</div>
-			<div class="search-area">
-           		<a href="${root}/chat/rooms">${loginMember.name}채팅방</a>
-            </div>
+	   <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"> 
+        <div id="topnothing">
+           
+                    
+	            
+	        <div id="search">
+	        	<div class="search-area">
+	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	            </div>
+	            <div  class="search-area">
+					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+				</div>
+	        	<div  class="search-area">
+	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        	</div>
                <input type="hidden" class="memberName" value="${loginMember.name }">
                <input type="hidden" class="teamNo" value="${loginMember.teamNo }">
         </div>
@@ -194,7 +194,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://192.168.0.238:8888/fire/hsSock");
+		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;

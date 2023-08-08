@@ -15,13 +15,14 @@
 	        ,CR.NO
 	        ,CR.USER1_NO AS USER1NO
 	        ,CR.USER2_NO AS USER2NO
-	        ,CR.UPDATE_TIME AS UPDATETIME
+	        ,CR.UPDATE_TIME1 AS UPDATETIME1
+	        ,CR.UPDATE_TIME2 AS UPDATETIME2
 	        ,U.NO 
 	        ,U.TEAM_NO TEAMNO
 	        ,U.POSITION_NO POSITIONNO
 	        ,U.NAME AS SENDERNAME
 	        ,P.NAME AS SENDERPOSITIONNAME
-	        ,T.TEAM_NO AS SENDERTEAMNAME
+	        ,T.TEAM_NAME AS SENDERTEAMNAME
 	    FROM MESSAGE M 
 	    JOIN CHAT_ROOM CR
 	    ON M.CHAT_ROOM_NO = CR.NO
@@ -55,5 +56,27 @@
 		        
 		    )
 	</insert>
+	<select id="checkCnt" resultType="int" parameterType="java.util.Map">
+	
+	
+		SELECT COUNT(*) AS CNT
+		FROM MESSAGE ME
+		JOIN CHAT_ROOM CR ON CR.NO = ME.CHAT_ROOM_NO
+		WHERE CR.NO = #{chatRoomNo}
+		   <!--  AND ME.ENROLL_DATE >= TO_DATE('2023-08-08 18:09:22', 'YY/MM/DD HH24:MI:SS')
+		    AND ME.ENROLL_DATE <= TO_DATE('2023-08-08 19:51:22', 'YY/MM/DD HH24:MI:SS') -->
+           <![CDATA[AND ME.ENROLL_DATE <= #{currentTimestamp}]]>
+		        <choose>
+		            <when test="user1No == loginMemberNo">
+		                <![CDATA[ AND ME.ENROLL_DATE >= #{updateTime1}]]>
+		            </when>
+		            <when test="user2No == loginMemberNo">
+		               <![CDATA[ AND ME.ENROLL_DATE >= #{updateTime2}]]>
+		            </when>
+		        </choose>
+	
+</select>
+
+	
 	
 </mapper>
