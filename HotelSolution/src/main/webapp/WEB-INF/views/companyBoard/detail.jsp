@@ -213,8 +213,10 @@
 
                     // writer, enrollDate 요소 추가
                     const commentNo = document.createElement("span");
-                    commentNo.className = "comment-writer-no";
+                    commentNo.className = "comment-no";
                     commentNo.textContent = comment.commentNo;
+                    commentNo.style.display = 'none';
+
 
                     const writerName = document.createElement("span");
                     writerName.className = "comment-writer-name";
@@ -222,6 +224,7 @@
 
                     const enrollDate = document.createElement("span");
                     enrollDate.className = "comment-date";
+                    enrollDate.textContent = comment.elapsedSinceEnrollDate;
 
                     const commentContent = document.createElement("div");
                     commentContent.className = "comment-content";
@@ -260,33 +263,36 @@
                 updatePagination(pageVo);
 
                 $('.comment-delete-btn').on('click',function (){
-                    let commentNo = document.querySelector('.comment-writer-no').textContent;
+                    let commentNo = document.querySelector('.comment-no').textContent;
 
-                    $.ajax({
-                        url : "${root}/board/comment/delete"
-                        ,type : "POST"
-                        ,data : {
-                            boardNo : ${companyBoardVo.no} //게시글번호
-                            ,commentNo : commentNo,
-                        }
-                        ,success: (x) => {
-                            console.log(x);
-                            if (x === 'success') {
-                                alert('댓글 삭제성공');
-                                loadBoardCommentList(1); // 댓글을 작성한 후 목록을 새로 고침합니다.
-                            } else {
-                                alert("댓글 삭제실패");
+                    if (confirm("댓글을 삭제하시겠습니까?")) {
+                        $.ajax({
+                            url: "${root}/board/comment/delete",
+                            type: "POST",
+                            data: {
+                                boardNo: ${companyBoardVo.no}, // 게시글번호
+                                commentNo: commentNo,
+                            },
+                            success: (x) => {
+                                console.log(x);
+                                if (x === 'success') {
+                                    alert('댓글 삭제성공');
+                                    loadBoardCommentList(1); // 댓글을 작성한 후 목록을 새로 고침합니다.
+                                } else {
+                                    alert("댓글 삭제실패");
+                                }
+                            },
+                            error: (x) => {
+                                console.log(x);
                             }
-                        },
-                        error: (x) => {
-                            console.log(x);
-                        }
-                    });
+                        });
+                    } else {
+                    }
                 });
 
                 $(".comment-edit-btn").on("click", function () {
                     // 수정할 댓글의 번호와 내용을 가져옵니다.
-                    const commentNo = document.querySelector('.comment-writer-no').textContent;
+                    const commentNo = document.querySelector('.comment-no').textContent;
                     const commentContent = $(this).siblings(".comment-content");
 
                     // 댓글 수정 입력창이 있는지 검사하고 없으면 생성���니다.

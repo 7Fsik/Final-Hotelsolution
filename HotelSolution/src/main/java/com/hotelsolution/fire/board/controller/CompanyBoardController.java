@@ -8,11 +8,10 @@ import com.hotelsolution.fire.board.vo.CompanyBoardCommentVo;
 import com.hotelsolution.fire.board.vo.CompanyBoardVo;
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
-import com.hotelsolution.fire.temp.FireConstPool;
+import com.hotelsolution.fire.common.temp.FireConstPool;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -190,7 +188,6 @@ public class CompanyBoardController {
         if(loginMember != null){
             String loginMemberNo = loginMember.getNo();
             companyBoardVo.setWriterNo(loginMemberNo);
-            companyBoardVo.setEnrollDate(LocalDateTime.now());
             log.info("수정후 넘어오는데이터 {} ", companyBoardVo);
             int result = boardService.companyBoardEditByNo(companyBoardVo);
             if(result != 1){
@@ -212,6 +209,10 @@ public class CompanyBoardController {
         int companyBoardCommentLimit = FireConstPool.COMPANY_BOARD_COMMENT_LIMIT;
         PageVo pageVo = new PageVo(commentlistCnt, currentPage, companyBoardCommentPageLimit, companyBoardCommentLimit);
         List<CompanyBoardCommentVo> companyBoardCommentVo = boardService.getAllCommentListByNo(boardNo, pageVo);
+
+        for (CompanyBoardCommentVo comment : companyBoardCommentVo) {
+            comment.setElapsedSinceEnrollDate();
+        }
 
         CommentResponse commentResponse = new CommentResponse();
         commentResponse.setCommentList(companyBoardCommentVo);
