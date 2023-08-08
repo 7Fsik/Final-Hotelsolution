@@ -63,7 +63,7 @@
                                         <td>${board.teamName}</td>
                                         <td>${board.writerName}</td>
                                         <td>${board.hit}</td>
-                                        <td>${board.enrollDate}</td>
+                                        <td>${board.elapsedSinceEnrollDate}</td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -75,13 +75,19 @@
                                 <c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
                                     <c:choose>
                                         <c:when test="${pv.currentPage != i}">
-                                            <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">${i}</a>
+                                            <c:if test="${not empty paramMap.searchType and not empty paramMap.searchValue}">
+                                                <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">${i}</a>
+                                            </c:if>
+                                            <c:if test="${empty paramMap.searchType or empty paramMap.searchValue}">
+                                                <a class="btn btn-primary btn-sm" href="${root}/board/list/${i}">${i}</a>
+                                            </c:if>
                                         </c:when>
                                         <c:otherwise>
                                             <a class="btn btn-primary btn-sm">${i}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
+
                                 <c:if test="${pv.currentPage < pv.maxPage}">
                                     <a class="btn btn-primary btn-sm" href="${root}/board/list/${pv.currentPage + 1}?searchType=${paramMap.searchType}&searchValue=${paramMap.searchValue}">다음</a>
                                 </c:if>
