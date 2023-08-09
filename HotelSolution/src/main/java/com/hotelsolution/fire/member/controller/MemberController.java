@@ -117,7 +117,15 @@ public class MemberController {
 		
 	}//login
 	
-	//로그인
+	//로그아웃
+	@GetMapping("logout")
+	public String logout(HttpSession session) {
+		
+		session.invalidate();
+		
+		return "redirect:/member/login";
+		
+	}
 	
 	//비밀번호 이메일 인증(화면)
 	@GetMapping("emailAuthentication")

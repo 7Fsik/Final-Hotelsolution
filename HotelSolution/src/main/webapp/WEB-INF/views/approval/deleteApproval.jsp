@@ -19,10 +19,11 @@
     #approval{
         border: 1px solid white;
         width: 1200px;
-        height: 700px;
+        height: 750px;
         background-color:white;
         margin:auto;
         border-radius:10px;
+        margin-top:20px;
     }
     
     #approval a{

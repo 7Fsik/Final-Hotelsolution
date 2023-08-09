@@ -64,7 +64,7 @@ public class WorkOutController {
 
         // LocalDateTime을 다시 Timestamp로 변환
         Timestamp sevenDaysAgoTimestamp = Timestamp.valueOf(sevenDaysAgoLocalDateTime);
-		Map<String,Object> map = new HashMap();
+		Map<String,Object> map = new HashMap<>();
 		map.put("currentTimestamp", currentTimestamp);
 		map.put("sevenDaysAgoTimestamp", sevenDaysAgoTimestamp);
 		map.put("no", loginMember.getNo());
@@ -94,9 +94,7 @@ public class WorkOutController {
         dayToIndexMap.put("FRIDAY", 5);
         dayToIndexMap.put("SATURDAY", 6);
         String dayOfWeekString = currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH).toUpperCase();
-        System.out.println(dayOfWeekString);
         Integer todayindex = dayToIndexMap.get(dayOfWeekString);
-        System.out.println("todayindex"+todayindex);
         for (WorkoutVo vo : voList) {
             String day = vo.getDayOfWeek();
             String h = vo.getTotalWorkHours();
@@ -107,7 +105,6 @@ public class WorkOutController {
 
             // dayToIndexMap에서 해당 요일에 해당하는 인덱스 번호를 가져옴
             Integer index = dayToIndexMap.get(day);
-            System.out.println("index"+index+day);
             if (index != null) {
                 // tableList에 해당 인덱스 번호에 h 값을 추가
             	workMinuteList.set(index, h);
@@ -136,13 +133,6 @@ public class WorkOutController {
       
       String lastM = Integer.toString(lastMin);
       String min = Integer.toString(k);
-      System.out.println("workMinuteList"+workMinuteList);
-      System.out.println("workStartTimeList"+workStartTimeList);
-      System.out.println("workStartDayList"+workStartDayList);
-      System.out.println("workEndTimeList"+workEndTimeList);
-      System.out.println("workEndDayList"+workEndDayList);
-      System.out.println("min"+min);
-      System.out.println("lastM"+lastM);
       
       
 		model.addAttribute("workMinuteList",workMinuteList);
@@ -162,7 +152,7 @@ public class WorkOutController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
-		Map<String,Object> map = new HashMap();
+		Map<String,Object> map = new HashMap<>();
 		LocalDate currentDate = LocalDate.now();
 	   DayOfWeek currentDayOfWeek = currentDate.getDayOfWeek();
 		map.put("no", no);
@@ -199,16 +189,22 @@ public class WorkOutController {
 		String tworkM = Integer.toString(total);		
 		String workoutNo = wvo.getNo();
 		
-		Map<String,Object> map = new HashMap();
+		Map<String, String> params = new HashMap<>();
+		params.put("workoutNo", workoutNo);
+		params.put("tworkM", tworkM);
+		
+		Map<String,Object> map = new HashMap<>();
 		map.put("workoutNo", workoutNo);
 		map.put("endTime", currentTimestamp);
 		map.put("tworkM", tworkM);
+		System.out.println("currentTimestamp : "+ currentTimestamp);
+		System.out.println("workoutNo : "+ workoutNo);
 		
 		
 		
 		int result = service.recordEndTime(map);
-//		int result2 = service.updateTotalWorkHours(workoutNo);
-		if(result != 1) {
+		int result2 = service.updateTotalWorkHours(params);
+		if(result != 1 && result2 != 1) {
 			return "fail";
 		}
 			return "success";

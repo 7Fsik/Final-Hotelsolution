@@ -23,5 +23,9 @@ public class MemberVo {
    private String positionName;
    private String teamAddress;
    
+   //승권추가
+   private String approvalPower;
+   
+   
    
 }
