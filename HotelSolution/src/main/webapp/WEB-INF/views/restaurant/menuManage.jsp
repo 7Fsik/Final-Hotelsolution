@@ -236,10 +236,10 @@
                                     </select>
                     </div>
                     <div class="line">
-                        메뉴 이름 : <input type="text" name="menuName" id="menuName" class="sis">
+                        메뉴 이름 : <input type="text" name="menuName" id="menuName" class="sis" placeholder="">
                     </div>
                     <div class="line">
-                        가격 : <input type="text" name="menuPrice" id="menuPrice" class="sis"> 원
+                        가격 : <input type="text" name="menuPrice" id="menuPrice" class="sis" placeholder="숫자만 입력하시오"> 원
                     </div>
                 </div>
                 <div class="model-btn">
@@ -348,6 +348,7 @@
                     } ,
                     success :function(x){   
                         console.log(x);
+                        alert("수정완료");
                         menuList();
 
                     } ,
@@ -380,6 +381,8 @@
                     } ,
                     success :function(x){   
                         console.log(x);
+                        alert("삭제완료");
+                        menuList();
                         
                     } ,
                     error : function(x){
@@ -387,7 +390,6 @@
                     },
                 });
 
-                menuList();
 
             });
         });
@@ -431,6 +433,7 @@
             success :function(x){   
                 console.log(x);
                 alert("메뉴 추가 완료");
+                menuList();
                 
             } ,
             error : function(x){
@@ -444,7 +447,6 @@
         modal.style.display = 'none';
         overlay.style.display = "none";
 
-        menuList();
 
     }
 

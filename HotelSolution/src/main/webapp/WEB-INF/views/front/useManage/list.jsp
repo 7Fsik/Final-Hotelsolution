@@ -114,7 +114,7 @@
             <div id="list-area">
                 <div id="list">
                     <c:forEach items="${useList}" var="useList">
-                        <div class="att"onclick="location.href='/fire/front/useManage/detail'">
+                        <div class="att"onclick="location.href='/fire/front/useManage/detail?no=${useList.roomUseNo}'">
                             <div class="img">
                                 <img src="/fire/static/img/front/room001.jpg">
                             </div>

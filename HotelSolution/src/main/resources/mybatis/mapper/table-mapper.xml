@@ -49,20 +49,74 @@
 	<insert id="useBook">
 	
 	INSERT INTO RESTAURANT_BOOK_LIST
-	(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE)
+	(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE,PRICE_YN)
 	VALUES
-	(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,SYSDATE,#{memberNo},#{bookpp},'Y',0)
+	(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,SYSDATE,#{memberNo},#{bookpp},'Y',0,'N')
 	
 	
 	</insert>
 	
 	<insert id="book">
 	
-	INSERT INTO RESTAURANT_BOOK_LIST(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE)
-	VALUES(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,#{bookDate},#{memberNo},#{bookpp},'N',0)
-	
+	INSERT INTO RESTAURANT_BOOK_LIST(NO,TABLE_NO,NAME,PHONE_NUMBER,BOOK_TIME,USE_TIME,BOOKED_EMPLOYEE,BOOK_PEOPLE,CHECK_YN,TOTAL_PRICE,PRICE_YN)
+	VALUES(SEQ_RESTAURANT_BOOK_LIST_NO.NEXTVAL,#{tableNo},#{bookName},#{bookPhone},SYSDATE,#{bookDate},#{memberNo},#{bookpp},'N',0,'N')
 	
 	</insert>
+	
+	<select id="getTotalPrice"  resultType="TablePrice">
+	
+	SELECT * FROM RESTAURANT_BOOK_LIST 
+	WHERE USE_TIME &gt;= #{startDateTime} AND USE_TIME &lt;= #{endDateTime}
+	AND PRICE_YN = 'N' AND CHECK_YN='Y'
+	
+	</select>
+	
+	<select id="getMenu" resultType="MenuVo">
+	SELECT
+	M.FOOD_NO,
+	M.NAME,
+	M.PAY,
+	M.FOOD_TYPE,
+	T.NO,
+	T.FOOD_TYPE AS TYPE_NAME
+	FROM FOOD_MENU M 
+	JOIN FOOD_TYPE T  ON M.FOOD_TYPE=T.NO
+	</select>
+	
+	<select id="getUse" resultType="TableBookVo">
+		
+		SELECT * FROM RESTAURANT_BOOK_LIST 
+		WHERE USE_TIME &gt;= #{startDateTime} AND USE_TIME &lt;= #{endDateTime}
+		AND PRICE_YN = 'N' AND CHECK_YN='Y' AND TABLE_NO=#{no}
+	
+	</select>
+	
+	<select id="posOrder">
+	
+		INSERT ALL
+	    <foreach collection="menuList" item="menu" index="index" separator=" ">
+	        INTO FOOD_ORDER(NO, FOOD_NO, BOOK_NO, COUNT)
+	        VALUES(SEQ_FOOD_ORDER_NO.NEXTVAL+${index}, #{menu}, #{useNo}, 1)
+	    </foreach>
+	    SELECT * FROM DUAL
+	
+	</select>
+	
+	<update id="totalPrice">
+	
+		UPDATE RESTAURANT_BOOK_LIST
+		SET TOTAL_PRICE = TOTAL_PRICE + #{totalPrice}
+		WHERE NO = #{useNo}
+	
+	</update>
+	
+	<update id="payment">
+	
+		UPDATE RESTAURANT_BOOK_LIST
+		SET PRICE_YN = 'Y'
+		WHERE NO = #{useNo}
+	
+	</update>
 	
 
 
