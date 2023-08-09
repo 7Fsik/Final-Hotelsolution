@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.hotelsolution.fire.restaurant.table.dao.TableDao;
 import com.hotelsolution.fire.restaurant.table.vo.TableIntVo;
+import com.hotelsolution.fire.restaurant.table.vo.TablePrice;
+import com.hotelsolution.fire.restaurant.vo.MenuVo;
 import com.hotelsolution.fire.restaurant.table.vo.TableBookVo;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class TableServiceImpl implements TableService{
 	
 	
 	//객실 예약 이용
+	@Override
 	public List<TableIntVo> getRoomInt() {
 		return td.getRoomInt(sst);
 	}
@@ -49,6 +52,36 @@ public class TableServiceImpl implements TableService{
 	@Override
 	public int book(Map<String, String> bookMap) {
 		return td.book(sst, bookMap);
+	}
+
+	@Override
+	public List<TablePrice> getTotalPrice(Map<String, String> date) {
+		return td.getTotalPrice(sst,date);
+	}
+
+	@Override
+	public List<MenuVo> getMenu() {
+		return td.getMenu(sst);
+	}
+
+	@Override
+	public TableBookVo getUse(Map<String, String> date) {
+		return td.getUse(sst,date);
+	}
+
+	@Override
+	public int posOrder(Map<String, Object> posOrderMap) {
+		return td.posOrder(sst,posOrderMap);
+	}
+
+	@Override
+	public int totalPrice(Map<String, String> price) {
+		return td.totalPrice(sst, price);
+	}
+
+	@Override
+	public int payment(String useNo) {
+		return td.payment(sst,useNo);
 	}
 
 }

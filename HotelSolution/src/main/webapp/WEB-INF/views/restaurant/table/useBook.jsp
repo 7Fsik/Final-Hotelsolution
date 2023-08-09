@@ -29,32 +29,6 @@
         left: 80%;
         width: 300px;
     }
-    .table-int{
-        border: 3px solid rgba(59, 68, 75, 1);
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: center;
-        border-radius: 10px;
-    }
-    .btn-area{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 3px;
-        height: 15%;
-        position: relative;
-        bottom: 2px;
-        font-size: 0.6em;
-        align-items: center
-    }
-    .bbb{
-        border:0;
-        background-color: rgba(59, 68, 75, 1);
-        color: white;
-        border-radius: 5px;
-        font-size: 0.9em;
-    }
     #table-area{
         width: 95%;
         height: 82%;
@@ -64,6 +38,34 @@
         margin: auto;
         grid-gap: 10px;
     }
+    .table-int{
+        border: 3px solid rgba(59, 68, 75, 1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        position: relative;
+    }
+    .btn-area{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 3px;
+        height: 15%;
+        position: relative;
+        bottom: 2px;
+        font-size: 0.8em;
+        align-items: center
+    }
+    .bbb{
+        border:0;
+        background-color: rgba(59, 68, 75, 1);
+        color: white;
+        border-radius: 5px;
+        font-size: 0.9em;
+        height: 80%;
+    }
+    
     .t-bold{
         font-weight: bold;
     }
@@ -73,9 +75,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-y: auto;
     }
     .ss{
-        font-size: 0.6em;
+        font-size: 0.8em;
     }
     .book-int{
         display: grid;
@@ -83,6 +86,7 @@
         border-top: 2px solid  rgba(59, 68, 75, 1);
         height: 30%;
         z-index: 1;
+        width: 90%;
     }
     .sidegrid{
         display: grid;
@@ -159,6 +163,20 @@
         background-color:  rgba(59, 68, 75, 1);
         border-radius: 5px;
     }
+    .wrn{
+        text-align: center;
+        color: red;
+        font-size: 0.7em;
+    }
+    #sasa{
+        border: 0;
+        color: white;
+        height: 100%;
+        border-radius: 5px;
+        background-color:  rgba(59, 68, 75, 1);
+
+    }
+    
 </style>
 <body>
 
@@ -175,7 +193,7 @@
                 <div id="search">
                      예약 날짜 : 
                     <input type="date"  id="dateInput">
-                    <button onclick="getBook()">검색</button>
+                    <button onclick="getBook()" id="sasa">검색</button>
                 </div>
             </div>
      
@@ -206,17 +224,18 @@
                             <img class="logoImg" src="${root}/resources/img/호텔솔루션.png" style="width:98%">
                         </div>
                         <div class="table-num">
-                            ${vo.tableNo}번 테이블 <br>이용 / 예약
+                            ${vo.tableNo}번 테이블 이용 / 예약
+                            <div class="wrn">전부 입력하시오</div>
                         </div>
                         <div class="int">
                             <div>
-                                손님 이름 : <input type="text" name="bookName" class="bookName">
+                                손님 이름 : <input type="text" name="bookName" class="bookName" placeholder="이름을 입력하시오">
                             </div>
                             <div>
-                                핸드폰 번호 : <input type="text" name="bookPhone"  class="bookPhone" maxlength="11">
+                                핸드폰 번호 : <input type="text" name="bookPhone"  class="bookPhone" maxlength="11" placeholder="숫자만 입력하시오">
                             </div>
                             <div>
-                                예약 인원 : <input type="text" name="bookpp" class="bookpp">
+                                예약 인원 : <input type="text" name="bookpp" class="bookpp" placeholder="숫자만 입력하시오">
                             </div>
                             <div class="chch">
                                 <select name="checked" class="selectOption">
@@ -327,7 +346,7 @@
                             + "<div class='sidegrid ss'>"
                             + "<div>"+data.useTime+" "+data.bookPeople+"명</div>"
                             + "<div class='sidegrid'>"
-                            + "<div class='ok' data-no = '"+data.no+"' data-name = '"+data.name+"'>확인 </div>"
+                            + "<div class='ok'  data-no = '"+data.no+"' data-name = '"+data.name+"'>확인 </div>"
                             + "<div class='no' data-no = '"+data.no+"'  data-name = '"+data.name+"'>취소</div>"
                             + "</div>"
                             + "</div>";
@@ -343,6 +362,7 @@
 
                 ok();
                 cancel();
+                bookUse();
 
             },
             error: function (x) {
@@ -374,7 +394,7 @@
                     } ,
                     success :function(x){ 
 
-                        getBook();
+                        location.reload();
 
                     } ,
                     error : function(x){
@@ -398,7 +418,7 @@
                 const num = no.dataset.no;
                 const name = no.dataset.name;
 
-                const result = confirm( "정말로"+name+"님 예약 취소 하시겠습니까");
+                const result = confirm( "정말로 "+name+"님 예약 취소 하시겠습니까");
                 if (result === true) {
                     $.ajax({
                     type : "POST",
@@ -408,7 +428,7 @@
                     } ,
                     success :function(x){ 
 
-                        getBook();
+                        location.reload();
 
                     } ,
                     error : function(x){
@@ -423,8 +443,8 @@
         });
     }
 
-    getBook();
-    bookUse();
+    
+    
 
     //예약하기 버튼 활성화
     function bookUse() {
@@ -463,15 +483,17 @@
                         success :function(x){ 
                             if(x==1){
                                 alert("테이블 안내해드리면 됩니다.");
+                                location.reload();
                             }else{
                                 alert("다시 이용하세요 ")
                             }
+
+                            
                         } ,
                         error : function(x){
                             alert("bad");
                         }
                     });
-                    console.log('확인');
                 } 
                 if(check==1) {
                     $.ajax({
@@ -489,27 +511,27 @@
                         success :function(x){ 
                             if(x==1){
                                 alert("예약완료");
+                                location.reload();
                             }else{
                                 alert("다시 이용하세요 ")
                             }
+
                         } ,
                         error : function(x){
                             alert("bad");
                         }
                     });
 
-                    console.log("취소 ");
                 }
 
                 modals[index].style.display = 'none';
                 overlay.style.display = "none";
+                
             });
         });
     }
-
-
-
-
+    
+    getBook();
 
 </script>
 

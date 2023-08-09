@@ -85,28 +85,28 @@ public class UseManageController {
 	}
 	
 	//객실주문
-		@GetMapping("roomOrder")
-		@ResponseBody
-		public String roomOrder(String str) {
-			
-			Gson gson = new Gson();
-			Map paramMap = gson.fromJson(str, Map.class);
-			
-			List <String> noList = (List<String>) paramMap.get("no");
-			List <String> numList = (List<String>) paramMap.get("num");
-			String useNo = (String) paramMap.get("useNo");
-			
-			Map<String , Object> roomOrderMap = new HashMap<>() ;
-			roomOrderMap.put("noList", noList);
-			roomOrderMap.put("numList", numList);
-			roomOrderMap.put("useNo", useNo);
-			
-			int result =us.roomOrder(roomOrderMap);
-			if(result<1) {
-				return "false";
-			}
-			return "ok";
+	@GetMapping("roomOrder")
+	@ResponseBody
+	public String roomOrder(String str) {
+		
+		Gson gson = new Gson();
+		Map paramMap = gson.fromJson(str, Map.class);
+		
+		List <String> noList = (List<String>) paramMap.get("no");
+		List <String> numList = (List<String>) paramMap.get("num");
+		String useNo = (String) paramMap.get("useNo");
+		
+		Map<String , Object> roomOrderMap = new HashMap<>() ;
+		roomOrderMap.put("noList", noList);
+		roomOrderMap.put("numList", numList);
+		roomOrderMap.put("useNo", useNo);
+		
+		int result =us.roomOrder(roomOrderMap);
+		if(result<1) {
+			return "false";
 		}
+		return "ok";
+	}
 	
 	
 	

@@ -621,7 +621,6 @@
                         
                         minuss.forEach(function(minus, index) {
                             minus.addEventListener('click', function() {
-                                alert("zz");
                                 const list = plusLists[index];
                                 list.remove();
                                 roomPrice();
@@ -661,7 +660,7 @@
             const noArray = [];
 
             nos.forEach(element => {
-            noArray.push(element.value);
+                noArray.push(element.value);
             });
 
             const nums = document.querySelectorAll(".room-order-num");
@@ -670,9 +669,6 @@
             nums.forEach(element => {
             numArray.push(element.textContent);
             });
-
-            console.log(noArray);
-            console.log(numArray);
 
             const obj = {
                     no:noArray,
@@ -798,7 +794,6 @@
                         
                         minuss2.forEach(function(minus, index) {
                             minus.addEventListener('click', function() {
-                                alert("zz");
                                 const list = plusLists2[index];
                                 list.remove();
                                 foodPrice();
@@ -912,10 +907,6 @@
             roomPrice = parseInt(roomPrice) || 0;
             foodPrice = parseInt(foodPrice) || 0;
             commonPrice = parseInt(commonPrice) || 0;
-
-            console.log(roomPrice);
-            console.log(foodPrice);
-            console.log(commonPrice);
 
             totalPrice.innerHTML = roomPrice + foodPrice + commonPrice;
         }

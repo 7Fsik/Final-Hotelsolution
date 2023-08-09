@@ -238,6 +238,7 @@
                                     count:count
                                 } ,
                                 success : function(x){
+                                    alert("수정완료");
                                     getItemList();
                                 } ,
                                 error : function(x){

@@ -239,6 +239,7 @@
                                 } ,
                                 success : function(x){
                                     getItemList();
+                                    alert("수정완료");
                                 } ,
                                 error : function(x){
                                     alert("bad");
