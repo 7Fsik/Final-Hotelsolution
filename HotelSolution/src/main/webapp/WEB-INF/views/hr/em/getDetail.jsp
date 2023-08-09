@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
   .detailWrap {
@@ -63,9 +65,324 @@
     cursor: pointer;
   }
   #pf{
-  	height: 10px;
+  	height: 100px;
+  	border-radius: 30px;
   	
   }
+  .detailTop{
+  	margin: auto;
+  }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  #menu{
+    	display:grid;
+    	justify-content:center;
+    	grid-template-rows: 1fr 1fr 1fr;
+		grid-gap: 5px;
+		height:440px;
+    }
+
+    .menu-bar{
+
+        width: 540px;
+        height: 230px;
+        border: 1px solid white;
+        border-radius: 30px;
+        background-color: white;
+    }
+    
+    .first-menu{
+    	display:grid;
+    	grid-template-rows: 1fr 1fr;
+    	width:350px;
+    	height:180px;
+    	position:relative;
+    	left:20px;
+    	top:20px;
+    }
+    
+    .clock{
+    	width: 250px;
+    	height:35px;
+    	background-color:#3B444B;
+    	color:white;
+    	border : 1px solid #3B444B;
+    	border-radius:20px;
+        display:flex;
+		line-height:35px;
+		justify-content:center;
+    }
+    
+    .menu-img{
+    	display:flex;
+    	flex-direction: row-reverse;
+    }
+    
+    .menu-img img{
+    	width:350px;
+    	height:230px;
+    	position:absolute;
+    	top:10px;
+    }
+    
+    .secend-menu{
+    	width:350px;
+    	border:1px solid #3B444B;
+    	background-color:#3B444B;
+    	color:white;
+    	display:grid;
+    	grid-template-columns: 1fr 1fr;
+    	height:120px;
+    	border-radius:10px;
+    }
+    
+    .secend-menu button{
+    	background-color : #3B444B;
+    	border: 1px solid white;
+    	border-radius:16px;
+    	color:white;
+        cursor: pointer;
+        width:70px;
+        height:40px;
+        font-size:1.2em;
+    }
+    
+    .work-btn{
+    	display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-bottom:15px;
+    }
+    
+    .text{
+    	font-size:12px;
+    }
+    
+    .work-time{
+    	position:relative;
+    	left:10px;
+    	top:10px;
+    }
+    
+    .work-time-text{
+    	position:relative;
+    	top:10px;
+    }
+
+    table{
+        border: 1px solid lightgray;
+        border-collapse: collapse;
+        width: 500px;
+       	height:150px;
+       	position:relative;
+       	top:10px;
+       	text-align:center;
+    }
+
+    table > thead{
+        background-color: #d9d9d9ed;
+        font-size:15px;
+        height:35px;
+    }
+    
+    table > thead > tr > td{
+    	vertical-align:middle;
+    }
+    
+    tbody > tr > td{
+    	vertical-align:middle;
+    }
+    
+    td{
+    	letter-spacing:2px;
+    }
+    
+    .table-title{
+    	font-size:1.2em;
+		font-weight:bold;
+    }
+    
+    .table-content{
+    	color : #adb5bd;
+		font-size: 15px;
+		position:relative;
+		top:5px;
+    }
+    
+    #three-menu{
+    	position:relative;
+    	top:15px;
+    	display:flex;
+    	flex-direction:column;
+    	left:20px;
+    }
+
+    tbody tr td:not(:first-child){
+        font-size: 13px;
+        color:#D9D9D9;
+    }
+    
+    tbody tr td:first-child{
+    	font-size:15px;
+    	border:1px solid #D9D9D9;
+    }
+    
+    #YN > td:not(:first-child){
+    	color:black;
+    }
+    
+    tbody tr{
+    	border : 1px solid #D9D9D9;
+    }
+    
+    #stopwatch{
+		font-size:1.8em;
+		position:relative;
+		top:23px;
+    }
+
+	#startBtn{
+		position: relative;
+		right: 10px;
+	}
+
+	.blueCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #86C8DB;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+	
+	.skinCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #EBD1D1;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+
+	.grayCircle{
+		width:10px;
+		height:10px;
+		border : 5px solid #adb5bd;
+		border-radius: 50%;
+		box-sizing: border-box;
+	}
+	
+	.circleContent{
+		font-size: 12px;
+		font-weight:bold;
+	}
+	
+	.CurworkTime{
+		width:90px;
+		height:20px;
+		border: 1px solid #bbe9f6;
+		text-align:center;
+		border-radius:20px;
+		background-color: #bbe9f6;
+		color: #86C8DB;
+		font-weight:bold;
+		font-size: 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.CurworkTimeText{
+		color: #86C8DB;
+		font-weight:bold;
+	}
+	
+	.workTime{
+		width:80px;
+		height:20px;
+		border: 1px solid #6c8af7;
+		text-align:center;
+		border-radius:20px;
+		background-color: #6c8af7;
+		color: #2650E7;
+		font-weight:bold;
+		font-size: 13px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.workTimeText{
+		color: #2650E7;
+		font-weight:bold;
+	}
+	
+	.graphEle{
+		display:flex;
+		justify-content: space-evenly;
+		align-items: center;
+		width: 540px;
+		margin: auto;
+	}
+
+	#chartJs{
+		display: flex;
+		height: 130px;
+		justify-content:space-evenly;
+	}
+	
+	#doughnut-chart{
+		position:relative;
+		bottom:20px;
+		width:160px;
+		height:160px;
+	}
+	
+	#myChart{
+		position:relative;
+		top:25px;
+	}
+    
+	#commuteText{
+		position: relative;
+		top:15px;
+		left:20px
+	}
+
+	.center-text {
+	  position: absolute;
+	  top: 45%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  font-weight: bold;
+	  color:black;
+	  font-size:13px;
+	  width:120px;
+	  text-align:center;
+	}
+	
+	.number{
+		color: #86C8DB;
+		font-size:25px;
+	}
+    #real{
+    	height : 450px;
+    }
 </style>
 </head>
 <body>
@@ -75,36 +392,126 @@
       <div class="detailWrap">
         <div class="detailTop">
           <form action="${root}/hr/em/edit" method="post" onsubmit="return totalCheck()">
-            <input class="userNo" name="no" value="${vo.no}" hidden>
-            <table class="detailTable">
-              <tr>
-                <td rowspan="4" style="text-align: center; border: 1px solid black; height: 230px;">
-                	<img id="pf" src="${root}/resources/img/member/profile/${vo.changeImage}" alt="${vo.image}"> 
-                </td>
-                <td class="" style="text-align: center; border: 1px solid black; ">이름</td>
-                <td class="dttd">소속 : <input class="tn" type="text" name="teamName" value="${vo.teamName}" readonly></td>
-                <td class="dttd">사번 : ${vo.no}</td>
-              </tr>
-              <tr>
-                <td rowspan="2" style="text-align: center; border: 1px solid black; height: 110px;"><input class="rd" type="text" name="name" value="${vo.name}" readonly style="width: 100px; text-align: center;"></td>
-                <td style="width: 350px" class="dttd">가입일 : ${vo.enrollDate}</td>
-                <td class="dttd">이메일 : <input type="text" class="em" name="email" value="${vo.email}" readonly></td>
-              </tr>
-              <tr>
-                <td style="width: 350px" class="dttd">연봉 : <input type="text" name="salary" class="sa" value="${vo.salary}" readonly>원</td>
-                <td class="dttd">휴대폰번호 : <input type="text" class="ph" value="0${vo.id}" name="id" readonly></td>
-              </tr>
-              <tr>
-                <td style="text-align: center; border: 1px solid black;"><button type="submit" class="editButton" style="display: none; border: 0px; text-align: center; width: 100px; margin: auto;">수정하기</button></td>
-                <td style="width: 350px" class="dttd">직책 : <input class="pn" type="text" name="positionName" value="${vo.positionName}" readonly></td>
-                <td class="dttd">부서전화번호 : ${vo.teamAddress}</td>
-              </tr>
-            </table>
+           
+            
+              <div style="display: grid; grid-template-columns: 1fr 1fr 3fr 3fr 1fr; border: 1px solid black; width: 1200px; height: 230px;">
+			        <div style="margin:auto;"><img id="pf" src="${root}/resources/img/member/profile/${vo.changeImage}" alt="${vo.image}"> </div>
+			        <div style="display: grid; grid-template-rows: 1fr 2fr 1fr;">
+			            <div style="padding-top:20px;"></div>
+			            <div style="padding-top:50px;"> ${vo.name} </div>
+			            <div> </div>
+			        </div>
+			        
+			        <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
+			              <div style="padding-top:20px;">소속 : <input class="tn" type="text" name="teamName" value="${vo.teamName}" readonly> </div>
+			            <div style="padding-top:20px;"> 가입일 : ${vo.enrollDate}    </div>
+			            <div style="padding-top:20px;"> 연봉 : <input type="text" name="salary" class="sa" value="${vo.salary}" readonly style="text-align: right;">원</div>
+			            <div style="padding-top:20px;">직책 : <input class="pn" type="text" name="positionName" value="${vo.positionName}" readonly></div>    
+			        </div>
+			        <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
+			            <div style="padding-top:20px;">사번 :  ${vo.no}</div>
+			            <div style="padding-top:20px;">이메일 : <input type="text" class="em" name="email" value="${vo.email}" readonly style="width: 300px;"></div>
+			            <div style="padding-top:20px;">휴대폰번호 : <input type="text" class="ph" value="0${vo.id}" name="id" readonly></div>
+			            <div style="padding-top:20px;">부서전화번호 : ${vo.teamAddress}</div>
+			            
+			        </div>
+			        <button type="submit" class="editButton" style="display: none; border: 0px; text-align: center; width: 100px; margin: auto;">수정하기</button>
+    		</div>
+    		 <input class="userNo" name="no" value="${vo.no}" hidden>
+    		 <input class="userNo" name="name" value="${vo.name}" hidden>
           </form>
         </div>
         <div class="detailBody">
           <div class="detailBodyLeft">
-            근태관리
+            <div id="real">
+
+        <div id="menu">
+           
+            <div class="menu-bar">
+            	<div id="commuteText">
+	            	<div class="table-title">총 근무시간</div>
+					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>
+            	</div>
+            	
+            	<div id="chartJs">
+	                <canvas id="myChart" width="350" height="120"></canvas>
+					<div style="position: relative">
+						<canvas id="doughnut-chart"></canvas>
+						<div class="center-text">주간 근무시간 <br><br><span id="hours" class="number"></span> 시간 <span class="number">${min%60}</span>분</div>
+					</div>
+            	</div>
+                <hr>
+				<div class="graphEle">
+					<div class="blueCircle"></div>
+					<div class="circleContent">근무시간</div>
+					<div class="skinCircle"></div>
+					<div class="circleContent">휴가</div>
+					<div class="grayCircle"></div>
+					<div class="circleContent">잔여 근무시간</div>
+					<div class="CurworkTime">주간 근무시간</div>
+					<div class="CurworkTimeText"><span id="hour"></span>시간 ${min%60}분</div>
+					<div class="workTime">총 근무시간</div>
+					<div class="workTimeText">40시간 0분</div>
+				</div>
+            </div>
+            <div class="menu-bar">
+
+				<div id="three-menu">
+					<div class="table-title">주간 테이블</div>
+					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>				
+					<table>
+	                    <thead>
+	                        <tr>
+	                            <td>일자(요일)</td>
+	                            
+	                            <td>${workEndDayList[1]}(월)</td>
+	                            <td>${workEndDayList[2]}(화)</td>
+	                            <td>${workEndDayList[3]}(수)</td>
+	                            <td>${workEndDayList[4]}(목)</td>
+	                            <td>${workEndDayList[5]}(금)</td>
+	                        </tr>
+	                    </thead>
+	                    <tbody>
+	                    	<tr>
+	                    		<td>출근시간</td>
+	                    		<td>${workStartTimeList[1]}</td>
+	                    		<td>${workStartTimeList[2]}</td>
+	                    		<td>${workStartTimeList[3]}</td>
+	                    		<td>${workStartTimeList[4]}</td>
+	                    		<td>${workStartTimeList[5]}</td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td>퇴근시간</td>
+	                    		<td>${workEndTimeList[1]}</td>
+	                    		<td>${workEndTimeList[2]}</td>
+	                    		<td>${workEndTimeList[3]}</td>
+	                    		<td>${workEndTimeList[4]}</td>
+	                    		<td>${workEndTimeList[5]}</td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td>오늘 근무시간</td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    		<td class="tableWorkTime"></td>
+	                    	</tr>
+	                    	<tr id="YN">
+	                    		<td>상태</td>
+	                    		<td>정상처리</td>
+	                    		<td>정상처리</td>
+	                    		<td>정상처리</td>
+	                    		<td>정상처리</td>
+	                    		<td>정상처리</td>
+	                    	</tr>
+	                    </tbody>
+	                </table>
+				</div>
+
+            </div>
+        </div>
+
+	</div>
           </div>
           <div class="detailBodyRight">
             휴가내역
@@ -260,7 +667,137 @@
 		
 
 	 
-  </script>
+
+	 
+	 
+	 
+	 
+    	
+   
+		const time = new Date();
+		const day = time.getDay();
+		const dayNames = ["일요일" , "월요일" , "화요일" , "수요일" ,"목요일" , "금요일" , "토요일"]
+		const currentDay = dayNames[day];
+		//출근 그래프
+		const labels = [
+			dayNames[1],
+			dayNames[2],
+			dayNames[3],
+			dayNames[4],
+			dayNames[5],
+			dayNames[6],
+			dayNames[0],
+		];
+
+		
+		const data = {
+			labels: labels,
+			datasets: [{
+			label: '근무시간',
+			backgroundColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' , '#86C8DB' , "#e9ecef" , "#e9ecef"],
+			borderColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' ,'#86C8DB' , "#e9ecef" , "#e9ecef"],
+			data: [
+				'${workMinuteList[1]}'/60,'${workMinuteList[2]}'/60,'${workMinuteList[3]}'/60,'${workMinuteList[4]}'/60,'${workMinuteList[5]}'/60 , 15 , 15]
+			}],
+
+		};
+
+		const config = {
+			type: 'bar',
+			data: data,
+			options: {
+				responsive:false,
+				scales: {
+				  /*  x: {
+					display: false, // Hide the x-axis scale and labels
+				  },   */
+				  y: {
+					display: false, // Hide the y-axis scale and labels
+					
+				  } 
+				},
+				plugins: {
+      legend: {
+        display: false, // Hide the legend (dataset label)
+        padding: 10,
+      },
+      tooltip: {
+        filter: function (tooltipItem) {
+          // Hide tooltip for Saturday and Sunday (6 and 0 are indices for Saturday and Sunday respectively)
+          return tooltipItem.dataIndex !== 5 && tooltipItem.dataIndex !== 6;
+        },
+      },
+    },
+    tooltips: {
+      mode: 'index',
+      intersect: false,
+    },
+    barPercentage: 0.7, // Adjust the width of the bars (0.8 means 80% width of the available space)
+    categoryPercentage: 0.5,
+  },
+};
+			const myChart = new Chart(document.getElementById('myChart'),config);
+
+			
+		//출근도넛 차트
+		new Chart(document.getElementById("doughnut-chart"), {
+			type: 'doughnut',
+			data: {
+				labels: ["총 근무시간", "잔여근무 시간"],
+				datasets: [
+					{
+						backgroundColor: ["#86C8DB", "#adb5bd"],
+						data: ['${min}'/60,'${lastM}'/60]
+					}
+				]
+			},
+			options: {
+				responsive:false,
+				cutout: '80%',
+				plugins: {
+					legend: {
+						display: false, // Hide the legend (dataset label)
+					},
+				},
+				afterDraw: function(chart) {
+					const ctx = chart.ctx;
+					const width = chart.chart.width;
+					const height = chart.chart.height;
+
+					ctx.restore();
+					ctx.font = "16px Arial";
+					ctx.fillStyle = "black";
+					ctx.textAlign = "center";
+					ctx.textBaseline = "middle";
+					const text = "Center Text"; // Replace this with your desired text
+					ctx.fillText(text, width / 2, height / 2);
+					ctx.save();
+					}  
+			}
+		});
+
+		//도넛 시간 나타내기
+		const doughnutWorkTime = Math.floor('${min}' / 60);
+		const hours = document.getElementById('hours');
+		hours.innerHTML = doughnutWorkTime;
+
+		//밑에 근무시간 나타내기
+		const weekWorkTime = Math.floor('${min}' / 60);
+		const hour = document.getElementById('hour');
+		hour.innerHTML = weekWorkTime;
+
+		//테이블 근무시간 나타내기
+		const tableWork =  document.querySelectorAll('.tableWorkTime');
+		console.log(tableWork);
+		for(let i = 0; i<= tableWork.length; i++){
+			const workMinuteList = '${workMinuteList}'
+			const workMinuteListArr = JSON.parse(workMinuteList);
+			const tableWorkTime = Math.floor(workMinuteListArr[i + 1] / 60);
+			const tableWorkMinute = Math.floor(workMinuteListArr[i + 1] % 60);
+			tableWork[i].innerHTML = tableWorkTime +'시간' +tableWorkMinute +'분';
+		}
+			
+    </script>
 </body>
 </html>
 
