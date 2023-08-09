@@ -6,8 +6,9 @@
   
  
 	<select id="getSubmitList" resultType="VacationDocVo" parameterType="java.util.Map">
-		  SELECT 
+		SELECT 
 		  	AD.NO,
+            AD.TYPE_NO,
 		  	AD.TITLE,
 		  	AD.CONTENT,
 		  	AD.ENROLL_DATE AS ENROLLDATE,
@@ -33,7 +34,7 @@
 		  ON M.POSITION_NO = P.NO
 		  JOIN TEAM T
 		  ON M.TEAM_NO = T.TEAM_NO
-		  WHERE APS.NO = 1
+		  WHERE AD.AD_YN = 'Y'
 		  AND M.STATUS !=2
 	  			 <if test="searchType == 'teamName'">
 			        AND t.TEAM_NAME LIKE ('%'|| #{searchValue} || '%')
@@ -75,8 +76,8 @@
 			  JOIN MEMBER M ON AD.USER_NO = M.NO
 			  JOIN POSITION P ON M.POSITION_NO = P.NO
 			  JOIN TEAM T ON M.TEAM_NO = T.TEAM_NO
-			  WHERE APS.NO = 1
-			    AND M.STATUS != 2
+			  WHERE AD.AD_YN = 'Y'
+			  AND M.STATUS !=2
 			  <if test="searchType == 'teamName'">
 			    AND T.TEAM_NAME LIKE ('%' || #{searchValue} || '%')
 			  </if>
