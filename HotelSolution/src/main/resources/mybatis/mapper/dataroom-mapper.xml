@@ -187,6 +187,14 @@
   			HIT = HIT + 1
   		WHERE DATA_NO = #{no}
     </update>
+    
+    <update id="deleteData">
+  	UPDATE DATAROOM
+  		SET
+  			DELETE_YN = 'Y'
+  		WHERE DATA_NO = #{dataNo}
+  		AND DELETE_YN = 'N'
+    </update>
 	
 
 </mapper>

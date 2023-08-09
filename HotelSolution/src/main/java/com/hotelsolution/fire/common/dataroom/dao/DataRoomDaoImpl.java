@@ -61,6 +61,11 @@ public class DataRoomDaoImpl implements DataRoomDao {
 	public int increaseHit(SqlSessionTemplate sst, String drvoNo) {
 		return sst.update("dataroom.increaseHit",drvoNo);
 	}
+
+	@Override
+	public int deleteDate(SqlSessionTemplate sst, String dataNo) {
+		return sst.update("dataroom.deleteData",dataNo);
+	}
 		
 
 }

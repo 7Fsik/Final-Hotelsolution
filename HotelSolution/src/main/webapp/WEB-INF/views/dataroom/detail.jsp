@@ -215,7 +215,10 @@
 			           			<div class= "topNameText" >${drvo.title} 
 			           			</div>
 			           				 	<div style="margin-top:60px;">
-			           				 	<button style="width: 70px; height:30px; border: #3B444B; background-color: #3B444B; color: white;border-radius: 20px;font-size: 12px;"onclick="deleteData(${drvo.dataNo})">삭제하기</button></div>
+			           				 <c:if test="${drvo.writerNo == loginMember.no}">
+										    <button style="width: 70px; height: 30px; border: #3B444B; background-color: #3B444B; color: white; border-radius: 20px; font-size: 12px;" onclick="deleteData(${drvo.dataNo})">삭제하기</button>
+										</c:if>
+			           				 	</div>
 			           			</div>
 					        <div class="writeDataroomWrap">
 					           <form action="${root}/dataroom/write" method="post" enctype="multipart/form-data" class="writeDataroomForm" data-file-count="1" >
@@ -280,10 +283,11 @@
 		
 	}
 	
-	function deleteData(dataNo)() {
+	function deleteData(dataNo) {
+		alert(dataNo);
 		$.ajax({
 	        type: "POST",
-	        url: "${root}/dataroom/list",
+	        url: "${root}/dataroom/delete",
 	        data: {
 	        	dataNo: dataNo,
 	        	

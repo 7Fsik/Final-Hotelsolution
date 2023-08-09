@@ -303,11 +303,15 @@ openModalBtn.addEventListener('click', function() {
 // 모달 닫기 버튼 클릭 시
 closeBtn.addEventListener('click', function() {
     modal.style.display = 'none';
+    let detailsContainer = document.querySelector('#detailsContainer');
+    detailsContainer.innerHTML = ""; // 수정된 부분
 });
 
 // 모달 외부 클릭 시 닫기
 window.addEventListener('click', function(event) {
     if (event.target === modal) {
+    	let detailsContainer = document.querySelector('#detailsContainer');
+        detailsContainer.innerHTML = ""; // 수정된 부분
         modal.style.display = 'none';
     }
 });

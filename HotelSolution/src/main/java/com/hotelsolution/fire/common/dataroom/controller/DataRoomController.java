@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hotelsolution.fire.common.dataroom.service.DataRoomService;
@@ -62,6 +63,7 @@ public class DataRoomController {
 		List<DataRoomFileVo> drfvoList = new ArrayList<DataRoomFileVo>(); // 이 위치로 이동
 		HttpSession session = req.getSession();
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	    
 
 	    drvo.setWriterNo(loginMember.getNo());
 	    drvo.setCategoryNo(categoryNo);
@@ -179,8 +181,11 @@ public class DataRoomController {
 	            .body(resource);
 	}
 	@PostMapping("delete")
-	public void deleteData(String dataNo) {
+	public String deleteData(String dataNo) {
+		System.out.println("dno"+dataNo);
 		int result = service.deleteDate(dataNo);
+		System.out.println(result);
+		return "redirect:/dataroom/list";
 	}
 
 

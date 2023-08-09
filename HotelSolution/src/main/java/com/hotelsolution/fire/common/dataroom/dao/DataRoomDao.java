@@ -24,4 +24,6 @@ public interface DataRoomDao {
 
 	List<DataRoomVo> getDataRoomList(SqlSessionTemplate sst, Map<String, Object> map);
 
+	int deleteDate(SqlSessionTemplate sst, String dataNo);
+
 }
