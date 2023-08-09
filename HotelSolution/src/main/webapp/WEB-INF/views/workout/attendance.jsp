@@ -585,7 +585,7 @@
 			backgroundColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' , '#86C8DB' , "#e9ecef" , "#e9ecef"],
 			borderColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' ,'#86C8DB' , "#e9ecef" , "#e9ecef"],
 			data: [
-				'${workMinuteList[1]}'/60,'${workMinuteList[2]}'/60,'${workMinuteList[3]}'/60,'${workMinuteList[4]}'/60,'${workMinuteList[5]}'/60 , 15 , 15]
+				'${workMinuteList[1]}'/60,'${workMinuteList[2]}'/60,'${workMinuteList[3]}'/60,'${workMinuteList[4]}'/60,'${workMinuteList[5]}'/60 , 10 , 10]
 			}],
 
 		};
@@ -596,22 +596,19 @@
 			options: {
 				responsive:false,
 				scales: {
-				  /*  x: {
-					display: false, // Hide the x-axis scale and labels
-				  },   */
+				 
 				  y: {
-					display: false, // Hide the y-axis scale and labels
+					display: false, 
 					
 				  } 
 				},
 				plugins: {
       legend: {
-        display: false, // Hide the legend (dataset label)
+        display: false, 
         padding: 10,
       },
       tooltip: {
         filter: function (tooltipItem) {
-          // Hide tooltip for Saturday and Sunday (6 and 0 are indices for Saturday and Sunday respectively)
           return tooltipItem.dataIndex !== 5 && tooltipItem.dataIndex !== 6;
         },
       },
@@ -620,7 +617,7 @@
       mode: 'index',
       intersect: false,
     },
-    barPercentage: 0.7, // Adjust the width of the bars (0.8 means 80% width of the available space)
+    barPercentage: 0.7, 
     categoryPercentage: 0.5,
   },
 };
@@ -644,7 +641,7 @@
 				cutout: '80%',
 				plugins: {
 					legend: {
-						display: false, // Hide the legend (dataset label)
+						display: false, 
 					},
 				},
 				afterDraw: function(chart) {
@@ -657,7 +654,7 @@
 					ctx.fillStyle = "black";
 					ctx.textAlign = "center";
 					ctx.textBaseline = "middle";
-					const text = "Center Text"; // Replace this with your desired text
+					const text = "Center Text"; 
 					ctx.fillText(text, width / 2, height / 2);
 					ctx.save();
 					}  
@@ -684,6 +681,18 @@
 			const tableWorkMinute = Math.floor(workMinuteListArr[i + 1] % 60);
 			tableWork[i].innerHTML = tableWorkTime +'시간' +tableWorkMinute +'분';
 		}
+
+		const graphData = [
+			workMinuteListArr[1] / 60,
+			workMinuteListArr[2] / 60,
+			workMinuteListArr[3] / 60,
+			workMinuteListArr[4] / 60,
+			workMinuteListArr[5] / 60,
+			10,
+			10,
+		];
+		myChart.data.datasets[0].data = graphData;
+		myChart.update();
 			
     </script>
 

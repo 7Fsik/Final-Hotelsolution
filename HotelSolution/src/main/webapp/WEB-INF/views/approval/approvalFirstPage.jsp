@@ -17,10 +17,11 @@
     #approval{
         border: 1px solid white;
         width: 1200px;
-        height: 700px;
+        height: 750px;
         background-color:white;
         margin:auto;
         border-radius:10px;
+		margin-top:20px;
     }
     
     #approval a{
@@ -80,8 +81,9 @@
     
     .list-title{
     	display:grid;
-    	grid-template-columns:0.5fr 1fr 1fr 1fr;
-    	align-items:center;
+    	grid-template-columns:1.5fr 3fr 1fr;
+		place-items:center;
+		width:290px;
     }
     
     .list-status{
@@ -117,8 +119,7 @@
 
         <div id="approval">
         
-        		
-					<h1>결재</h1>
+					<h1>나의 결재</h1>
         		<div class="approval-menu">
 		        	<div class="approval-list">
 		        		<a href="${root}/approval/approvalFirstPage" class="">나의 결재</a>
@@ -135,11 +136,23 @@
         		</div>
         		
 				<hr class="line">  
-				
 				<div id="approval-content">
 					
-					
-					<div class="list">
+					<c:forEach items="${approvalList}" var="appList">
+						<div class="list">
+							<div class="list-title">
+								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
+								<div>[${appList.documentTypeName}]</div>
+								<a href="#">${appList.title}</a>
+							</div>
+							
+							<div class="list-status">
+								<div>${appList.enrollDate}</div>
+								<div>승인</div>
+							</div>
+						</div>
+					</c:forEach>
+					<!-- <%-- <div class="list">
 						<div class="list-title">
 							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
 							<div>[지출 결의서]</div>
@@ -198,19 +211,7 @@
 							<div>2023-07-16 13:37</div>
 							<div>승인</div>
 						</div>
-					</div>
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div>
+					</div> --%> -->
 					
 				</div>
 				

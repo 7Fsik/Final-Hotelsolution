@@ -4,9 +4,268 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="approval">
   
+  <select id="getPositionList" resultType="com.hotelsolution.fire.approval.vo.PositionVo">
+  	
+  	SELECT 
+  	NO
+	,P_LEVEL
+	,NAME
+	,VACATION
+  	FROM POSITION
+  	
+  </select>
   
+  <select id="getTeamList" resultType="com.hotelsolution.fire.approval.vo.TeamVo">
+  
+  	SELECT 
+  		TEAM_NO
+		,TEAM_NAME
+  	 FROM TEAM
+  
+  </select>
+  
+  <select id="getEmployee" resultType="MemberVo" parameterType="java.util.Map">
+  	<!-- SELECT
+  		TEAM_NO  AS TEAMNO
+  		,POSITION_NO AS POSITIONNO
+  		,NAME
+  		
+  		FROM MEMBER WHERE
+  		TEAM_NO = #{teamNo}
+  		<![CDATA[
+  		AND POSITION_NO = #{positionNo}
+  		]]> -->
+  		
+  		SELECT
+  		m.TEAM_NO  
+  		,m.POSITION_NO 
+  		,m.NAME
+  		,p.NAME	AS POSITION_NAME
+        ,t.TEAM_NAME
+  		FROM MEMBER m
+        JOIN TEAM t ON m.TEAM_NO = t.TEAM_NO
+        JOIN POSITION p ON m.POSITION_NO = p.NO
+  		<![CDATA[
+        WHERE
+  		m.TEAM_NO = #{teamNo}
+  		AND m.POSITION_NO = #{positionNo}
+  		]]>
+  </select>
+  
+  <select id="getDecideEmployee" resultType="MemberVo" parameterType="java.util.Map">
+  
+  	 SELECT
+  	M.NAME
+  	,M.APPROVAL_POWER
+  	,P.NAME AS POSITION_NAME
+  	,T.TEAM_NAME
+  	FROM MEMBER M
+  	JOIN TEAM T ON M.TEAM_NO = T.TEAM_NO
+  	JOIN POSITION P ON M.POSITION_NO = P.NO
+  	
+  	
+  
+  </select>
+  
+  <select id="getDocumentVactionNo" resultType="com.hotelsolution.fire.approval.vo.DocumentVo" parameterType="java.util.Map">
+  	
+  	SELECT
+  	DOCUMENT_TYPE_NO 
+  	,DOCUMENT_TYPE_NAME
+  	FROM APPROVAL_DOCUMENT_TYPE
+    WHERE DOCUMENT_TYPE_NO = 1
+  	
+  </select>
+  
+  <select id="getDocumentExpenditureNo" resultType="com.hotelsolution.fire.approval.vo.DocumentVo" parameterType="java.util.Map">
+  	
+  	SELECT
+  	DOCUMENT_TYPE_NO 
+  	,DOCUMENT_TYPE_NAME
+  	FROM APPROVAL_DOCUMENT_TYPE
+    WHERE DOCUMENT_TYPE_NO = 2
+  	
+  </select>
+  
+  <select id="getDocumentReportNo" resultType="com.hotelsolution.fire.approval.vo.DocumentVo" parameterType="java.util.Map">
+  	
+  	SELECT
+  	DOCUMENT_TYPE_NO 
+  	,DOCUMENT_TYPE_NAME
+  	FROM APPROVAL_DOCUMENT_TYPE
+    WHERE DOCUMENT_TYPE_NO = 3
+  	
+  </select>
+  
+  <!-- <select id="getDocumentType" resultType="com.hotelsolution.fire.approval.vo.DocumentVo" parameterType="java.util.Map">
+  	
+  	SELECT
+  	DOCUMENT_TYPE_NO 
+  	,DOCUMENT_TYPE_NAME
+  	FROM APPROVAL_DOCUMENT_TYPE
+    
+  	
+  </select> -->
+  
+  <insert id="insertApprovalDocument">
+  	INSERT INTO APPROVAL_DOCUMENT
+		(NO
+		,TYPE_NO
+		,USER_NO
+		,TITLE
+		,CONTENT
+		)
+		VALUES 
+		(SEQ_APPROVAL_DOCUMENT_NO.NEXTVAL 
+		, #{typeNo} 
+		, #{userNo} 
+		, #{title}
+		, #{content}
+		)
+  </insert>
+  
+  <select id="getDocumentNo" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo">
+  	SELECT * FROM APPROVAL_DOCUMENT
+	WHERE USER_NO = #{no}
+	ORDER BY NO DESC
+	FETCH FIRST ROW ONLY
+  </select>
+  
+	<update id="updateDocumentApproval" parameterType="java.util.Map">
+		UPDATE APPROVAL_DOCUMENT
+		SET 
+		TITLE = #{title}
+		,CONTENT = #{content}
+		WHERE NO = #{avoNo}
+	</update>
 	
+	<insert id="vacation" parameterType="java.util.Map">
+	 INSERT INTO VACATION_APPLY
+	 (NO
+	 ,APP_NO
+	 ,VACATION_START
+	 ,VACATION_END
+	 )
+	 VALUES(
+	 SEQ_VACATION_APPLY_NO.NEXTVAL
+	 ,#{avoNo}
+	 ,#{vacationStart}
+	 ,#{vacationEnd})
+	 
+	</insert>
+	
+	
+	<update id="updateDocumentReport" parameterType="java.util.Map">
+		UPDATE APPROVAL_DOCUMENT
+		SET
+		TITLE = #{title}
+		,CONTENT = #{content}
+		WHERE NO = #{avoNo}
+	</update>
+	
+	<insert id="report" parameterType="java.util.Map">
+	
+	INSERT INTO BUSINESS_REPORT
+	(
+		NO
+		,APP_NO
+		,COMPLETION_DATE
+		,SUGGESTIONS	
+	)
+	VALUES
+	(
+		SEQ_BUSINESS_REPORT_NO.NEXTVAL
+		,#{avoNo}
+		,#{completed}
+		,#{suggestions}
+	)
+	
+	</insert>
+	
+	<select id="getItemList" resultType="com.hotelsolution.fire.approval.vo.ItemVo">
+	
+		SELECT * FROM ITEM_MANAGER
+	
+	</select>
+	
+	<update id="updateDocumentExpenditure" parameterType="java.util.Map">
+		
+		UPDATE APPROVAL_DOCUMENT
+		SET
+		TITLE = #{title}
+		WHERE NO = #{avoNo}
+	
+	</update>
+	
+	<insert id="expenditure">
+		INSERT INTO PURCHASE_REQUISITION
+		(
+			NO
+			,APP_NO
+			,PRICE
+		)
+		VALUES
+		(
+			SEQ_PURCHASE_REQUISITION_NO.NEXTVAL
+			,#{avoNo}
+			,#{totalPrice}
+		)
+	</insert>
+	
+	<select id="getExpenditureNo" resultType="com.hotelsolution.fire.approval.vo.ExpenditureVo">
+	SELECT * FROM PURCHASE_REQUISITION
+	WHERE APP_NO = #{avoNo}
+	ORDER BY NO DESC
+	FETCH FIRST ROW ONLY
+	</select>
 
+
+	 <insert id="expenditureItemList" parameterType="java.util.Map">
+		
+		INSERT INTO PURCHASE_ITEMLIST
+		(
+			NO
+			,ITEM_NO
+			,PURCHASE_REQUISITION_NO
+			,COUNT
+		)
+		VALUES
+		(
+			SEQ_PURCHASE_ITEMLIST_NO.NEXTVAL
+			,#{item}
+			,#{keyNo}
+			,#{count}
+		)
+	
+	</insert> 
+	
+	<select id="getApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo">
+	
+		SELECT
+	     A.NO
+	    ,A.TYPE_NO
+	    ,A.USER_NO
+	    ,A.TITLE
+	    ,A.CONTENT
+	    ,A.AD_YN
+	    ,A.ENROLL_DATE
+	    ,A.END_DATE
+	    ,T.DOCUMENT_TYPE_NAME
+	   FROM
+	   APPROVAL_DOCUMENT A
+	   JOIN APPROVAL_DOCUMENT_TYPE T
+	   ON A.TYPE_NO = T.DOCUMENT_TYPE_NO
+	   WHERE A.TITLE IS NOT NULL AND AD_YN ='N'
+	   ORDER BY NO DESC
+	
+	</select>
+	
+	<select id="getApprovalCnt" resultType="int">
+		SELECT COUNT(NO)
+		FROM APPROVAL_DOCUMENT
+		WHERE AD_YN = 'N'
+		AND TITLE IS NOT NULL
+	</select>
 
 
 </mapper>

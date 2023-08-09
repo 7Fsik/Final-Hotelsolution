@@ -250,6 +250,7 @@
         width: 70%;
         justify-content: space-around;
     }
+
     #mainboard{
         position: relative;
         height: 84vh;
@@ -291,6 +292,32 @@
     display: block;
 }
 
+.header-profile {
+    position: relative;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+}
+
+.header-profile:hover .dropdown {
+    display: block;
+}
+
+.dropdown > li > a {
+	text-decoration : none;
+	height:40px;
+	color : black;
+	background-color:#333;
+	color : #fff;
+}
 
 
 
@@ -324,9 +351,10 @@
 
 					</div>
                     <div class="header-profile">
-                        <a href="/fire/" >
                             <img class="header-profile-img" src="${root}/resources/img/증명사진.png" alt="채팅이미지">
-                        </a>
+                            <ul class="dropdown">
+                                <li><a href="${root}/member/logout">로그아웃</a></li>
+                            </ul>
                     </div>
                 </div>
             </div>
@@ -398,7 +426,7 @@
                 </div>
                 <div id="profile-menu" class="fontbb">
                     <div>내 정보 수정</div>
-                    <div>요청한 결재              3</div>
+                    <div>요청한 결재             3</div>
                     <div>남은 결재              1</div>
                 </div>
             </div>

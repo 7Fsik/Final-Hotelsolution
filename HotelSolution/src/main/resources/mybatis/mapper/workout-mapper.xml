@@ -32,11 +32,11 @@
 	<update id="recordEndTime" parameterType="java.util.Map">
 	
 		UPDATE COMMUTE_RECORD SET
-		WORK_END_TIME = #{currentTimestamp}
+		WORK_END_TIME = #{endTime}
 		WHERE NO = #{workoutNo}
 	</update>
 	
-	<select id="getStartTime" resultType="java.util.Date">
+	<!-- <select id="getStartTime" resultType="java.util.Date">
 	    SELECT WORK_START_TIME
 	    FROM COMMUTE_RECORD
 	    WHERE NO = #{workoutNo}
@@ -52,7 +52,7 @@
 	    AND WORK_END_TIME IS NOT NULL
 	    ORDER BY WORK_END_TIME DESC
 	    FETCH FIRST ROW ONLY
-	</select>
+	</select> -->
 	
 	<update id="totalWorkHours" parameterType="java.util.Map">
 	

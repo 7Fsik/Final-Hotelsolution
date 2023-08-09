@@ -151,7 +151,6 @@
     
                 const userId = document.querySelector('input[name=id]').value;
                 const password = document.querySelector('input[type=password]').value;
-    
             $.ajax({
                 type : "post",
                 url : "${root}/member/login",
@@ -163,6 +162,7 @@
                 success : function name(data) {
                     console.log(data);
                     if(data === "success")
+                        alert('로그인 성공');
                         window.location.href = "/fire";
                 },
                 error : function (e) {

@@ -146,8 +146,7 @@
 		                	<input formaction="${root}/member/emailKeyRightOrNo" class="sub-input" type="submit" value="확인">
 	                	</div>
 		                <ul class="list">
-	                        <li>3분안으로 입력해주세요.</li>
-	                        <li>메일함에서 인증코드를 확인해주세요.</li>
+	                        <li>입력하신 메일에서 인증코드를 확인해주세요.</li>
 	                    </ul>
                    </div>
 
