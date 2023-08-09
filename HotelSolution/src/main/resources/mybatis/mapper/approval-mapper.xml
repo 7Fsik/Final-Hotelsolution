@@ -40,6 +40,7 @@
   		m.TEAM_NO  
   		,m.POSITION_NO 
   		,m.NAME
+  		,m.NO
   		,p.NAME	AS POSITION_NAME
         ,t.TEAM_NAME
   		FROM MEMBER m
@@ -57,6 +58,7 @@
   	 SELECT
   	M.NAME
   	,M.APPROVAL_POWER
+  	,M.NO
   	,P.NAME AS POSITION_NAME
   	,T.TEAM_NAME
   	FROM MEMBER M
@@ -148,7 +150,7 @@
 	 )
 	 VALUES(
 	 SEQ_VACATION_APPLY_NO.NEXTVAL
-	 ,#{avoNo}
+	 ,#{appNo}
 	 ,#{vacationStart}
 	 ,#{vacationEnd})
 	 
@@ -266,6 +268,45 @@
 		WHERE AD_YN = 'N'
 		AND TITLE IS NOT NULL
 	</select>
+	
+	<insert id="approver">
+	
+	 INSERT INTO APPROVER
+	   (
+	    NO
+	    ,APPROVAL_DOC_NO
+	    ,STATUS_NO
+	    ,APP_NO
+	    ,PRIORITY
+	   )
+	   VALUES
+	   (
+	    SEQ_APPROVER_NO.NEXTVAL
+	    ,#{approvalDocNo}
+	    ,#{statusNo}
+	    ,#{appNo}
+	    ,#{priority}
+	   )	
+	
+	</insert>
+	
+	<insert id="referrer">
+	
+	INSERT INTO APPROVAL_REFERRER
+	   (
+	    NO
+	    ,APPROVAL_NO
+	    ,REFERRER_NO
+	   )
+	   VALUES
+	   (
+	    SEQ_APPROVAL_REFERRER_NO.NEXTVAL
+	    ,#{approvalNo}
+	    ,#{referrerNo}
+	   )	
+		
+	
+	</insert>
 
 
 </mapper>

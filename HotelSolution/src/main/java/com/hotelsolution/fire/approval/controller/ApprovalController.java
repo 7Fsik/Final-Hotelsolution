@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.hotelsolution.fire.approval.service.ApprovalService;
+import com.hotelsolution.fire.approval.vo.ApprovalReferrerVo;
 import com.hotelsolution.fire.approval.vo.ApprovalVo;
+import com.hotelsolution.fire.approval.vo.ApproverVo;
 import com.hotelsolution.fire.approval.vo.DocumentVo;
 import com.hotelsolution.fire.approval.vo.ExpenditureVo;
 import com.hotelsolution.fire.approval.vo.ItemVo;
@@ -125,30 +127,71 @@ public class ApprovalController {
 	
 	//휴가신청서 작성
 	@PostMapping("vacation")
-	public String vaction(String title , String content ,  String vacationStart , String vacationEnd , HttpSession session) {
+	public String vaction(VactionVo vo , ApprovalVo avo , String teamLeader , String hrTeamLeader ,  
+			@RequestParam("reference") List<String> referenceList , HttpSession session) {
 		
+		System.out.println(referenceList);
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
-		ApprovalVo avo = service.getDocumentNo(no);
-		String avoNo = avo.getNo();
-		System.out.println(avoNo);
-		Map<String, Object> map = new HashMap<>();
-		map.put("avoNo", avoNo);
-		map.put("title", title);
-		map.put("content", content);
-		System.out.println("map :" + map );
+		ApprovalVo appvo = service.getDocumentNo(no);
+		String avoNo = appvo.getNo();
 		
-		Map<String, Object> params = new HashMap<>();
-		params.put("avoNo", avoNo);
-		params.put("vacationStart", vacationStart);
-		params.put("vacationEnd", vacationEnd);
-		System.out.println("params:" + params);
+		ApprovalReferrerVo arvo = new ApprovalReferrerVo();
 		
-		int result = service.updateDocumentApproval(map);
-		int result2 = service.vacation(params);
-		System.out.println("result2 : " +result2);
-		if(result !=1 && result2 != 1) {
+		int startIndex = 0;
+		int endIndex = 0;
+		for(String reference : referenceList) {
+			startIndex = reference.indexOf("[")+1;
+			endIndex = reference.indexOf("]");
+			
+			String rfNo = reference.substring(startIndex , endIndex);
+
+			arvo.setApprovalNo(avoNo);
+			arvo.setReferrerNo(rfNo);
+			
+			int result4 = service.referrer(arvo);
+		}
+		
+		ApproverVo appVo = new ApproverVo();
+		
+		
+		
+		System.out.println("teamLeader : "+teamLeader);
+		System.out.println("hrteamLeader : "+hrTeamLeader);
+		
+		startIndex = teamLeader.indexOf("[")+1;
+		endIndex = teamLeader.indexOf("]");
+		String tlNo = teamLeader.substring(startIndex , endIndex);
+		System.out.println(tlNo);
+		
+		int result = service.insertApprovalDocument(avo);
+		
+		
+		vo.setAppNo(avoNo);
+		System.out.println(vo);
+		
+		int result2 = service.vacation(vo);
+		
+		List<String> approverList = new ArrayList<String>();
+		approverList.add(tlNo);
+		approverList.add(hrTeamLeader);
+		System.out.println("result2 : " + result2);
+		
+		int x = 0;
+		for(int i=0; i < approverList.size(); i++) {
+			appVo.setApprovalDocNo(avoNo);
+			appVo.setStatusNo("1");
+			appVo.setAppNo(approverList.get(i));
+			x = i+1;
+			String p = Integer.toString(x);
+			appVo.setPriority(p);
+			int result3 = service.approver(appVo);
+			System.out.println("@@@#!@#!@#!"+result3);
+		}
+		
+		
+		if(result !=1 || result2 != 1) {
 			throw new RuntimeException();
 		}
 		
