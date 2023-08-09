@@ -181,11 +181,12 @@ public class DataRoomController {
 	            .body(resource);
 	}
 	@PostMapping("delete")
-	public String deleteData(String dataNo) {
+	@ResponseBody
+	public int deleteData(String dataNo) {
 		System.out.println("dno"+dataNo);
 		int result = service.deleteDate(dataNo);
-		System.out.println(result);
-		return "redirect:/dataroom/list";
+		System.out.println("delete" +result);
+		return result;
 	}
 
 

@@ -284,21 +284,29 @@
 	}
 	
 	function deleteData(dataNo) {
-		alert(dataNo);
-		$.ajax({
-	        type: "POST",
-	        url: "${root}/dataroom/delete",
-	        data: {
-	        	dataNo: dataNo,
-	        	
-	        },
-	        success: function (response) {
-	        },
-	        error: function (xhr, status, error) {
-	            console.error("Error:", error);
-	        }
-	    });
+	    if (confirm("삭제하시겠습니까?")) {
+	        alert(dataNo);
+	        $.ajax({
+	            type: "POST",
+	            url: "${root}/dataroom/delete",
+	            data: {
+	                dataNo: dataNo,
+	            },
+	            success: function (response) {
+	                alert("1이면 삭제 성공 :" + response);
+	                if (response == 1) {
+	                    window.location.href = "${root}/dataroom/list";
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                console.error("Error:", error);
+	            }
+	        });
+	    } else {
+	        // 사용자가 "취소"를 누른 경우에 대한 처리
+	    }
 	}
+
 </script>
  
 </html>

@@ -235,19 +235,19 @@
 			                
 			                <div class="question">
 			                    1. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
-			                    <textarea readonly></textarea>
+			                    <textarea style="resize: none;"readonly></textarea>
 			                </div>
 			                <div class="question">
 			                    2. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
-			                    <textarea readonly></textarea>
+			                      <textarea style="resize: none;"readonly></textarea>
 			                </div>
 			                <div class="question">
 			                    3. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
-			                    <textarea readonly></textarea>
+			                      <textarea style="resize: none;"readonly></textarea>
 			                </div>
 			                <div class="question">
 			                    4. <input type="text" placeholder="설문 질문을 입력하세요" name="question" class="questionInput" maxlength="50">
-			                    <textarea readonly></textarea>
+			                      <textarea style="resize: none;"readonly></textarea>
 			                </div>
 			                <div class="btn">
 			                    <button type="submit" class="button" onclick="submitForm()">설문지 배포</button>

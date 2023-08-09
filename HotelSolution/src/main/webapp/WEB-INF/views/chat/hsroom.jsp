@@ -193,11 +193,11 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
+		let ws = new WebSocket("ws://192.168.35.188:8080/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
-		ws.onerror = funcError;
+		ws.onerror = funcError;                   
 		ws.onmessage = funcMessage;
 	  
 		function funcOpen() {

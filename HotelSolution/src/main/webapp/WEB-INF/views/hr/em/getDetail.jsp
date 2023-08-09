@@ -66,6 +66,7 @@
   }
   #pf{
   	height: 100px;
+  	width:100px;
   	border-radius: 30px;
   	
   }
@@ -429,7 +430,7 @@
            
             <div class="menu-bar">
             	<div id="commuteText">
-	            	<div class="table-title">총 근무시간</div>
+	            	<div class="table-title">이번 주 근무시간</div>
 					<div class="table-content">${sessionScope.loginMember.name}님의 근태관리 내역입니다.</div>
             	</div>
             	
@@ -437,7 +438,7 @@
 	                <canvas id="myChart" width="350" height="120"></canvas>
 					<div style="position: relative">
 						<canvas id="doughnut-chart"></canvas>
-						<div class="center-text">주간 근무시간 <br><br><span id="hours" class="number"></span> 시간 <span class="number">${min%60}</span>분</div>
+						<div class="center-text">이번 주 근무시간 <br><br><span id="hours" class="number"></span> 시간 <span class="number">${min%60}</span>분</div>
 					</div>
             	</div>
                 <hr>
