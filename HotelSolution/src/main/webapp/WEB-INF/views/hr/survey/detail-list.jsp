@@ -73,6 +73,7 @@
     }
     input{
         border: 0px;
+        outline: none;
     }
     .btn{
         margin:30px;
@@ -95,6 +96,7 @@
         padding-left:10px;
         resize: none;
         overflow: scroll;
+        outline: none;
         
     }
 

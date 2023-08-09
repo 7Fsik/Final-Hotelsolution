@@ -193,9 +193,7 @@ import lombok.RequiredArgsConstructor;
 	        dayToIndexMap.put("FRIDAY", 5);
 	        dayToIndexMap.put("SATURDAY", 6);
 	        String dayOfWeekString = currentDate.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH).toUpperCase();
-	        System.out.println(dayOfWeekString);
 	        Integer todayindex = dayToIndexMap.get(dayOfWeekString);
-	        System.out.println("todayindex"+todayindex);
 	        for (WorkoutVo vo1 : voList) {
 	            String day = vo1.getDayOfWeek();
 	            String h = vo1.getTotalWorkHours();

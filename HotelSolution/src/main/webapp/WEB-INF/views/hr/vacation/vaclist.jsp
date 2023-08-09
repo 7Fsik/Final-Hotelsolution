@@ -258,6 +258,11 @@
        
 	
 }
+.pf{
+	width: 100px;
+	height: 100px;
+	border-radius: 30px;
+}
 </style>
 </head>
 <body>
@@ -295,7 +300,7 @@
 								<c:forEach items="${vdvoList}" var="vdvo"> 
 									<div class="vac">
 										<div class="pfimage" style="display:grid; grid-template-rows: 3fr 1fr;">
-											<div>${vdvo.image}</div>
+											<div><img class="pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진"></div>
 											<div>이름 : ${vdvo.name}</div>
 										</div>
 										<div style="display:grid; grid-template-rows: 1fr 1fr 2fr;">
@@ -303,14 +308,14 @@
 												<div>제목 : ${vdvo.title}</div>
 												<div>부서 : ${vdvo.teamName}</div>
 											</div>
-											<div>기간 : ${vdvo.startDate} ~ ${vdvo.endDate} </div>
+											<div>기간 : ${vdvo.vacationStart} ~ ${vdvo.vacationEnd} </div>
 											<div>사유 : ${vdvo.content}</div>
 										</div>
 										<div style="display:grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
 											<div>직책 : ${vdvo.positionName}</div>
-											<div>전화번호 : ${vdvo.id}</div>
+											<div>전화번호 : 0${vdvo.id}</div>
 											<div>신청일 : ${vdvo.enrollDate}</div>
-											<div>승인버튼</div>
+											<div></div>
 										</div>
 									</div>
 								</c:forEach>
@@ -322,18 +327,18 @@
 							
 							 <div id="page-area">
 				            	<c:if test="${pv.currentPage > 1}">
-					            	<a  href="${root}/hr/vaction/vaclist?submitListpage=${pv.currentPage - 1}">이전</a>
+					            	<a  href="${root}/hr/vacation/vaclist?submitListpage=${pv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}">이전</a>
 				            	</c:if>
 					            	<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
 					            		<c:if test="${pv.currentPage != i}">
-							            	<a  href="${root}/hr/vaction/vaclist?submitListpage=${i}">${i}</a>
+							            	<a  href="${root}/hr/vacation/vaclist?submitListpage=${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
 					            		</c:if>
 					            		<c:if test="${pv.currentPage == i}">
 							            	<a >${i}</a>
 					            		</c:if>
 					            	</c:forEach>
 					            <c:if test="${pv.currentPage < pv.endPage}">
-					            	<a  href="${root}/hr/vaction/vaclist?submitListpage=${pv.currentPage + 1}">다음</a>
+					            	<a  href="${root}/hr/vacation/vaclist?submitListpage=${pv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}">다음</a>
 					            </c:if>
 					            <div class="searchType" hidden="">${searchType}</div>
 					            <div class="searchValue" hidden="">${searchValue}</div>
