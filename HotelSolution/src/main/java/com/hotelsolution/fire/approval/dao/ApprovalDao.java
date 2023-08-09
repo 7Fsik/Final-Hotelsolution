@@ -6,7 +6,9 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.hotelsolution.fire.approval.vo.ApprovalReferrerVo;
 import com.hotelsolution.fire.approval.vo.ApprovalVo;
+import com.hotelsolution.fire.approval.vo.ApproverVo;
 import com.hotelsolution.fire.approval.vo.DocumentVo;
 import com.hotelsolution.fire.approval.vo.ExpenditureVo;
 import com.hotelsolution.fire.approval.vo.ItemVo;
@@ -36,7 +38,7 @@ public interface ApprovalDao {
 
 	int insertApprovalDocument(SqlSessionTemplate sst, ApprovalVo avo);
 
-	int vacation(SqlSessionTemplate sst, Map<String, Object> params);
+	int vacation(SqlSessionTemplate sst, VactionVo vo);
 
 	ApprovalVo getDocumentNo(SqlSessionTemplate sst, String no);
 
@@ -59,6 +61,10 @@ public interface ApprovalDao {
 	List<ApprovalVo> getApproval(SqlSessionTemplate sst , PageVo pv);
 
 	int getApprovalCnt(SqlSessionTemplate sst);
+
+	int approver(SqlSessionTemplate sst, ApproverVo appVo);
+
+	int referrer(SqlSessionTemplate sst, ApprovalReferrerVo arvo);
 
 
 

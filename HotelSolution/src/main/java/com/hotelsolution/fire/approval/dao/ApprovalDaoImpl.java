@@ -10,7 +10,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.hotelsolution.fire.approval.vo.ApprovalReferrerVo;
 import com.hotelsolution.fire.approval.vo.ApprovalVo;
+import com.hotelsolution.fire.approval.vo.ApproverVo;
 import com.hotelsolution.fire.approval.vo.DocumentVo;
 import com.hotelsolution.fire.approval.vo.ExpenditureVo;
 import com.hotelsolution.fire.approval.vo.ItemVo;
@@ -69,8 +71,8 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 	
 	@Override
-	public int vacation(SqlSessionTemplate sst, Map<String, Object> params) {
-		return sst.insert("approval.vacation" , params);
+	public int vacation(SqlSessionTemplate sst, VactionVo vo) {
+		return sst.insert("approval.vacation" , vo);
 	}
 
 	@Override
@@ -139,6 +141,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int getApprovalCnt(SqlSessionTemplate sst) {
 		return sst.selectOne("approval.getApprovalCnt");
+	}
+
+	@Override
+	public int approver(SqlSessionTemplate sst, ApproverVo appVo) {
+		return sst.insert("approval.approver" , appVo);
+	}
+
+	@Override
+	public int referrer(SqlSessionTemplate sst, ApprovalReferrerVo arvo) {
+		return sst.insert("approval.referrer" , arvo);
 	}
 
 

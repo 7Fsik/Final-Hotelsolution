@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hotelsolution.fire.approval.dao.ApprovalDao;
+import com.hotelsolution.fire.approval.vo.ApprovalReferrerVo;
 import com.hotelsolution.fire.approval.vo.ApprovalVo;
+import com.hotelsolution.fire.approval.vo.ApproverVo;
 import com.hotelsolution.fire.approval.vo.DocumentVo;
 import com.hotelsolution.fire.approval.vo.ExpenditureVo;
 import com.hotelsolution.fire.approval.vo.ItemVo;
@@ -85,8 +87,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	@Override
 	//휴가신청서 작성
-	public int vacation(Map<String, Object> params) {
-		return dao.vacation(sst,params);
+	public int vacation(VactionVo vo) {
+		return dao.vacation(sst,vo);
 	}
 
 	@Override
@@ -147,6 +149,16 @@ public class ApprovalServiceImpl implements ApprovalService{
 	//결재 문서 개수 가져오기
 	public int getApprovalCnt() {
 		return dao.getApprovalCnt(sst);
+	}
+
+	@Override
+	public int approver(ApproverVo appVo) {
+		return dao.approver(sst,appVo);
+	}
+
+	@Override
+	public int referrer(ApprovalReferrerVo arvo) {
+		return dao.referrer(sst,arvo);
 	}
 
 	

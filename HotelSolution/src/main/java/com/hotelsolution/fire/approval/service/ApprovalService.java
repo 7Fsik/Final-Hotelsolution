@@ -4,7 +4,9 @@ import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Map;
 
+import com.hotelsolution.fire.approval.vo.ApprovalReferrerVo;
 import com.hotelsolution.fire.approval.vo.ApprovalVo;
+import com.hotelsolution.fire.approval.vo.ApproverVo;
 import com.hotelsolution.fire.approval.vo.DocumentVo;
 import com.hotelsolution.fire.approval.vo.ExpenditureVo;
 import com.hotelsolution.fire.approval.vo.ItemVo;
@@ -34,7 +36,7 @@ public interface ApprovalService {
 	//List<DocumentVo> getDocumentType(Map<String, String> map);
 
 	//휴가신청서 작성
-	int vacation(Map<String, Object> params);
+	int vacation(VactionVo vo);
 
 	//웹페이지 로드될때 결재문서 인서트
 	int insertApprovalDocument(ApprovalVo avo);
@@ -64,5 +66,9 @@ public interface ApprovalService {
 	List<ApprovalVo> getApproval(PageVo pv);
 
 	int getApprovalCnt();
+
+	int approver(ApproverVo appVo);
+
+	int referrer(ApprovalReferrerVo arvo);
 
 }

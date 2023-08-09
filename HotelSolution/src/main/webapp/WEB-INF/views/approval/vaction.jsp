@@ -517,7 +517,7 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td class="td2">결재</td>
-                                                <td class="employee-name"></td>
+                                                <td onclick="delEmployee();" class="employee-name modalTl"></td>
                                             </tr>
                 
                                             
@@ -527,7 +527,7 @@
                                                 <td class="td2">결재</td>
                                                 <c:forEach items="${list}" var = "member">
                                                     <c:if test="${member.approvalPower eq '1' }">
-                                                        <td>${member.name}(${member.teamName} ${member.positionName})</td>
+                                                        <td class="modalHrTl"><input type="hidden" class="hrtlNo" value="${member.no}"> ${member.name}(${member.teamName} ${member.positionName})</td>
                                                     </c:if>
                                                 </c:forEach>
                                             </tr>
@@ -538,13 +538,13 @@
         
                         <div id="reference-div">
                             <div class="reference">참조</div>
-                            <div class="reference-list">
+                            <div onclick="delEmployees();" class="reference-list">
                                
                             </div>
                         </div>
                     
                     <div class="submit-btn">
-                        <button type="submit">확인</button>
+                        <button onclick="submit();">확인</button>
                         <button onclick="closeModal();">닫기</button>
                     </div>
                 </div>
@@ -589,8 +589,8 @@
                                <tbody>
 	                                <tr>
 	                                	<td>${loginMember.name}</td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td class="teamLeader"></td>
+	                                	<td class="hrLeader"></td>
 	                                </tr>
 	                                
 	                                <tr>
@@ -598,9 +598,9 @@
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td class="refer"></td>
+	                                	<td class="refer"></td>
+	                                	<td class="refer"></td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -678,27 +678,6 @@
     
 	<script>
 
-        $(document).ready(function() {
-            $.ajax({
-                url : '${root}/approval/insertApprovalDocument',
-                method : 'post',
-                data : {
-                    typeNo : "${documentType.documentTypeNo}",
-                    userNo : "${loginMember.no}"
-                },
-                success : (data)=>{
-                    console.log(data);
-                    if(data == 'success'){
-                        alert('성공');
-                    }
-                },
-                error : (e)=>{
-                    console.log(e);
-                    alert('fail');
-                }
-            })
-        })
-
         // 모달 요소를 가져옵니다.
         const modal = document.getElementById('myModal');
 
@@ -711,11 +690,41 @@
         // 모달을 엽니다.
         function openModal() {
             modal.style.display = 'block';
+            const employeeNameEle = document.querySelector('.reference-list')
+            employeeNameEle.textContent = '';
+
+            document.querySelector('.hrLeader').innerHTML = '';
+            document.querySelector('.teamLeader').innerHTML = '';
+
+            const refer = document.querySelectorAll('.refer');
+            for(let i=0; i<refer.length; i++){
+                refer[i].innerHTML = '';
+            }
+
         }
 
         // 모달을 닫습니다.
         function closeModal() {
             modal.style.display = 'none';
+            const td = document.querySelector('table .employee-name');
+            const x = document.querySelector('.x');
+            const teams = document.querySelectorAll('.teams');
+            const icons = document.querySelectorAll('.iii');
+            const reference = document.querySelector('.reference-list');
+
+            let team = '';
+            let icon = '';
+            for(let i=0; i<teams.length; i++){
+                team = teams[i];
+                icon = icons[i];
+                team.style.display = 'none';
+                icon.classList.remove('bi-dash-circle-fill');
+                icon.classList.add("bi-plus-circle-fill");
+            }
+            x.innerHTML = '';
+            td.innerHTML = '';
+            reference.innerHTML = '';
+
         }
 
         // 버튼을 클릭하면 모달을 엽니다.
@@ -780,7 +789,7 @@
 				success : (data)=>{
 						str += '<div class="x-container">'
 					for(let i=0; i<data.length; i++){
-						str += '<input type="checkbox" class="employee-checkbox" name="checkbox-" value=" ' + data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
+						str += '<input type="checkbox" class="employee-checkbox tlNo" name="checkbox-" value="  '+'['+data[i].no+']' + ' '+ data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
 						data[i].name +" " +"("+data[i].teamName + " "+data[i].positionName+")" + "<br>";
 						str += '<input type="hidden" name="positionNo" value="'+data[i].positionNo+'">'
 					}
@@ -807,21 +816,85 @@
 
 
 		}
-			
-		
+        
+        
 
 		function handleReference() {
-			const employee = document.querySelector('input[name=checkbox-]:checked');
-			const reference = document.querySelector('.reference-list');
-			console.log(employee);
-			console.log(reference[0]);
-			console.log(reference[1]);
-			console.log(reference[2]);
-			const em = employee.value;
-			
-			reference.innerHTML += '<div>'+employee.value+'</div>';
+        const employee = document.querySelectorAll('input[name=checkbox-]:checked');
+        const reference = document.querySelector('.reference-list');
+        
+        if (reference.children.length < 3) {
+            for (let i = 0; i < employee.length && reference.children.length < 3; i++) {
+                const em = employee[i].value;
+                reference.innerHTML += '<div class="a">' + em + '</div>';
+            }
+        }
+};
 
-		};
+    //결재 innerHTML 지우기
+    function delEmployee() {
+    const employeeNameEle = document.querySelector('.employee-name');
+    const isEmployeeNameEmpty = employeeNameEle.textContent === '';
+        console.log(employeeNameEle);
+        console.log(isEmployeeNameEmpty);
+
+    if (!isEmployeeNameEmpty) {
+        const result = confirm('삭제하시겠습니까?');
+        if (result) {
+            employeeNameEle.textContent = '';
+            }
+        }
+    };
+
+            function delEmployees(params) {
+            const employeeNameEle = document.querySelector('.reference-list')
+            const isEmployeeNameEmpty = employeeNameEle.textContent === '';
+            console.log(employeeNameEle);
+            console.log(isEmployeeNameEmpty);
+
+            if (!isEmployeeNameEmpty){
+                const result = confirm('삭제하시겠습니까?');
+                    if(result){
+                        employeeNameEle.innerHTML = '';
+                    }
+            }
+        
+            }
+
+
+            function submit() {
+                const tl = document.querySelector('.teamLeader');
+                const mtl = document.querySelector('.modalTl');
+                const hl = document.querySelector('.hrLeader');
+                const htl = document.querySelector('.modalHrTl');
+                const refer = document.querySelectorAll('.refer');
+                const a = document.querySelectorAll('.a');
+
+                const tlNo = document.querySelector('.tlNo').value;
+                const hrtlNo = document.querySelector('.hrtlNo').value;
+
+                const strMtl  = mtl.textContent;
+                const strHtl = htl.textContent;
+                let str = '';
+                str += '<input type="text" name="teamLeader" id="teamLeader" value="' + strMtl + '">';
+                tl.innerHTML = str;
+
+                let str2 ='';
+                str2+='<input type="text"  id="hrTeamLeader" value="' + strHtl + '">';
+                str2+='<input type="hidden" name="hrTeamLeader" id="hrTeamLeader" value="' + hrtlNo + '">';
+                hl.innerHTML = str2;
+                for(let i = 0; i<a.length; i++){
+                    //let aa = a[i].textContent;
+                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" value="' + a[i].textContent + '">'
+                }
+
+                closeModal();
+
+            }
+
+
+
+
 	</script>
 	
 
