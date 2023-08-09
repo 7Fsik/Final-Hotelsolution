@@ -72,6 +72,7 @@
     }
     input{
         border: 0px;
+        outline: none;
     }
     .btn{
         margin:30px;

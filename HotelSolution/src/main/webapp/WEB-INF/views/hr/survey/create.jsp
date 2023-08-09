@@ -91,6 +91,7 @@
         border: 0px solid #3B444B;
         border-radius: 20px;
         resize: none;
+        outline: none;
         
     }
 
