@@ -45,16 +45,24 @@ public class ApprovalController {
 
 	//결재 첫화면
 	@GetMapping("approvalFirstPage")
-	public String approval(@RequestParam(defaultValue = "1") int p ,  Model model) {
+	public String approval(@RequestParam(defaultValue = "1") int p ,  Model model , HttpSession session) {
 		
-		int listCount = service.getApprovalCnt();
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
+		int listCount = service.getApprovalFirstPageCnt(no);
 		int currentPage = p;
 		int pageLimit = FireConstPool.COMPANY_BOARD_PAGE_LIMIT;
 		int boardLimit = 7;
 		
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		
-		List<ApprovalVo> approvalList = service.getApproval(pv);
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("pv", pv);
+		
+		
+		List<ApprovalVo> approvalList = service.getApproval(map);
 		System.out.println(approvalList);
 		model.addAttribute("approvalList" ,approvalList);
 		
@@ -63,19 +71,54 @@ public class ApprovalController {
 	
 	//내가받은결재(화면)
 	@GetMapping("getApproval")
-	public void getApproval() {
+	public String getApproval(@RequestParam(defaultValue = "1") int p , Model model , HttpSession session) {
 		
-	}
-	
-	//삭제된 결재(화면)
-	@GetMapping("deleteApproval")
-	public void deleteApproval() {
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
+		int listCount = service.getApprovalCnt(no);
+		int currentPage = p;
+		int pageLimit = FireConstPool.COMPANY_BOARD_PAGE_LIMIT;
+		int boardLimit = 7;
+		
+		PageVo pv = new PageVo(listCount, currentPage , pageLimit , boardLimit);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("pv", pv);
+		
+		
+		List<ApprovalVo> getList = service.getMyApproval(map);
+		System.out.println("getList : " + getList );
+		model.addAttribute("getList" , getList);
+		
+		return "approval/getApproval";
 		
 	}
 	
 	//참조받은결재(화면)
 	@GetMapping("referrerApproval")
-	public void referrerApproval() {
+	public String referrerApproval(@RequestParam(defaultValue = "1") int p , Model model ,  HttpSession session) {
+		
+		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+		String no = loginMember.getNo();
+		
+		int listCount = service.getReferrCnt(no);
+		int currentPage = p;
+		int pageLimit = FireConstPool.COMPANY_BOARD_PAGE_LIMIT;
+		int boardLimit = 7;
+		
+		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("pv", pv);
+		
+		List<ApprovalVo> getList = service.getReferenceApproval(map);
+		System.out.println("refgetList :" + getList);
+		model.addAttribute("getList" , getList);
+		
+		return "approval/referrerApproval";
 		
 	}
 	
@@ -121,6 +164,7 @@ public class ApprovalController {
 		List<MemberVo> list = service.getDecideEmployee(params);
 		
 		model.addAttribute("list" , list);
+		System.out.println("list : " + list);
 		model.addAttribute("positionList" , positionList);
 		model.addAttribute("teamList" , teamList);
 	}
@@ -134,51 +178,29 @@ public class ApprovalController {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
+		int result = service.insertApprovalDocument(avo);
+
 		ApprovalVo appvo = service.getDocumentNo(no);
 		String avoNo = appvo.getNo();
+		vo.setAppNo(avoNo);
+		System.out.println(vo);
+		int result2 = service.vacation(vo);
 		
-		ApprovalReferrerVo arvo = new ApprovalReferrerVo();
 		
 		int startIndex = 0;
 		int endIndex = 0;
-		for(String reference : referenceList) {
-			startIndex = reference.indexOf("[")+1;
-			endIndex = reference.indexOf("]");
-			
-			String rfNo = reference.substring(startIndex , endIndex);
-
-			arvo.setApprovalNo(avoNo);
-			arvo.setReferrerNo(rfNo);
-			
-			int result4 = service.referrer(arvo);
-		}
 		
 		ApproverVo appVo = new ApproverVo();
-		
-		
-		
-		System.out.println("teamLeader : "+teamLeader);
-		System.out.println("hrteamLeader : "+hrTeamLeader);
-		
 		startIndex = teamLeader.indexOf("[")+1;
 		endIndex = teamLeader.indexOf("]");
 		String tlNo = teamLeader.substring(startIndex , endIndex);
 		System.out.println(tlNo);
-		
-		int result = service.insertApprovalDocument(avo);
-		
-		
-		vo.setAppNo(avoNo);
-		System.out.println(vo);
-		
-		int result2 = service.vacation(vo);
-		
 		List<String> approverList = new ArrayList<String>();
 		approverList.add(tlNo);
 		approverList.add(hrTeamLeader);
-		System.out.println("result2 : " + result2);
 		
 		int x = 0;
+		int result3 =0;
 		for(int i=0; i < approverList.size(); i++) {
 			appVo.setApprovalDocNo(avoNo);
 			appVo.setStatusNo("1");
@@ -186,16 +208,29 @@ public class ApprovalController {
 			x = i+1;
 			String p = Integer.toString(x);
 			appVo.setPriority(p);
-			int result3 = service.approver(appVo);
+			result3 = service.approver(appVo);
 			System.out.println("@@@#!@#!@#!"+result3);
 		}
 		
-		
-		if(result !=1 || result2 != 1) {
-			throw new RuntimeException();
+		int result4 = 0;
+		ApprovalReferrerVo arvo = new ApprovalReferrerVo();
+		for(String reference : referenceList) {
+			startIndex = reference.indexOf("[")+1;
+			endIndex = reference.indexOf("]");
+			
+			String rfNo = reference.substring(startIndex , endIndex);
+			
+			arvo.setApprovalNo(avoNo);
+			arvo.setReferrerNo(rfNo);
+			
+			result4 = service.referrer(arvo);
 		}
 		
-		return "redirect:/approval/approvalFirstPage";
+		if(result ==1 && result2 == 1 && result3 == 1 && result4 == 1) {
+			return "redirect:/approval/approvalFirstPage";
+		}
+		
+		throw new RuntimeException();
 		
 	}
 	
@@ -348,8 +383,22 @@ public class ApprovalController {
 	
 	//휴가신청서 상세조회(화면)
 	@GetMapping("vactionDetail")
-	public void vactionDetail() {
+	public String vactionDetail(String no , Model model) {
+
+		ApprovalVo vo = service.vacationDetail(no);
+		List<ApproverVo> list = service.getApprover(no);
 		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+		
+		System.out.println("vo : " + vo);
+		System.out.println("appList : " + list);
+		System.out.println("refList : " + fList);
+		
+		return "approval/vactionDetail";
 	}
 	
 	//업무보고서 상세조회(화면)

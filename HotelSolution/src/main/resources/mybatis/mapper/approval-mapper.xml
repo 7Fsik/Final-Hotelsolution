@@ -241,7 +241,7 @@
 	
 	</insert> 
 	
-	<select id="getApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo">
+	<select id="getApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo" parameterType="java.util.Map">
 	
 		SELECT
 	     A.NO
@@ -257,16 +257,16 @@
 	   APPROVAL_DOCUMENT A
 	   JOIN APPROVAL_DOCUMENT_TYPE T
 	   ON A.TYPE_NO = T.DOCUMENT_TYPE_NO
-	   WHERE A.TITLE IS NOT NULL AND AD_YN ='N'
+	   WHERE A.TITLE IS NOT NULL AND USER_NO = #{no}
 	   ORDER BY NO DESC
 	
 	</select>
 	
-	<select id="getApprovalCnt" resultType="int">
+	<select id="getApprovalFirstPageCnt" resultType="int" parameterType="java.util.Map">
 		SELECT COUNT(NO)
 		FROM APPROVAL_DOCUMENT
-		WHERE AD_YN = 'N'
-		AND TITLE IS NOT NULL
+		WHERE TITLE IS NOT NULL
+		AND USER_NO = #{no}
 	</select>
 	
 	<insert id="approver">
@@ -307,6 +307,153 @@
 		
 	
 	</insert>
+	
+	<select id="getApprovalCnt" resultType="int">
+	
+		SELECT COUNT(NO)
+		FROM APPROVER
+        WHERE APP_NO = #{no}
+		
+	</select>
+	
+	<select id="getMyApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo" parameterType="java.util.Map">
+	
+		SELECT 
+	    A.NO
+	    ,A.TYPE_NO
+	    ,A.USER_NO
+	    ,A.TITLE
+	    ,A.CONTENT
+	    ,A.AD_YN
+	    ,A.ENROLL_DATE
+	    ,V.PRIORITY
+	    ,S.NAME AS STATUS_NAME
+	    ,T.DOCUMENT_TYPE_NAME
+	    ,P.NAME AS POSITION_NAME
+	    ,TM.TEAM_NAME
+	    ,M.NAME AS SEND_NAME
+	    FROM APPROVAL_DOCUMENT A
+	    JOIN APPROVER V
+	    ON A.NO = V.APPROVAL_DOC_NO
+	    JOIN APPROVAL_STATUS S
+	    ON V.STATUS_NO = S.NO
+	    JOIN APPROVAL_DOCUMENT_TYPE T
+	    ON A.TYPE_NO = T.DOCUMENT_TYPE_NO
+	    JOIN MEMBER M
+	    ON A.USER_NO = M.NO
+	    JOIN POSITION P
+	    ON P.NO = M.POSITION_NO
+	    JOIN TEAM TM
+	    ON TM.TEAM_NO = M.TEAM_NO
+	    WHERE V.APP_NO = #{no}
+	    ORDER BY NO DESC
+	
+	</select>
+	
+	<select id="getReferrCnt" resultType="int">
+		
+		SELECT COUNT(NO)
+		FROM APPROVAL_REFERRER
+		WHERE REFERRER_NO = #{no}
+        
+	</select>
+	
+	<select id="getReferenceApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo" parameterType="java.util.Map">
+		
+		SELECT
+	     A.NO
+	    ,A.TYPE_NO
+	    ,A.USER_NO
+	    ,A.TITLE
+	    ,A.CONTENT
+	    ,A.AD_YN
+	    ,A.ENROLL_DATE
+	    ,A.END_DATE
+	    ,T.DOCUMENT_TYPE_NAME
+        ,M.NAME AS SEND_NAME
+        ,P.NAME AS POSITION_NAME
+        ,TM.TEAM_NAME
+	   FROM
+	   APPROVAL_DOCUMENT A
+	   JOIN APPROVAL_DOCUMENT_TYPE T
+	   ON A.TYPE_NO = T.DOCUMENT_TYPE_NO
+       JOIN APPROVAL_REFERRER R
+       ON A.NO = R.APPROVAL_NO
+       JOIN MEMBER M
+        ON A.USER_NO = M.NO
+	    JOIN POSITION P
+	    ON P.NO = M.POSITION_NO
+	    JOIN TEAM TM
+	    ON TM.TEAM_NO = M.TEAM_NO
+	   WHERE A.TITLE IS NOT NULL AND REFERRER_NO = #{no}
+	   ORDER BY NO DESC
+		
+	</select>
+	
+	<select id="vacationDetail" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo">
+	
+		SELECT
+	     A.NO
+	    ,A.TYPE_NO
+	    ,A.USER_NO
+	    ,A.TITLE
+	    ,A.CONTENT
+	    ,A.AD_YN
+	    ,A.ENROLL_DATE
+	    ,A.END_DATE
+        ,V.VACATION_START
+        ,V.VACATION_END
+        ,M.NAME AS WRITER_NAME
+        ,P.NAME AS POSITION_NAME
+        ,TM.TEAM_NAME
+        FROM
+        APPROVAL_DOCUMENT A
+        JOIN MEMBER M
+        ON A.USER_NO = M.NO
+        JOIN VACATION_APPLY V
+        ON A.NO = V.APP_NO
+        JOIN POSITION P
+	    ON P.NO = M.POSITION_NO
+	    JOIN TEAM TM
+	    ON TM.TEAM_NO = M.TEAM_NO
+        WHERE A.TYPE_NO = 1
+        AND A.NO = #{no}
+	
+	</select>
+	
+	<select id="getApprover" resultType="com.hotelsolution.fire.approval.vo.ApproverVo">
+	
+		SELECT
+        A.NO
+        ,A.APPROVAL_DOC_NO
+        ,A.STATUS_NO
+        ,A.APP_NO
+        ,A.PRIORITY
+        ,M.NAME AS APPROVER_NAME
+        ,ST.NAME AS STATUS_NAME
+        FROM APPROVER A
+        JOIN MEMBER M
+        ON M.NO = A.APP_NO
+        JOIN APPROVAL_STATUS ST
+        ON A.STATUS_NO = ST.NO
+        WHERE APPROVAL_DOC_NO = #{no}
+	
+	</select>
+	
+	<select id="getReferrer" resultType="com.hotelsolution.fire.approval.vo.ApprovalReferrerVo">
+	
+		SELECT 
+        AR.NO
+        ,AR.APPROVAL_NO
+        ,AR.REFERRER_NO
+        ,M.NAME AS REFERRER_NAME
+        FROM 
+        APPROVAL_REFERRER AR
+        JOIN MEMBER M
+        ON M.NO = AR.REFERRER_NO
+        WHERE APPROVAL_NO = #{no}
+	
+	</select>
 
 
 </mapper>

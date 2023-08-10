@@ -141,24 +141,67 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	@Override
 	//결재 문서 리스트로 가져오기
-	public List<ApprovalVo> getApproval(PageVo pv) {
-		return dao.getApproval(sst , pv);
+	public List<ApprovalVo> getApproval(Map<String, Object> map) {
+		return dao.getApproval(sst , map);
 	}
 
 	@Override
-	//결재 문서 개수 가져오기
-	public int getApprovalCnt() {
-		return dao.getApprovalCnt(sst);
+	//내가 보낸 결재문서 개수 가져오기
+	public int getApprovalFirstPageCnt(String no) {
+		return dao.getApprovalFirstPageCnt(sst , no);
 	}
 
 	@Override
+	//결재자 인서트
 	public int approver(ApproverVo appVo) {
 		return dao.approver(sst,appVo);
 	}
 
 	@Override
+	//참조자 인서트
 	public int referrer(ApprovalReferrerVo arvo) {
 		return dao.referrer(sst,arvo);
+	}
+
+	@Override
+	//내가받은결재 개수 가져오기
+	public int getApprovalCnt(String no) {
+		return dao.getApprovalCnt(sst, no);
+	}
+
+	@Override
+	//내가 받은결재 리스트 가져오기
+	public List<ApprovalVo> getMyApproval(Map<String, Object> map) {
+		return dao.getMyApproval(sst,map);
+	}
+
+	@Override
+	//참조받은 결재 카운트
+	public int getReferrCnt(String no) {
+		return dao.getReferrCnt(sst,no);
+	}
+
+	@Override
+	//참조받은결재 리스트 가져오기
+	public List<ApprovalVo> getReferenceApproval(Map<String, Object> map) {
+		return dao.getReferenceApproval(sst,map);
+	}
+
+	@Override
+	//휴가신청서 상세조회
+	public ApprovalVo vacationDetail(String no) {
+		return dao.vacationDetail(sst,no);
+	}
+
+	@Override
+	//휴가 신청서 상세조회 결재자 가져오기
+	public List<ApproverVo> getApprover(String no) {
+		return dao.getApprover(sst,no);
+	}
+
+	@Override
+	public List<ApprovalReferrerVo> getReferrer(String no) {
+		return dao.getReferrer(sst,no);
 	}
 
 	

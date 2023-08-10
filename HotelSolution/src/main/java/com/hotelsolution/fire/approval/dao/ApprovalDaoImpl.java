@@ -133,14 +133,15 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
-	public List<ApprovalVo> getApproval(SqlSessionTemplate sst , PageVo pv) {
+	public List<ApprovalVo> getApproval(SqlSessionTemplate sst , Map<String, Object> map) {
+		PageVo pv = (PageVo)map.get("pv");
 		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
-		return sst.selectList("approval.getApproval", null , rb);
+		return sst.selectList("approval.getApproval", map , rb);
 	}
 
 	@Override
-	public int getApprovalCnt(SqlSessionTemplate sst) {
-		return sst.selectOne("approval.getApprovalCnt");
+	public int getApprovalFirstPageCnt(SqlSessionTemplate sst , String no) {
+		return sst.selectOne("approval.getApprovalFirstPageCnt" , no);
 	}
 
 	@Override
@@ -151,6 +152,45 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int referrer(SqlSessionTemplate sst, ApprovalReferrerVo arvo) {
 		return sst.insert("approval.referrer" , arvo);
+	}
+
+	@Override
+	public int getApprovalCnt(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("approval.getApprovalCnt" , no);
+	}
+
+	@Override
+	public List<ApprovalVo> getMyApproval(SqlSessionTemplate sst, Map<String, Object> map) {
+		PageVo pv = (PageVo)map.get("pv");
+		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
+		return sst.selectList("approval.getMyApproval" , map , rb);
+	}
+
+	@Override
+	public int getReferrCnt(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("approval.getReferrCnt" , no);
+	}
+
+	@Override
+	public List<ApprovalVo> getReferenceApproval(SqlSessionTemplate sst, Map<String, Object> map) {
+		PageVo pv = (PageVo)map.get("pv");
+		RowBounds rb = new RowBounds(pv.getOffset(), pv.getBoardLimit());
+		return sst.selectList("approval.getReferenceApproval" , map , rb);
+	}
+
+	@Override
+	public ApprovalVo vacationDetail(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("approval.vacationDetail" , no);
+	}
+
+	@Override
+	public List<ApproverVo> getApprover(SqlSessionTemplate sst, String no) {
+		return sst.selectList("approval.getApprover" , no);
+	}
+
+	@Override
+	public List<ApprovalReferrerVo> getReferrer(SqlSessionTemplate sst, String no) {
+		return sst.selectList("approval.getReferrer" , no);
 	}
 
 

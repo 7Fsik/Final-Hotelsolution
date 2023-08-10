@@ -8,5 +8,6 @@ public class ApprovalReferrerVo {
 	private String no;
 	private String approvalNo;
 	private String referrerNo;
+	private String referrerName;
 	
 }

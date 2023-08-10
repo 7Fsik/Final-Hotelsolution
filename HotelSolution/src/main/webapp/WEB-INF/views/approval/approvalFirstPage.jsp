@@ -81,9 +81,8 @@
     
     .list-title{
     	display:grid;
-    	grid-template-columns:1.5fr 3fr 1fr;
+    	grid-template-columns:1fr 3fr 2.5fr;
 		place-items:center;
-		width:290px;
     }
     
     .list-status{
@@ -91,6 +90,7 @@
     	grid-template-columns:1fr 1fr;
     	align-items:center;
     	text-align:center;
+    	width:350px;
     }
     
     #page-area{
@@ -124,7 +124,6 @@
 		        	<div class="approval-list">
 		        		<a href="${root}/approval/approvalFirstPage" class="">나의 결재</a>
 		        		<a href="${root}/approval/getApproval">내가 받은 결재</a>
-		        		<a href="${root}/approval/deleteApproval">삭제된 결재</a>
 		        		<a href="${root}/approval/referrerApproval">참조 결재</a>
 		        	</div>
 		        	
@@ -137,18 +136,19 @@
         		
 				<hr class="line">  
 				<div id="approval-content">
-					
 					<c:forEach items="${approvalList}" var="appList">
 						<div class="list">
 							<div class="list-title">
 								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
 								<div>[${appList.documentTypeName}]</div>
-								<a href="#">${appList.title}</a>
+								<a onclick="goDetail('${appList.no}' , '${appList.typeNo}' , '${appList.userNo}');">${appList.title}</a>
 							</div>
 							
 							<div class="list-status">
 								<div>${appList.enrollDate}</div>
-								<div>승인</div>
+								<c:if test="${appList.adYn == 'N' }">
+									<div>진행중</div>
+								</c:if>
 							</div>
 						</div>
 					</c:forEach>
@@ -252,6 +252,14 @@
 			}
 		});
 	
+		function goDetail(no , typeNo) {
+			
+			if(typeNo == 1){
+				location.href = '${root}/approval/vactionDetail?no=' + no;
+			}
+
+		}
+
 	
 	</script>
 	
