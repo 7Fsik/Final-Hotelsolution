@@ -1,10 +1,6 @@
 package com.hotelsolution.fire.common.chat.vo;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
-import org.springframework.web.socket.WebSocketSession;
 
 import lombok.Data;
 
@@ -24,7 +20,6 @@ public class ChatRoomVo {
     private String user2Image;
     private String updateTime1;
     private String updateTime2;
-    private Set<WebSocketSession> sessions = new HashSet<>();
 
    
 }

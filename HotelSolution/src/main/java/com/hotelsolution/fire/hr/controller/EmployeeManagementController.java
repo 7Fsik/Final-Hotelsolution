@@ -15,19 +15,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.service.EmployeeManagementService;
-import com.hotelsolution.fire.hr.vo.SurveyDocVo;
+import com.hotelsolution.fire.hr.vo.VacationDocVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
 import com.hotelsolution.fire.workout.Service.WorkoutService;
-import com.hotelsolution.fire.workout.Service.WorkoutServiceImpl;
 import com.hotelsolution.fire.workout.vo.WorkoutVo;
 
 import lombok.RequiredArgsConstructor;
@@ -70,25 +66,21 @@ import lombok.RequiredArgsConstructor;
 			}
 			
 			map.put("pv", pv);
-			System.out.println("getList직원 "+pv);
 			List<MemberVo> memberVoList = service.getMemberList(map);
 			model.addAttribute("memberVoList", memberVoList);
 			model.addAttribute("memberListpage",memberListpage);
 			model.addAttribute("pv", pv);
 			model.addAttribute("searchType", searchType);
 			model.addAttribute("searchValue", searchValue);
-			System.out.println(map);
-			System.out.println(memberVoList);
 			
 		}
 		//승인 이후 직원 목록 변동
 		@PostMapping("list")
 		@ResponseBody
-		public List list(String memberListpage,String searchType, String searchValue) {
+		public List<MemberVo> list(String memberListpage,String searchType, String searchValue) {
 			Map<String,Object> map = new HashMap();
 			map.put("searchType", searchType);
 			map.put("searchValue", searchValue);
-			System.out.println(map);
 			int listCount = service.getMemberCnt(map);
 			if (memberListpage == null || memberListpage.isEmpty()) {
 				memberListpage = "1";
@@ -106,7 +98,6 @@ import lombok.RequiredArgsConstructor;
 			if(realPage<=pv.getEndPage()) {
 				pv.setEndPage(realPage);
 			}
-			System.out.println("postList직원 "+pv);
 			map.put("pv", pv);
 			return service.getMemberList(map);
 			
@@ -116,21 +107,21 @@ import lombok.RequiredArgsConstructor;
 		//
 		@GetMapping("new")
 		@ResponseBody
-		public List getNewList() {
+		public List<MemberVo> getNewList() {
 			int listCount = 10;
 			int currentPage = 1;
 			int pageLimit = 1;
 			int boardLimit = 10;
 			
 			PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-			List<MemberVo> newMemberList = service.getNewList(pv);
-			return newMemberList;
+		
+			return  service.getNewList(pv);
 		}
 		
 		//신규멤버 승인 포스트 매핑
 		@PostMapping("new")
 		@ResponseBody
-		public List getNewList(String memberNo) {
+		public List<MemberVo> getNewList(String memberNo) {
 			int result = service.acceptNewMember(memberNo);
 			if(result ==1) {
 				
@@ -143,9 +134,15 @@ import lombok.RequiredArgsConstructor;
 		
 		@GetMapping("getDetail")
 		public String detail(Model model, String memberNo, HttpSession session) {
-			System.out.println(memberNo);
+			//휴가목록
+
+			
+			List<VacationDocVo> vdvoList = service.getSubmitListToEm(memberNo);
+			
+			model.addAttribute("vdvoList",vdvoList);
+			
+			//근태
 			MemberVo vo = service.getDetail(memberNo);
-			System.out.println(vo);
 			model.addAttribute("vo", vo);
 			 Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
 
@@ -277,8 +274,6 @@ import lombok.RequiredArgsConstructor;
 		    }
 
 		    int result = service.edit(vo);
-		    System.out.println("result: " + result);
-		    System.out.println("vo.getNo(): " + vo.getNo());
 
 		    if (result == 1) {
 		        // memberNo를 flash 속성으로 전달

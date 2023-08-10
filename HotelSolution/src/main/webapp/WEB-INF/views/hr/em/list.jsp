@@ -169,7 +169,7 @@
     	font-size: 15px;
     }
     .accept:hover{
-    	  background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    	 background-color: rgba(59, 68, 75, 0.2); /* #3b444b 색상의 투명도 50% */
     }
     .newMemberListTop{
     	
@@ -196,6 +196,10 @@
 		box-sizing: border-box;
     	overflow: auto;
     }
+    .newMemberList:hover{
+    	background-color: rgba(59, 68, 75, 0.2);
+    	cursor: pointer;
+    }
     .main {
     width: 100%;
     height: 100%;
@@ -216,7 +220,7 @@
    
 }
 .memberVoList:hover{
-	 background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+	background-color: rgba(59, 68, 75, 0.2); /* #3b444b 색상의 투명도 50% */
     
 }
 .ac{
@@ -333,7 +337,7 @@
 		        for (let i = 0; i < x.length; i++) {
 		
 		            str += '<div class="newMemberList">' +
-		                '<div class="acNamediv">' +'('+ x[i].teamName+')'+ x[i].name +' ' + x[i].positionName+ '</div>' +
+		                '<div class="acNamediv" onclick="goDetail(' + x[i].no + ')">' +'('+ x[i].teamName+')'+ x[i].name +' ' + x[i].positionName+ '</div>' +
 		                '<div class="accept" onclick="acceptMember(' + x[i].no + ')">승인</div>' +
 		                '</div>';
 		        }

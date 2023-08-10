@@ -38,6 +38,8 @@
     margin: auto;
     border: 1px solid black;
     border-radius: 20px;
+   
+    font-size: 12px;
   }
 
   .detailTable {
@@ -67,7 +69,7 @@
   #pf{
   	height: 100px;
   	width:100px;
-  	border-radius: 30px;
+  	border-radius: 50px;
   	
   }
   .detailTop{
@@ -384,6 +386,32 @@
     #real{
     	height : 450px;
     }
+    
+       	.vacList{
+   		display:grid;
+        grid-template-rows: 4fr 4fr 4fr ;
+        gap :10px;
+        margin-top : 10px;
+         overflow-y: auto;
+         height: 400px;
+         width: 550px;
+   	}
+   	
+   	.vac{
+	padding-top: 10px;
+	padding-left:10px;
+	display:grid;
+	width:540px;
+	height:90px;
+	grid-template-columns: 1fr 3fr 2fr  ;
+       
+	
+}
+.pf{
+	width: 50px;
+	height: 50px;
+	border-radius: 80px;
+}
 </style>
 </head>
 <body>
@@ -395,7 +423,7 @@
           <form action="${root}/hr/em/edit" method="post" onsubmit="return totalCheck()">
            
             
-              <div style="display: grid; grid-template-columns: 1fr 1fr 3fr 3fr 1fr; border: 1px solid black; width: 1200px; height: 230px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr 3fr 3fr 1fr; border: 1px solid black; border-radius:20px;width: 1200px; height: 230px;">
 			        <div style="margin:auto;"><img id="pf" src="${root}/resources/img/member/profile/${vo.changeImage}" alt="${vo.image}"> </div>
 			        <div style="display: grid; grid-template-rows: 1fr 2fr 1fr;">
 			            <div style="padding-top:20px;"></div>
@@ -515,9 +543,36 @@
 	</div>
           </div>
           <div class="detailBodyRight">
-            휴가내역
-          </div>
-        </div>
+          		<div style="font-size: 20px; text-align: center; border-bottom: 1px solid black; height:50px; padding-top:15px;">휴가 내역</div>
+           		<div class="vacList">
+					<c:forEach items="${vdvoList}" var="vdvo"> 
+						<div class="vac">
+							<div class="pfimage" style="display:grid; grid-template-rows: 3fr 1fr;">
+								<div><img class="pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진"></div>
+								<div>&nbsp;&nbsp;${vdvo.name}</div>
+							</div>
+							<div style="display:grid; grid-template-rows: 1fr 1fr 2fr;">
+								<div style="display:grid; grid-template-columns: 1fr 1fr;">
+									<div>제목 : ${vdvo.title}</div>
+									<div>부서 : ${vdvo.teamName}</div>
+								</div>
+								<div>${vdvo.vacationStart} ~ ${vdvo.vacationEnd} </div>
+								<div>사유 : ${vdvo.content}</div>
+							</div>
+							<div style="display:grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
+								<div>직책 : ${vdvo.positionName}</div>
+								<div>전화번호 : 0${vdvo.id}</div>
+								<div>신청일 : ${vdvo.enrollDate}</div>
+								<div></div>
+							</div>
+						</div>
+					</c:forEach>
+									
+								
+							
+				</div>
+         </div>
+       </div>
       </div>
     </div>
   </div>

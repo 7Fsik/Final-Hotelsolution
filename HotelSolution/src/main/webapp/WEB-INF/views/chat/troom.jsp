@@ -50,7 +50,6 @@
     overflow-wrap: break-word; 
 	width : 480px;
 	  padding: 10px; 
-	  border-bottom: 1px solid lightgray;
 	}
 	
 	#chatForm{
@@ -71,20 +70,19 @@
 	
 	}
 
-	/* 스크롤바 스타일 설정 */
 	::-webkit-scrollbar {
 		width: 10px;
-		background-color: #3B444B; /* 연한 하늘색 배경색 */
+		background-color: white; /* 연한 하늘색 배경색 */
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: #3B444B; /* 연한 하늘색 스크롤바 색상 */
+		background-color: white; /* 연한 하늘색 스크롤바 색상 */
 		border-radius: 5px; /* 스크롤바를 둥글게 보이도록 설정 */
 	}
 
 	::-webkit-scrollbar-thumb:hover {
-		background-color: #1976D2; /* 마우스 오버 시 스크롤바 색상 변경 */
-	}
+		background-color: #3B444B; /* 마우스 오버 시 스크롤바 색상 변경 */
+	} */
 
 
 	.content{
@@ -134,6 +132,9 @@
    .search-area{
    text-align: center;
    }
+    .tnone{
+   	text-decoration: none;
+   }
 </style>
 <body>
 
@@ -144,13 +145,13 @@
 	            
 	        <div id="search">
 	        	<div class="search-area">
-	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	           		<a class="tnone" href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
 	            </div>
 	            <div  class="search-area">
-					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+					<a class="tnone"  href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
 				</div>
 	        	<div  class="search-area">
-	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        		<a class="tnone" href="${root}/chat/hsroom">공용 채팅방</a>
 	        	</div>
                <input type="hidden" class="memberName" value="${loginMember.name }">
                <input type="hidden" class="teamNo" value="${loginMember.teamNo }">
@@ -160,11 +161,30 @@
 	<div class="chatWrap">
 			<div class="receive-chat-area">
 				<c:forEach items="${tvoList}" var="vo">
-			    	<div  class="chatmessage">
-				    	<strong>[${vo.senderPositionName}][${vo.senderName}]</strong>
-				    	${vo.content}
-				    	<sub>${vo.enrollDate}</sub>
+			    	<c:if test="${vo.senderNo == loginMember.no}">
+			    	<div class="chatmessage" style="padding-left: 230px;">
+			    		<div style="width: 250px;">
+			    			<div style="width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">
+						    	 ${vo.content}</br>
+						    	 <p style="font-size: 10px; ">${vo.enrollDate}</p>
+			    			</div>
+					    	  
+				    	</div>
+				    	
 			    	</div>
+			    </c:if>	
+			  	<c:if test="${vo.senderNo != loginMember.no}">
+			       <div class="chatmessage" style="padding-right: 230px;">
+			       		<div style="width: 250px;">
+			       			<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}]</strong> </br> 
+				    		<div style=" background-color: rgba(59, 68, 75, 0.2);margin-top : 10px; width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">
+					    		
+						    	${vo.content}</br>
+						    	 <p style="font-size: 10px; ">${vo.enrollDate}</p>
+						    	 </div>
+					    	</div>
+			    		</div>
+			    	</c:if>
 				</c:forEach>
 			</div>
            
@@ -175,7 +195,7 @@
 				    <textarea name="chat" id="chatInput" style="resize: none;" placeholder="채팅칸."></textarea>
 				    <input id="wc" type="button" value="채팅작성" onclick="f01(${loginMember.no},${loginMember.teamNo})">
 				</form>
-
+ <input type="hidden" class="loginMemberNo" value="${loginMember.no}">
 		</div>
 		<br>
 		<br>
@@ -194,7 +214,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://192.168.35.188:8080/fire/hsSock");
+		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
@@ -222,13 +242,25 @@
 			console.log(obj);
 			const teamNoDiv = document.querySelector(".teamNo");
 			const teamNo = teamNoDiv.value;
+			const loginMemberNo = document.querySelector(".loginMemberNo").value;
 			if(obj.teamChatNo==teamNo){
-				resultDiv.innerHTML += '<div class="chatmessage">' 
-									+ "<strong>[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
-									+ "<span> " + obj.content + " </span>" 
-									+ "<sub>" + obj.sendTime + "</sub>" 
-									+ '</div>';
+				if(obj.senderNo==loginMemberNo){
+					resultDiv.innerHTML += '<div class="chatmessage" style="padding-left: 230px;"><div style="width: 250px;"><div style="width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">'+
+					obj.content+
+					'</br><p style="font-size: 10px;">' +  obj.sendTime+
+			    	'</p></div></div></div>';
+			    	  					
+				}else{
+					resultDiv.innerHTML += '	<div class="chatmessage" style="padding-right: 230px;">' 
+						+ "<div style=width: 250px;><strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + ']</strong></br><div style=" background-color: rgba(59, 68, 75, 0.2);margin-top : 10px; width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">' 
+						+ obj.content 
+						+ '</br><p style="font-size: 10px;">' + obj.sendTime + "</p>" 
+						+ '</div></div></div>';
+						
+						
+					
 				}
+			}
 				
 			
 		   resultDiv.scrollTop = resultDiv.scrollHeight;

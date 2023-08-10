@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
+import com.hotelsolution.fire.hr.vo.VacationDocVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
 @Repository
 public class EmployeeManagementDao {
@@ -28,12 +29,10 @@ public class EmployeeManagementDao {
 	}
 
 	public int acceptNewMember(SqlSessionTemplate sst, String memberNo) {
-//		int no = Integer.parseInt(memberNo);
 		return sst.update("member.acceptNewMember",memberNo);
 	}
 
 	public MemberVo getDetail(SqlSessionTemplate sst, String memberNo) {
-		System.out.println("dao");
 		return sst.selectOne("member.getDetail", memberNo);
 	}
 
@@ -41,6 +40,10 @@ public class EmployeeManagementDao {
 
 	public int edit(SqlSessionTemplate sst, MemberVo vo) {
 		return sst.update("member.edit", vo);
+	}
+
+	public List<VacationDocVo> getSubmitListToEm(SqlSessionTemplate sst, String memberNo) {
+		return sst.selectList("vacationDoc.getSubmitListToEm",memberNo);
 	}
 
 }

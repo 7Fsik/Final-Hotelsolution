@@ -46,6 +46,10 @@
 		color: blue !important;
 		text-decoration: none;
 		}
+		.fc-daygrid-day-frame:hover{
+			 background-color: rgba(59, 68, 75, 0.2); 
+			 cursor: pointer;
+		}
 
 /* Modal 내부 CSS */
 .modal-content {
@@ -207,6 +211,7 @@ border-radius: 20px;
         background-color: #3B444B ;
         color: white;
         font-weight: bold;
+        cursor: pointer;
     }
     
     .scheduleContentArea{
@@ -230,6 +235,8 @@ border-radius: 20px;
         color: white;
         border: 0px;
     }
+   
+   
 </style>
 	
 </head>
@@ -288,8 +295,8 @@ border-radius: 20px;
 		
 						<div class="scheduleType">
 						    <select name="scheduleTypeNo" class="scheduleTypeSelect" id="scheduleTypeSelect">
-						        <option disabled selected value="" class="disabled">일정타입</option>
-						        <option value="1">휴가</option>
+						        <option  disabled selected value="" class="disabled">일정타입</option>
+						        <option  value="1">휴가</option>
 						        <option value="2">팀일정</option>
 						        <option value="3">업무일정</option>
 						        <option value="4">사생활</option>
@@ -448,9 +455,30 @@ border-radius: 20px;
 					            let ostr = "";
 					            let ostr2 = "";
 								let end = data.endDate-1;
+								let sd= data.startDate;
+								let edi= data.endDate-1;
+								let ed = String(edi); // 또는 ed.toString();
+								
+								let syear = sd.substring(2, 4);
+								let smonth = sd.substring(4, 6);
+								let sday = sd.substring(6, 8);
+					
+								
+
+								// 결과 문자열 생성
+								let sStartDate = syear+'년' +smonth+'월'+sday+'일';
+								
+								let eDateyear = ed.substring(2, 4);
+								let eDatemonth = ed.substring(4, 6);
+								
+								let eDateday = ed.substring(6, 8);
+
+								// 결과 문자열 생성
+								let eEndDate = eDateyear+'년' +eDatemonth+'월'+eDateday+'일';
+								
 					            // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
-					            ostr+= '<div><input name="startDate" value="'+data.startDate+'" hidden> <input name="endDate" value="'+data.endDate+'" hidden>'+
-					            	data.startDate + "~" +end+"</div>";
+					            ostr+= '<div><input name="startDate" value="'+data.startDate+'" hidden> <input name="endDate" value="'+edi+'" hidden>'+
+					            	sStartDate + "~" +eEndDate+"</div>";
 					            console.log(ostr);
 					            ostr2+='일정 이름 : <br><input type="text" name="title" placeholder="일정 이름을 입력하세요" value="'+data.title+'" style="width: 370px; height: 20px;">'
 					            // 모달에 내용을 삽입합니다.
@@ -500,11 +528,28 @@ border-radius: 20px;
 					      const modalFooter = detailModal.find('.modal-footer');
 					      let ostr = "";
 					      let ostr2 = "";
+							const startDate = data.startDate;
+							const year = startDate.substring(0, 4);
+							const month = startDate.substring(4, 6);
+							const day = startDate.substring(6, 8);
+				
+							
 
+							// 결과 문자열 생성
+							const dataStartDate = year+'년' +month+'월'+day+'일';
+							
+							const endDate = data.endDate;
+							const endDateyear = endDate.substring(0, 4);
+							const endDatemonth = endDate.substring(4, 6);
+							const endDateday = endDate.substring(6, 8);
+
+
+							// 결과 문자열 생성
+							const dataEndDate = endDateyear+'년' +endDatemonth+'월'+endDateday+'일'
 					      // 데이터를 가공하여 모달에 출력할 HTML 형식으로 만듭니다.
 					     
 					        ostr += '<div class="memberVoList">' +
-					          '<div class="bbr" style="text-align:center; font-size:25px;">'+  data.startDate + '~'+ data.endDate+ '</div>' +
+					          '<div class="bbr" style="text-align:center; font-size:25px;">'+  dataStartDate + '~'+ dataEndDate+ '</div>' +
 					          '<div class="bbr">작성자 : '+ data.writerName + '</div>' +
 					          '<div class="bbr">타입 : '+  data.typeName +'</div>' +
 					          '<div class="bbr" >제목 : ' + data.title + '</div>' +

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hotelsolution.fire.common.page.vo.PageVo;
 import com.hotelsolution.fire.hr.dao.EmployeeManagementDao;
+import com.hotelsolution.fire.hr.vo.VacationDocVo;
 import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,10 @@ public class EmployeeManagementService {
 
 	public int edit(MemberVo vo) {
 		return dao.edit(sst,vo);
+	}
+
+	public List<VacationDocVo> getSubmitListToEm(String memberNo) {
+		return dao.getSubmitListToEm(sst,memberNo);
 	}
 
 }

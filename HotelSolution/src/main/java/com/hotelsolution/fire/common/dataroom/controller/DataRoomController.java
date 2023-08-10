@@ -47,9 +47,8 @@ public class DataRoomController {
 	
 	//작성하기 클릭시 작성하는 화면
 	@GetMapping("write")
-	public void write(Model model,HttpServletRequest req, String categoryNo) {
+	public void write(Model model, String categoryNo) {
 		
-	    HttpSession session = req.getSession();
 	    model.addAttribute("categoryNo",categoryNo);
 	}
 	
@@ -103,17 +102,13 @@ public class DataRoomController {
 		Map<String,Object> map = new HashMap();
 		map.put("searchType", searchType);
 		map.put("searchValue", searchValue);
-		//초기 카테고리는 개인으로
-		System.out.println("first cn "+categoryNo);
 		if(categoryNo == null) {
 			categoryNo = "0";
 		}
-		System.out.println("lastCn"+categoryNo);
 		map.put("categoryNo" , categoryNo);
 		if("100".equals(categoryNo)) {
 			map.put("memberNo",loginMember.getNo());
 		}
-		System.out.println("map"+map);
 		//자료실 카운트
 		int listCount = service.getDataRoomCnt(map);
 		if(dataRoomListPage == null) {
@@ -138,8 +133,6 @@ public class DataRoomController {
 		List<DataRoomVo> dataVoList = service.getDataRoomList(map); 
 		
 		map.put("dataVoList" , dataVoList);
-		System.out.println("map"+map);
-		System.out.println("mdataVoListap"+dataVoList);
 		model.addAttribute("map" , map);
 	}
 	
@@ -183,9 +176,7 @@ public class DataRoomController {
 	@PostMapping("delete")
 	@ResponseBody
 	public int deleteData(String dataNo) {
-		System.out.println("dno"+dataNo);
 		int result = service.deleteDate(dataNo);
-		System.out.println("delete" +result);
 		return result;
 	}
 

@@ -72,6 +72,7 @@
         border: 0px solid #3B444B;
         border-radius: 20px;
         resize: none;
+        outline:none;
         
     }
 
@@ -253,7 +254,7 @@
 									       	<div class="fileVo3">
 										    
 									       	
-									       		<a href="${root}/dataroom/download?changeName=${drfvo.changeName}&fileName=${drfvo.fileName}">다운로드</a>
+									       		<a style="text-decoration: none;"  href="${root}/dataroom/download?changeName=${drfvo.changeName}&fileName=${drfvo.fileName}">다운로드</a>
 									       	</div>
 								       	</c:forEach>
 								    </div>

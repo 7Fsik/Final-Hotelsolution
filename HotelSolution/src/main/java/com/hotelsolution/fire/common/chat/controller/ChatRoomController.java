@@ -10,18 +10,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.hotelsolution.fire.common.chat.service.ChatRoomService;
@@ -47,11 +42,9 @@ public class ChatRoomController {
     public void rooms(Model model,  HttpSession session){
     	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
     	List<TeamVo> tvo = service.getTvo();
-    	 tvo.remove(0);
     	List<PositionVo> pvo = 	service.getPvo();
-    	Gson gson = new Gson();
-//    	String pvoJson = gson.toJson(pvo);
     	List<ChatRoomVo>voList = service.getChatRoomList(loginMember.getNo());
+     	tvo.remove(0);//0번 공용 row 제거
     	session.setAttribute("voList", voList);
     	model.addAttribute("tvo",tvo);
     	model.addAttribute("pvo",pvo);
@@ -61,17 +54,20 @@ public class ChatRoomController {
     //1:1 채팅방 입장!
     @GetMapping("room")
     public void goRoom(String selectMemberNo,String user1No,Model model,String chatRoomNo, HttpSession session) {
-    	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-    	String user2No = selectMemberNo;
+    	 MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+    	 String user2No = selectMemberNo;
     	 Map<String,String>map = new HashMap<String, String>();
          map.put("user1No", user1No);
-         map.put("user2No", selectMemberNo);
+         map.put("user2No", user2No);
          map.put("chatRoomNo", chatRoomNo);
-          map.put("loginMemberNo", loginMember.getNo());
+         map.put("loginMemberNo", loginMember.getNo());
          List<MessageVo> voList= service.getMessage(map); 
          int result = updateTime(map);
+         if(result!=1) {
+        	 throw new RuntimeException("1:1 채팅방 입장중 에러");
+         }
          model.addAttribute("user1No", user1No);
-         model.addAttribute("user2No", selectMemberNo);
+         model.addAttribute("user2No", user2No);
          model.addAttribute("chatRoomNo", chatRoomNo);
          model.addAttribute("voList",voList);
     	
@@ -80,15 +76,10 @@ public class ChatRoomController {
     @PostMapping("updateTime")
     @ResponseBody
     public int updateTime(@RequestBody Map<String, String> data) {
-        String user1No = data.get("user1No");
-        String user2No = data.get("user2No");
-        String chatRoomNo = data.get("chatRoomNo");
-        String loginMemberNo = data.get("loginMemberNo");
 
 
-        // 이후에 필요한 로직을 추가하고 결과를 반환하는 등의 작업 수행
         int result = service.updateTime(data);
-
+        
         return result;
     }
 
@@ -100,25 +91,19 @@ public class ChatRoomController {
     	Map<String,String>map = new HashMap<String, String>();
     	map.put("user1No", loginMember.getNo());
     	map.put("user2No", selectMemberNo);
-    	System.out.println("roompost map"+map);
     	ChatRoomVo vo = service.getCreateChatRoomVo(map);
     	int result =0;
     	if(vo==null) {
     		result = service.createChatRoomVo(map);
     		vo = service.getCreateChatRoomVo(map);
-    		System.out.println(result);
-    		System.out.println(vo);
     	} else {
     		
     	}
-//    	result = service.updateTime(map);
-//    	;
     	Gson gson = new Gson();
     	String a = gson.toJson(vo);
     	return a;
-    	
-    	
     }
+    
     
     @PostMapping("sendMessage")
     @ResponseBody
@@ -143,7 +128,7 @@ public class ChatRoomController {
         	int result = 0;
         
         if(postno.equals(senderNo)) {
-        	result = service.setMessageList(map);
+           	result = service.setMessageList(map);
         }
         return result;
     }
@@ -151,8 +136,7 @@ public class ChatRoomController {
 
   //전체채팅방 조회
     @GetMapping("hsroom")
-    public void getRoom(Model model, HttpSession session ){
-    	  MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+    public void getRoom(Model model){
     	  List<TeamChatMessageVo> voList = service.getHsChatList();
     	  model.addAttribute("voList",voList);// 전체 채팅방 모든 메세지 조회
     	  
@@ -175,7 +159,7 @@ public class ChatRoomController {
         map.put("senderNo", senderNo);
         map.put("content", content);
        
-        map.put("teamChatNo", "0");
+        map.put("teamChatNo", "0");//공용은 0을 넣는다
         int result = 0;
         
         if(postno.equals(senderNo)) {
@@ -244,7 +228,7 @@ public class ChatRoomController {
     	List<String> checkCntList = new ArrayList<String>();
     	Map<String,Object> map = new HashMap();
     	 for (ChatRoomVo vo : voList) {
-    		 map.put("loginMemberNo",loginMember.getNo());
+    		map.put("loginMemberNo",loginMember.getNo());
 	    	map.put("currentTimestamp", currentTimeStamp);
 	    	map.put("user1No",vo.getUser1No());
 	    	map.put("user2No",vo.getUser2No());

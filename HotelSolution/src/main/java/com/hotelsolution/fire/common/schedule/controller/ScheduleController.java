@@ -36,10 +36,8 @@ public class ScheduleController {
 	@GetMapping("calendar")
 	public void calendar(Model model,HttpSession session){
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
-		List<ScheduleVo> myList;
-		myList= service.getMySchedule(loginMember.getNo());
-		List<ScheduleVo> teamList;
-		teamList= service.getTeamSchedule(loginMember);
+		List<ScheduleVo> myList= service.getMySchedule(loginMember.getNo());
+		List<ScheduleVo> teamList= service.getTeamSchedule(loginMember);
 		model.addAttribute("myList",myList);
 		model.addAttribute("teamList",teamList);
 	}
@@ -112,7 +110,6 @@ public class ScheduleController {
 		map.put("endDate", endDate);
 		map.put("title", data[2]);
 		ScheduleVo vo = service.detailSchedule(map);
-	
 		endDate = Integer.toString((Integer.parseInt(endDate))-1);
 		vo.setStartDate(startDate);
 		vo.setEndDate(endDate);

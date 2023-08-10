@@ -42,10 +42,12 @@
         width: 500px;
         margin: auto;
         height: 600px;
-        overflow: visible;
+        overflow-y: auto;
        
     }
-
+	.chatRoomList:hover{
+		background-color: rgba(59, 68, 75, 0.2);
+	}
  
     #page-area{
          width : 500px;
@@ -125,11 +127,23 @@
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 90%;
     height : 600px;
     border-radius: 5px;
 }
+::-webkit-scrollbar {
+		width: 10px;
+		background-color: white; /* 연한 하늘색 배경색 */
+	}
 
+	::-webkit-scrollbar-thumb {
+		background-color: white; /* 연한 하늘색 스크롤바 색상 */
+		border-radius: 5px; /* 스크롤바를 둥글게 보이도록 설정 */
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background-color: #3B444B; /* 마우스 오버 시 스크롤바 색상 변경 */
+	} */
 .close {
     color: #aaaaaa;
     float: right;
@@ -166,7 +180,6 @@
     height:600px;
         max-height: 600px; /* 원하는 높이로 조정하세요 */
         overflow-y: auto;
-        border: 1px solid #ccc; /* 스크롤 가능한 컨테이너를 감싸는 테두리를 추가합니다 */
     }
     .uimage{
     	text-align: center;
@@ -174,8 +187,8 @@
     	align-items: center;
     }
     .uImage > img{
-    	width: 72px;
-    	height: 72px;
+    	width: 65px;
+    	height: 65px;
     	border-radius: 10px;
     	
     }
@@ -186,23 +199,27 @@
     }
     .chatRoomList{
     	cursor: pointer;
+    	border-bottom: 1px solid #3B444B;
     }
+     .tnone{
+   	text-decoration: none;
+   }
 </style>
 <body>
-              <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"> 
+              <div style="margin: auto;"><img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"></div> 
         <div id="topnothing">
            <input type="hidden" id="loginMemberNo" value="${loginMember.no}">
                     
 	            
 	        <div id="search">
 	        	<div class="search-area">
-	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	           		<a class="tnone"  href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
 	            </div>
 	            <div  class="search-area">
-					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+					<a class="tnone" href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
 				</div>
 	        	<div  class="search-area">
-	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        		<a class="tnone" href="${root}/chat/hsroom">공용 채팅방</a>
 	        	</div>
 				
 				
@@ -217,7 +234,7 @@
 		    	<c:if test="${vo.user1No eq (loginMember.no)}">
 		  
 			       <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;" onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})"> <!-- 수정된 부분 -->
-					    <div class="uImage"><img alt="" src="${root}/resources/img/member/profile/${vo.user2Image}"></div>
+					    <div class="uImage"><img style="border-radius:50px; "alt="" src="${root}/resources/img/member/profile/${vo.user2Image}"></div>
 					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
 					        <div style="padding-left: 20px;">${vo.user2Name} ${vo.user2PositionName} (${vo.user2TeamName})</div>
 					        <div class="currentMsg" ></div>
@@ -243,7 +260,7 @@
 		    </c:forEach>
 		</div>
 	</div>
-		    <button id="openModalBtn">생성</button>
+		    <div style="text-align: right; margin-right: 30px; margin-top: 30px;"><i class="fas fa-plus" id="openModalBtn" style="cursor: pointer; border: 1px solid black; border-radius:30px;"></i></div>
 			
 				<!-- 모달 엘리먼트 -->
 				<!-- 모달 엘리먼트 -->
@@ -257,8 +274,8 @@
 		                    </select>
 		                    <input type="text" id="searchValue" placeholder="검색할 값을 입력하세요">
 		                    <button id="searchButton" onclick="performSearch()">검색</button>
+				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="close">&times;</span>
                		 </div>
-				        <span class="close">&times;</span>
 				        <div id="teamWrap" style="height:500px;">
 			            	<div>
 					            <c:forEach items="${tvo}" var="tvo">
