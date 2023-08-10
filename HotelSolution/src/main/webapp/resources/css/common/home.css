@@ -24,6 +24,7 @@
     grid-row: 1 / 2;    /* 첫 번째 행에 배치합니다. */
     background-color: #ffffff;
     border-radius: 10px;
+    width : 650px;
 }
 
 /*2*/
@@ -36,6 +37,7 @@
     grid-row: 1 / 2;    /* 첫 번째 행에 배치합니다. */
     background-color: #ffffff;
     border-radius: 10px;
+    width : 650px;
 }
 
 /*3*/
@@ -48,6 +50,7 @@
     grid-row: 2 / 3;    /* 두 번째 행에 배치합니다. */
     background-color: #ffffff;
     border-radius: 10px;
+    width : 650px;
 }
 
 .mail > .quick-mail-view-container{
@@ -75,6 +78,7 @@
     grid-row: 2 / 3;    /* 두 번째 행에 배치합니다. */
     background-color: #ffffff;
     border-radius: 10px;
+    width : 650px;
 }
 
 .book-list{
@@ -84,3 +88,77 @@
 #board-list > div{
     height: 30px !important;
 }
+
+  
+.quick-mail-title h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3b444b;
+    padding-bottom: 5px;
+    width : 500px;
+} 
+
+.first-menu {
+    display: flex;
+    align-items: flex-start;
+	height : 150px;
+}
+
+.clock {
+    font-size: 14px;
+    font-weight: normal;
+    color: #333;
+    margin-right: 20px;
+}
+
+.work-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.work-btn button {
+    font-size: 16px;
+    background-color: #3b444b;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 5px 20px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.work-btn button:hover {
+    background-color: #3b444b;
+}
+
+.work-btn .text {
+    font-size: 12px;
+    color: #777;
+    text-align: center;
+} 
+.menu-img img{
+	width : 400px;
+	height : 150px;
+
+}
+
+#workout-btn {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#workout-btn:hover {
+    text-decoration: underline;
+    color: #a1a1a1; 
+}
+
+
+
+
+
+
+
