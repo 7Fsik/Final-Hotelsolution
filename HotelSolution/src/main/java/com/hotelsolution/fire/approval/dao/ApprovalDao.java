@@ -58,13 +58,28 @@ public interface ApprovalDao {
 
 	ExpenditureVo getExpenditureNo(SqlSessionTemplate sst, String avoNo);
 
-	List<ApprovalVo> getApproval(SqlSessionTemplate sst , PageVo pv);
+	List<ApprovalVo> getApproval(SqlSessionTemplate sst , Map<String, Object> map);
 
-	int getApprovalCnt(SqlSessionTemplate sst);
+	int getApprovalFirstPageCnt(SqlSessionTemplate sst, String no);
 
 	int approver(SqlSessionTemplate sst, ApproverVo appVo);
 
 	int referrer(SqlSessionTemplate sst, ApprovalReferrerVo arvo);
+
+	int getApprovalCnt(SqlSessionTemplate sst, String no);
+
+	List<ApprovalVo> getMyApproval(SqlSessionTemplate sst, Map<String, Object> map);
+
+	int getReferrCnt(SqlSessionTemplate sst, String no);
+
+	List<ApprovalVo> getReferenceApproval(SqlSessionTemplate sst, Map<String, Object> map);
+
+	ApprovalVo vacationDetail(SqlSessionTemplate sst, String no);
+
+	List<ApproverVo> getApprover(SqlSessionTemplate sst, String no);
+
+	List<ApprovalReferrerVo> getReferrer(SqlSessionTemplate sst, String no);
+
 
 
 

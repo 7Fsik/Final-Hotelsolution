@@ -961,9 +961,9 @@
     //직책 보여주기
 		function openDiv(index) {
 			const teams = document.querySelectorAll('.teams')
-			const teamDiv = teams[index-1];
+			const teamDiv = teams[index];
 			const allIcon = document.querySelectorAll('.iii');
-			const icon = allIcon[index-1]; 
+			const icon = allIcon[index]; 
 			console.log(teamDiv);
 			console.log(icon);
 			if(teamDiv.style.display == 'none' || teamDiv.style.display == ''){

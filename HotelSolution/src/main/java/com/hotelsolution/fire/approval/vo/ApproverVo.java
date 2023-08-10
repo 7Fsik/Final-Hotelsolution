@@ -11,6 +11,8 @@ public class ApproverVo {
 	private String appNo;
 	private String insteadYn;
 	private String priority;
-	private String commeNT;
+	private String comment;
+	private String statusName;
+	private String approverName;
 	
 }

@@ -170,6 +170,16 @@
 		margin-top:20px;
 	}
 	
+	input[type="date"][readonly]::-webkit-calendar-picker-indicator {
+    display: none;
+	}
+	
+	input[type="date"][readonly] {
+    margin: 0;
+    padding: 0;
+    width:95px;
+	}
+	
     
 </style>
 </head>
@@ -191,7 +201,7 @@
 						<div class="title">기안문서</div>
 						<h1>호텔 솔루션 휴가 신청서</h1>        
 						<span class="date">기간</span> : 
-						<input type="date" class="myDate"> ~ <input type="date" class="myDate">
+						<input type="date" class="myDate" value="${vo.vacationStart.substring(0, 10)}" readonly> ~ <input type="date" class="myDate" value="${vo.vacationEnd.substring(0, 10)}" readonly>
         			</div>
 					
 					<div id="head-right">
@@ -200,31 +210,26 @@
                             <thead>
                                 <tr>
                                     <td>기안자</td>
-                                    <td>슈퍼바이저</td>
                                     <td>팀장</td>
-                                    <td>인사팀<br>슈퍼바이저</td>
-                                    <td>인사팀<br>팀장</td>
+                                    <td>인사팀 팀장</td>
                                 </tr>
                             </thead>
                                 
                                <tbody>
 	                                <tr>
-	                                	<td>1</td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td>${vo.writerName}</td>
+	                                	<td class="teamLeader">${list[0].approverName}</td>
+	                                	<td class="hrLeader">${list[1].approverName}</td>
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td style="font-weight:bold;" colspan="5">참조자</td>
+	                                	<td style="font-weight:bold;" colspan="3">참조자</td>
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td colspan="2">X</td>
+		                                	<td class="refer">${fList[0].referrerName}</td>
+		                                	<td class="refer">${fList[1].referrerName}</td>
+		                                	<td class="refer">${fList[2].referrerName}</td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -238,36 +243,31 @@
                         <thead>
                             <tr>
                                 <td>제목</td>
-                                <td class="document-title"><input class="input" type="text" name="title"></td>
+                                <td class="document-title"><input class="input" type="text" name="title" value="${vo.title }" readonly></td>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
                                 <td class="info">소속</td>
-                                <td><input class="input" type="text" name="team"></td>
+                                <td>${vo.teamName}</td>
                             </tr>
 
                             <tr>
                                 <td class="info">직책</td>
-                                <td><input class="input" type="text" name="position"></td>
+                                <td>${vo.positionName}</td>
                             </tr>
 
                             <tr>
                                 <td class="info">성명</td>
-                                <td><input class="input" type="text" name="name" value="이승권"></td>
+                                <td>${vo.writerName }</td>
                             </tr>
                             
                             <tr>
                                 <td class="reason">사유</td>
-                               <td><textarea name="content"></textarea></td>
+                               <td><textarea name="content" readonly>${vo.content}</textarea></td>
                             </tr>
 
-                            <tr>
-                                <td class="replace">대체 업무자</td>
-                                <td><input class="input" type="text" name="replaceName"></td>
-                            </tr>
-                            
                             <tr>
                                 <td class="replace">비상 연락망</td>
                                 <td><input class="input" type="text" name="phone"></td>
@@ -277,8 +277,7 @@
                            		<td colspan="2">
                            			<div id="last-td">
 	                           			<div style="margin-top:10px;">위의 사유로 휴가신청서를 제출합니다.</div>
-	                           			<div class="end-div">2023년 07월 18일</div>
-	                           			<div class="end-div">작성인 : 이승권</div>
+	                           			<div class="end-div">작성인 : ${vo.writerName}</div>
                            			</div>
                            		</td>
                            	</tr>

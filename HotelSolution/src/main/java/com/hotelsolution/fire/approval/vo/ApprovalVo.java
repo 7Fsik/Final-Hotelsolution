@@ -15,4 +15,13 @@ public class ApprovalVo {
 	private String enrollDate;
 	private String endDate;
 	private String documentTypeName;
+	private String statusName;
+	private String positionName;
+	private String teamName;
+	private String sendName;
+	private String vacationStart;
+	private String vacationEnd;
+	private String writerName;
+	
+	
 }

@@ -83,8 +83,9 @@
     
     .list-title{
     	display:grid;
-    	grid-template-columns:0.5fr 1fr 1fr 1fr;
+    	grid-template-columns:0.8fr 1fr 1.5fr 1.5fr;
     	align-items:center;
+		text-align: center;
     }
     
     .list-status{
@@ -122,14 +123,13 @@
 		        	<div class="approval-list">
 		        		<a href="${root}/approval/approvalFirstPage">나의 결재</a>
 		        		<a href="${root}/approval/getApproval">내가 받은 결재</a>
-		        		<a href="${root}/approval/deleteApproval">삭제된 결재</a>
 		        		<a href="${root}/approval/referrerApproval">참조 결재</a>
 		        	</div>
 		        	
 		        	<div class="approval-write">
-		        		<a href="#">휴가 신청서</a>
-		        		<a href="#">지출 결의서</a>
-		        		<a href="#">업무 보고서</a>
+		        		<a href="${root}/approval/vaction">휴가 신청서</a>
+		        		<a href="${root}/approval/expenditure">지출 결의서</a>
+		        		<a href="${root}/approval/report">업무 보고서</a>
 		        	</div>
         		</div>
         		
@@ -137,91 +137,21 @@
 				
 				<div id="approval-content">
 					
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
+					<c:forEach items="${getList}" var="list">
+						<div class="list">
+							<div class="list-title">
+								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
+								<div>[${list.teamName}]${list.sendName}</div>
+								<div>[${list.documentTypeName }]</div>
+								<a href="#">${list.title}</a>
+							</div>
+							
+							<div class="list-status">
+								<div>${list.enrollDate}</div>
+								<div>${list.statusName }</div>
+							</div>
 						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[구매]홍길동</div>
-							<div>[휴가 신청서]</div>
-							<a href="#">휴가 승인 부탁드립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>진행중</div>
-						</div>
-					</div>
-					
+					</c:forEach>
 					
 				</div>
 				

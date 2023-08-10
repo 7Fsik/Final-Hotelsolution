@@ -63,12 +63,26 @@ public interface ApprovalService {
 
 	ExpenditureVo getExpenditureNo(String no);
 
-	List<ApprovalVo> getApproval(PageVo pv);
+	List<ApprovalVo> getApproval(Map<String, Object> map);
 
-	int getApprovalCnt();
+	int getApprovalFirstPageCnt(String no);
 
 	int approver(ApproverVo appVo);
 
 	int referrer(ApprovalReferrerVo arvo);
+
+	int getApprovalCnt(String no);
+
+	List<ApprovalVo> getMyApproval(Map<String, Object> map);
+
+	int getReferrCnt(String no);
+
+	List<ApprovalVo> getReferenceApproval(Map<String, Object> map);
+
+	ApprovalVo vacationDetail(String no);
+
+	List<ApproverVo> getApprover(String no);
+
+	List<ApprovalReferrerVo> getReferrer(String no);
 
 }
