@@ -47,7 +47,6 @@ public class WebsocketServer extends TextWebSocketHandler {
 	@Override
 
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//		String roomTypeNo = message.getPayload().substring(0,1);
 		log.info("handleTextMessage 호출됨 ...");
 		log.info("handleTextMessage 호출됨 ... : {}", message);
      
@@ -64,14 +63,14 @@ public class WebsocketServer extends TextWebSocketHandler {
 			vo.setSenderNo(loginMember.getNo());
 			vo.setSenderPositionName(loginMember.getPositionName());
 			vo.setSenderTeamName(loginMember.getTeamName());
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String formattedDate = dateFormat.format(new Date());
-			vo.setSendTime(formattedDate.substring(6,21));
+			vo.setSendTime(formattedDate);
 			jsonStr = gson.toJson(vo);
 		}else {
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String formattedDate = dateFormat.format(new Date());
-			mvo.setEnrollDate(formattedDate.substring(6,21));
+			mvo.setEnrollDate(formattedDate);
 			mvo.setSenderName(loginMember.getName());
 			mvo.setSenderNo(loginMember.getNo());
 			mvo.setSenderPositionName(loginMember.getPositionName());

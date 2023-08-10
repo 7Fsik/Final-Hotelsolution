@@ -70,7 +70,7 @@
    	}
    	.newMemberListWrap{
    		display:grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 12fr;
         margin-left: 20px;
         width: 350px;
    		height:645px;
@@ -187,7 +187,7 @@
     	font-size: 15px;
     }
     .accept:hover{
-    	  background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+    	  background-color: rgba(59, 68, 75, 0.2); /* #3b444b 색상의 투명도 50% */
     }
     .newMemberListTop{
     	
@@ -234,7 +234,7 @@
    
 }
 .memberVoList:hover{
-	 background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+	 background-color: rgba(59, 68, 75, 0.2); /* #3b444b 색상의 투명도 50% */
     
 }
 .ac{
@@ -261,7 +261,47 @@
 .pf{
 	width: 100px;
 	height: 100px;
-	border-radius: 30px;
+	border-radius: 80px;
+}
+.vac2{
+	height:100px; 
+	display: grid;
+	grid-template-rows:1fr 2fr; 
+	border: 1px solid #3b444b;
+	border-radius: 20px;
+	
+	
+}
+.vac2Name{
+	margin-top:5px;
+	font-size: 18px;
+	text-align: center;
+}
+.vac2Date{
+	margin-top:5px;
+	font-size : 15px;
+}
+.vac2B{
+	display: grid;
+	grid-template-columns:1fr 3fr; 
+}
+.vac2D{
+	display: grid;
+	grid-template-rows:1fr 1fr; 
+}
+.vac2pf{
+	margin-left:5px;
+	width: 60px;
+	height: 60px;
+	border-radius: 40px;
+}
+.vac:hover{
+	background-color: rgba(59, 68, 75, 0.2);
+	cursor: pointer;
+}
+.vac2:hover{
+	background-color: rgba(59, 68, 75, 0.2);
+	cursor: pointer;
 }
 </style>
 </head>
@@ -296,33 +336,33 @@
 	               						
 			        		</div>
 			        		
-				        	<div class="vacList">
-								<c:forEach items="${vdvoList}" var="vdvo"> 
-									<div class="vac">
-										<div class="pfimage" style="display:grid; grid-template-rows: 3fr 1fr;">
-											<div><img class="pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진"></div>
-											<div>이름 : ${vdvo.name}</div>
-										</div>
-										<div style="display:grid; grid-template-rows: 1fr 1fr 2fr;">
-											<div style="display:grid; grid-template-columns: 1fr 1fr;">
-												<div>제목 : ${vdvo.title}</div>
-												<div>부서 : ${vdvo.teamName}</div>
+					        	<div class="vacList">
+									<c:forEach items="${vdvoList}" var="vdvo"> 
+										<div class="vac" onclick="goDetail(${vdvo.userNo})">
+											<div class="pfimage" style="display:grid; grid-template-rows: 3fr 1fr;">
+												<div><img class="pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진"></div>
+												<div>이름 : ${vdvo.name}</div>
 											</div>
-											<div>기간 : ${vdvo.vacationStart} ~ ${vdvo.vacationEnd} </div>
-											<div>사유 : ${vdvo.content}</div>
+											<div style="display:grid; grid-template-rows: 1fr 1fr 2fr;">
+												<div style="display:grid; grid-template-columns: 1fr 1fr;">
+													<div>제목 : ${vdvo.title}</div>
+													<div>부서 : ${vdvo.teamName}</div>
+												</div>
+												<div>기간 : ${vdvo.vacationStart} ~ ${vdvo.vacationEnd} </div>
+												<div>사유 : ${vdvo.content}</div>
+											</div>
+											<div style="display:grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
+												<div>직책 : ${vdvo.positionName}</div>
+												<div>전화번호 : 0${vdvo.id}</div>
+												<div>신청일 : ${vdvo.enrollDate}</div>
+												<div></div>
+											</div>
 										</div>
-										<div style="display:grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
-											<div>직책 : ${vdvo.positionName}</div>
-											<div>전화번호 : 0${vdvo.id}</div>
-											<div>신청일 : ${vdvo.enrollDate}</div>
-											<div></div>
-										</div>
-									</div>
-								</c:forEach>
+									</c:forEach>
+										
 									
-								
-								
-							</div>
+									
+								</div>
 							
 							
 							 <div id="page-area">
@@ -354,6 +394,26 @@
 				                <div>휴가 결재 대기</div>
 				                
 				            </div>
+				                <div style="overflow-y:auto; ">
+				                <br>
+				                	<c:forEach items="${vdvoList2}" var="vdvo"> 
+										<div class="vac2" onclick="goDetail(${vdvo.userNo})" >
+											<div class="vac2Name">[${vdvo.teamName}](${vdvo.positionName})${vdvo.name} </div>
+											<div class="vac2B">
+												<div class="vac2Img">
+													<img class="vac2pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진">
+												</div>
+												<div class="vac2D">
+													<div class="vac2Date">${vdvo.vacationStart} ~ ${vdvo.vacationEnd}  </div>
+													<div class="vac2Date">신청일 : ${vdvo.enrollDate}</div>
+												</div>
+											
+											</div>
+										</div>
+										<br>
+									</c:forEach>
+				                
+				                </div>
 						</div>
 			        </div>
 			    </div>
@@ -366,6 +426,13 @@
 	</div>
 	
 </body>
+<script type="text/javascript">
+	function goDetail(memberNo) {
+		
+		 window.location.href = '${root}/hr/em/getDetail?memberNo=' + memberNo ;
+		
+	}
+</script>
 </html>
 	   		
 				

@@ -143,7 +143,7 @@
         
     }
     .titleList:hover {
-        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+       background-color: rgba(59, 68, 75, 0.2);/* #3b444b 색상의 투명도 50% */
     }
     p.titleTruncate {
 	  white-space: nowrap;

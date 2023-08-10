@@ -174,7 +174,6 @@ public class SurveyController {
 		map2.put("no", loginMember.getNo());
 		map2.put("surveyNo", sdvo.getNo());
 		int listCount = service.getAnswerCnt2(map2)/4;
-		System.out.println("listCount"+listCount);
 		if(detailListpage == null) {
 			detailListpage = "1";
 		}
@@ -183,16 +182,13 @@ public class SurveyController {
 		int pageLimit = 5;
 	
 		PageVo detailListPv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
-		System.out.println("detailListPv"+detailListPv);
 		int realPage = (detailListPv.getListCount()-1)/boardLimit+1;
-		System.out.println("realPage"+realPage);
 		if(realPage<=detailListPv.getPageLimit()) {
 			detailListPv.setEndPage(realPage);
 		}
 		if(realPage<=detailListPv.getEndPage()) {
 			detailListPv.setEndPage(realPage);
 		}
-		System.out.println(detailListPv);
 		model.addAttribute("detailListPv",detailListPv);
 		
 		
@@ -247,28 +243,23 @@ public class SurveyController {
 		if(realPage<=pv.getEndPage()) {
 			pv.setEndPage(realPage);
 		}
-		System.out.println(pv);
-		System.out.println(searchValue);
-		System.out.println(loginMember.getNo());
 		
 	
 		List<SurveyDocVo> titleList =  service.newTitleList(pv,searchValue,loginMember.getNo());
-		System.out.println("tl"+titleList);
 		String no = "";
 		if(surveyNo !=null) {
 			no = surveyNo;
 		}
 		List<SurveyQuestionVo> questionList = service.getNewQuestionList(loginMember.getNo(),no);
-		System.out.println("ql"+questionList);
-		Map<String, Object>map = new HashMap<String, Object>();
-		map.put("newFirst", titleList.get(0));
-		map.put("titleList",titleList);
-		map.put("questionList",questionList);
-		map.put("pv", pv);
-		model.addAttribute("titleList",map.get("titleList"));
-		model.addAttribute("newFirst",map.get("newFirst"));
+//		Map<String, Object>map = new HashMap<String, Object>();
+//		map.put("newFirst", titleList.get(0));
+//		map.put("titleList",titleList);
+//		map.put("questionList",questionList);
+//		map.put("pv", pv);
+		model.addAttribute("titleList",titleList);
+		model.addAttribute("newFirst",titleList.get(0));
 		model.addAttribute("searchValue",searchValue);
-		model.addAttribute("pv",map.get("pv"));
+		model.addAttribute("pv",pv);
 		model.addAttribute("questionList",questionList);
 		
 	
@@ -276,18 +267,14 @@ public class SurveyController {
 	}
 	@PostMapping("survey/write")
 	public String surveyWrite(HttpSession session, String[] answer, String title,String[] no) {
-		System.out.println("answer"+answer);
-		System.out.println("title"+title);
 		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 		List<String> answers = Arrays.asList(answer);
 		List<String> nos = Arrays.asList(no);
 		Map<String, Object>map = new HashMap<String, Object>();
-		System.out.println(answers);
 		map.put("nos", nos);
 		map.put("answers", answers);
 		map.put("loginMember",loginMember);
 		map.put("title",title);
-		System.out.println(map);
 		int result = service.write(map);
 	    if (result != 1) {
 	        throw new RuntimeException();
@@ -307,16 +294,7 @@ public class SurveyController {
 	    int memberSurveyCnt = service.getAnswerCnt(map2)/4;
 	    int totalSurveyCnt = service.getSurveyCnt("");
 	    int cnt = totalSurveyCnt-memberSurveyCnt;
-	    System.out.println(memberSurveyCnt);
-	    System.out.println(totalSurveyCnt);
 	    return cnt;
 	}
 	
-	public void getSurvey(HttpSession session) {
-		MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
-		String no = loginMember.getNo();
-		//설문지 질문목록 	설문지 답변(설문자 번호 여기서조인) 조인해서 답변없는 설문지랑 질문목록 가져온다.
-		//미답변 설문지 숫자 파악해서 헤더에 숫자로 알림 뜨기 
-		//가져와서 sdvo 만들어서 그거로 질문 다시 가져오기
-	}
 }

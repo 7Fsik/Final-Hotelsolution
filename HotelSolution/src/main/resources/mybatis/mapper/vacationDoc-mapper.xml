@@ -13,8 +13,8 @@
 		  	AD.CONTENT,
 		  	AD.ENROLL_DATE AS ENROLLDATE,
 		  	AD.USER_NO AS USERNO,
-		  	VA.VACATION_START AS VACATIONSTART,
-		  	VA.VACATION_END AS VACATIONEND,
+		  	TO_CHAR(VA.VACATION_START, 'YYYY-MM-DD') AS VACATIONSTART,
+    		TO_CHAR(VA.VACATION_END, 'YYYY-MM-DD') AS VACATIONEND,
 		  	M.NAME AS NAME,
 		  	M.ID AS ID,
 		  	M.CHANGE_IMAGE AS IMAGE,
@@ -44,8 +44,68 @@
 			    <if test="searchType == 'id'">
 			        AND '0' || m.ID LIKE ('%'|| #{searchValue} || '%')
 			    </if>
+			    ORDER BY AD.NO DESC
   </select>
- 
+  	<select id="getNoSubmitList" resultType="VacationDocVo" parameterType="java.util.Map">
+		SELECT 
+		  	AD.NO,
+            AD.TYPE_NO,
+		  	AD.TITLE,
+		  	AD.CONTENT,
+		  	AD.ENROLL_DATE AS ENROLLDATE,
+		  	AD.USER_NO AS USERNO,
+		  	TO_CHAR(VA.VACATION_START, 'YYYY-MM-DD') AS VACATIONSTART,
+   			 TO_CHAR(VA.VACATION_END, 'YYYY-MM-DD') AS VACATIONEND,
+		  	M.NAME AS NAME,
+		  	M.ID AS ID,
+		  	M.CHANGE_IMAGE AS IMAGE,
+		  	M.STATUS,
+		  	P.NAME AS POSITIONNAME,
+		  	T.TEAM_NAME AS TEAMNAME
+		  FROM APPROVAL_DOCUMENT AD
+		  JOIN VACATION_APPLY VA
+		  ON AD.NO = VA.APP_NO
+		  JOIN MEMBER M
+		  ON AD.USER_NO = M.NO
+		  JOIN POSITION P 
+		  ON M.POSITION_NO = P.NO
+		  JOIN TEAM T
+		  ON M.TEAM_NO = T.TEAM_NO
+		  WHERE AD.AD_YN = 'N'
+		  AND M.STATUS !=2
+			    ORDER BY AD.NO DESC
+  </select>
+  
+ <select id="getSubmitListToEm" resultType="VacationDocVo">
+		SELECT 
+		  	AD.NO,
+            AD.TYPE_NO,
+		  	AD.TITLE,
+		  	AD.CONTENT,
+		  	AD.ENROLL_DATE AS ENROLLDATE,
+		  	AD.USER_NO AS USERNO,
+		  	TO_CHAR(VA.VACATION_START, 'YYYY-MM-DD') AS VACATIONSTART,
+    		TO_CHAR(VA.VACATION_END, 'YYYY-MM-DD') AS VACATIONEND,
+		  	M.NAME AS NAME,
+		  	M.ID AS ID,
+		  	M.CHANGE_IMAGE AS IMAGE,
+		  	M.STATUS,
+		  	P.NAME AS POSITIONNAME,
+		  	T.TEAM_NAME AS TEAMNAME
+		  FROM APPROVAL_DOCUMENT AD
+		  JOIN VACATION_APPLY VA
+		  ON AD.NO = VA.APP_NO
+		  JOIN MEMBER M
+		  ON AD.USER_NO = M.NO
+		  JOIN POSITION P 
+		  ON M.POSITION_NO = P.NO
+		  JOIN TEAM T
+		  ON M.TEAM_NO = T.TEAM_NO
+		  WHERE AD.AD_YN = 'Y'
+		  AND M.NO=#{memberNo}
+	  			
+			    ORDER BY AD.NO DESC
+  </select>
 
 <select id="getSubmitListCnt"  resultType="int" parameterType="java.util.Map">
 	      SELECT COUNT(NO)

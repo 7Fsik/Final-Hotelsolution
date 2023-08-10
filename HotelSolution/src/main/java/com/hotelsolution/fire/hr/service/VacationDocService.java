@@ -25,4 +25,8 @@ public class VacationDocService {
 		return dao.getSubmitListCnt(sst, map);
 	}
 
+	public List<VacationDocVo> getNoSubmitList() {
+		return dao.getNoSubmitList(sst);
+	}
+
 }

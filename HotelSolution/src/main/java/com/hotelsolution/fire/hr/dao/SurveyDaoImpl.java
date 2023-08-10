@@ -90,7 +90,6 @@ public class SurveyDaoImpl implements SurveyDao{
 		
 		map.put("searchValue",searchValue);
 		map.put("no", no);
-		System.out.println(map);
 		return sst.selectList("survey.newTitleList",map,rb);
 	}
 
@@ -102,7 +101,6 @@ public class SurveyDaoImpl implements SurveyDao{
 	    RowBounds rb = new RowBounds(offset, limit);
 		map.put("loginMemberNo",no);
 		map.put("surveyDocNo", no2);
-		System.out.println(map);
 		return sst.selectList("survey.getNewQuestionList",map,rb);
 	}
 

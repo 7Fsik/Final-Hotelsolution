@@ -50,7 +50,6 @@
     overflow-wrap: break-word; 
 	width : 480px;
 	  padding: 10px; 
-	  border-bottom: 1px solid lightgray;
 	}
 	
 	#chatForm{
@@ -71,20 +70,19 @@
 	
 	}
 
-	/* 스크롤바 스타일 설정 */
 	::-webkit-scrollbar {
 		width: 10px;
-		background-color: #3B444B; /* 연한 하늘색 배경색 */
+		background-color: white; /* 연한 하늘색 배경색 */
 	}
 
 	::-webkit-scrollbar-thumb {
-		background-color: #3B444B; /* 연한 하늘색 스크롤바 색상 */
+		background-color: white; /* 연한 하늘색 스크롤바 색상 */
 		border-radius: 5px; /* 스크롤바를 둥글게 보이도록 설정 */
 	}
 
 	::-webkit-scrollbar-thumb:hover {
-		background-color: #1976D2; /* 마우스 오버 시 스크롤바 색상 변경 */
-	}
+		background-color: #3B444B; /* 마우스 오버 시 스크롤바 색상 변경 */
+	} */
 
 
 	.content{
@@ -134,6 +132,9 @@
    .search-area{
    text-align: center;
    }
+    .tnone{
+   	text-decoration: none;
+   }
 </style>
 <body>
  		  <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"> 
@@ -143,13 +144,13 @@
 	            
 	        <div id="search">
 	        	<div class="search-area">
-	           		<a href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+	           		<a class="tnone" href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
 	            </div>
 	            <div  class="search-area">
-					<a href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+					<a class="tnone" href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
 				</div>
 	        	<div  class="search-area">
-	        		<a href="${root}/chat/hsroom">공용 채팅방</a>
+	        		<a class="tnone" href="${root}/chat/hsroom">공용 채팅방</a>
 	        	</div>
 	           <input type="hidden" class="memberName" value="${loginMember.name}">
 	           <input type="hidden" class="loginMemberNo" value="${loginMember.no}">
@@ -162,11 +163,30 @@
 	<div class="chatWrap">
 			<div class="receive-chat-area">
 				<c:forEach items="${voList}" var="vo">
-			    	<div class="chatmessage">
-				    	<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}] : </strong>
-				    	${vo.content}
-				    	<sub>${vo.enrollDate}</sub>
+				<c:if test="${vo.senderNo == loginMember.no}">
+			    	<div class="chatmessage" style=" padding-left: 230px;">
+			    		<div style="width: 250px;">
+			    			<div style="width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">
+						    	 ${vo.content}</br>
+						    	 <p style="font-size: 10px; ">${vo.enrollDate}</p>
+			    			</div>
+					    	  
+				    	</div>
+				    	
 			    	</div>
+			    </c:if>	
+			  	<c:if test="${vo.senderNo != loginMember.no}">
+			       <div class="chatmessage" style="padding-right: 230px;">
+			       		<div style="width: 250px;">
+			       			<strong>[${ vo.senderTeamName}][${vo.senderPositionName }][${vo.senderName}]</strong> </br> 
+				    		<div style=" background-color: rgba(59, 68, 75, 0.2); margin-top : 10px; width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">
+					    		
+						    	${vo.content}</br>
+						    	 <p style="font-size: 10px; ">${vo.enrollDate}</p>
+						    	 </div>
+					    	</div>
+			    		</div>
+			    	</c:if>
 				</c:forEach>
 			</div>
            
@@ -197,7 +217,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://192.168.35.188:8080/fire/hsSock");
+		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
@@ -249,21 +269,35 @@
 			console.log("소켓 통해서 메세지 받음 ~ !");
 			const obj = JSON.parse(event.data);
 			const chatRoomNo = document.querySelector(".chatRoomNo").value;
+			const loginMemberNo = document.querySelector(".loginMemberNo").value;
 			console.log(obj);
 			console.log(obj.chatRoomNo);
 			console.log(chatRoomNo);
 			
 			if(obj.chatRoomNo==chatRoomNo){
-			resultDiv.innerHTML += '<div class="chatmessage">' 
-								+ "<strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + "]</strong>" 
-								+ "<span> " + obj.content + " </span>" 
-								+ "<sub>" + obj.sendTime + "</sub>" 
-								+ '</div>';
+				if(obj.senderNo==loginMemberNo){
+					resultDiv.innerHTML += '<div class="chatmessage" style=" padding-left: 230px;"><div style="width: 250px;"><div style="  width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">'+
+					obj.content+
+					'</br><p style="font-size: 10px;">' +  obj.enrollDate+
+			    	'</p></div></div></div>';
+			    	  					
+				}else{
+					resultDiv.innerHTML += '	<div class="chatmessage" style="padding-right: 230px;">' 
+						+ "<div style=width: 250px;><strong>[" + obj.senderTeamName + "]" +"[" + obj.senderPositionName + "]" +"[" + obj.senderName + ']</strong></br><div style=" background-color: rgba(59, 68, 75, 0.2); margin-top : 10px; width: 240px; border: 1px solid #3B444B; padding-left: 10px; padding-right: 10px; padding-top: 10px; border-radius:  20px; ">' 
+						+ obj.content 
+						+ '</br><p style="font-size: 10px;">' + obj.enrollDate + "</p>" 
+						+ '</div></div></div>';
+						
+						
+					
+				}
+			
+	       		
+			    		
 			}
 		   resultDiv.scrollTop = resultDiv.scrollHeight;
 		   const user1No = document.querySelector(".user1No").value;
 			const user2No = document.querySelector(".user2No").value;
-			const loginMemberNo = document.querySelector(".loginMemberNo").value;
 			$.ajax({
 		        type: "POST",
 		        url: "${root}/chat/updateTime",
@@ -322,37 +356,43 @@
 		
 		
 		function f01(user1No,user2No,chatRoomNo){
+
 			const content = document.querySelector("#chatInput").value;
-			const dataToSend = {
-					content: content,
-			        senderNo: user1No,
-			        chatRoomNo : chatRoomNo,
-			        user2No : user2No
-			        
-			    };
-			/* ws.send(JSON.stringify(dataToSend)); */
-			ws.send(JSON.stringify(dataToSend));
-			document.querySelector("#chatInput").value="";
-			$.ajax({
-		        type: "POST",
-		        url: "${root}/chat/sendMessage",
-		        data: JSON.stringify({
-		            content: content,
-		            senderNo: user1No,
-		            chatRoomNo:chatRoomNo
-		        }),
-		        contentType: "application/json",
-		        success: function (response) {
-		        	 resultDiv.scrollTop = resultDiv.scrollHeight;
-			            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
-		        },
-		        error: function (xhr, status, error) {
-		            console.error("Error:", error);
-		        }
-		    });
-			 // jQuery를 이용한 Ajax POST 요청
+	        if (content == "") {
+	        	alert("채팅 내용을 입력해주세요.");
+	        } else {
+	            
+	       
+				const dataToSend = {
+						content: content,
+				        senderNo: user1No,
+				        chatRoomNo : chatRoomNo,
+				        user2No : user2No
+				        
+				    };
+				/* ws.send(JSON.stringify(dataToSend)); */
+				ws.send(JSON.stringify(dataToSend));
+				document.querySelector("#chatInput").value="";
+				$.ajax({
+			        type: "POST",
+			        url: "${root}/chat/sendMessage",
+			        data: JSON.stringify({
+			            content: content,
+			            senderNo: user1No,
+			            chatRoomNo:chatRoomNo
+			        }),
+			        contentType: "application/json",
+			        success: function (response) {
+			        	 resultDiv.scrollTop = resultDiv.scrollHeight;
+				            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
+			        },
+			        error: function (xhr, status, error) {
+			            console.error("Error:", error);
+			        }
+			    });
+				 // jQuery를 이용한 Ajax POST 요청
 	        
-			
+	        }
 			
 		}
 		

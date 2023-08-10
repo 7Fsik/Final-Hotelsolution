@@ -161,7 +161,8 @@
      	padding-top: 10px;	
      }
      .dataList:hover {
-        background-color: rgba(59, 68, 75, 0.5); /* #3b444b 색상의 투명도 50% */
+        background-color: rgba(59, 68, 75, 0.2);/* #3b444b 색상의 투명도 50% */
+        cursor: pointer;
     }
     .main {
     width: 100%;
@@ -177,10 +178,7 @@
 #img1{
 	height:20px;
 }
- a {
-            text-decoration: none; /* Remove underline */
-            color: #007bff; /* Set default link color (blue in this case) */
-        }
+
 
         /* Apply Bootstrap button styles to <a> tags */
         a.tcca {
@@ -200,6 +198,7 @@
             border: 1px solid transparent;
             border-radius: 0.25rem;
             color:#6c757d !important;;
+            text-decoration: none;
             
         }
 

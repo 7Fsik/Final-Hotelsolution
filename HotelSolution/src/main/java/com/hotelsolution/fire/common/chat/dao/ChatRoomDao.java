@@ -25,10 +25,7 @@ public class ChatRoomDao {
  
 
     public List<ChatRoomVo> findAllRooms(SqlSessionTemplate sst, String no){
-        //채팅방 생성 순서 최근 순으로 반환
-    	if(no==null) {
-    		no="1";
-    	}//로그린 없어서 임시 리터럴
+       
        return sst.selectList("chatRoom.findAllRooms",no );
     }
 

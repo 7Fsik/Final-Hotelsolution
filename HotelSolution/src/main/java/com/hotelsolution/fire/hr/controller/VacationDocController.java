@@ -60,8 +60,10 @@ public class VacationDocController {
 		model.addAttribute("pv", pv);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("searchValue", searchValue);
-		System.out.println(map);
-		System.out.println(vdvoList);
+		
+		/////휴가 대기 목록 
+		List<VacationDocVo> vdvoList2 = service.getNoSubmitList();
+		model.addAttribute("vdvoList2",vdvoList2);
 		
 	}
 }

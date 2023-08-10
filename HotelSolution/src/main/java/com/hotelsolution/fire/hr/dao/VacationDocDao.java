@@ -22,4 +22,8 @@ public class VacationDocDao {
 		return sst.selectOne("vacationDoc.getSubmitListCnt",map);
 	}
 
+	public List<VacationDocVo> getNoSubmitList(SqlSessionTemplate sst) {
+		return sst.selectList("vacationDoc.getNoSubmitList");
+	}
+
 }
