@@ -55,11 +55,12 @@
 					<!-- calendar 태그 -->
 					<div id='calendar-container'>
 						<div class="quick-mail-title">
-							<h1 id="caledner-btn" onclick="gocalenderPage();">통근관리</h1>
+							<h1 id="calender-btn" onclick="gocalenderPage();">통근관리</h1>
 						</div>
 						<div id='calendar'>
+
+						</div>
 					</div>
-				</div>
 
 				</div>
 				<div class="mail">
@@ -360,6 +361,12 @@ categoryPercentage: 0.5,
 		window.location.href =  "${root}/workout/attendance";
 	}
 
+
+	function gocalenderPage(){
+		window.location.href="${root}/schedule/calendar";
+	}
+
+	
 
 
 
