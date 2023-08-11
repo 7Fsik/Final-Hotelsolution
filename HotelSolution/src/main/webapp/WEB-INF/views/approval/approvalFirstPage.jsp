@@ -152,66 +152,7 @@
 							</div>
 						</div>
 					</c:forEach>
-					<!-- <%-- <div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div>
-					<div class="list">
-						<div class="list-title">
-							<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
-							<div>[지출 결의서]</div>
-							<a href="#">지출 결의서 올립니다.</a>
-						</div>
-						
-						<div class="list-status">
-							<div>2023-07-16 13:37</div>
-							<div>승인</div>
-						</div>
-					</div> --%> -->
+					
 					
 				</div>
 				
