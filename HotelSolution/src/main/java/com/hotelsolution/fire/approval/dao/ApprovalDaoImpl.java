@@ -193,6 +193,26 @@ public class ApprovalDaoImpl implements ApprovalDao{
 		return sst.selectList("approval.getReferrer" , no);
 	}
 
+	@Override
+	public int firstSubmit(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.update("approval.firstSubmit",map);
+	}
+
+	@Override
+	public int adYnEdit(SqlSessionTemplate sst, String approvalNo) {
+		return sst.update("approval.adYnEdit",approvalNo);
+	}
+
+	@Override
+	public int reject(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.update("approval.reject",map);
+	}
+
+	@Override
+	public int adYnReject(SqlSessionTemplate sst, String approvalNo) {
+		return sst.update("approval.adYnReject",approvalNo);
+	}
+
 
 
 //	@Override

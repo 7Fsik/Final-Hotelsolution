@@ -34,6 +34,7 @@ import com.hotelsolution.fire.temp.FireConstPool;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("approval")
@@ -487,9 +488,45 @@ public class ApprovalController {
 	
 	}
 	
+	//처음 결재자가 승인시
+	@PostMapping("submit")
+	@ResponseBody
+	public int submit(String approverNo, String approvalNo) {
+		// 결재자 결재상태 1.진행 2.반려 3. 승인  3으로 승인으로 변경
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("approverNo", approverNo);
+		map.put("approvalNo", approvalNo);
+		int result = service.firstSubmit(map);
+		
+		return result;
+	}
 	
+	//마지막 결재자가 승인시
+	@PostMapping("lastSubmit")
+	@ResponseBody
+	public int lastSubmit(String approverNo, String approvalNo) {
+		int result = submit(approverNo,approvalNo);
+		
+		if(result ==1) {
+			result += service.adYnEdit(approvalNo);
+		}
+		
+		return result;
+	}
 	
-	
+	//반려시
+		@PostMapping("reject")
+		@ResponseBody
+		public int reject(String approverNo, String approvalNo) {
+			// 결재자 결재상태 1.진행 2.반려 3. 승인  3으로 승인으로 변경
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("approverNo", approverNo);
+			map.put("approvalNo", approvalNo);
+			int result = service.reject(map);
+			result += service.adYnReject(approvalNo);
+			
+			return result;
+		}
 }//class
 
 

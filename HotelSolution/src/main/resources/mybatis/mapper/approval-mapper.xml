@@ -141,6 +141,36 @@
 		WHERE NO = #{avoNo}
 	</update>
 	
+	
+	<update id="firstSubmit" parameterType="java.util.Map">
+		UPDATE APPROVER
+		SET 
+		STATUS_NO = 3
+		WHERE APP_NO = #{approverNo}
+		AND APPROVAL_DOC_NO = #{approvalNo}
+	</update>
+	
+	<update id="reject" parameterType="java.util.Map">
+		UPDATE APPROVER
+		SET 
+		STATUS_NO = 2
+		WHERE APP_NO = #{approverNo}
+		AND APPROVAL_DOC_NO = #{approvalNo}
+	</update>
+	
+	<update id="adYnEdit" >
+		UPDATE APPROVAL_DOCUMENT
+		SET 
+		AD_YN = 'Y'
+		WHERE NO = #{approvalNo}
+	</update>
+	
+	<update id="adYnReject" >
+		UPDATE APPROVAL_DOCUMENT
+		SET 
+		AD_YN = 'X'
+		WHERE NO = #{approvalNo}
+	</update>
 	<insert id="vacation" parameterType="java.util.Map">
 	 INSERT INTO VACATION_APPLY
 	 (NO

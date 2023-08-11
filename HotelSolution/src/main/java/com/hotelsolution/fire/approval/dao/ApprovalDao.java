@@ -80,6 +80,14 @@ public interface ApprovalDao {
 
 	List<ApprovalReferrerVo> getReferrer(SqlSessionTemplate sst, String no);
 
+	int firstSubmit(SqlSessionTemplate sst, Map<String, String> map);
+
+	int adYnEdit(SqlSessionTemplate sst, String approvalNo);
+
+	int reject(SqlSessionTemplate sst, Map<String, String> map);
+
+	int adYnReject(SqlSessionTemplate sst, String approvalNo);
+
 
 
 

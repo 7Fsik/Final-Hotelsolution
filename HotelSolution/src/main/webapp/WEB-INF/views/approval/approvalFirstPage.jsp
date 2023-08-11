@@ -149,6 +149,12 @@
 								<c:if test="${appList.adYn == 'N' }">
 									<div>진행중</div>
 								</c:if>
+								<c:if test="${appList.adYn == 'Y' }">
+									<div>승인</div>
+								</c:if>
+								<c:if test="${appList.adYn == 'X' }">
+									<div>반려</div>
+								</c:if>
 							</div>
 						</div>
 					</c:forEach>

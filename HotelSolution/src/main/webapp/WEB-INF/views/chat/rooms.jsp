@@ -100,7 +100,11 @@
         padding-top: 20px;
         
     }
-       #search{
+    #search{
+    	  display: grid;
+	grid-template-rows: 1fr 1fr;       
+    }
+       #search1{
        display: grid;
 	grid-template-columns: 1fr 1fr 1fr;       
       
@@ -187,9 +191,9 @@
     	align-items: center;
     }
     .uImage > img{
-    	width: 65px;
-    	height: 65px;
-    	border-radius: 10px;
+    	width: 60px;
+    	height: 60px;
+    	border-radius: 30px;
     	
     }
     .currentMsg{
@@ -204,6 +208,10 @@
      .tnone{
    	text-decoration: none;
    }
+   #searchAreaTop{
+   		text-align: right;
+   		margin-right: 20px;
+   }
 </style>
 <body>
               <div style="margin: auto;"><img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"></div> 
@@ -211,19 +219,31 @@
            <input type="hidden" id="loginMemberNo" value="${loginMember.no}">
                     
 	            
-	        <div id="search">
-	        	<div class="search-area">
-	           		<a class="tnone"  href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
-	            </div>
-	            <div  class="search-area">
-					<a class="tnone" href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+	        <div id="search" >
+	        	<div id="search1" >
+		        	<div class="search-area">
+		           		<a class="tnone"  href = "${root}/chat/rooms?no=${loginMember.no}">개인채팅방</a>
+		            </div>
+		            <div  class="search-area">
+						<a class="tnone" href="${root}/chat/troom">${loginMember.teamName}채팅방</a>
+					</div>
+		        	<div  class="search-area">
+		        		<a class="tnone" href="${root}/chat/hsroom">공용 채팅방</a>
+		        	</div>
+				
 				</div>
-	        	<div  class="search-area">
-	        		<a class="tnone" href="${root}/chat/hsroom">공용 채팅방</a>
-	        	</div>
-				
-				
 	           
+	            <div id="searchAreaTop">
+		            <form id="approvalForm" action="${root}/chat/rooms?no=${loginMember.no}" method="GET">
+	                    <select id="searchTypeTop" name="searchType">
+	                        <option value="name">이름</option>
+	                        <option value="positionName">직책</option>
+	                        <option value="teamName">부서</option>
+	                    </select>
+	                    <input type="text" id="searchValueTop" name="searchValue" placeholder="검색할 값을 입력하세요">
+	                    <button type="submit" id="searchButton">검색</button>
+                    </form>
+           		 </div>
 	        </div>
         </div>
         <hr style="background-color: rgb(214, 248, 246);">
@@ -347,6 +367,8 @@ function goPosition(clickedTeam) {
     
     // firstTeamContainer를 여기서 사용할 수 있습니다.
 }
+
+
 function performSearch() {
 	
     const searchType = document.querySelector("#searchType").value; // 검색 조건 가져오기
@@ -432,7 +454,6 @@ function goChatRoom(user1No,user2No,chatRoomNo){
 	window.location.href = "${root}/chat/room?selectMemberNo=" + user2No+"&user1No="+user1No+"&chatRoomNo="+chatRoomNo;
 }
 
-noneCheckCnt;
 function noneCheckCnt() {
  
 

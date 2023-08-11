@@ -438,7 +438,8 @@
 			            <div style="padding-top:20px;">직책 : <input class="pn" type="text" name="positionName" value="${vo.positionName}" readonly></div>    
 			        </div>
 			        <div style="display: grid; grid-template-rows: 1fr 1fr 1fr 1fr;">
-			            <div style="padding-top:20px;">사번 :  ${vo.no}</div>
+			            <div style="padding-top:20px;" hidden>사번 :  ${vo.no}</div>
+			            <div style="padding-top:20px;">결재 권한 :  <input type="text" class="ap" name="approvalPower" value="${vo.approvalPower}" readonly style="width: 300px;"></div>
 			            <div style="padding-top:20px;">이메일 : <input type="text" class="em" name="email" value="${vo.email}" readonly style="width: 300px;"></div>
 			            <div style="padding-top:20px;">휴대폰번호 : <input type="text" class="ph" value="0${vo.id}" name="id" readonly></div>
 			            <div style="padding-top:20px;">부서전화번호 : ${vo.teamAddress}</div>
@@ -584,6 +585,7 @@
     const emailInput = document.querySelector(".em");
     const salaryInput = document.querySelector(".sa");
     const phoneInput = document.querySelector(".ph");
+    const approvalPowerInput = document.querySelector(".ap");
 
     const originalValues = {}; // 객체를 생성하여 원래 값들을 저장할 변수
 
@@ -649,6 +651,12 @@
           alert("휴대폰번호는 숫자만 입력 가능하며 최대 11글자를 초과할 수 없습니다.");
           return false;
         }
+      }else if (inputId === "approvalPower") {
+          const approvalPowerPattern = /^\d{0,1}$/;
+          if (!approvalPowerPattern.test(value)) {
+            alert("결재 등급은 1~7까지");
+            return false;
+          }
       }
 
       return true;
@@ -675,6 +683,10 @@
 
     phoneInput.addEventListener("click", handleInputClick);
     phoneInput.addEventListener("change", validate);
+    
+    approvalPowerInput.addEventListener("click", handleInputClick);
+    approvalPowerInput.addEventListener("change", validate);
+    
     
 	 document.addEventListener('keydown', function(event) {
 		  if (event.keyCode === 13) {

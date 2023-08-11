@@ -81,8 +81,8 @@ public class ChatRoomDao {
 		return sst.insert("message.setMessageList", map);
 	}
 
-	public List<ChatRoomVo> getChatRoomList(SqlSessionTemplate sst, String no) {
-		return sst.selectList("chatRoom.getChatRoomList",no);
+	public List<ChatRoomVo> getChatRoomList(SqlSessionTemplate sst, Map<String, String> map) {
+		return sst.selectList("chatRoom.getChatRoomList",map);
 	}
 
 	public int checkCnt(SqlSessionTemplate sst, Map<String, Object> map) {

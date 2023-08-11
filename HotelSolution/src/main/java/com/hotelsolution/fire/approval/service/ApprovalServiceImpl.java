@@ -204,6 +204,26 @@ public class ApprovalServiceImpl implements ApprovalService{
 		return dao.getReferrer(sst,no);
 	}
 
+	@Override
+	public int firstSubmit(Map<String, String> map) {
+		return dao.firstSubmit(sst,map);
+	}
+
+	@Override
+	public int adYnEdit(String approvalNo) {
+		return dao.adYnEdit(sst,approvalNo);
+	}
+
+	@Override
+	public int reject(Map<String, String> map) {
+		return dao.reject(sst,map);
+	}
+
+	@Override
+	public int adYnReject(String approvalNo) {
+		return dao.adYnReject(sst,approvalNo);
+	}
+
 	
 	
 

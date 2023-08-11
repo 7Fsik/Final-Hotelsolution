@@ -268,6 +268,7 @@
     .header-notification,
     .header-chat,
     .header-profile {
+    	cursor:pointer;
         margin-right: 15px; /* 헤더, 노티피케이션, 챗, 프로필 영역 사이에 10px의 오른쪽 마진을 줍니다. */
     }
 
@@ -335,7 +336,7 @@
                             <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지">
                         </a>
                     </div>
-                    <div class="header-chat">
+                    <div class="header-chat" onclick="goChatList(${loginMember.no})">
                         <a href="/fire/" >
                             <img class="header-chatimg" src="${root}/resources/img/일단넣음.png" alt="채팅이미지">
                         </a>
