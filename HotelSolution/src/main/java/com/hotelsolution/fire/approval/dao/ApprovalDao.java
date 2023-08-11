@@ -52,7 +52,7 @@ public interface ApprovalDao {
 
 	int updateDocumentExpenditure(SqlSessionTemplate sst, Map<String, String> map);
 
-	int expenditure(SqlSessionTemplate sst, Map<String, Object> params);
+	int expenditure(SqlSessionTemplate sst, ExpenditureVo evo);
 
 	int expenditureItemList(SqlSessionTemplate sst, Map<String, Object> paramValue);
 
@@ -80,6 +80,7 @@ public interface ApprovalDao {
 
 	List<ApprovalReferrerVo> getReferrer(SqlSessionTemplate sst, String no);
 
+
 	int firstSubmit(SqlSessionTemplate sst, Map<String, String> map);
 
 	int adYnEdit(SqlSessionTemplate sst, String approvalNo);
@@ -87,6 +88,11 @@ public interface ApprovalDao {
 	int reject(SqlSessionTemplate sst, Map<String, String> map);
 
 	int adYnReject(SqlSessionTemplate sst, String approvalNo);
+
+	ApprovalVo expenditureDetail(SqlSessionTemplate sst, String no);
+
+	List<ItemVo> getItemInfo(SqlSessionTemplate sst, String no);
+
 
 
 

@@ -158,6 +158,14 @@
         border: 0px;
         text-align: end;
     }
+    #go{
+        border: 0;
+        border-radius: 5px;
+        /* width: 25%; */
+        height: 100%;
+        background-color: rgba(59, 68, 75, 1);
+        color: white;
+    }
     
     
 </style>
@@ -186,7 +194,7 @@
                         <option value="4">주류</option>
                         <option value="5">디저트</option>
                     </select>
-                <button onclick="menuList();">검색</button>
+                <button onclick="menuList();" id="go">검색</button>
                 
 
                 </div>

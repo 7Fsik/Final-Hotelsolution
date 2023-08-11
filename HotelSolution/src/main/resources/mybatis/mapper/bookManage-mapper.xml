@@ -19,53 +19,56 @@
 
 	<select id="list" resultType="BookManageVo">
 		
-		SELECT 
-		G.GUEST_NO
-		,G.NAME
-		,G.PHONE_NUMBER
-		,G.GENDER
-		,G.AGE
-		,G.NATIONALLITY
-		,S.TYPE_NAME
-		,S.NO
-		,S.ROOM_INT_NO
-		,S.BOOK_DATE
-		,TO_CHAR(S.START_DATE, 'MM-DD') AS START_DATE
-		,TO_CHAR(S.END_DATE, 'MM-DD') AS END_DATE
-		,S.USER_NO
-		,S.PRICE
-		,S.ROOM_NO
-		,S.IMG
-		FROM ROOM_GUEST G
-		JOIN (SELECT 
-		T.TYPE_NAME
-		,S.NO
-		,S.GUEST_NO
-		,S.ROOM_INT_NO
-		,S.BOOK_DATE
-		,S.START_DATE
-		,S.END_DATE
-		,S.USER_NO
-		,S.PRICE
-		,S.ROOM_NO
-		,S.IMG
-		FROM ROOM_TYPE T
-		JOIN (SELECT 
-		B.NO
-		,B.GUEST_NO
-		,B.ROOM_INT_NO
-		,B.BOOK_DATE
-		,B.START_DATE
-		,B.END_DATE
-		,B.USER_NO
-		,B.PRICE
-		,I.ROOM_NO
-		,I.IMG
-		,I.TYPE_NO
-		FROM BOOK_LIST B
-		JOIN ROOM_INTRODUCE I ON B.ROOM_INT_NO = I.ROOM_INT_NO) S
-		ON  T.TYPE_NO = S.TYPE_NO ) S
-		ON G.GUEST_NO = S.GUEST_NO
+	 SELECT 
+	    G.GUEST_NO,
+	    G.NAME,
+	    G.PHONE_NUMBER,
+	    G.GENDER,
+	    G.AGE,
+	    G.NATIONALLITY,
+	    S.TYPE_NAME,
+	    S.NO,
+	    S.ROOM_INT_NO,
+	    S.BOOK_DATE,
+	    TO_CHAR(S.START_DATE, 'MM-DD') AS START_DATE,
+	    TO_CHAR(S.END_DATE, 'MM-DD') AS END_DATE,
+	    S.USER_NO,
+	    S.PRICE,
+	    S.ROOM_NO,
+	    S.IMG
+	FROM ROOM_GUEST G
+	JOIN (
+	    SELECT 
+	        T.TYPE_NAME,
+	        S.NO,
+	        S.GUEST_NO,
+	        S.ROOM_INT_NO,
+	        S.BOOK_DATE,
+	        S.START_DATE,
+	        S.END_DATE,
+	        S.USER_NO,
+	        S.PRICE,
+	        S.ROOM_NO,
+	        S.IMG,
+	        CASE WHEN S.START_DATE >= CURRENT_DATE THEN 1 ELSE 2 END AS ORD
+	    FROM ROOM_TYPE T
+	    JOIN (
+	        SELECT 
+	            B.NO,
+	            B.GUEST_NO,
+	            B.ROOM_INT_NO,
+	            B.BOOK_DATE,
+	            B.START_DATE,
+	            B.END_DATE,
+	            B.USER_NO,
+	            B.PRICE,
+	            I.ROOM_NO,
+	            I.IMG,
+	            I.TYPE_NO
+	        FROM BOOK_LIST B
+	        JOIN ROOM_INTRODUCE I ON B.ROOM_INT_NO = I.ROOM_INT_NO
+	    ) S ON T.TYPE_NO = S.TYPE_NO
+	) S ON G.GUEST_NO = S.GUEST_NO
 		<where>
 			<if test="searchType == 'name'">
 				G.NAME LIKE ('%'||#{searchValue}||'%')
@@ -74,6 +77,7 @@
 				G.PHONE_NUMBER LIKE ('%'||#{searchValue}||'%')
 			</if>
 		</where>
+	ORDER BY S.ORD ASC, S.START_DATE DESC
 		
 	</select>
 	
@@ -92,6 +96,7 @@
 		,S.BOOK_DATE
 		,TO_CHAR(S.START_DATE, 'YYYY-MM-DD') AS START_DATE
 		,TO_CHAR(S.END_DATE, 'YYYY-MM-DD') AS END_DATE
+        ,(EXTRACT(DAY FROM (S.END_DATE - S.START_DATE)) * S.PRICE) AS TOTAL_PRICE
 		,S.USER_NO
 		,S.PRICE
 		,S.ROOM_NO
@@ -126,9 +131,24 @@
 		JOIN ROOM_INTRODUCE I ON B.ROOM_INT_NO = I.ROOM_INT_NO) S
 		ON  T.TYPE_NO = S.TYPE_NO ) S
 		ON G.GUEST_NO = S.GUEST_NO
-		WHERE S.NO = #{no}
+        WHERE NO =#{no}
 	
 	</select>
+	
+	<delete id="cencel">
+	
+		DELETE FROM  BOOK_LIST
+		WHERE NO = #{bookNo}
+	</delete>
+	
+	<insert id="checkIn">
+
+		INSERT INTO ROOM_USE
+		(ROOM_USE_NO, BOOK_NO ,CHECK_IN_TIME )
+		VALUES 
+		(SEQ_ROOM_USE_NO.NEXTVAL ,#{bookNo},SYSDATE)
+		
+	</insert>
 	
 	
 	

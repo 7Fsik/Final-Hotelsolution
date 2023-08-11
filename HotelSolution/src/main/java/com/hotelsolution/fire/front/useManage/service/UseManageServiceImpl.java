@@ -66,6 +66,11 @@ public class UseManageServiceImpl implements UseManageService{
 		return ud.roomOrder(sst, roomOrderMap);
 	}
 
+	@Override
+	public int payment(Map<String, String> paramMap) {
+		return ud.payment(sst,paramMap);
+	}
+
 	
 
 }

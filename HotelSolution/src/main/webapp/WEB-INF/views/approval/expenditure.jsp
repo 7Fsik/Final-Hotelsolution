@@ -128,7 +128,7 @@
 	
 	.x-container{
 		position:relative;
-		left: 30px;
+		left: 50px;
 		width:200px;
 		height:300px;
 		border : 1px solid black;
@@ -566,7 +566,7 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td class="td2" style="width: 50px;">결재</td>
-                                                <td class="employee-name"></td>
+                                                <td onclick="delEmployee();" class="employee-name modalTl"></td>
                                             </tr>
                 
                                             
@@ -576,7 +576,7 @@
                                                 <td class="td2" style="width: 50px;">결재</td>
                                                 <c:forEach items="${list}" var = "member">
                                                     <c:if test="${member.approvalPower eq '2' }">
-                                                        <td>${member.name}(${member.teamName} ${member.positionName})</td>
+                                                        <td class="modalprTl"><input type="hidden" class="prtlNo" value="${member.no}">${member.name}(${member.teamName} ${member.positionName})</td>
                                                     </c:if>
                                                 </c:forEach>
                                             </tr>
@@ -591,13 +591,13 @@
         
                         <div id="reference-div">
                             <div class="reference">참조</div>
-                            <div class="reference-list">
+                            <div onclick="delEmployees();" class="reference-list">
                                
                             </div>
                         </div>
                     
                     <div class="submit-btn">
-                        <button type="submit">확인</button>
+                        <button onclick="submit();">확인</button>
                         <button onclick="closeModal();">닫기</button>
                     </div>
                 </div>
@@ -641,15 +641,15 @@
                                 <tr>
                                     <td>기안자</td>
                                     <td>팀장</td>
-                                    <td>인사팀 팀장</td>
+                                    <td>구매팀 팀장</td>
                                 </tr>
                             </thead>
                                 
                                <tbody>
 	                                <tr>
 	                                	<td>${loginMember.name}</td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td class="teamLeader"></td>
+	                                	<td class="prLeader"></td>
 	                                </tr>
 	                                
 	                                <tr>
@@ -657,9 +657,9 @@
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td class="refer"></td>
+	                                	<td class="refer"></td>
+	                                	<td class="refer"></td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -668,6 +668,8 @@
         		</div>
         		
         		<div id="document">
+					<input type="hidden" name="typeNo" value="${documentType.documentTypeNo}">
+                    <input type="hidden" name="userNo" value="${loginMember.no}">
         			<table class="first-table" border="1">
                         <thead>
                             <tr>
@@ -829,8 +831,6 @@
                     </table>
                     
         		</div>
-        		<input type="hidden" name="typeNo" value="${documentType.documentTypeNo}">
-
 
         	</form>
         		
@@ -843,28 +843,6 @@
     </div>
     
 	<script>
-	
-    //웹페이지 로드될때 결재문서 insert
-	$(document).ready(function() {
-        $.ajax({
-        url : '${root}/approval/insertApprovalDocument',
-        method : 'post',
-        data : {
-            typeNo : "${documentType.documentTypeNo}",
-            userNo : "${loginMember.no}"
-        },
-        success : (data)=>{
-            console.log(data);
-            if(data == 'success'){
-                alert('성공');
-            }
-        },
-        error : (e)=>{
-            console.log(e);
-            alert('fail');
-        }
-    });
-});
 
 	 //가격 매기기
     document.addEventListener('DOMContentLoaded', () => {
@@ -927,11 +905,39 @@
     // 모달을 엽니다.
     function openModal() {
         modal.style.display = 'block';
+		const employeeNameEle = document.querySelector('.reference-list')
+            employeeNameEle.textContent = '';
+
+            document.querySelector('.prLeader').innerHTML = '';
+            document.querySelector('.teamLeader').innerHTML = '';
+
+            const refer = document.querySelectorAll('.refer');
+            for(let i=0; i<refer.length; i++){
+                refer[i].innerHTML = '';
+            }
     }
 
     // 모달을 닫습니다.
     function closeModal() {
         modal.style.display = 'none';
+		const td = document.querySelector('table .employee-name');
+            const x = document.querySelector('.x');
+            const teams = document.querySelectorAll('.teams');
+            const icons = document.querySelectorAll('.iii');
+            const reference = document.querySelector('.reference-list');
+
+            let team = '';
+            let icon = '';
+            for(let i=0; i<teams.length; i++){
+                team = teams[i];
+                icon = icons[i];
+                team.style.display = 'none';
+                icon.classList.remove('bi-dash-circle-fill');
+                icon.classList.add("bi-plus-circle-fill");
+            }
+            x.innerHTML = '';
+            td.innerHTML = '';
+            reference.innerHTML = '';
     }
 
     // 버튼을 클릭하면 모달을 엽니다.
@@ -996,7 +1002,7 @@
 				success : (data)=>{
 						str += '<div class="x-container">'
 					for(let i=0; i<data.length; i++){
-						str += '<input type="checkbox" class="employee-checkbox" name="checkbox-" value=" ' + data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
+						str += '<input type="checkbox" class="employee-checkbox tlNo" name="checkbox-" value=" '+'['+data[i].no+']' + ' '+ data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
 						data[i].name +" " +"("+data[i].teamName + " "+data[i].positionName+")" + "<br>";
 						str += '<input type="hidden" name="positionNo" value="'+data[i].positionNo+'">'
 					}
@@ -1022,21 +1028,83 @@
 
 
 		}
-			
-		
 
 		function handleReference() {
-			const employee = document.querySelector('input[name=checkbox-]:checked');
-			const reference = document.querySelector('.reference-list');
-			console.log(employee);
-			console.log(reference[0]);
-			console.log(reference[1]);
-			console.log(reference[2]);
-			const em = employee.value;
+        const employee = document.querySelectorAll('input[name=checkbox-]:checked');
+        const reference = document.querySelector('.reference-list');
+        
+        if (reference.children.length < 3) {
+            for (let i = 0; i < employee.length && reference.children.length < 3; i++) {
+                const em = employee[i].value;
+                reference.innerHTML += '<div class="a">' + em + '</div>';
+            }
+         }
+        };
 			
-			reference.innerHTML += '<div>'+employee.value+'</div>';
 
-		};
+		 //결재 innerHTML 지우기
+		 function delEmployee() {
+    const employeeNameEle = document.querySelector('.employee-name');
+    const isEmployeeNameEmpty = employeeNameEle.textContent === '';
+        console.log(employeeNameEle);
+        console.log(isEmployeeNameEmpty);
+
+    if (!isEmployeeNameEmpty) {
+        const result = confirm('삭제하시겠습니까?');
+        if (result) {
+            employeeNameEle.textContent = '';
+            }
+        }
+    };
+
+
+			//참조 innerHTML 지우기
+            function delEmployees(params) {
+            const employeeNameEle = document.querySelector('.reference-list')
+            const isEmployeeNameEmpty = employeeNameEle.textContent === '';
+            console.log(employeeNameEle);
+            console.log(isEmployeeNameEmpty);
+
+            if (!isEmployeeNameEmpty){
+                const result = confirm('삭제하시겠습니까?');
+                    if(result){
+                        employeeNameEle.innerHTML = '';
+                    }
+            }
+        
+            }
+
+
+            function submit() {
+                const tl = document.querySelector('.teamLeader');
+                const mtl = document.querySelector('.modalTl');
+                const pl = document.querySelector('.prLeader');
+                const ptl = document.querySelector('.modalprTl');
+                const refer = document.querySelectorAll('.refer');
+                const a = document.querySelectorAll('.a');
+
+                const tlNo = document.querySelector('.tlNo').value;
+                const prtlNo = document.querySelector('.prtlNo').value;
+
+                const strMtl  = mtl.textContent;
+                const strPtl = ptl.textContent;
+                let str = '';
+                str += '<input type="text" name="teamLeader" id="teamLeader" value="' + strMtl + '">';
+                tl.innerHTML = str;
+
+                let str2 ='';
+                str2+='<input type="text"  id="prTeamLeader" value="' + strPtl + '">';
+                str2+='<input type="hidden" name="prTeamLeader" id="prTeamLeader" value="' + prtlNo + '">';
+                pl.innerHTML = str2;
+                for(let i = 0; i<a.length; i++){
+                    //let aa = a[i].textContent;
+                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" value="' + a[i].textContent + '">'
+                }
+
+                closeModal();
+
+            }
+		
 
 	
 	</script>

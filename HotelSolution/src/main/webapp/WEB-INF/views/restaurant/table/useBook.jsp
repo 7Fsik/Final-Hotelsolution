@@ -176,6 +176,9 @@
         background-color:  rgba(59, 68, 75, 1);
 
     }
+    .point {
+        cursor: pointer;
+    }
     
 </style>
 <body>
@@ -346,8 +349,8 @@
                             + "<div class='sidegrid ss'>"
                             + "<div>"+data.useTime+" "+data.bookPeople+"명</div>"
                             + "<div class='sidegrid'>"
-                            + "<div class='ok'  data-no = '"+data.no+"' data-name = '"+data.name+"'>확인 </div>"
-                            + "<div class='no' data-no = '"+data.no+"'  data-name = '"+data.name+"'>취소</div>"
+                            + "<div class='ok point'  data-no = '"+data.no+"' data-name = '"+data.name+"'>확인 </div>"
+                            + "<div class='no point' data-no = '"+data.no+"'  data-name = '"+data.name+"'>취소</div>"
                             + "</div>"
                             + "</div>";
                         div.innerHTML = innerHTML;

@@ -120,7 +120,7 @@
 	
 	.x-container{
 		position:relative;
-		left: 30px;
+		left: 50px;
 		width:200px;
 		height:300px;
 		border : 1px solid black;

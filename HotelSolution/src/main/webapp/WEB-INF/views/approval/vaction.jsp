@@ -130,7 +130,7 @@
 	
 	.x-container{
 		position:relative;
-		left: 30px;
+		left: 50px;
 		width:200px;
 		height:300px;
 		border : 1px solid black;
@@ -456,12 +456,6 @@
         background-color: lightgray;
     }
 
-    
-
-
-
-   
-    
 </style>
 </head>
 <body>
@@ -517,7 +511,7 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td class="td2">결재</td>
-                                                <td onclick="delEmployee();" class="employee-name modalTl"></td>
+                                                <td style="width: 300px;" onclick="delEmployee();" class="employee-name modalTl"></td>
                                             </tr>
                 
                                             
@@ -527,7 +521,7 @@
                                                 <td class="td2">결재</td>
                                                 <c:forEach items="${list}" var = "member">
                                                     <c:if test="${member.approvalPower eq '1' }">
-                                                        <td class="modalHrTl"><input type="hidden" class="hrtlNo" value="${member.no}"> ${member.name}(${member.teamName} ${member.positionName})</td>
+                                                        <td style="width:300px" class="modalHrTl"><input type="hidden" class="hrtlNo" value="${member.no}"> ${member.name}(${member.teamName} ${member.positionName})</td>
                                                     </c:if>
                                                 </c:forEach>
                                             </tr>
@@ -816,8 +810,6 @@
 
 
 		}
-        
-        
 
 		function handleReference() {
         const employee = document.querySelectorAll('input[name=checkbox-]:checked');
@@ -828,8 +820,8 @@
                 const em = employee[i].value;
                 reference.innerHTML += '<div class="a">' + em + '</div>';
             }
-        }
-};
+         }
+        };
 
     //결재 innerHTML 지우기
     function delEmployee() {
@@ -893,7 +885,7 @@
             }
 
 
-
+            
 
 	</script>
 	

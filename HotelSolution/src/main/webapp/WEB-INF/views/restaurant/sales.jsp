@@ -35,6 +35,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        margin-top: 30px;
     }
     .month-area{
         width: 80%;
@@ -91,6 +92,10 @@
         border-top: 3px solid black;
         width: 80%;
         text-align: center;
+    }
+    .daySales a{
+        color: black;
+        text-decoration: none;
     }
     
 </style>

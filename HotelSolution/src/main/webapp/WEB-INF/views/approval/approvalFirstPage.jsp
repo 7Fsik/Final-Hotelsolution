@@ -205,6 +205,10 @@
 				location.href = '${root}/approval/vactionDetail?no=' + no;
 			}
 
+			if(typeNo == 2){
+				location.href = '${root}/approval/expenditureDetail?no=' +no;
+			}
+
 		}
 
 	

@@ -38,7 +38,7 @@
 
     #list-area{
         width: 95%;
-        height: 80%;
+        height: 84%;
         margin: auto;
 
     }
@@ -54,7 +54,10 @@
 
     #page-area{
         display: flex;
-        justify-content: center
+        justify-content: space-around;
+        width: 40%;
+        position: relative;
+        left: 30%;
     }
     .att{
         height: 90%;
@@ -99,7 +102,13 @@
     #checkSelect{
         display: none;
     }
-    
+    #bttb{
+        border: 0px;
+        background-color: rgba(59, 68, 75, 1);
+        color: white;
+        border-radius: 5px;
+        height: 100%;
+    }
 
 </style>
 <body>
@@ -117,17 +126,17 @@
                 <div id="search">
                     <form action="${root}/front/status/list">
                         <input type="hidden" name="page" value="1">
-                        <select name="searchType" id="searchType">
+                        <select name="searchType" id="searchType" value="${searchType}">
                             <option value="roomNo">방 호수</option>
                             <option value="statusNo">객실상태</option>
                             <option value="typeName">객실이름</option>
                         </select>
-                        <input type="text" name="searchValue" id="searchValue" value="${searchValue}" style="display: inline-block;">
+                        <input type="text" name="searchValue" id="searchValue" value="${searchValue}" style="display: inline-block;" >
                         <select name="checkSelect" id="checkSelect" style="display: none;">
                             <option value="1">사용가능</option>
                             <option value="2">수리중</option>
                         </select>
-                        <input type="submit" value="검색">
+                        <input type="submit" value="검색" id="bttb">
                     </form>
                 </div>
             </div>
@@ -171,20 +180,29 @@
     </div>
 
     <script>
-        document.getElementById('searchType').addEventListener('change', function () {
-            var checkSelect = document.getElementById('checkSelect');
-            var searchValue = document.getElementById('searchValue');
-    
-            if (this.value === 'statusNo') {
-                checkSelect.style.display = 'inline-block';
-                searchValue.style.display = 'none';
-                searchValue.disabled = true;
-            } else {
-                checkSelect.style.display = 'none';
-                searchValue.style.display = 'inline-block';
-                searchValue.disabled = false;
+        
+        const select = document.getElementById("searchType");
+        const options = select.options;
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].value === '${searchType}') {
+                options[i].selected = true;
+                break; // 선택된 옵션을 찾았으므로 루프 종료
             }
-        });
+        }
+        
+        var checkSelect = document.getElementById('checkSelect');
+        var searchValue = document.getElementById('searchValue');
+
+        if (select.value === 'statusNo') {
+            checkSelect.style.display = 'inline-block';
+            searchValue.style.display = 'none';
+            searchValue.disabled = true;
+        } else {
+            checkSelect.style.display = 'none';
+            searchValue.style.display = 'inline-block';
+            searchValue.disabled = false;
+        }
+
     </script>
 
     

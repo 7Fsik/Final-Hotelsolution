@@ -213,7 +213,7 @@
 		box-sizing:border-box;
 	}
 	
-	tbody input[name="note"]{
+	tbody input[name="count"]{
 		width:190px;
 		box-sizing:border-box;
 	}
@@ -233,6 +233,8 @@
 		margin-top:20px;
 		display:flex;
 		justify-content:center;
+		margin-left:60px;
+		font-size: 1.1em;
 	}
 	
 	 .end-div{
@@ -241,8 +243,7 @@
     	margin-top:15px;
     	margin-right:20px;
     }
-	
-    
+
 </style>
 </head>
 <body>
@@ -254,7 +255,6 @@
    <div id="mainboard">
         <div id="approval">
         
-        	<form action="">
         	
         		<div id ="head">
         		
@@ -262,7 +262,7 @@
 						<div class="title">기안문서</div>
 						<h1>호텔 솔루션 지출결의서</h1>        
 						<span class="date">요청일자</span> 
-					 	 : <input type="date" class="myDate">
+					 	 : <input type="date" class="myDate" readonly value="${vo.enrollDate.substring(0, 10)}">
         			</div>
 					
 					<div id="head-right">
@@ -271,31 +271,26 @@
                             <thead>
                                 <tr>
                                     <td>기안자</td>
-                                    <td>슈퍼바이저</td>
                                     <td>팀장</td>
-                                    <td>구매/재무팀<br>슈퍼바이저</td>
-                                    <td>구매/재무팀<br>팀장</td>
+                                    <td>구매/재무팀 팀장</td>
                                 </tr>
                             </thead>
                                 
                                <tbody>
 	                                <tr>
-	                                	<td>1</td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
+	                                	<td>${vo.writerName}</td>
+	                                	<td class="teamLeader">${list[0].approverName}</td>
+	                                	<td class="prLeader">${list[1].approverName}</td>
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td style="font-weight:bold;" colspan="5">참조자</td>
+	                                	<td style="font-weight:bold;" colspan="3">참조자</td>
 	                                </tr>
 	                                
 	                                <tr>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td></td>
-	                                	<td colspan="2">X</td>
+	                                	<td class="refer">${fList[0].referrerName}</td>
+	                                	<td class="refer">${fList[1].referrerName}</td>
+	                                	<td class="refer">${fList[2].referrerName}</td>
 	                                </tr>
                                 </tbody>
                         </table>
@@ -309,18 +304,18 @@
                         <thead>
                             <tr>
                                 <td>제목</td>
-                                <td colspan="5" class="document-title"><input class="input" type="text" name="title"></td>
+                                <td colspan="5" class="document-title">${vo.title }</td>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
                                 <td class="info">소속</td>
-                                <td><input class="input" type="text" name="team"></td>
+                                <td>${vo.teamName}</td>
                                 <td class="info">직책</td>
-                                <td><input class="input" type="text" name="position"></td>
+                                <td>${vo.positionName}</td>
                                 <td class="info">성명</td>
-                                <td><input class="input" type="text" name="name" value="이승권"></td>
+                                <td>${vo.writerName}</td>
                             </tr>
 
                         </tbody>
@@ -331,73 +326,71 @@
                         <thead>
                             <tr>
                                 <th>품명</th>
+                                <th>수량</th>
                                 <th>금액</th>
-                                <th>비고</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[0].name}</td>
+                                <td>${itemList[0].count}개</td>
+                                <td>${itemList[0].count * itemList[0].price}원</td>
                             </tr>
                            
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[1].name}</td>
+                                <td>${itemList[1].count}개</td>
+                                <td>${itemList[1].count * itemList[1].price}원</td>
                             </tr>
                            
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
-                           
+                                <td>${itemList[2].name}</td>
+                                <td>${itemList[2].count}개</td>
+                                <td>${itemList[2].count * itemList[2].price}원</td>
                             </tr>
                            
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[3].name}</td>
+   	                            <td>${itemList[3].count}개</td>
+                                <td>${itemList[3].count * itemList[3].price}원</td>
                             </tr>
 
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[4].name}</td>
+                                <td>${itemList[4].count}개</td>
+                                <td>${itemList[4].count * itemList[4].price}원</td>
                             </tr>
 
                             <tr>
-                               <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[5].name}</td>
+                                <td>${itemList[5].count}개</td>
+                                <td>${itemList[5].count * itemList[5].price}원</td>
                             </tr>
 
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[6].name}</td>
+                                <td>${itemList[6].count}개</td>
+                                <td>${itemList[6].count * itemList[6].price}원</td>
                             </tr>
 
                             <tr>
-                                <td><input type="text" name="product"></td>
-                                <td><input type="text" name="price"></td>
-                                <td><input type="text" name="note"></td>
+                                <td>${itemList[7].name}</td>
+                                <td>${itemList[7].count}개</td>
+                                <td>${itemList[7].count * itemList[7].price}원</td>
                             </tr>
 
                             <tr>
                                 <th>합계</th>
-                                <td><input type="text" name="totalPrice"></td>
-                                <td></td>
+                                <td>X</td>
+                                <td>${itemList[0].totalPrice}원</td>
                             </tr>
                             
                             <tr style="height:180px;">
                            		<td colspan="3">
                            			<div id="last-td">
 	                           			<div class="last-td-content">지출결의서를 제출합니다.</div>
-	                           			<div class="end-div">2023년 07월 18일</div>
-	                           			<div class="end-div">작성인 : 이승권</div>
+	                           			<div class="end-div">작성인 : ${vo.writerName}</div>
                            			</div>
                            		</td>
                            	</tr>
@@ -405,9 +398,6 @@
                     </table>
                     
         		</div>
-
-
-        	</form>
         		
 	    </div>
 

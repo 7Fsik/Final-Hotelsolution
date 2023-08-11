@@ -239,7 +239,7 @@
 		VALUES
 		(
 			SEQ_PURCHASE_REQUISITION_NO.NEXTVAL
-			,#{avoNo}
+			,#{appNo}
 			,#{totalPrice}
 		)
 	</insert>
@@ -484,6 +484,51 @@
         WHERE APPROVAL_NO = #{no}
 	
 	</select>
-
-
+	
+	<select id="expenditureDetail" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo">
+		
+		 SELECT
+	     A.NO
+	    ,A.TYPE_NO
+	    ,A.USER_NO
+	    ,A.TITLE
+	    ,A.CONTENT
+	    ,A.AD_YN
+	    ,A.ENROLL_DATE
+	    ,A.END_DATE
+        ,M.NAME AS WRITER_NAME
+        ,P.NAME AS POSITION_NAME
+        ,TM.TEAM_NAME
+        FROM
+        APPROVAL_DOCUMENT A
+        JOIN MEMBER M
+        ON A.USER_NO = M.NO
+        JOIN POSITION P
+	    ON P.NO = M.POSITION_NO
+	    JOIN TEAM TM
+	    ON TM.TEAM_NO = M.TEAM_NO
+        WHERE A.TYPE_NO = 2
+        AND A.NO = #{no}
+		
+	</select>
+	
+	<select id="getItemInfo" resultType="com.hotelsolution.fire.approval.vo.ItemVo">
+	
+		SELECT
+	     P.NO
+	     ,P.APP_NO
+	     ,P.PRICE AS TOTAL_PRICE
+	     ,ITEM.COUNT
+	     ,MA.NAME
+	     ,MA.PRICE
+	     FROM 
+	     PURCHASE_REQUISITION P
+	     JOIN PURCHASE_ITEMLIST ITEM
+	     ON P.NO = ITEM.PURCHASE_REQUISITION_NO
+	     JOIN ITEM_MANAGER MA
+	     ON ITEM.ITEM_NO = MA.ITEM_NO
+	     WHERE P.APP_NO = #{no}
+	
+	</select>
+	
 </mapper>

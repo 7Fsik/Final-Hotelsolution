@@ -101,8 +101,8 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
-	public int expenditure(SqlSessionTemplate sst, Map<String, Object> params) {
-		return sst.insert("approval.expenditure" , params);
+	public int expenditure(SqlSessionTemplate sst, ExpenditureVo evo) {
+		return sst.insert("approval.expenditure" , evo);
 	}
 
 	@Override
@@ -194,6 +194,7 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
+
 	public int firstSubmit(SqlSessionTemplate sst, Map<String, String> map) {
 		return sst.update("approval.firstSubmit",map);
 	}
@@ -211,6 +212,16 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int adYnReject(SqlSessionTemplate sst, String approvalNo) {
 		return sst.update("approval.adYnReject",approvalNo);
+    
+  @Ocerrride
+	public ApprovalVo expenditureDetail(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("approval.expenditureDetail" , no);
+	}
+
+	@Override
+	public List<ItemVo> getItemInfo(SqlSessionTemplate sst, String no) {
+		return sst.selectList("approval.getItemInfo" , no);
+
 	}
 
 

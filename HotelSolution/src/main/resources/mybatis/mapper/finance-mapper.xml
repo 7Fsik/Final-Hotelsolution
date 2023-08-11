@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="finance">
+
+
+
+<select id="front" resultType="FrontVo">
+
+	SELECT 
+	    TO_CHAR(TRUNC(CHECK_OUT_TIME), 'yyyy-mm-dd') AS DAY,
+	    SUM(TOTAL_PRICE) AS TOTAL_PRICE
+	FROM 
+	    ROOM_USE
+	GROUP BY 
+	    TRUNC(CHECK_OUT_TIME)
+	ORDER BY 
+	    TRUNC(CHECK_OUT_TIME) ASC
+
+</select>
+
+
+<select id="restaurant" resultType="RestaurantVo">
+
+	SELECT 
+	    TO_CHAR(TRUNC(USE_TIME), 'YYYY-MM-DD') AS DAY,
+	    SUM(TOTAL_PRICE) AS TOTAL_PRICE
+	FROM 
+	    RESTAURANT_BOOK_LIST
+	WHERE
+	    PRICE_YN = 'Y'
+	GROUP BY 
+	    TO_CHAR(TRUNC(USE_TIME), 'YYYY-MM-DD')
+	ORDER BY 
+	    TO_CHAR(TRUNC(USE_TIME), 'YYYY-MM-DD') ASC
+
+</select>
+
+
+	
+	
+
+
+</mapper>

@@ -49,11 +49,11 @@
     }
     #user-area{
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
     #user-area2{
         display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
     }
     #userdate-area{
         width: 70%;
@@ -120,10 +120,10 @@
     
             <div id="int-area">
                 <div class="font-25">
-                    방이름
+                    ${vo.typeName}
                 </div>
                 <div class="font-20">
-                    호수
+                    ${vo.roomNo} 호
                 </div>
     
                 <div class="img">
@@ -133,35 +133,46 @@
                     <div class="line font-25">손님 정보</div>
                     <div id="user-area" class="text-left">
                         <div>
-                            손님이름 : <input type="text">
+                            손님이름 : <input type="text" id="name">
                         </div>
                         <div>
-                            국적 : <input type="text">
+                            국적 : <input type="text" id="country">
+                        </div>
+                        <div>
+                            이용 : 
+                            <select name="checkUse" id="checkUse">
+                                <option value="1">첫 이용자 </option>
+                                <option value="2">회원</option>
+                            </select>
                         </div>
                     </div>
                     <div id="user-area2" class="text-left">
                         <div>
-                            전화번호 : <input type="text">
+                            전화번호 : <input type="text" id="phone"  maxlength="11">
                         </div>
                         <div>
-                            성별 : <input class="small-input" type="text">
+                            성별 : 
+                            <select id="sex">
+                                <option value="M">남자</option>    
+                                <option value="F">여자</option>    
+                            </select>
                         </div>
                         <div>
-                            연령 : <input class="small-input" type="text"> 살
+                            연령 : <input class="small-input" type="text" id="age"> 살
                         </div>
                     </div>
                     <div class="line font-25">이용날짜</div>
                     <div>
-                        시작일 : <input type="date">
+                        시작일 : <span id="startDate">${paramMap.startDate}</span>
                     </div>
                     <div>
-                        종료일 : <input type="date">
+                        종료일 : <span id="endDate">${paramMap.endDate}</span>
                     </div>
-                    <div id="price">총 객실 금액 : 230000 원</div>
+                    <div id="price">총 객실 금액 : <span id="totalPrice">${vo.totalPrice}</span> 원</div>
                 </div>
                 <div id="ch">
-                    <button>예약하기</button>
-                    <button>이용하기</button>
+                    <button id="book" data-roomIntNo="${paramMap.no}" onclick="book()">예약하기</button>
+                    <button id="use" data-roomIntNo="${paramMap.no}" onclick="use()">이용하기</button>
                 </div>
     
             </div>
@@ -170,8 +181,100 @@
     </div>
 <script>
     function goBack() {
-            window.history.back();
-        }
+        window.history.back();
+    }
+
+    function book(){
+        const name = document.querySelector("#name").value;
+        const country = document.querySelector("#country").value;
+        const phone = document.querySelector("#phone").value;
+        const sex = document.querySelector("#sex").value;
+        const age = document.querySelector("#age").value;
+        const checkUse = document.querySelector("#checkUse").value;
+
+        const startDate = document.querySelector("#startDate").textContent;
+        const endDate = document.querySelector("#endDate").textContent;
+        const totalPrice = document.querySelector("#totalPrice").textContent;
+
+        const roomIntNo = document.querySelector("#book").dataset.roomintno;
+
+        $.ajax({
+            type : "post",
+            url :"${root}/front/useBook/detail/book" ,
+            dataType :"json", 
+            data :{
+                name:name,
+                country:country,
+                phone:phone,
+                sex:sex,
+                age:age,
+                startDate:startDate,
+                endDate:endDate,
+                totalPrice:totalPrice,
+                roomIntNo:roomIntNo,
+                checkUse:checkUse
+            } ,
+            success :function(x){   
+                if(x==1){
+                    alert("예약완료");
+                    window.location.href = "${root}/front/useBook/list";
+                }else{
+                    alert("다시 이용해주세요");
+                }
+            } ,
+            error : function(x){
+                alert("값을 전부 다 입력해주세요");
+            },
+        });
+    }
+
+    function use(){
+        const name = document.querySelector("#name").value;
+        const country = document.querySelector("#country").value;
+        const phone = document.querySelector("#phone").value;
+        const sex = document.querySelector("#sex").value;
+        const age = document.querySelector("#age").value;
+        const checkUse = document.querySelector("#checkUse").value;
+
+        const startDate = document.querySelector("#startDate").textContent;
+        const endDate = document.querySelector("#endDate").textContent;
+        const totalPrice = document.querySelector("#totalPrice").textContent;
+
+        const roomIntNo = document.querySelector("#book").dataset.roomintno;
+
+        $.ajax({
+            type : "post",
+            url :"${root}/front/useBook/detail/use" ,
+            dataType :"json", 
+            data :{
+                name:name,
+                country:country,
+                phone:phone,
+                sex:sex,
+                age:age,
+                startDate:startDate,
+                endDate:endDate,
+                totalPrice:totalPrice,
+                roomIntNo:roomIntNo,
+                checkUse:checkUse
+            } ,
+            success :function(x){   
+                if(x==1){
+                    alert("방 안내 해드리면 됩니다 ");
+                    window.location.href = "${root}/front/useBook/list";
+                }else if(x==100){
+                    alert("회원이 아닙니다...첫 이용으로 다시 이용해주세요");
+                }else{
+                    alert("꼼꼼하게 입력후 다시 이용해주세요");
+                }
+            },
+            error : function(x){
+                alert("꼼꼼하게 입력후 다시 이용해주세요");
+            },
+        });
+    }
+
+
 </script>
 </body>
 </html>
