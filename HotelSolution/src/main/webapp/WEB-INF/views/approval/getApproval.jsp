@@ -143,7 +143,7 @@
 								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
 								<div>[${list.teamName}]${list.sendName}</div>
 								<div>[${list.documentTypeName }]</div>
-								<a href="#">${list.title}</a>
+								<a onclick ="getVacationDetail('${list.no}' , '${list.typeNo}');">${list.title}</a>
 							</div>
 							
 							<div class="list-status">
@@ -176,6 +176,13 @@
 
 
 	<script>
+
+		function getVacationDetail(no , typeNo) {
+			
+			if(typeNo == 1){
+				location.href = '${root}/approval/getVacationDetail?no=' + no;
+			}
+		}
 	
 	</script>
 	

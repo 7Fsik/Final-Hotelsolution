@@ -381,7 +381,7 @@ public class ApprovalController {
 	}
 	
 	
-	//휴가신청서 상세조회(화면)
+	//내가 보낸 휴가신청서 상세조회(화면)
 	@GetMapping("vactionDetail")
 	public String vactionDetail(String no , Model model) {
 
@@ -399,6 +399,27 @@ public class ApprovalController {
 		System.out.println("refList : " + fList);
 		
 		return "approval/vactionDetail";
+	}
+	
+	//내가 받은 휴가신청서 상세조회(화면)
+	@GetMapping("getVacationDetail")
+	public String getVacationDetail(String no , Model model) {
+		
+		ApprovalVo vo = service.vacationDetail(no);
+		List<ApproverVo> list = service.getApprover(no);
+		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+		
+		System.out.println("vo : " + vo);
+		System.out.println("appList : " + list);
+		System.out.println("refList : " + fList);
+	
+		
+		return "approval/getVacationDetail";
 	}
 	
 	//업무보고서 상세조회(화면)
