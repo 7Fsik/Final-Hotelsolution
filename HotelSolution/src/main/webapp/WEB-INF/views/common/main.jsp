@@ -441,6 +441,7 @@
                                 <li><a class="custom-link" href="#">보낸메일함</a></li>
                                 <li><a class="	" href="#">받은메일함</a></li>
                                 <li><a class="custom-link" href="#">휴지통</a></li>
+                                <li><a class="custom-link" href="${root}/manager/search">직원검색</a></li>
                             </ul>
                         </div>
                 </div>
@@ -613,6 +614,114 @@
      function gotoList(){
          window.location.href = "${root}/mail/list";
      }
+
+     function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+			if(color == '#ffffff'){
+				return color;
+			}
+		}
+		return color;
+	}
+
+    
+
+	var randomColor = getRandomColor(); // 랜덤 색상 생성
+
+	(function () {
+		$(function () {
+			// calendar element 취득
+			var calendarEl = $('#calendar')[0];
+			// full-calendar 생성하기
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				height: '100px', // calendar 높이 설정
+                contentHeight: 100, // 원하는 높이로 변경
+				expandRows: true, // 화면에 맞게 높이 재설정
+				slotMinTime: '10:00', // Day 캘린더에서 시작 시간
+				slotMaxTime: '18:00', // Day 캘린더에서 종료 시간
+				// 해더에 표시할 툴바
+				headerToolbar: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+				},
+				initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
+				// initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
+				navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+				editable: true, // 수정 가능?
+				selectable: true, // 달력 일자 드래그 설정가능
+				nowIndicator: true, // 현재 시간 마크
+				dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
+				locale: 'ko', // 한국어 설정
+				// 이벤트 
+				events: [
+					<c:forEach items="${myList}" var="my">
+					    <c:if test="${my.scheduleTypeNo==1}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        backgroundColor: 'coral'
+					        },
+					    </c:if>
+					    <c:if test="${my.scheduleTypeNo==3}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        backgroundColor: 'lightgray'
+					        },
+					    </c:if>
+				        <c:if test="${my.scheduleTypeNo==4}">
+					        {
+					        title: '${my.title}',
+					        start: '${my.startDate}',
+					        end: '${my.endDate}',
+					        backgroundColor: 'skyblue'
+					        },
+					    </c:if>
+					    <!-- 추가적인 조건에 따른 데이터 처리 -->
+					</c:forEach>
+
+					<c:forEach items="${teamList}" var="team">
+						{
+						title: '${team.title}',
+						start: '${team.startDate}',
+						end: '${team.endDate}',
+						backgroundColor: 'crimson'
+						},
+					</c:forEach>
+				]
+			});
+
+
+			// 캘린더 랜더링
+			calendar.render();
+		});
+	})();
+	
+	function deleteSchedule(no) {
+		  $.ajax({
+		    url: '${root}/schedule/calendar/delete',
+		    type: 'post',
+		    data: {
+		      no: JSON.stringify(no)
+		    },
+		    dataType: 'json', // JSON 데이터로 처리하기 위한 설정
+		    success: function (x) {
+		    	alert(x);
+		      location.reload();
+		    },
+		    error: function (e) {
+		      alert('작성자만 삭제가 가능합니다');
+		      alert(e);
+		      location.reload();
+		    }
+		  });
+		}
 
 
 </script>
