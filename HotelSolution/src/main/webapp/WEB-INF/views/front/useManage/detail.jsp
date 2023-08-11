@@ -327,7 +327,7 @@
                     <div>객실금액 : <span id="common-price">${vo.commonPrice}</span> 원</div>
                     <div>총 결제 금액 : <span id="total-price"></span> 원</div>
                 </div>
-                <div><button style="width: 200px;" id="last-btn">체크아웃 / 결제하기</button></div>
+                <div><button style="width: 200px;" id="last-btn" data-roomuseno="${vo.roomUseNo}" onclick="payment()">체크아웃 / 결제하기</button></div>
 
                 <div class="room-modal">
                     <div class="room-x"><i class="close">X</i></div>
@@ -418,6 +418,42 @@
     
 
     <script>
+        //체크아웃,  결제 
+        function payment(){
+
+            alert('z');
+            const roomUseNo = document.querySelector("#last-btn").dataset.roomuseno;
+            const totalPrice = document.querySelector("#total-price").textContent;
+
+            $.ajax({
+                type : "post" ,
+                url : "${root}/front/useManage/payment" ,
+                data : {
+                    roomUseNo:roomUseNo,
+                    totalPrice:totalPrice
+                } ,
+                dataType : "json" ,
+                success : function(x){
+                    
+                    if(x==1){
+                        alert("체크 아웃 완료 ");
+                        window.location.href = "${root}/front/useManage/list";
+                    }else{
+                        alert("결제 실패");
+                    }
+                    
+                    } ,
+                error : function(x){
+                    alert("내부오류");
+                    console.log(x);
+                    } ,
+                
+            });
+
+
+
+
+        }
 
         function goBack() {
              window.history.back();

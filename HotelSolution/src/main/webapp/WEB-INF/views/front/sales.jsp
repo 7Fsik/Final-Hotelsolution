@@ -92,6 +92,10 @@
         width: 80%;
         text-align: center;
     }
+    .daySales a{
+        color: black;
+        text-decoration: none;
+    }
     
 </style>
 <body>
@@ -117,7 +121,7 @@
                         </div>
                         <div id="month">
                             월 : 
-                            <input type="number" id="searchMonth" name="month" min="1" max="12" value="7">
+                            <input type="number" id="searchMonth" name="month" min="1" max="12" value="8">
                         </div>
                         <button id="se-btn" onclick="getMonthSales();">검색</button>
                     </div>
@@ -177,10 +181,6 @@ getMonthSales();
                 } ,
             
         });
-
-
-
-
     }
 
 

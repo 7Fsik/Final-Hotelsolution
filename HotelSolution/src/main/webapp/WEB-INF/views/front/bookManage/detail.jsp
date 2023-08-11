@@ -38,6 +38,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-evenly
     }
     .img{
         width: 70%;
@@ -149,7 +150,8 @@
                                 <div>종료일 : ${vo.endDate}</div>
                             </div>
                             <div id="ch">
-                                <input type="button" value="체크인하기">
+                                <input type="button" data-bookNo="${vo.no}" data-totalPrice = "${vo.totalPrice}"  id="checkIn" onclick="checkIn()" value="체크인하기">
+                                <input type="button"  data-bookNo="${vo.no}" data-totalPrice = "${vo.totalPrice}" id="cencel" onclick="cencel()" value="취소하기">
                             </div>
                 
                         </div>
@@ -164,6 +166,60 @@
         function goBack() {
              window.history.back();
         }
+
+        function checkIn(){
+            const bookNo = document.querySelector("#checkIn").dataset.bookno;
+            const totalPrice = document.querySelector("#checkIn").dataset.totalprice;
+
+            $.ajax({
+                type : "post",
+                url :"${root}/front/bookManage/checkIn" ,
+                dataType :"json", 
+                data :{
+                    bookNo:bookNo,
+                    totalPrice:totalPrice
+                } ,
+                success :function(x){   
+                    if(x==1){
+                        alert("방 안내 해주세요");
+                        window.location.href = "${root}/front/bookManage/list";
+                    }else{
+                        alert("체크인 실패 ,,");
+                    }
+                } ,
+                error : function(x){
+                    alert("내부오류 ㅜㅜ");
+                },
+            });
+        }
+
+        function cencel(){
+            const bookNo = document.querySelector("#checkIn").dataset.bookno;
+            const totalPrice = document.querySelector("#checkIn").dataset.totalprice;
+
+            $.ajax({
+                type : "post",
+                url :"${root}/front/bookManage/cencel" ,
+                dataType :"json", 
+                data :{
+                    bookNo:bookNo,
+                    totalPrice:totalPrice
+                } ,
+                success :function(x){   
+                    if(x==1){
+                        alert("예약 취소 완료");
+                        window.location.href = "${root}/front/bookManage/list";
+                    }else{
+                        alert("예약 취소 실패 ,,");
+                    }
+                } ,
+                error : function(x){
+                    alert("내부오류 ㅜㅜ");
+                },
+            });
+        }
+
+        
     </script>
 
 </body>

@@ -65,6 +65,8 @@
         align-items: center;
         text-align: center;
         border: 1px solid rgba(59, 68, 75, 1);
+        justify-content: space-around;
+        position: relative;
     }
     .img{
         height:50%;
@@ -82,13 +84,30 @@
         display: flex;
         align-items: center;
     }
-    button{
+    .useBtn{
         height: 30px;
         width: 150px;
         border: 0px ;
         background-color:rgba(59, 68, 75, 1);
         color: white;
         border-radius: 5px;
+    }
+    .soldOut{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        font-style: oblique;
+        font-weight: bolder;
+        border-radius: 10px;
     }
     
 
@@ -106,39 +125,90 @@
     
             <div id="search-area">
                 <div id="search">
-                    <select name="" id="">
-                        <option value="">방 호수</option>
-                    </select>
-                    
-                    <input type="date">
+	                <form action="${root}/front/useBook/list" >
+                        <select name="searchType" id="searchType">
+                            <option class="st" value="0">전체</option>
+                            <option class="st" value="1">포레스트뷰 스탠다드</option>
+                            <option class="st" value="2">오션뷰 스탠다드</option>
+                            <option class="st" value="3">포레스트뷰 프리미어 더블</option>
+                            <option class="st" value="4">오션뷰 프리미어 더블</option>
+                            <option class="st" value="5">포레스트뷰 스위트룸</option>
+                            <option class="st" value="6">오션뷰 스위트룸</option>
+                        </select>
+	                    <span>시작날짜 : </span>
+	                    <input type="date" id="startDate" name="startDate" value="${paramMap.startDate}">
+	                    <span>끝날짜 : </span>
+	                    <input type="date" id="endDate" name="endDate" value="${paramMap.endDate}">
+						<input type="submit" value="검색">
+	                </form>
                 </div>
             </div>
     
             <div id="list-area">
                 <div id="list">
                     <c:forEach items="${voList}" var="vo">
-                        <div class="att" onclick="location.href='/fire/front/useBook/detail'">
+                        <div class="att" >
                             <div class="img">
                                 <img src="/fire/static/img/front/room001.jpg">
                             </div>
                             <div>
                                 <div class="name">${vo.typeName}</div>
                                 <div class="ho">${vo.roomNo}</div>
-                                <div>금액 :  원</div>
+                                <div>금액 : <span>${vo.totalPrice}</span>원</div>
                             </div>
                             <div class="btn">
-                                <button>이용/예약하기</button>
+                                <button class="useBtn" onclick="location.href='${root}/front/useBook/detail?no=${vo.roomIntNo}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}'"> 이용/예약하기 </button>
                             </div>
+                            <c:forEach items="${bookList}" var="book">
+                            	<c:if test="${book.roomIntNo == vo.roomIntNo}">
+		                            <div class="soldOut">
+		                                SOLD OUT!
+		                            </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </c:forEach>
                 </div>
                 <div id="page-area">
-                    이전 1 2 3 4 5 6 7 8 9 10 다음
+                    <c:if test="${pv.currentPage >1}">
+                        <a href="/fire/front/useBook/list?page=1&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> << </a>
+                        <a href="/fire/front/useBook/list?page=${pv.currentPage - 1}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> < </a>
+                    </c:if>
+                    
+                    <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
+                        <a href="/fire/front/useBook/list?page= ${i}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}">${i}</a>
+                    </c:forEach>
+                    
+                    <c:if test="${pv.currentPage < pv.maxPage }">
+                        <a href="/fire/front/useBook/list?page=${pv.maxPage}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> >> </a>            
+                        <a href="/fire/front/useBook/list?page=${pv.currentPage + 1}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> > </a>
+                    </c:if>
                 </div>
             </div>
         </div>
     
     </div>
+
+<script>
+
+    const startDate = document.querySelector("#startDate").value;
+    const endDate = document.querySelector("#endDate").value;
+
+    const desiredValue = '${paramMap.searchType}';
+    const selectElement = document.getElementById("searchType");
+    const optionElements = selectElement.querySelectorAll(".st");
+
+    for (const option of optionElements) {
+        if (option.value === desiredValue) {
+            option.selected = true;
+            break; 
+        }
+    }
+
+
+
+
+</script>
 
 </body>
 </html>

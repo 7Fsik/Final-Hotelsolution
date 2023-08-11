@@ -46,9 +46,8 @@
 			<if test="searchType == 'typeName'">
 				F.TYPE_NAME LIKE('%'||#{searchValue}||'%')
 			</if>
-		
 		</where>
-		
+		ORDER BY F.ROOM_INT_NO ASC
 
 	</select>
 	
@@ -77,6 +76,7 @@
 		FROM ROOM_INTRODUCE I
 		JOIN ROOM_TYPE T ON I.TYPE_NO = T.TYPE_NO 
 		WHERE ROOM_INT_NO=#{no}
+		
 		
 
 	</select>

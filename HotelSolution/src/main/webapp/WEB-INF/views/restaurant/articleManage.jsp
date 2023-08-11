@@ -85,6 +85,14 @@
         background-color:  rgba(59, 68, 75, 1);
         color: white;
     }
+    #gos{
+        border: 0;
+        border-radius: 5px;
+        /* width: 25%; */
+        height: 100%;
+        background-color: rgba(59, 68, 75, 1);
+        color: white;
+    }
     
 </style>
 <body>
@@ -111,7 +119,7 @@
                         <option value="3">해산물</option>
                         <option value="4">고기</option>
                     </select>
-                    <input type="submit" value="검색" onclick="getItemList();">
+                    <input id="gos" type="submit" value="검색" onclick="getItemList();">
 	            </div>
 	
 	            <div>
