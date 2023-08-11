@@ -206,7 +206,25 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	//지출결의서 상세조회
+	public int firstSubmit(Map<String, String> map) {
+		return dao.firstSubmit(sst,map);
+	}
+
+	@Override
+	public int adYnEdit(String approvalNo) {
+		return dao.adYnEdit(sst,approvalNo);
+	}
+
+	@Override
+	public int reject(Map<String, String> map) {
+		return dao.reject(sst,map);
+	}
+
+	@Override
+	public int adYnReject(String approvalNo) {
+		return dao.adYnReject(sst,approvalNo);
+    
+  @Override
 	public ApprovalVo expenditureDetail(String no) {
 		return dao.expenditureDetail(sst,no);
 	}
@@ -215,6 +233,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	//지출결의서로 요청한 물품 개수,수량,가격 가져오기
 	public List<ItemVo> getItemInfo(String no) {
 		return dao.getItemInfo(sst,no);
+
 	}
 
 	

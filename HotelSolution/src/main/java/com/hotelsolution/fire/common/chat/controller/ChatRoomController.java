@@ -39,11 +39,15 @@ public class ChatRoomController {
 
     //채팅방 목록 조회
     @GetMapping("rooms")
-    public void rooms(Model model,  HttpSession session){
+    public void rooms(Model model,  HttpSession session,String searchType, String searchValue){
     	MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
     	List<TeamVo> tvo = service.getTvo();
     	List<PositionVo> pvo = 	service.getPvo();
-    	List<ChatRoomVo>voList = service.getChatRoomList(loginMember.getNo());
+    	Map<String,String>map = new HashMap<String, String>();
+    	map.put("loginMemberNo",loginMember.getNo());
+    	map.put("searchType", searchType);
+    	map.put("searchValue", searchValue);
+    	List<ChatRoomVo>voList = service.getChatRoomList(map);
      	tvo.remove(0);//0번 공용 row 제거
     	session.setAttribute("voList", voList);
     	model.addAttribute("tvo",tvo);

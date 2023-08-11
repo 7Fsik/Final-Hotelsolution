@@ -190,7 +190,8 @@
      <%@ include file="/WEB-INF/views/common/main.jsp" %>
 
    <div id="mainboard">
-
+        		 <button onclick="submit('${loginMember.no}');"> 승인 ${loginMember.no}</button>
+    			<button onclick="reject('${loginMember.no}');">반려 ${loginMember.no}</button>
         <div id="approval">
         
         	<form action="">
@@ -217,8 +218,35 @@
                                <tbody>
 	                                <tr>
 	                                	<td>${vo.writerName}</td>
-			                                <td class="teamLeader">${list[0].approverName}</td>
-	                                	<td class="hrLeader">${list[1].approverName}</td>
+											    <c:choose>
+											         <c:when test="${ list[0].statusName eq '진행중'}">
+	                                					<td class="teamLeader">
+											          	  ${list[0].approverName}
+											          	  	<input type="hidden" class="tl" value="${list[0].approverName}">
+														</td>
+											        </c:when>
+											        <c:otherwise>
+     	                                				<td class="teamLeader">
+     	                                					<input type="hidden" class="tl" value="${list[0].statusName}">
+											          		 ${list[0].statusName}
+											     		 </td>
+											        </c:otherwise>
+											    </c:choose>
+
+											<input type="hidden" class="teamLeaderNo" value="${list[0].appNo}">
+											    <c:choose>
+											         <c:when test="${ list[1].statusName eq '진행중'}">
+											      		  <td class="hrLeader">
+											           			${list[1].approverName}
+											           	</td>
+											        </c:when>
+											        <c:otherwise>
+											     	    <td class="hrLeader">
+											          	 	 ${list[1].statusName}
+											           	 </td>
+											        </c:otherwise>
+											    </c:choose>
+											<input type="hidden" class="hrLeaderNo" value="${list[1].appNo}">
 	                                </tr>
 	                                
 	                                <tr>
@@ -282,24 +310,142 @@
                            	</tr>
 
                         </tbody>
+                      
                     </table>
+                    
         		</div>
 
 
         	</form>
-        		
 	    </div>
-   
+   	<input type="hidden" class="approvalNo" value="${vo.no}">
    </div>
 
 
+	
     </div>
     
-	<script>
-
-	
-	</script>
 	
 
 </body>
+	<script>
+	
+	/// 반려버튼 클릭시
+	function reject(loginMemberNo) {
+    	  let approvalNo = document.querySelector(".approvalNo").value;
+          let teamLeader = document.querySelector('.teamLeader');
+          let tl = document.querySelector('.tl').value;
+          let hrLeader = document.querySelector('.hrLeader');
+          let hl = hrLeader.textContent;
+          let teamLeaderNo =document.querySelector('.teamLeaderNo').value;
+          let hrLeaderNo =document.querySelector('.hrLeaderNo').value;
+    	    if (teamLeaderNo === loginMemberNo) {
+    	        if (confirm("반려하시겠습니까?")) {
+    	            $.ajax({
+    	                url: "${root}/approval/reject",
+    	                method: "POST",
+    	                data: {
+    	                    approverNo: teamLeaderNo,
+    	                    approvalNo: approvalNo
+    	                },
+    	                dataType: "json",
+    	                success: function (x) {
+    	                    alert("1 이 나오면 반려 성공 : " + x);
+    	                    teamLeader.textContent = "반려";
+    	                    teamLeader.style.color = "red";
+    	                    location.reload();
+    	                },
+    	                error: function (e) {
+    	                    console.log(e);
+    	                },
+    	            });
+    	        }
+    	    } else if (hrLeaderNo === loginMemberNo) {
+    	            if (confirm("반려하시겠습니까?")) {
+    	                $.ajax({
+    	                    url: "${root}/approval/reject",
+    	                    method: "POST",
+    	                    data: {
+    	                        approverNo: hrLeaderNo,
+    	                        approvalNo: approvalNo
+    	                    },
+    	                    dataType: "json",
+    	                    success: function (x) {
+    	                        alert("2가 나오면 승인 성공 : " + x);
+    	                        hrLeader.textContent = "승인";
+    	                        hrLeader.style.color = "red";
+    	                        location.reload();
+    	                    },
+    	                    error: function (e) {
+    	                        console.log(e);
+    	                    },
+    	                });
+    	            }
+    	    }
+    	}
+	
+	
+	
+	
+   ///승인버튼 클릭시
+   
+      function submit(loginMemberNo) {
+    	  let approvalNo = document.querySelector(".approvalNo").value;
+          let teamLeader = document.querySelector('.teamLeader');
+          let tl = document.querySelector('.tl').value;
+          let hrLeader = document.querySelector('.hrLeader');
+          let hl = hrLeader.textContent;
+          let teamLeaderNo =document.querySelector('.teamLeaderNo').value;
+          let hrLeaderNo =document.querySelector('.hrLeaderNo').value;
+          
+    	    if (teamLeaderNo === loginMemberNo) {
+    	        if (confirm("승인하시겠습니까?")) {
+    	            $.ajax({
+    	                url: "${root}/approval/submit",
+    	                method: "POST",
+    	                data: {
+    	                    approverNo: teamLeaderNo,
+    	                    approvalNo: approvalNo
+    	                },
+    	                dataType: "json",
+    	                success: function (x) {
+    	                    alert("1 이 나오면 승인 성공 : " + x);
+    	                    teamLeader.textContent = "승인";
+    	                    teamLeader.style.color = "blue";
+    	                    location.reload();
+    	                },
+    	                error: function (e) {
+    	                    console.log(e);
+    	                },
+    	            });
+    	        }
+    	    } else if (hrLeaderNo === loginMemberNo) {
+    	        if (tl === "승인") {
+    	            if (confirm("승인하시겠습니까?")) {
+    	                $.ajax({
+    	                    url: "${root}/approval/lastSubmit",
+    	                    method: "POST",
+    	                    data: {
+    	                        approverNo: hrLeaderNo,
+    	                        approvalNo: approvalNo
+    	                    },
+    	                    dataType: "json",
+    	                    success: function (x) {
+    	                        alert("2가 나오면 승인 성공 : " + x);
+    	                        hrLeader.textContent = "승인";
+    	                        hrLeader.style.color = "blue";
+    	                        location.reload();
+    	                    },
+    	                    error: function (e) {
+    	                        console.log(e);
+    	                    },
+    	                });
+    	            }
+    	        } else {
+    	            alert("결재 순번이 아닙니다.");
+    	        }
+    	    }
+    	}
+
+	</script>
 </html>

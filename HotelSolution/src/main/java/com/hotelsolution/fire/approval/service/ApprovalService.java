@@ -85,8 +85,18 @@ public interface ApprovalService {
 
 	List<ApprovalReferrerVo> getReferrer(String no);
 
+
+	int firstSubmit(Map<String, String> map);
+
+	int adYnEdit(String approvalNo);
+
+	int reject(Map<String, String> map);
+
+	int adYnReject(String approvalNo);
+
 	ApprovalVo expenditureDetail(String no);
 
 	List<ItemVo> getItemInfo(String no);
+
 
 }

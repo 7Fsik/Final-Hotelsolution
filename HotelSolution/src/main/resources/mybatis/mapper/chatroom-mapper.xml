@@ -114,7 +114,22 @@
         ON M.TEAM_NO=T1.TEAM_NO
         JOIN TEAM T2
         ON U.TEAM_NO = T2.TEAM_NO
-		WHERE USER1_NO = #{no} or USER2_NO = #{no}
+		WHERE (USER1_NO = #{loginMemberNo} or USER2_NO = #{loginMemberNo})
+	
+		  <if test="searchType == 'name'">
+		      AND (M.NAME LIKE ('%'|| #{searchValue}|| '%') OR U.NAME LIKE ('%'|| #{searchValue}|| '%'))
+
+		  </if>
+		   <if test="searchType == 'positionName'">
+		     AND (P1.NAME LIKE ('%'|| #{searchValue}|| '%') OR P2.NAME LIKE ('%'|| #{searchValue}|| '%'))
+
+		  </if>
+		 
+		  
+		  <if test="searchType == 'teamName'">
+		    AND (T1.TEAM_NAME LIKE ('%'|| #{searchValue}|| '%') OR T2.TEAM_NAME LIKE ('%'|| #{searchValue}|| '%'))
+
+		  </if>
 
 	</select>
 	

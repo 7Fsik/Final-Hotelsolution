@@ -20,6 +20,7 @@
 		    u.CONTRACT_WORK_TIME,
 		    u.CONTRACT_WORK_END_TIME,
 		    u.SALARY,
+		    u.APPROVAL_POWER AS APPROVALPOWER,
 		    t.TEAM_NAME AS TEAMNAME,
 		    t.TEAM_ADDRESS AS TEAMADDRESS
 		FROM 
@@ -49,6 +50,7 @@
 		    u.CONTRACT_WORK_TIME,
 		    u.CONTRACT_WORK_END_TIME,
 		    u.SALARY,
+		    u.APPROVAL_POWER AS APPROVALPOWER,
 		    t.TEAM_NAME AS TEAMNAME,
 		     t.TEAM_ADDRESS AS TEAMADDRESS
 		FROM 
@@ -141,6 +143,7 @@
   			,u.CONTRACT_WORK_END_TIME
   			,u.SALARY
   			,u.CHANGE_IMAGE AS CHANGEIMAGE
+  			,u.APPROVAL_POWER AS APPROVALPOWER
   			,t.TEAM_NAME AS TEAMNAME
   			,t.TEAM_ADDRESS AS TEAMADDRESS
   			
@@ -189,9 +192,11 @@
   			,u.CONTRACT_WORK_TIME
   			,u.CONTRACT_WORK_END_TIME
   			,u.SALARY
+  			,u.APPROVAL_POWER AS APPROVALPOWER
   			,u.CHANGE_IMAGE AS CHANGEIMAGE
   			,t.TEAM_NAME AS TEAMNAME
   			,t.TEAM_ADDRESS AS TEAMADDRESS
+  			
   			
   			FROM
   			member u
@@ -255,6 +260,7 @@
 	    ,NAME = #{name}
 	    ,EMAIL = #{email}
 	    ,SALARY = #{salary}
+	    ,APPROVAL_POWER = #{approvalPower}
 		WHERE no = #{no}
   	
   	</update>
@@ -267,6 +273,7 @@
   			,p.name AS POSITIONNAME
   			,u.NAME
   			,u.STATUS
+  			,u.APPROVAL_POWER AS APPROVALPOWER
   			,t.TEAM_NAME AS TEAMNAME
   			FROM
   			member u

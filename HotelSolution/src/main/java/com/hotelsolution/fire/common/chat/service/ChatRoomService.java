@@ -108,8 +108,8 @@ public class ChatRoomService {
 
 
 
-	public List<ChatRoomVo> getChatRoomList(String no) {
-		return dao.getChatRoomList(sst,no);
+	public List<ChatRoomVo> getChatRoomList(Map<String, String> map) {
+		return dao.getChatRoomList(sst,map);
 	}
 
 
