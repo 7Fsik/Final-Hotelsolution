@@ -57,7 +57,7 @@ public interface ApprovalService {
 
 	int updateDocumentExpenditure(Map<String, String> map);
 
-	int expenditure(Map<String, Object> params);
+	int expenditure(ExpenditureVo evo);
 
 	int expenditureItemList(Map<String, Object> paramValue);
 
@@ -84,5 +84,9 @@ public interface ApprovalService {
 	List<ApproverVo> getApprover(String no);
 
 	List<ApprovalReferrerVo> getReferrer(String no);
+
+	ApprovalVo expenditureDetail(String no);
+
+	List<ItemVo> getItemInfo(String no);
 
 }

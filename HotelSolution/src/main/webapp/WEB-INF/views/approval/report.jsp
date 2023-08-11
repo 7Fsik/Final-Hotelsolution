@@ -128,7 +128,7 @@
 	
 	.x-container{
 		position:relative;
-		left: 30px;
+		left: 50px;
 		width:200px;
 		height:300px;
 		border : 1px solid black;
@@ -524,7 +524,7 @@
                                             <tr>
                                                 <td>1</td>
                                                 <td class="rtd2" style="width: 50px;">결재</td>
-                                                <td class="employee-name"></td>
+                                                <td style="width:300px" class="employee-name"></td>
                                             </tr>
                 
                                             
@@ -534,7 +534,7 @@
                                                 <td class="rtd2" style="width: 50px;">결재</td>
                                                 <c:forEach items="${list}" var = "member">
                                                     <c:if test="${member.approvalPower eq '3' }">
-                                                        <td>${member.name}(${member.teamName} ${member.positionName})</td>
+                                                        <td style="width:300px">${member.name}(${member.teamName} ${member.positionName})</td>
                                                     </c:if>
                                                 </c:forEach>
                                             </tr>
