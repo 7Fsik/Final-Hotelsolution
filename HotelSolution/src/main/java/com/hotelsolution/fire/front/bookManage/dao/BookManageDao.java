@@ -1,6 +1,7 @@
 package com.hotelsolution.fire.front.bookManage.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -14,5 +15,9 @@ public interface BookManageDao {
 	int getBookCnt(SqlSessionTemplate sst);
 
 	BookManageVo getBookByNo(SqlSessionTemplate sst, int no);
+
+	int checkIn(SqlSessionTemplate sst, Map<String, String> paramMap);
+
+	int cencel(SqlSessionTemplate sst, Map<String,String>paramMap);
 
 }

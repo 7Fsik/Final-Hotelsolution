@@ -31,8 +31,9 @@
 	<where>
 	#{date} BETWEEN U.START_DATE AND U.END_DATE-1
 		<if test="searchValue != null ">
-			R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
+			AND R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
 		</if>
+		AND U.TOTAL_PRICE IS NULL
 	</where>
 
 </select>
@@ -78,6 +79,7 @@
 		<if test="searchValue != null ">
 			R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
 		</if>
+		AND U.TOTAL_PRICE IS NULL
 	</where>
 
 </select>
@@ -200,6 +202,16 @@
   	</foreach>
 	SELECT * FROM DUAL
 </insert>
+
+
+<update id="payment">
+
+	UPDATE ROOM_USE
+	SET CHECK_OUT_TIME = SYSDATE
+	,TOTAL_PRICE = #{totalPrice}
+	WHERE ROOM_USE_NO = #{roomUseNo}
+
+</update>
 
 
 

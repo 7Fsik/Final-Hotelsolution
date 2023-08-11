@@ -39,7 +39,7 @@
 
     #list-area{
         width: 95%;
-        height: 80%;
+        height: 84%;
         margin: auto;
 
     }
@@ -55,7 +55,10 @@
 
     #page-area{
         display: flex;
-        justify-content: center
+        justify-content: space-around;
+        width: 40%;
+        position: relative;
+        left: 30%;
     }
     .att{
         height: 90%;
@@ -107,6 +110,12 @@
         color: white;
         border-radius: 5px;
     }
+    #searchb{
+        border: 0;
+        border-radius: 5px;
+        color: white;
+        background-color:rgba(59, 68, 75, 1);
+    }
 
 </style>
 <body>
@@ -123,13 +132,13 @@
                 <div id="search">
                     <form action="/fire/front/bookManage/list">
                         <input type="hidden" name="page" value="1">
-                        <select name="searchType" >
+                        <select name="searchType" id="searchType" >
                             <option value="name">손님 이름</option>
                             <option value="phoneNumber">전화 번호</option>
                         </select>
                         
-                        <input type="text" name="searchValue">
-                        <input type="submit" value="검색">
+                        <input type="text" name="searchValue" value="${searchValue}">
+                        <input type="submit" id="searchb" value="검색">
                     </form>
                 </div>
             </div>
@@ -169,7 +178,19 @@
         </div>
     
     </div>
+<script>
+    const select = document.getElementById("searchType");
+    const options = select.options;
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].value === '${searchType}') {
+            options[i].selected = true;
+            break; // 선택된 옵션을 찾았으므로 루프 종료
+        }
+    }
 
+
+
+</script>
 
 </body>
 </html>

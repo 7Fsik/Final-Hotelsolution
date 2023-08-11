@@ -36,4 +36,14 @@ public class BookManageDaoImpl implements BookManageDao{
 		return sst.selectOne("bookManage.getBookByNo", no);
 	}
 
+	@Override
+	public int checkIn(SqlSessionTemplate sst, Map<String, String> paramMap) {
+		return sst.insert("bookManage.checkIn", paramMap);
+	}
+
+	@Override
+	public int cencel(SqlSessionTemplate sst, Map<String, String> paramMap) {
+		return sst.delete("bookManage.cencel", paramMap);
+	}
+
 }

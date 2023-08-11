@@ -72,4 +72,9 @@ public class UseManageDaoImpl implements UseManageDao{
 		return sst.insert("useManage.roomOrder", roomOrderMap);
 	}
 
+	@Override
+	public int payment(SqlSessionTemplate sst, Map<String, String> paramMap) {
+		return sst.update("useManage.payment", paramMap);
+	}
+
 }

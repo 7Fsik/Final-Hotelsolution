@@ -463,7 +463,6 @@
                             <div class="sub-menu-title">재고관리</div>
                             <ul class="sub-menu-list">
                                 <li><a class="custom-link" href="${root}/front/articleManage">재고 수량 관리</a></li>
-                                <li><a class="custom-link" href="${root}/front/productManage">객실 비품 서비스 관리</a></li>
                             </ul>
                         </div>
                     </div>
@@ -512,29 +511,15 @@
                         <div class="sub-menu">
                             <div class="sub-menu-title">매출관리</div>
                             <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="#">매출관리1</a></li>
-                                <li><a class="custom-link" href="#">매출관리2</a></li>
-                                <li><a class="custom-link" href="#">매출관리3</a></li>
+                                <li><a class="custom-link" href="${root}/finance/sales">호텔 식당 매출관리</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="mail-box">
                         <div class="sub-menu">
-                            <div class="sub-menu-title">메일함</div>
+                            <div class="sub-menu-title">발주 결재 하기</div>
                             <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="#">보낸메일함</a></li>
-                                <li><a class="custom-link" href="#">받은메일함</a></li>
-                                <li><a class="custom-link" href="#">휴지통</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mail-box">
-                        <div class="sub-menu">
-                            <div class="sub-menu-title">게시판</div>
-                            <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="#">프론트팀게시판</a></li>
-                                <li><a class="custom-link" href="#">좋은게시판</a></li>
-                                <li><a class="custom-link" href="#">공지사항</a> </li>
+                                <li><a class="custom-link" href="#">발주 결재 하기</a></li>
                             </ul>
                         </div>
                     </div>

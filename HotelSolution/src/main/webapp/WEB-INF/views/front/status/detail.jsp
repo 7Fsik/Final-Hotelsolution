@@ -36,6 +36,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-evenly;
     }
     .img{
         width: 70%;
@@ -63,6 +64,9 @@
     }
     #ch{
         height: 70px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     button{
         position: relative;
@@ -95,13 +99,14 @@
         border-radius: 10px;
         border: 0;
         text-align: center;
+        
     }
     #room-int>div{
         width: 70%;
     }
     #img-file{
         position: absolute;
-        top: 55%;
+        top: 60%;
         left: 60%;
     }
     form{
@@ -111,6 +116,13 @@
         height: 100%;
         width: 100%;
         border-radius: 5px;
+    }
+    #edit{
+        height: 50%;
+        border: 0;
+        color: white;
+        border-radius: 5px;
+        background-color: rgba(59, 68, 75, 1); 
     }
 </style>
 <body>
@@ -153,12 +165,12 @@
                         <br>
                         <div class="line font-20">
                             객실 상태 
-                            <input type="radio"name="statusNo" value="1">사용가능
-                            <input type="radio"name="statusNo" value="2">수리중
+                            <input type="radio"name="statusNo" value="1" id="option1">사용가능
+                            <input type="radio"name="statusNo" value="2" id="option2">수리중
                         </div>
                     </div>
                     <div id="ch">
-                        <input type="submit" value="수정하기">
+                        <input type="submit" value="수정하기" id="edit">
                     </div>
                 </form>
             </div>
@@ -172,6 +184,13 @@
     function goBack() {
          window.history.back();
     }
+    
+    if (${sv.statusNo} === 1) {
+   	  	document.getElementById("option1").checked = true;
+   	} else if (${sv.statusNo} === 2) { 
+   	  	document.getElementById("option2").checked = true;
+   	}
+    
 </script>
 
 </body>

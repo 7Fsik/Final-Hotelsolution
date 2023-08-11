@@ -54,7 +54,10 @@
 
     #page-area{
         display: flex;
-        justify-content: center
+        justify-content: space-around;
+        width: 40%;
+        position: relative;
+        left: 30%;
     }
     .att{
         height: 90%;
@@ -65,6 +68,7 @@
         align-items: center;
         text-align: center;
         border: 1px solid rgba(59, 68, 75, 1);
+        justify-content: space-evenly;
     }
     .img{
         height:50%;
@@ -91,6 +95,7 @@
         border-radius: 5px;
     }
     
+    
 
 </style>
 <body>
@@ -106,8 +111,10 @@
     
             <div id="search-area">
                 <div id="search">
-                    <input type="text" placeholder="방 호수를 입력하시오 ">
-                    <input type="submit" value="검색">
+                    <form action="${root}/front/useManage/list">
+                        <input type="text" name="searchValue" placeholder="방 호수를 입력하시오 ">
+                        <input type="submit" value="검색">
+                    </form>
                 </div>
             </div>
     
@@ -119,8 +126,8 @@
                                 <img src="/fire/static/img/front/room001.jpg">
                             </div>
                             <div>
-                                <div class="name">${useList.roomUseNo}</div>
-                                <div class="ho">호수</div>
+                                <div class="name">${useList.typeName}</div>
+                                <div class="ho">${useList.roomNo} 호</div>
                             </div>
                             <div class="btn">
                                 <button>이용내역</button>

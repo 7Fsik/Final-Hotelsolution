@@ -31,5 +31,7 @@ public class BookManageVo {
 	private String age;
 	private String nationallity;
 	
+	private String totalPrice;
+	
 	
 }

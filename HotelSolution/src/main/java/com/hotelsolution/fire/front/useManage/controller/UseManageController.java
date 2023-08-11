@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +34,7 @@ public class UseManageController {
 	
 	/////////////////////////////객실 이용관리
 	@GetMapping("list")
-	public String useManageList(int page, String searchValue,Model model) {
+	public String useManageList(@RequestParam(defaultValue = "1") int page, String searchValue,Model model) {
 		
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -47,6 +48,7 @@ public class UseManageController {
 		PageVo pv = new PageVo(listCount, currentPage, pageLimit, boardLimit);
 		
 		List<UseManageVo> useList = us.getUseList(pv,date,searchValue);
+		
 		model.addAttribute("useList", useList);
 		model.addAttribute("searchValue", searchValue);
 		
@@ -63,6 +65,17 @@ public class UseManageController {
 		return "front/useManage/detail";
 	}
 	////////////////////////////////
+	//결제 
+	@PostMapping("payment")
+	@ResponseBody
+	public int payment(@RequestParam Map<String,String>paramMap) {
+		
+		int result = us.payment(paramMap);
+		
+		return result;
+	}
+	
+	
 	////////////////////////////////
 	
 	//객실 비품 내역들
