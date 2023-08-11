@@ -123,8 +123,8 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	@Override
 	//지출결의서 작성
-	public int expenditure(Map<String, Object> params) {
-		return dao.expenditure(sst,params);
+	public int expenditure(ExpenditureVo evo) {
+		return dao.expenditure(sst,evo);
 	}
 
 	@Override
@@ -194,14 +194,27 @@ public class ApprovalServiceImpl implements ApprovalService{
 	}
 
 	@Override
-	//휴가 신청서 상세조회 결재자 가져오기
+	//결재자 가져오기
 	public List<ApproverVo> getApprover(String no) {
 		return dao.getApprover(sst,no);
 	}
 
 	@Override
+	//참조자 가져오기
 	public List<ApprovalReferrerVo> getReferrer(String no) {
 		return dao.getReferrer(sst,no);
+	}
+
+	@Override
+	//지출결의서 상세조회
+	public ApprovalVo expenditureDetail(String no) {
+		return dao.expenditureDetail(sst,no);
+	}
+
+	@Override
+	//지출결의서로 요청한 물품 개수,수량,가격 가져오기
+	public List<ItemVo> getItemInfo(String no) {
+		return dao.getItemInfo(sst,no);
 	}
 
 	

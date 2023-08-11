@@ -173,8 +173,10 @@ public class ApprovalController {
 	@PostMapping("vacation")
 	public String vaction(VactionVo vo , ApprovalVo avo , String teamLeader , String hrTeamLeader ,  
 			@RequestParam("reference") List<String> referenceList , HttpSession session) {
-		
+		System.out.println("teamLeader :" +teamLeader);
+		System.out.println("hrteamLeader :" +hrTeamLeader);
 		System.out.println(referenceList);
+		System.out.println("avo : " + avo);
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
@@ -209,7 +211,6 @@ public class ApprovalController {
 			String p = Integer.toString(x);
 			appVo.setPriority(p);
 			result3 = service.approver(appVo);
-			System.out.println("@@@#!@#!@#!"+result3);
 		}
 		
 		int result4 = 0;
@@ -237,6 +238,8 @@ public class ApprovalController {
 	//지출결의서 작성(화면)
 	@GetMapping("expenditure")
 	public String expenditure(HttpSession session , Model model , String documentTypeNo , String documentTypeName) {
+		
+		
 		Map<String, String> map = new HashMap<>();
 		map.put("documentTypeNo", documentTypeNo);
 		map.put("documentTypeName", documentTypeName);
@@ -271,34 +274,26 @@ public class ApprovalController {
 	
 	//지출결의서 작성
 	@PostMapping("expenditure")
-	public String expenditure(HttpSession session , String title
-			,ExpenditureVo evo , @RequestParam("item") List<String> itemList , @RequestParam("count") List<String> countList) {
-		System.out.println("item : " + itemList);
-		System.out.println("count : " + countList);
-		
-		itemList.removeIf(element -> element == null || element.trim().isEmpty());
-		System.out.println(itemList);
-		
-		countList.removeIf(element -> element == null || element.trim().isEmpty());
-		System.out.println(countList);
-		
+	public String expenditure(ApprovalVo avo , HttpSession session , String teamLeader , String prTeamLeader
+			,ExpenditureVo evo , @RequestParam("item") List<String> itemList
+			, @RequestParam("count") List<String> countList
+			, @RequestParam("reference") List<String> referenceList) {
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
-		ApprovalVo avo = service.getDocumentNo(no);
-		String avoNo = avo.getNo();
+		int result = service.insertApprovalDocument(avo);
+		
+		
+		ApprovalVo appvo = service.getDocumentNo(no);
+		String avoNo = appvo.getNo();
+		evo.setAppNo(avoNo);
 		System.out.println(avoNo);
+		int result2 = service.expenditure(evo);
 		
-		Map<String, String> map = new HashMap<>();
-		map.put("avoNo", avoNo);
-		map.put("title", title);
-		System.out.println(map);
-		int result = service.updateDocumentExpenditure(map);
 		
-		Map<String, Object> params = new HashMap<>();
-		params.put("avoNo", avoNo);
-		params.put("totalPrice", evo.getTotalPrice());
-		int result2 = service.expenditure(params);
+		itemList.removeIf(element -> element == null || element.trim().isEmpty());
+		
+		countList.removeIf(element -> element == null || element.trim().isEmpty());
 		
 		ExpenditureVo Evo = service.getExpenditureNo(avoNo);
 		String keyNo = Evo.getNo();
@@ -309,12 +304,54 @@ public class ApprovalController {
 		paramValue.put("item", itemList);
 		int result3 = service.expenditureItemList(paramValue);
 		
-		if(result != 1 && result2 != 1 && result3 != 1) {
-			throw new RuntimeException();
+		int startIndex = 0;
+		int endIndex = 0;
+		
+		ApproverVo appVo = new ApproverVo();
+		startIndex = teamLeader.indexOf("[")+1;
+		System.out.println("startIndex : " + startIndex);
+		endIndex = teamLeader.indexOf("]");
+		System.out.println("startIndex : " + endIndex);
+		String tlNo = teamLeader.substring(startIndex , endIndex);
+		System.out.println(tlNo);
+		List<String> approverList = new ArrayList<String>();
+		approverList.add(tlNo);
+		approverList.add(prTeamLeader);
+		System.out.println("teamLeader : " + teamLeader);
+		System.out.println("prTeamLeader : " + prTeamLeader);
+		
+		int x = 0;
+		int result4 =0;
+		for(int i=0; i < approverList.size(); i++) {
+			appVo.setApprovalDocNo(avoNo);
+			appVo.setStatusNo("1");
+			appVo.setAppNo(approverList.get(i));
+			x = i+1;
+			String p = Integer.toString(x);
+			appVo.setPriority(p);
+			result4 = service.approver(appVo);
+		}
+
+		int result5 = 0;
+		ApprovalReferrerVo arvo = new ApprovalReferrerVo();
+		for(String reference : referenceList) {
+			startIndex = reference.indexOf("[")+1;
+			endIndex = reference.indexOf("]");
+			
+			String rfNo = reference.substring(startIndex , endIndex);
+			
+			arvo.setApprovalNo(avoNo);
+			arvo.setReferrerNo(rfNo);
+			
+			result5 = service.referrer(arvo);
 		}
 		
+		if(result == 1 && result2 == 1 && result3 == 1 && result4 == 1 && result5 ==1) {
+			return "redirect:/approval/approvalFirstPage";
+		}
+		
+		throw new RuntimeException();
 	
-		return "redirect:/approval/approvalFirstPage";
 	}
 	
 	//업무보고서 작성(화면)
@@ -376,8 +413,8 @@ public class ApprovalController {
 		if(result != 1 && result2 != 1) {
 			throw new RuntimeException();
 		}
-		
 		return "redirect:/approval/approvalFirstPage";
+		
 	}
 	
 	
@@ -393,10 +430,6 @@ public class ApprovalController {
 		model.addAttribute("vo" , vo);
 		model.addAttribute("list" , list);
 		model.addAttribute("fList" , fList);
-		
-		System.out.println("vo : " + vo);
-		System.out.println("appList : " + list);
-		System.out.println("refList : " + fList);
 		
 		return "approval/vactionDetail";
 	}
@@ -414,13 +447,33 @@ public class ApprovalController {
 		model.addAttribute("list" , list);
 		model.addAttribute("fList" , fList);
 		
-		System.out.println("vo : " + vo);
-		System.out.println("appList : " + list);
-		System.out.println("refList : " + fList);
-	
-		
 		return "approval/getVacationDetail";
 	}
+	
+	//내가 보낸 지출결의서 상세조회(화면)
+	@GetMapping("expenditureDetail")
+	public void expenditureDetail(String no , Model model) {
+		
+		ApprovalVo vo = service.expenditureDetail(no);
+		
+		List<ApproverVo> list = service.getApprover(no);
+		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		List<ItemVo> itemList = service.getItemInfo(no);
+		
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+		model.addAttribute("itemList" , itemList);
+		System.out.println("itemList :" + itemList);
+		System.out.println("vo : " + vo);
+		System.out.println("list : " + list);
+		System.out.println("fList : " + fList);
+	}
+	
+	//내가 받은 지출결의서 상세조회(화면)
 	
 	//업무보고서 상세조회(화면)
 	@GetMapping("reportDetail")
@@ -428,11 +481,6 @@ public class ApprovalController {
 		
 	}
 	
-	//지출결의서 상세조회(화면)
-	@GetMapping("expenditureDetail")
-	public void expenditureDetail() {
-		
-	}
 	
 	//결재선 정하기(화면)
 	@GetMapping("approvalLine")

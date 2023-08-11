@@ -10,5 +10,7 @@ public class ItemVo {
 	private String teamNo;
 	private String name;
 	private String count;
+	private String appNo;
+	private String totalPrice;
 	private String price;
 }
