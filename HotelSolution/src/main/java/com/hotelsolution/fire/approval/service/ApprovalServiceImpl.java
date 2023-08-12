@@ -223,6 +223,7 @@ public class ApprovalServiceImpl implements ApprovalService{
 	@Override
 	public int adYnReject(String approvalNo) {
 		return dao.adYnReject(sst,approvalNo);
+	}
     
   @Override
 	public ApprovalVo expenditureDetail(String no) {

@@ -212,8 +212,9 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	@Override
 	public int adYnReject(SqlSessionTemplate sst, String approvalNo) {
 		return sst.update("approval.adYnReject",approvalNo);
-    
-  @Ocerrride
+	}
+	
+	@Override
 	public ApprovalVo expenditureDetail(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("approval.expenditureDetail" , no);
 	}

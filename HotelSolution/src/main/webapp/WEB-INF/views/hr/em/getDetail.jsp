@@ -442,7 +442,7 @@
 			            <div style="padding-top:20px;">결재 권한 :  <input type="text" class="ap" name="approvalPower" value="${vo.approvalPower}" readonly style="width: 300px;"></div>
 			            <div style="padding-top:20px;">이메일 : <input type="text" class="em" name="email" value="${vo.email}" readonly style="width: 300px;"></div>
 			            <div style="padding-top:20px;">휴대폰번호 : <input type="text" class="ph" value="0${vo.id}" name="id" readonly></div>
-			            <div style="padding-top:20px;">부서전화번호 : ${vo.teamAddress}</div>
+			            <div style="padding-top:20px;">부서 내선번호 : <input type="text" class="ta" value="${vo.teamAddress}" name="teamAddress" readonly></div>
 			            
 			        </div>
 			        <button type="submit" class="editButton" style="display: none; border: 0px; text-align: center; width: 100px; margin: auto;">수정하기</button>
@@ -683,6 +683,7 @@
 
     phoneInput.addEventListener("click", handleInputClick);
     phoneInput.addEventListener("change", validate);
+    
     
     approvalPowerInput.addEventListener("click", handleInputClick);
     approvalPowerInput.addEventListener("change", validate);

@@ -57,6 +57,17 @@
 			<beans:bean class="com.hotelsolution.fire.interceptor.CheckSessionInterceptor"/>
 		</interceptor>
 	</interceptors>
+	
+   <interceptors>
+		<interceptor>
+			<mapping path="/hr/**"/>
+			<exclude-mapping path="/member/login/**"/>
+			<exclude-mapping path="/member/join/**"/>
+			<exclude-mapping path="/member/emailAuthentication/**"/>
+			<exclude-mapping path="/resources/**"/>
+			<beans:bean class="com.hotelsolution.fire.interceptor.CheckTeamInterceptor"/>
+		</interceptor>
+	</interceptors>
 
 <!-- 웹소켓 bean 등록 -->
 	<beans:bean id="hsWebsocketServerBean" class="com.hotelsolution.fire.common.websocket.server.WebsocketServer"></beans:bean>
