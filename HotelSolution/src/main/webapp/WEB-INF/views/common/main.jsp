@@ -245,10 +245,11 @@
         padding: 10px;
     }
     #profile-menu{
-        display: flex;
-        flex-direction: column;
+       /*  display: flex;
+        flex-direction: column; */
+        text-align:center;
         width: 70%;
-        justify-content: space-around;
+        /* justify-content: space-around; */
     }
 
     #mainboard{
@@ -471,31 +472,18 @@
             <div class="profile-box">
                 <div id="profile-int">
                     <div >
-                        <img class="header-profile-img-2" src="${root}/resources/img/증명사진.png" >
+                        <img class="header-profile-img-2" style="width: 100px; height: 100px; border-radius:50px;"   src="${root}/resources/img/member/profile/${sessionScope.loginMember.changeImage}" >
                     </div>
                     <div>
-                        <div class="fontbb pp">${sessionScope.loginMember.name} 사원</div>
-                        <c:if test="${sessionScope.loginMember.teamNo == 1}" >
-                            <div>경영지원팀</div>
-                        </c:if>
-                        <c:if test="${sessionScope.loginMember.teamNo == 2}" >
-                            <div>프론트팀/시설관리팀</div>
-                        </c:if>
-                        <c:if test="${sessionScope.loginMember.teamNo == 3}" >
-                            <div>식음팀</div>
-                        </c:if>
-                        <c:if test="${sessionScope.loginMember.teamNo == 4}" >
-                            <div>인사팀</div>
-                        </c:if>
-                        <c:if test="${sessionScope.loginMember.teamNo == 5}" >
-                            <div>구매/재무팀</div>
-                        </c:if>
+                        <div class="fontbb pp">${sessionScope.loginMember.name} ${sessionScope.loginMember.positionName}</div>
+                            <div>${sessionScope.loginMember.teamName}</div>
+                        
                     </div>
                 </div>
                 <div id="profile-menu" class="fontbb">
-                    <div>내 정보 수정</div>
-                    <div>요청한 결재             3</div>
-                    <div>남은 결재              1</div>
+                    <div class="sideProfilesurvey">
+                    	설문지 
+                    </div>
                 </div>
             </div>
 
@@ -737,7 +725,7 @@
 				
                 // HTML에서 알림 카운트를 업데이트(필요한 경우)
                 $(".notification-count").text('설문지 : '+cnt);
-
+                $(".sideProfilesurvey").text('설문지 '+cnt);
                 // 카운트에 따라 알림 요소를 표시/숨기기(필요한 경우)
                 if (cnt > 0) {
                     $(".notification-count").css("display", "inline");
