@@ -217,7 +217,7 @@
 	
 	//출근버튼 눌렀을때 출근시간 DB에 인서트	
 	let isStarted = false;
-	
+	const endBtn = document.querySelector('#endBtn');
 	const startBtn = document.querySelector('#startBtn');
 	startBtn.addEventListener('click' , (event)=>{
 		if(!isStarted){
@@ -242,7 +242,7 @@
 	});
 	
 	//퇴근버튼 눌렀을때 퇴근시간 DB에 인서트
-	const endBtn = document.querySelector('#endBtn');
+	
 	endBtn.addEventListener('click' , ()=>{
 		if(!isStarted){
 			startBtn.disabled = false;
@@ -268,94 +268,7 @@
 	});
 	endBtn.disabled = true;
 	
-	const time = new Date();
-	const day = time.getDay();
-	const dayNames = ["일요일" , "월요일" , "화요일" , "수요일" ,"목요일" , "금요일" , "토요일"]
-	const currentDay = dayNames[day];
-	//출근 그래프
-	const labels = [
-		dayNames[1],
-		dayNames[2],
-		dayNames[3],
-		dayNames[4],
-		dayNames[5],
-		dayNames[6],
-		dayNames[0],
-	];
-
 	
-	const data = {
-		labels: labels,
-		datasets: [{
-		label: '근무시간',
-		backgroundColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' , '#86C8DB' , "#e9ecef" , "#e9ecef"],
-		borderColor: ['#86C8DB', '#86C8DB' , '#86C8DB' , '#86C8DB' ,'#86C8DB' , "#e9ecef" , "#e9ecef"],
-		data: [
-			'${workMinuteList[1]}'/60,'${workMinuteList[2]}'/60,'${workMinuteList[3]}'/60,'${workMinuteList[4]}'/60,'${workMinuteList[5]}'/60 , 10 , 10]
-		}],
-
-	};
-
-	const config = {
-		type: 'bar',
-		data: data,
-		options: {
-			responsive:false,
-			scales: {
-			 
-			  y: {
-				display: false, 
-				
-			  } 
-			},
-			plugins: {
-  legend: {
-    display: false, 
-    padding: 10,
-  },
-  tooltip: {
-    filter: function (tooltipItem) {
-      return tooltipItem.dataIndex !== 5 && tooltipItem.dataIndex !== 6;
-    },
-  },
-},
-tooltips: {
-  mode: 'index',
-  intersect: false,
-},
-barPercentage: 0.7, 
-categoryPercentage: 0.5,
-},
-};
-	
-
-	//밑에 근무시간 나타내기
-	const weekWorkTime = Math.floor('${min}' / 60);
-	const hour = document.getElementById('hour');
-	hour.innerHTML = weekWorkTime;
-
-	//테이블 근무시간 나타내기
-	const tableWork =  document.querySelectorAll('.tableWorkTime');
-	console.log(tableWork);
-	for(let i = 0; i<= tableWork.length; i++){
-		const workMinuteList = '${workMinuteList}'
-		const workMinuteListArr = JSON.parse(workMinuteList);
-		const tableWorkTime = Math.floor(workMinuteListArr[i + 1] / 60);
-		const tableWorkMinute = Math.floor(workMinuteListArr[i + 1] % 60);
-		tableWork[i].innerHTML = tableWorkTime +'시간' +tableWorkMinute +'분';
-	}
-
-	const graphData = [
-		workMinuteListArr[1] / 60,
-		workMinuteListArr[2] / 60,
-		workMinuteListArr[3] / 60,
-		workMinuteListArr[4] / 60,
-		workMinuteListArr[5] / 60,
-		10,
-		10,
-	];
-	myChart.data.datasets[0].data = graphData;
-	myChart.update();
 
 	function goworkPage(){
 		window.location.href =  "${root}/workout/attendance";

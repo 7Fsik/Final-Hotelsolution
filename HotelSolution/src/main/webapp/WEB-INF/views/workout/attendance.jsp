@@ -334,8 +334,8 @@
 				               	</div>
 			               </div>
 			               	<div class="work-btn">
-				               	<div><button id="startBtn" onclick="startClock();">출근</button></div>
-				               	<div><button id="endBtn" onclick="stopClock();">퇴근</button></div>
+				               	<div><button style="width: 100px;" id="startBtn" onclick="startClock();">출근</button></div>
+				               	<div><button style="width: 100px;" id="endBtn" onclick="stopClock();">퇴근</button></div>
 				               	<div class="text">버튼을 눌러 <br>출근시간을 기록하세요</div>
 			               	</div>
 		               </div>
@@ -486,6 +486,8 @@
 		}
 		
 		function stopClock() {
+			
+			
 			clearInterval(interval);
 			startTime = null;
 			localStorage.removeItem("startTime");
@@ -511,7 +513,7 @@
 		
 		//출근버튼 눌렀을때 출근시간 DB에 인서트	
 		let isStarted = false;
-		
+		const endBtn = document.querySelector('#endBtn');
 		const startBtn = document.querySelector('#startBtn');
 		startBtn.addEventListener('click' , (event)=>{
 			if(!isStarted){
@@ -536,7 +538,7 @@
 		});
 		
 		//퇴근버튼 눌렀을때 퇴근시간 DB에 인서트
-		const endBtn = document.querySelector('#endBtn');
+		
 		endBtn.addEventListener('click' , ()=>{
 			if(!isStarted){
 				startBtn.disabled = false;
@@ -549,6 +551,7 @@
 						if(data ==="success"){
 							console.log(data);
 							alert('퇴근처리 되었습니다.');
+							endBtn.disabled = true;
 						}else{
 							alert('퇴근 처리 오류');
 						}
@@ -560,7 +563,7 @@
 				});
 			};
 		});
-		endBtn.disabled = true;
+		
 		
 		const time = new Date();
 		const day = time.getDay();

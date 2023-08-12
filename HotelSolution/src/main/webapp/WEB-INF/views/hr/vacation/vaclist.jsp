@@ -279,7 +279,7 @@
 }
 .vac2Date{
 	margin-top:5px;
-	font-size : 15px;
+	font-size : 13px;
 }
 .vac2B{
 	display: grid;
@@ -302,6 +302,15 @@
 .vac2:hover{
 	background-color: rgba(59, 68, 75, 0.2);
 	cursor: pointer;
+}
+.vac2DateWrap{
+	display: grid;
+	grid-template-columns:8fr 2fr;
+}
+.vac2app:hover{
+	background-color: rgba(59, 68, 75, 0.7);
+	cursor: pointer;
+	
 }
 </style>
 </head>
@@ -397,14 +406,19 @@
 				                <div style="overflow-y:auto; ">
 				                <br>
 				                	<c:forEach items="${vdvoList2}" var="vdvo"> 
-										<div class="vac2" onclick="goDetail(${vdvo.userNo})" >
+										<div class="vac2" >
 											<div class="vac2Name">[${vdvo.teamName}](${vdvo.positionName})${vdvo.name} </div>
 											<div class="vac2B">
-												<div class="vac2Img">
+												<div class="vac2Img" onclick="goDetail(${vdvo.userNo})" >
 													<img class="vac2pf" src="${root}/resources/img/member/profile/${vdvo.image}" alt="사진">
 												</div>
 												<div class="vac2D">
-													<div class="vac2Date">${vdvo.vacationStart} ~ ${vdvo.vacationEnd}  </div>
+													<div class="vac2DateWrap">
+														<div class="vac2Date">${vdvo.vacationStart} ~ ${vdvo.vacationEnd}</div>
+														<c:if test="${loginMember.approvalPower==1 }">
+															<div class="vac2app"style="margin-top:10px;padding-top:2px; width:35px; border-radius:10px;">결재</div> 
+														</c:if>
+													</div>
 													<div class="vac2Date">신청일 : ${vdvo.enrollDate}</div>
 												</div>
 											
