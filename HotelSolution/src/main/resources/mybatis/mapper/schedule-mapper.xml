@@ -71,6 +71,7 @@
 		    S.CONTENT,
 		    M.NO,
 		    M.TEAM_NO,
+		    M.CHANGE_IMAGE AS WRITERIMAGE,
 		    M.NAME AS WRITERNAME,
 		    ST.NAME AS TYPENAME
 		FROM SCHEDULE S
@@ -93,7 +94,8 @@
 		    S.CONTENT,
 		    M.NO,
 		    M.TEAM_NO,
-		    M.NAME,
+		    M.CHANGE_IMAGE AS WRITERIMAGE,
+		    M.NAME AS WRITERNAME,
 		    ST.NAME AS TYPENAME,
 		    ST.COMMON_YN 
 		FROM SCHEDULE S
@@ -101,6 +103,29 @@
 		JOIN SCHEDULE_TYPE ST ON S.SCHEDULE_TYPE_NO = ST.NO
 		WHERE M.TEAM_NO = #{teamNo}
 		AND S.SCHEDULE_TYPE_NO = 2
+		
+	</select>
+	
+	<select id="getScheduleList" resultType="ScheduleVo">
+	  SELECT 
+		    S.NO,
+		    S.USER_NO,
+		    S.SCHEDULE_TYPE_NO,
+		    S.START_DATE,
+		    S.END_DATE,
+		    S.TITLE,
+		    S.CONTENT,
+		    M.NO,
+		    M.TEAM_NO,
+		    M.CHANGE_IMAGE AS WRITERIMAGE,
+		    M.NAME AS WRITERNAME,
+		    ST.NAME AS TYPENAME,
+		    ST.COMMON_YN 
+		FROM SCHEDULE S
+		JOIN MEMBER M ON S.USER_NO = M.NO
+		JOIN SCHEDULE_TYPE ST ON S.SCHEDULE_TYPE_NO = ST.NO
+		WHERE S.USER_NO = #{no}
+		OR (S.SCHEDULE_TYPE_NO = 2 AND  M.TEAM_NO = #{teamNo})
 		
 	</select>
 </mapper>

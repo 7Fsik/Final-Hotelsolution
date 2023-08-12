@@ -54,6 +54,11 @@ public class ScheduleDao {
 		map.put("no", no);
 	    return sst.delete("schedule.deleteScheduleByNo", map);
 	}
+
+
+	public List<ScheduleVo> getScheduleList(SqlSessionTemplate sst, MemberVo loginMember) {
+		return  sst.selectList("schedule.getScheduleList", loginMember);
+	}
 	
 	
 

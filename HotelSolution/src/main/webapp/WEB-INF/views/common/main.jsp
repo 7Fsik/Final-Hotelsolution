@@ -55,7 +55,7 @@
     .header-detail-area {
         height: 100%;
         display: flex;
-        justify-content: space-between; /* 변경: 중앙 정렬을 위해 space-between으로 수정 */
+        justify-content: space-evenly; /* 변경: 중앙 정렬을 위해 space-between으로 수정 */
         align-items: center;
         box-sizing: border-box;
     }
@@ -105,8 +105,8 @@
     }
 
     .aside-icon img {
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
     }
 
     .aside-icon span {
@@ -121,6 +121,7 @@
         height: 100%;
         align-items: center;
         justify-content: flex-start;
+        padding-left : 80px;
     }
     .mailbox-content .mail-detail {
         text-align: left;
@@ -245,11 +246,11 @@
         padding: 10px;
     }
     #profile-menu{
-       /*  display: flex;
-        flex-direction: column; */
+        display: flex;
+        flex-direction: column; 
         text-align:center;
         width: 70%;
-        /* justify-content: space-around; */
+        justify-content: space-evenly; 
     }
 
     #mainboard{
@@ -283,10 +284,13 @@
 .notification-menu {
     display: none;
     position: absolute;
+    width:80px;
     top: 50px; /* 메뉴 탭이 이미지 아래에 표시되도록 조절 */
+    margin-top:17px;
+    height : 50px;
     background-color: white;
-    padding: 10px;
     border: 1px solid #ccc;
+    padding-left : 1px;
 }
 
 /* 클릭 시 보여지도록 */
@@ -301,10 +305,11 @@
 .dropdown {
     display: none;
     position: absolute;
+    margin-top:10px;
+    width:70px;
     top: 100%;
     left: 0;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: blcak;
     padding: 0;
     margin: 0;
 }
@@ -399,28 +404,32 @@
         <div class="header">
             <div class="header-area">
                 <div class="header-detail-area">
-                    <div class="header-logo">
+                    <div class="header-logo" style="margin :50px;">
                         <a href="/fire/">
                             <img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지">
                         </a>
                     </div>
-                    <div class="header-chat" onclick="goChatList(${loginMember.no})">
-                        <a href="/fire/" >
+                    <div style="width:500px; font-weight: bold; font-size: 20px; color:#3B444B;" class="mainClock"></div>
+                    <div class="header-chat" onclick="goChatList(${loginMember.no})" style="margin: 50px;  position: relative;">
                             <img class="header-chatimg" src="${root}/resources/img/일단넣음.png" alt="채팅이미지">
-                        </a>
+                            <div style="position: absolute;  top: 50%; left: 50%; transform: translate(-70%, -60%); color:crimson;  padding: 10px;font-weight: bold;"class="mainTopChatAlert"></div>
                     </div>
-                   <div class="header-notification">
+                   <div class="header-notification" style="margin :50px;  position: relative;">
 				        <img class="header-notification-img" src="${root}/resources/img/종모양아이콘.png" alt="채팅이미지">
+				        <div style="position: absolute;  top: 50%; left: 50%; transform: translate(-50%, -60%); color:crimson;  padding: 10px;font-weight: bold;"class="mainTopBellAlert"></div>
 					    <!-- 여러 개의 메뉴 탭 -->
+					    
 					    <ul class="notification-menu">
-					        <li><a href="${root}/hr/survey/write"><span class="notification-count">설문지 : </span></a></li>
-					        <li onclick="goChatList(${loginMember.no})">채팅 : </li>
+					        <li><a href="${root}/hr/survey/write" style="text-decoration: none;"><span class="notification-count"> </span></a></li>
+					        <li  onclick="goChatList(${loginMember.no})"><span class="chatList-count"></span> </li>
+					         <%-- <li><a href="${root}/approval/getApproval" style="text-decoration: none;"><span class="main-approval-count"> </span></a></li> --%>
 					        <!-- 추가적인 메뉴 탭들을 원하는 만큼 추가할 수 있습니다. -->
 					    </ul>
 
 					</div>
-                    <div class="header-profile">
-                            <img class="header-profile-img" src="${root}/resources/img/증명사진.png" alt="채팅이미지">
+				
+                    <div class="header-profile" style="margin :50px;">
+                   		 <img class="header-profile-img" style="width: 60px; height: 60px; border-radius:50px; "   src="${root}/resources/img/member/profile/${sessionScope.loginMember.changeImage}" >
                             <ul class="dropdown">
                                 <li><a href="${root}/member/logout">로그아웃</a></li>
                             </ul>
@@ -474,16 +483,26 @@
                     <div >
                         <img class="header-profile-img-2" style="width: 100px; height: 100px; border-radius:50px;"   src="${root}/resources/img/member/profile/${sessionScope.loginMember.changeImage}" >
                     </div>
-                    <div>
-                        <div class="fontbb pp">${sessionScope.loginMember.name} ${sessionScope.loginMember.positionName}</div>
-                            <div>${sessionScope.loginMember.teamName}</div>
+                        <div class="fontbb pp">[${sessionScope.loginMember.teamName}]${sessionScope.loginMember.name}</div></br>
+                        <div style="font-size: 20px;"> ${sessionScope.loginMember.positionName}</div>
                         
-                    </div>
                 </div>
                 <div id="profile-menu" class="fontbb">
-                    <div class="sideProfilesurvey">
-                    	설문지 
-                    </div>
+                	<div style="display: flex; justify-content: center;">
+	                	<div>
+    		            	설문지 
+            	    	</div>
+                	    <div class="sideProfilesurvey">
+                    	</div>
+                	</div>
+                   	<div style="display: flex; justify-content: center;">	
+                    	<div>
+    		            	채팅 
+            	    	</div>
+                    	<div class="sideProfileChat">
+                    	
+                    	</div>
+                	</div>
                 </div>
             </div>
 
@@ -703,15 +722,14 @@
 	    const top = 100;
 	    window.open('${root}/chat/room?selectMemberNo=' + selectMemberNo +'&user1No='+loginMenberNo, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
 	}
-	$(document).ready(function() {
-        // 문서가 준비되면 surveyAlert 함수를 호출합니다.
-        surveyAlert();
-
-        // "header-notification" 클래스를 클릭했을 때 메뉴를 전환하는 이벤트 핸들러입니다.
-        $(".header-notification").on("click", function() {
-            $(this).toggleClass("active");
-        });
-    });
+	 function goChatList(no) {
+		    const width = 517;
+		    const height = 820;
+		    const left = (window.innerWidth / 2) - (width / 2);
+		    const top = 100;
+		    window.open('${root}/chat/rooms?no=' + no, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+	}
+	
 	//미완료 설문지 갯수
 	 function surveyAlert() {
         // 서버 측 Java 코드에 AJAX 요청 보내기
@@ -724,28 +742,68 @@
                 var cnt = response;
 				
                 // HTML에서 알림 카운트를 업데이트(필요한 경우)
-                $(".notification-count").text('설문지 : '+cnt);
-                $(".sideProfilesurvey").text('설문지 '+cnt);
+              
+                $(".sideProfilesurvey").text(cnt);
                 // 카운트에 따라 알림 요소를 표시/숨기기(필요한 경우)
-                if (cnt > 0) {
+               /*  if (cnt > 0) {
                     $(".notification-count").css("display", "inline");
                 } else {
                     $(".notification-count").css("display", "none");
-                }
+                } */
+                checkBell();
             },
             error: function(xhr, status, error) {
                 console.error("설문 조사 알림 가져오기 오류: " + status);
             }
         });
     }
+	 function noneCheckCnt() {
+		
+		 let cnt = 0;
+		    // AJAX 요청을 보냅니다.
+			// class명이 currentMsg인 요소들을 가져옵니다.
 
-	 function goChatList(no) {
-		    const width = 517;
-		    const height = 820;
-		    const left = (window.innerWidth / 2) - (width / 2);
-		    const top = 100;
-		    window.open('${root}/chat/rooms?no=' + no, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
+			$.ajax({
+			    url: "${root}/chat/checkTotalCnt", // 실제 서버의 URL 주소로 대체해야 합니다.
+			    method: 'POST', // 또는 GET 등 HTTP 메서드를 선택합니다.
+			    dataType: 'json',
+			    success: function(x) {
+			        console.log("서버 응답:", x);
+			        // response는 배열 형태의 데이터일 것이므로, 배열의 각 요소를 순회합니다.
+			        if(x !="0"){
+			       $(".sideProfileChat").text(x);
+			        	
+			        $(".mainTopChatAlert").text(x);
+			        }
+			       surveyAlert();
+			    },
+			    error: function(error) {
+			        // AJAX 요청이 실패했을 때 처리하는 로직
+			        console.error("에러:", error);
+			    }
+			});
+
+
 		}
+
+	 function checkBell() {
+		    let chatCntDiv = document.querySelector(".sideProfileChat");
+		    let surveyCntDiv = document.querySelector(".sideProfilesurvey");
+		    let chatCnt = parseInt(chatCntDiv.textContent); // 문자열을 숫자로 변환
+		    let surveyCnt = parseInt(surveyCntDiv.textContent); // 문자열을 숫자로 변환
+		    
+		    if (chatCnt > 0) {
+		        document.querySelector(".chatList-count").textContent = "채팅 : " + chatCnt;
+		        document.querySelector(".mainTopBellAlert").textContent = "!";
+		    }
+		    if (surveyCnt > 0) {
+		        document.querySelector(".notification-count").textContent = "설문지 : " + surveyCnt;
+		        document.querySelector(".mainTopBellAlert").textContent = "!";
+		    }
+		}
+
+
+
 
      function gotoBoardList() {
          window.location.href = "${root}/board/list/1";
@@ -754,7 +812,40 @@
      function gotoList(){
          window.location.href = "${root}/mail/list";
      }
-
+     $(document).ready(function() {
+         // 문서가 준비되면 surveyAlert 함수를 호출합니다.
+        
+         noneCheckCnt();
+       
+         // "header-notification" 클래스를 클릭했을 때 메뉴를 전환하는 이벤트 핸들러입니다.
+         $(".header-notification").on("click", function() {
+             $(this).toggleClass("active");
+         });
+     });
    
+     
+     const mainClock = document.querySelector('.mainClock');
+     
+     //시계 만들기
+     function getTimeInMain(params) {
+         const maintime = new Date();
+         const mainmonth = (maintime.getMonth()+1);
+         const mainday = maintime.getDay();
+         const maindayNames = ["일요일" , "월요일" , "화요일" , "수요일" ,"목요일" , "금요일" , "토요일"]
+         const maincurrentDay = maindayNames[mainday];
+         const maindate = maintime.getDate();
+         const mainhour = String(maintime.getHours()).padStart(2, "0");
+         const mainminutes = String(maintime.getMinutes()).padStart(2, "0");
+         const mainseconds = String(maintime.getSeconds()).padStart(2, "0");
+         mainClock.innerHTML = mainmonth+ "월 "+maindate+ "일 " + mainhour + ":"+mainminutes+":"+mainseconds + " "+ maincurrentDay; 
+         
+     }
+     
+     //시계 실행
+     getTimeInMain();
+     setInterval(() => {
+    	 getTimeInMain();
+     }, 1000);
+     
 </script>
 </html>

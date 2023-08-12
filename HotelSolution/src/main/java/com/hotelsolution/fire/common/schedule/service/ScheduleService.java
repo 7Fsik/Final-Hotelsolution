@@ -50,6 +50,10 @@ public class ScheduleService {
 		return dao.deleteScheduleByNo(sst, loginMember, no);
 	}
 
+	public List<ScheduleVo> getScheduleList(MemberVo loginMember) {
+		return dao.getScheduleList(sst,loginMember);
+	}
+
 	
 	
 }

@@ -116,7 +116,7 @@ public class ChatRoomController {
 
 
         int result = service.updateTime(data);
-        
+        System.out.println("시간 업데이트 서옥ㅇ시 1 :" +result);
         return result;
     }
 
@@ -278,6 +278,33 @@ public class ChatRoomController {
            checkCntList.add(checkCnt);
        }
     	 return checkCntList;
+    }
+    
+    @PostMapping("checkTotalCnt")
+    @ResponseBody
+    public String checkTotalCnt(HttpSession session) {
+    	 Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
+    	 MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+         // Map에 넣기
+    	 Map<String,String>map2 = new HashMap<String, String>();
+     	map2.put("loginMemberNo",loginMember.getNo());
+    	List<ChatRoomVo>voList = service.getChatRoomList(map2);
+    	List<String> checkCntList = new ArrayList<String>();
+    	Map<String,Object> map = new HashMap();
+    	int cnt=0;
+    	 for (ChatRoomVo vo : voList) {
+    		map.put("loginMemberNo",loginMember.getNo());
+	    	map.put("currentTimestamp", currentTimeStamp);
+	    	map.put("user1No",vo.getUser1No());
+	    	map.put("user2No",vo.getUser2No());
+	    	map.put("updateTime1",vo.getUpdateTime1());
+	    	map.put("updateTime2",vo.getUpdateTime2());
+	    	map.put("chatRoomNo",vo.getNo());
+	    	
+           cnt +=service.checkCnt(map);
+       }
+    	 String checkCnt = String.valueOf(cnt);
+    	 return checkCnt;
     }
 
 // 
