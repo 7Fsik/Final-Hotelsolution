@@ -49,6 +49,7 @@
 		    u.STATUS,
 		    u.CONTRACT_WORK_TIME,
 		    u.CONTRACT_WORK_END_TIME,
+		    u.CHANGE_IMAGE AS CHANGEIMAGE,
 		    u.SALARY,
 		    u.APPROVAL_POWER AS APPROVALPOWER,
 		    t.TEAM_NAME AS TEAMNAME,
@@ -253,7 +254,8 @@
 
  	<update id="edit" >
   	
-  		UPDATE MEMBER SET 
+  		UPDATE MEMBER 
+  		SET 
 	    TEAM_NO = #{teamNo}
 	    ,POSITION_NO = #{positionNo}
 	    ,ID = #{id}
@@ -261,6 +263,7 @@
 	    ,EMAIL = #{email}
 	    ,SALARY = #{salary}
 	    ,APPROVAL_POWER = #{approvalPower}
+	   
 		WHERE no = #{no}
   	
   	</update>

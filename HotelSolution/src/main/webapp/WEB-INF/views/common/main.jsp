@@ -320,11 +320,78 @@
 	color : #fff;
 }
 
+/* Modal Styles */
+.searchMainModal {
+    display: none;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.4);
+}
 
+.searchMainModal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    left: 500px; /* Center horizontally */
+    top: 100px; /* Center vertically */
+    overflow-y:auto; 
+}
 
+.searchValueModalTopclose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.mdalMemberSearchList:hover{
+	background-color: rgba(59, 68, 75, 0.2);
+}
+.mainChatBtnDiv:hover{
+	background-color: rgba(59, 68, 75, 0.5);
+	cursor: pointer;
+}
+.mainMailBtnDiv:hover{
+	background-color: rgba(59, 68, 75, 0.5);
+	cursor: pointer;
+}
 </style>
 <body>
-	
+	<!-- 모달 -->
+	<div id="searchMainModal" class="searchMainModal">
+        <div class="searchMainModal-content">
+            
+            <!-- ... Your modal content goes here ... -->
+             <div id="searchArea">
+             
+                   
+              
+                   
+                   
+		                    <select id="searchTypeModalTop">
+	                             <option value="teamName" >부서</option>
+			                     <option value="positionName" >직책</option>
+			                     <option value="name" >이름</option>
+			                     <option value="id">전화번호</option>
+			                     <option value="email">이메일</option>
+		                    </select>
+							<input type="text" id="searchValueModalTop"   onkeyup="searchMainModalListTop()" placeholder="검색할 내용"/> 
+		                    <input type="image" style="width: 20px;"  src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="Submit" onclick="searchMainModalListTop()"/>
+				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="searchValueModalTopclose" onclick="closeSearchMainModal()">&times;</span>
+            </div>
+            <div class ="searchMainModalList">
+            
+            </div>
+        </div>
+    </div>
     
 
         <!--헤더-->
@@ -369,7 +436,7 @@
                     <img src="${root}/resources/img/메일.png" alt="아이콘1">
                     <span>메일</span>
                 </div>
-                <div class="aside-icon">
+                <div class="aside-icon" onclick="openSearchMainModal()">
                     <img src="${root}/resources/img/주소록.png" alt="아이콘2">
                     <span>주소록</span>
                 </div>
@@ -530,7 +597,8 @@
 
         </div>
 
-
+<input type="hidden" value="${root}" class="mainRoot">
+<input type="hidden" value="${loginMember.no}" class="loginMemberNoFromMain">
 
     
    
@@ -539,6 +607,80 @@
     
 </body>
 <script type="text/javascript">
+	//모달
+	document.addEventListener("click", function(event) {
+    let searchMainModal = document.querySelector(".searchMainModal");
+    if (event.target === searchMainModal) {
+        closeSearchMainModal();
+    }
+	});
+	
+	function openSearchMainModal() {
+	    let searchMainModal = document.querySelector(".searchMainModal");
+
+	    searchMainModal.style.display = "block";
+	    
+	    
+	}
+	 function searchMainModalListTop() {
+		const searchTypeModalTop = document.querySelector("#searchTypeModalTop").value; // 검색 조건 가져오기
+	    const searchValueModalTop = document.querySelector("#searchValueModalTop").value; // 검색 값을 가져오기
+	    const searchMainModalList = document.querySelector(".searchMainModalList");
+	    const mainRoot = document.querySelector(".mainRoot").value;
+	    if (searchValueModalTop.trim() === "") {
+	        // 검색 값이 없을 경우, 결과를 비우고 리턴
+	        searchMainModalList.innerHTML = "";
+	        return;
+	    }
+	    $.ajax({
+	        url: "${root}/search/memberlist",
+	        method: 'POST',
+	        data: {
+	            searchType: searchTypeModalTop,
+	            searchValue: searchValueModalTop // 변수명 수정
+	        },
+	        dataType: 'json', 
+	        success: function(data) {
+	        	const loginMemberNo = document.querySelector(".loginMemberNoFromMain").value; 
+	        	let list = "";
+	            const length = data.length;
+	            searchMainModalList.innerHTML = ""; 
+	            for (let i = 0; i < length; i++) {
+	                list += '</br><div class="mdalMemberSearchList" style="display: grid; grid-template-columns: 1fr 2fr 3fr 3fr 1fr; border: 1px solid black; border-radius: 20px; height: 100px;">'
+	                 +'<div style="margin:auto; width:70px;"><img style="width:70px; height:70px; border-radius:40px;" id="pf" src="'+mainRoot+'/resources/img/member/profile/'+data[i].changeImage+'"></div>'
+	               +' <div style="display: grid; grid-template-rows: 1fr 1fr;">'
+	               +'<div style=";">'+data[i].name+'</div><div> 부서 : '+data[i].teamName+' </div></div>'
+	               +'<div style="display: grid; grid-template-rows: 1fr 1fr;">'
+	                +'<div style=";">직책 : '+data[i].positionName+' </div>'
+                  +'<div style=";">내선번호 : '+data[i].teamAddress+'</div></div>'
+                  +'<div style="display: grid; grid-template-rows: 1fr 1fr;">'
+	                +'<div style=";">전화번호 : 0'+data[i].id+' </div>'
+	                  +'<div style=";">이메일 : '+data[i].email+'</div></div>'
+	                  
+	                 +'<div style="display: grid; grid-template-rows: 1fr 1fr;">'
+		                +'<div style="margin:auto; "><div style="border:0px; backgournd-color:red;" class="mainChatBtnDiv" onclick="goChatRoomFromMain('+data[i].no+','+loginMemberNo+')">채팅</div> </div>'
+		                  +'<div style="margin:auto; "><div style="border:0px; backgournd-color:red;"class="mainMailBtnDiv">메일</div> </div></div></div>';
+	                  
+	                  
+	            }
+	            searchMainModalList.innerHTML = list;
+	        },
+	        error: function(error) {
+	        	alert("errstart");
+	            // AJAX 요청이 실패했을 때 처리
+	        }
+	    });
+	} 
+	
+	function closeSearchMainModal() {
+		const modal = document.querySelector(".searchMainModal");
+	    const modalList = document.querySelector(".searchMainModalList");
+	    
+	    modalList.innerHTML = ''; // Clear the content
+	    modal.style.display = "none";
+	}
+
+////////////////////////
 	function goDataroomByAside() {
 	    window.location.href = "${root}/dataroom/list";
 	}
@@ -563,6 +705,15 @@
 	
 	function goApprovalByAside(){
 		window.location.href = "${root}/approval/approvalFirstPage"
+	}
+	
+	function goChatRoomFromMain(selectMemberNo,loginMenberNo) {
+		closeSearchMainModal();
+		const width = 517;
+	    const height = 820;
+	    const left = (window.innerWidth / 2) - (width / 2);
+	    const top = 100;
+	    window.open('${root}/chat/room?selectMemberNo=' + selectMemberNo +'&user1No='+loginMenberNo, '', 'width=' + width + ', height=' + height + ', left=' + left + ', top=' + top);
 	}
 	$(document).ready(function() {
         // 문서가 준비되면 surveyAlert 함수를 호출합니다.
@@ -616,114 +767,6 @@
          window.location.href = "${root}/mail/list";
      }
 
-     function getRandomColor() {
-		var letters = '0123456789ABCDEF';
-		var color = '#';
-		for (var i = 0; i < 6; i++) {
-			color += letters[Math.floor(Math.random() * 16)];
-			if(color == '#ffffff'){
-				return color;
-			}
-		}
-		return color;
-	}
-
-    
-
-	var randomColor = getRandomColor(); // 랜덤 색상 생성
-
-	(function () {
-		$(function () {
-			// calendar element 취득
-			var calendarEl = $('#calendar')[0];
-			// full-calendar 생성하기
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				height: '100px', // calendar 높이 설정
-                contentHeight: 100, // 원하는 높이로 변경
-				expandRows: true, // 화면에 맞게 높이 재설정
-				slotMinTime: '10:00', // Day 캘린더에서 시작 시간
-				slotMaxTime: '18:00', // Day 캘린더에서 종료 시간
-				// 해더에 표시할 툴바
-				headerToolbar: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-				},
-				initialView: 'dayGridMonth', // 초기 로드 될때 보이는 캘린더 화면(기본 설정: 달)
-				// initialDate: '2021-07-15', // 초기 날짜 설정 (설정하지 않으면 오늘 날짜가 보인다.)
-				navLinks: true, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-				editable: true, // 수정 가능?
-				selectable: true, // 달력 일자 드래그 설정가능
-				nowIndicator: true, // 현재 시간 마크
-				dayMaxEvents: true, // 이벤트가 오버되면 높이 제한 (+ 몇 개식으로 표현)
-				locale: 'ko', // 한국어 설정
-				// 이벤트 
-				events: [
-					<c:forEach items="${myList}" var="my">
-					    <c:if test="${my.scheduleTypeNo==1}">
-					        {
-					        title: '${my.title}',
-					        start: '${my.startDate}',
-					        end: '${my.endDate}',
-					        backgroundColor: 'coral'
-					        },
-					    </c:if>
-					    <c:if test="${my.scheduleTypeNo==3}">
-					        {
-					        title: '${my.title}',
-					        start: '${my.startDate}',
-					        end: '${my.endDate}',
-					        backgroundColor: 'lightgray'
-					        },
-					    </c:if>
-				        <c:if test="${my.scheduleTypeNo==4}">
-					        {
-					        title: '${my.title}',
-					        start: '${my.startDate}',
-					        end: '${my.endDate}',
-					        backgroundColor: 'skyblue'
-					        },
-					    </c:if>
-					    <!-- 추가적인 조건에 따른 데이터 처리 -->
-					</c:forEach>
-
-					<c:forEach items="${teamList}" var="team">
-						{
-						title: '${team.title}',
-						start: '${team.startDate}',
-						end: '${team.endDate}',
-						backgroundColor: 'crimson'
-						},
-					</c:forEach>
-				]
-			});
-
-
-			// 캘린더 랜더링
-			calendar.render();
-		});
-	})();
-	
-	function deleteSchedule(no) {
-		  $.ajax({
-		    url: '${root}/schedule/calendar/delete',
-		    type: 'post',
-		    data: {
-		      no: JSON.stringify(no)
-		    },
-		    dataType: 'json', // JSON 데이터로 처리하기 위한 설정
-		    success: function (x) {
-		    	alert(x);
-		      location.reload();
-		    },
-		    error: function (e) {
-		      alert('작성자만 삭제가 가능합니다');
-		      alert(e);
-		      location.reload();
-		    }
-		  });
-		}
-
-
+   
 </script>
 </html>

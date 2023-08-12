@@ -97,6 +97,7 @@
    		height:100px;
    }
    #topnothing{
+   	border-bottom:1px solid black;
         padding-top: 20px;
         
     }
@@ -174,7 +175,7 @@
    }
    #teamWrap{
    		display: grid;
-   		grid-template-columns: 2fr 1fr;
+   		grid-template-columns: 5fr 4fr;
    }
    .list:hover{
    		background-color: lightgray;
@@ -246,13 +247,13 @@
            		 </div>
 	        </div>
         </div>
-        <hr style="background-color: rgb(214, 248, 246);">
+        <!-- <hr style="background-color: rgb(214, 248, 246);"> -->
 	<div class="chatlistWrap">
 
 	    <div class="scrollable-container">
 		    <c:forEach items="${voList}" var="vo">
 		    	<c:if test="${vo.user1No eq (loginMember.no)}">
-		  
+		  			</br>
 			       <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;" onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})"> <!-- 수정된 부분 -->
 					    <div class="uImage"><img style="border-radius:50px; "alt="" src="${root}/resources/img/member/profile/${vo.user2Image}"></div>
 					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
@@ -262,10 +263,10 @@
 					       
 					    </div>
 					</div>
-					<br>
+					
 				</c:if>
 				<c:if test="${vo.user2No eq (loginMember.no)}">
-				
+					</br>
 			     <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;"onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})">
 					    <div class="uImage">  	<img alt="" src="${root}/resources/img/member/profile/${vo.user1Image}"></div>
 					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
@@ -274,7 +275,7 @@
 						    <input type="hidden" class="teamChatNo" value="${vo.no}">
 					    </div>
 					</div>
-					<br>
+					
 				</c:if>
 
 		    </c:forEach>
@@ -292,8 +293,8 @@
 		                        <option value="positionName">직책</option>
 		                        <option value="teamName">부서</option>
 		                    </select>
-		                    <input type="text" id="searchValue" placeholder="검색할 값을 입력하세요">
-		                    <button id="searchButton" onclick="performSearch()">검색</button>
+							<input type="text" id="searchValue" onkeyup="performSearch()" />
+		                   <button id="searchButton" onclick="performSearch()">검색</button>
 				        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="close">&times;</span>
                		 </div>
 				        <div id="teamWrap" style="height:500px;">
@@ -371,9 +372,17 @@ function goPosition(clickedTeam) {
 
 function performSearch() {
 	
+	
     const searchType = document.querySelector("#searchType").value; // 검색 조건 가져오기
     const searchValue = document.querySelector("#searchValue").value; // 검색 값을 가져오기
 
+    
+    if (searchValue.trim() === "") {
+        // 검색 값이 없을 경우, 결과를 비우고 리턴
+        const div = document.querySelector("#detailsContainer");
+        div.innerHTML = "";
+        return;
+    }
     $.ajax({
         url: "${root}/chat/searchMember",
         method: 'POST',
