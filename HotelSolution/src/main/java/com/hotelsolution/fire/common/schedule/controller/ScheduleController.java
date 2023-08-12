@@ -128,7 +128,17 @@ public class ScheduleController {
 		return gson.toJson("작성자가 아닙니다.");
 	}
 	
-	
+	@PostMapping(value = "list", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String list(HttpSession session) {
+	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
+	    Gson gson = new Gson();
+	    List<ScheduleVo> voList = service.getScheduleList(loginMember);
+	    System.out.println(voList);
+	    System.out.println(gson.toJson(voList));
+	    return gson.toJson(voList);
+	}
+
 }
 		
 

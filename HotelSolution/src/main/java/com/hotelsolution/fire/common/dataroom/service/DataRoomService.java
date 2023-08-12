@@ -22,4 +22,6 @@ public interface DataRoomService {
 
 	int deleteDate(String dataNo);
 
+	List<DataRoomVo> getDataRoomListMain(Map<String, Object> map2);
+
 }

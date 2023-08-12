@@ -299,6 +299,8 @@
 								        </div>
 								    </div>
 								</c:forEach>
+							</c:if>
+
 								 <div id="data-page-area">
 					            	<c:if test="${dataRoomListPv.currentPage > 1}">
 						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}">이전</a>
@@ -316,8 +318,6 @@
 						            	<a  href="${root}/dataroom/list?categoryNo=${categoryNo}&dataRoomListPage=${dataRoomListPv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}">다음</a>
 						            </c:if>
 					            </div>
-							</c:if>
-
 						</div>
 						
 			        </div>

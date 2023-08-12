@@ -21,7 +21,10 @@ public class DataRoomDaoImpl implements DataRoomDao {
 		RowBounds rb = new RowBounds(dataRoomListPv.getOffset(), dataRoomListPv.getBoardLimit());
 		return sst.selectList("dataroom.getDataRoomList", map, rb);
 	}
-
+	@Override
+	public List<DataRoomVo> getDataRoomListMain(SqlSessionTemplate sst, Map<String, Object> map) {
+		return sst.selectList("dataroom.getDataRoomList", map);
+	}
 	@Override
 	public int write(SqlSessionTemplate sst, DataRoomVo drvo, List<DataRoomFileVo> drfvoList) {
 		int result = sst.insert("dataroom.writeDataroom", drvo);//loginMemberNo 전달되야됨

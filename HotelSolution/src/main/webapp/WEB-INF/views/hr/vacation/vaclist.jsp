@@ -416,7 +416,7 @@
 													<div class="vac2DateWrap">
 														<div class="vac2Date">${vdvo.vacationStart} ~ ${vdvo.vacationEnd}</div>
 														<c:if test="${loginMember.approvalPower==1 }">
-															<div class="vac2app"style="margin-top:10px;padding-top:2px; width:35px; border-radius:10px;">결재</div> 
+															<div class="vac2app"style="margin-top:10px;padding-top:2px; width:35px; border-radius:10px;" onclick="goApproval(${vdvo.no})">결재</div> 
 														</c:if>
 													</div>
 													<div class="vac2Date">신청일 : ${vdvo.enrollDate}</div>
@@ -445,6 +445,9 @@
 		
 		 window.location.href = '${root}/hr/em/getDetail?memberNo=' + memberNo ;
 		
+	}
+	function goApproval(appNo) {
+		window.location.href = '${root}/approval/getVacationDetail?no=' + appNo ;
 	}
 </script>
 </html>

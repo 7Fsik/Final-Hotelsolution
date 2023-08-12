@@ -15,30 +15,10 @@
 }
 
 /*1 */
-.commute-box {
-    display: flex;
-    padding: 20px;
-    font-size: 30px;
-    font-weight: bold;
-    grid-column: 1 / 2; /* 첫 번째 열에 배치합니다. */
-    grid-row: 1 / 2;    /* 첫 번째 행에 배치합니다. */
-    background-color: #ffffff;
-    border-radius: 10px;
-    width : 650px;
-}
+
 
 /*2*/
-.calendar-box {
-    display: flex;
-    padding: 20px;
-    font-size: 30px;
-    justify-content: center;
-    grid-column: 2 / 3; /* 두 번째 열에 배치합니다. */
-    grid-row: 1 / 2;    /* 첫 번째 행에 배치합니다. */
-    background-color: #ffffff;
-    border-radius: 10px;
-    width : 650px;
-}
+
 
 /*3*/
 .mail{

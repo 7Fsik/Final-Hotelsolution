@@ -59,4 +59,9 @@ public class DataRoomServiceImpl implements DataRoomService {
 		return dao.deleteDate(sst,dataNo);
 	}
 
+	@Override
+	public List<DataRoomVo> getDataRoomListMain(Map<String, Object> map2) {
+		return dao.getDataRoomListMain(sst,map2);
+	}
+
 }

@@ -217,7 +217,7 @@
 		const resultDiv = document.querySelector(".receive-chat-area");
 		 resultDiv.scrollTop = resultDiv.scrollHeight;
 		//웹소켓 만들기
-		let ws = new WebSocket("ws://127.0.0.1:8080/fire/hsSock");
+		let ws = new WebSocket("ws://192.168.0.238:8888/fire/hsSock");
 		
 		ws.onopen = funcOpen;
 		ws.onclose = funcClose;
@@ -318,42 +318,36 @@
 						            // 성공적으로 데이터를 전송한 후의 동작을 여기에 추가
 		}
 		
-		 window.addEventListener("beforeunload", function(event) {
-			 const user1No = document.querySelector(".user1No").value;
-               const user2No = document.querySelector(".user2No").value;
-               const chatRoomNo = document.querySelector(".chatRoomNo").value;
-               const loginMemberNo = document.querySelector(".loginMemberNo").value;
-               
-			  $.ajax({
-                  type: "POST",
-                  url: "${root}/chat/updateTime",
-                  data: JSON.stringify({
-                      user1No: user1No,
-                      user2No: user2No,
-                      chatRoomNo: chatRoomNo,
-                      loginMemberNo: loginMemberNo
-                  }),
-                  contentType: "application/json",
-                  success: function (response) {
-                	
-      	               
-						  console.log("updateTime success");
-			                      
-			                      // funcClose 함수 호출
-                      funcClose();
-      	                // 서버의 updateTime 함수 호출
-      	              
-      	            
-                      
-                    
-                  },
-                  error: function (xhr, status, error) {
-                      console.error("Error:", error);
-                  }
-              });
-	           
-	        });
-		
+		window.addEventListener("beforeunload", function(event) {
+		    const user1No = document.querySelector(".user1No").value;
+		    const user2No = document.querySelector(".user2No").value;
+		    const chatRoomNo = document.querySelector(".chatRoomNo").value;
+		    const loginMemberNo = document.querySelector(".loginMemberNo").value;
+
+		    $.ajax({
+		        type: "POST",
+		        url: "${root}/chat/updateTime",
+		        data: JSON.stringify({
+		            user1No: user1No,
+		            user2No: user2No,
+		            chatRoomNo: chatRoomNo,
+		            loginMemberNo: loginMemberNo
+		        }),
+		        contentType: "application/json",
+		        success: function (response) {
+		            console.log("updateTime success");
+		            // funcClose 함수 호출
+		            funcClose();
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error:", error);
+		        }
+		    });
+
+		    // 경고 메시지를 표시할 메시지를 반환
+		    return "채팅창을 나갑니다";
+		});
+
 		
 		function f01(user1No,user2No,chatRoomNo){
 
