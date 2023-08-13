@@ -619,6 +619,20 @@ public class ApprovalController {
 		
 		return result;
 	}
+	
+	//내가받은결재(화면)
+	@PostMapping("getApprovalCntInMain")
+	@ResponseBody
+	public int getApprovalCntInMain(Model model , HttpSession session) {
+			
+			MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
+			String no = loginMember.getNo();
+			
+			int listCount = service.getApprovalCntInMain(no);
+			
+			return listCount;
+			
+		}
 }//class
 
 

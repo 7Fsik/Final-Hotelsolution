@@ -37,7 +37,6 @@ public class SearchMemberController {
 		
 		Gson gson = new Gson();
     	String list = gson.toJson(memberVoList);
-    	System.out.println("list"+list);
     	return list;
 		
 	}

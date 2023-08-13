@@ -388,7 +388,6 @@
     	                dataType: "json",
     	                success: function (x) {
     	                    alert('반려처리 되었습니다.');
-    	                    teamLeader.style.color = "red";
     	                    location.reload();
     	                },
     	                error: function (e) {
@@ -408,7 +407,6 @@
     	                    dataType: "json",
     	                    success: function (x) {
     	                        alert('반려처리 되었습니다.');
-    	                        hrLeader.style.color = "red";
     	                        location.reload();
     	                    },
     	                    error: function (e) {

@@ -165,7 +165,6 @@ import lombok.RequiredArgsConstructor;
 			map.put("sevenDaysAgoTimestamp", sevenDaysAgoTimestamp);
 			map.put("no", memberNo);
 			List<WorkoutVo> voList = wservice.getWorkOutVoListByWeek(map);
-			System.out.println(voList);
 			 // List<String> 타입의 리스트 생성
 	        List<String> workMinuteList = new ArrayList<>();
 	        List<String> workStartTimeList = new ArrayList<>();
@@ -201,7 +200,6 @@ import lombok.RequiredArgsConstructor;
 
 	            // dayToIndexMap에서 해당 요일에 해당하는 인덱스 번호를 가져옴
 	            Integer index = dayToIndexMap.get(day);
-	            System.out.println("index"+index+day);
 	            if (index != null) {
 	                // tableList에 해당 인덱스 번호에 h 값을 추가
 	            	workMinuteList.set(index, h);

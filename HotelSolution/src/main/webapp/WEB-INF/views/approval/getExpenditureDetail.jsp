@@ -501,7 +501,6 @@
     	                dataType: "json",
     	                success: function (x) {
     	                    alert('반려처리 되었습니다.');
-    	                    teamLeader.style.color = "red";
     	                    location.reload();
     	                },
     	                error: function (e) {
@@ -521,7 +520,6 @@
     	                    dataType: "json",
     	                    success: function (x) {
     	                        alert('반려처리 되었습니다.');
-    	                        prLeader.style.color = "red";
     	                        location.reload();
     	                    },
     	                    error: function (e) {
@@ -557,7 +555,7 @@
     	                },
     	                dataType: "json",
     	                success: function (x) {
-    	                    alert('승인처리 되었습니다.');
+    	                    alert('승인처리 되었습니다.')
     	                    location.reload();
     	                },
     	                error: function (e) {

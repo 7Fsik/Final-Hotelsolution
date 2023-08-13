@@ -150,6 +150,7 @@
 .mainScheduleList{
 	height : 320px;
 	overflow-y:auto; 
+	width: 600px;
 }
 
 

@@ -345,7 +345,13 @@
         WHERE APP_NO = #{no}
 		
 	</select>
+	<select id="getApprovalCntInMain" resultType="int">
 	
+		SELECT COUNT(NO)
+		FROM APPROVER
+        WHERE APP_NO = #{no}
+		AND STATUS_NO = 1
+	</select>
 	<select id="getMyApproval" resultType="com.hotelsolution.fire.approval.vo.ApprovalVo" parameterType="java.util.Map">
 	
 		SELECT 

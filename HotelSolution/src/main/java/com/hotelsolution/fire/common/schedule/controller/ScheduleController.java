@@ -134,8 +134,6 @@ public class ScheduleController {
 	    MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
 	    Gson gson = new Gson();
 	    List<ScheduleVo> voList = service.getScheduleList(loginMember);
-	    System.out.println(voList);
-	    System.out.println(gson.toJson(voList));
 	    return gson.toJson(voList);
 	}
 

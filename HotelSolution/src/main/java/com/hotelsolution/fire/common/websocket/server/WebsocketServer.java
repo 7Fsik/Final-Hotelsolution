@@ -34,29 +34,23 @@ public class WebsocketServer extends TextWebSocketHandler {
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		log.info("afterConnectionEstablished 호출됨 ...");
 		sessionSet.add(session);
 	}
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		log.info("afterConnectionClosed 호출됨 ...");
 		sessionSet.remove(session);
 	}
 	
 	@Override
 
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		log.info("handleTextMessage 호출됨 ...");
-		log.info("handleTextMessage 호출됨 ... : {}", message);
      
 		MemberVo loginMember = (MemberVo) session.getAttributes().get("loginMember");
 		Gson gson = new Gson();
 		
 	    TeamChatMessageVo vo = gson.fromJson(message.getPayload(), TeamChatMessageVo.class);
 	    MessageVo mvo = gson.fromJson(message.getPayload(), MessageVo.class);
-	    System.out.println("팀채팅으로"+vo);
-	    System.out.println("1:1채팅으로"+mvo);
 	    String jsonStr="";
 		if(vo.getTeamChatNo() != null) {
 			vo.setSenderName(loginMember.getName());
