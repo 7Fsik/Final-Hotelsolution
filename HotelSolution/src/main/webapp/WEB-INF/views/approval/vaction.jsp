@@ -529,7 +529,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td class="td2">결재</td>
+                                                <td class="td2" style="width:50px;">결재</td>
                                                 <td style="width: 300px;" onclick="delEmployee();" class="employee-name modalTl"></td>
                                             </tr>
                 
@@ -537,7 +537,7 @@
                                             
                                             <tr>
                                                 <td>2</td>
-                                                <td class="td2">결재</td>
+                                                <td class="td2" style="width:50px;">결재</td>
                                                 <c:forEach items="${list}" var = "member">
                                                     <c:if test="${member.approvalPower eq '1' }">
                                                         <td style="width:300px" class="modalHrTl"><input type="hidden" class="hrtlNo" value="${member.no}"> ${member.name}(${member.teamName} ${member.positionName})</td>
@@ -917,6 +917,7 @@
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',  
                         success : (data)=>{
+                            console.log(data);
                             str += '<div class="x-container">'
                         for(let i=0; i<data.length; i++){
                             str += '<input type="checkbox" class="employee-checkbox tlNo" name="checkbox-" value="  '+'['+data[i].no+']' + ' '+ data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
