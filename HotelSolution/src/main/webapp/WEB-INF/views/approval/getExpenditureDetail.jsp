@@ -475,7 +475,6 @@
     	                },
     	                dataType: "json",
     	                success: function (x) {
-    	                    alert("1 이 나오면 반려 성공 : " + x);
     	                    teamLeader.textContent = "반려";
     	                    teamLeader.style.color = "red";
     	                    location.reload();
@@ -496,7 +495,6 @@
     	                    },
     	                    dataType: "json",
     	                    success: function (x) {
-    	                        alert("2가 나오면 반려 성공 : " + x);
     	                        prLeader.textContent = "승인";
     	                        prLeader.style.color = "red";
     	                        location.reload();
@@ -534,7 +532,6 @@
     	                },
     	                dataType: "json",
     	                success: function (x) {
-    	                    alert("1 이 나오면 승인 성공 : " + x);
     	                    teamLeader.textContent = "승인";
     	                    teamLeader.style.color = "blue";
     	                    location.reload();
@@ -556,7 +553,6 @@
     	                    },
     	                    dataType: "json",
     	                    success: function (x) {
-    	                        alert("2가 나오면 승인 성공 : " + x);
     	                        prLeader.textContent = "승인";
     	                        prLeader.style.color = "blue";
     	                        location.reload();

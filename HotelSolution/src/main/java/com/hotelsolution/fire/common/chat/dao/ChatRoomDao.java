@@ -74,7 +74,6 @@ public class ChatRoomDao {
 	}
 
 	public int updateTime(SqlSessionTemplate sst, Map<String, String> map) {
-		System.out.println("daomap"+map);
 		return sst.update("chatRoom.updateTime",map);
 	}
 

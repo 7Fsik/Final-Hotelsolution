@@ -286,11 +286,12 @@
     position: absolute;
     width:80px;
     top: 50px; /* 메뉴 탭이 이미지 아래에 표시되도록 조절 */
-    margin-top:17px;
-    height : 50px;
+    margin-top:10px;
+    height : 100px;
     background-color: white;
     border: 1px solid #ccc;
     padding-left : 1px;
+    padding-top : 2px;
 }
 
 /* 클릭 시 보여지도록 */
@@ -359,6 +360,7 @@
     cursor: pointer;
 }
 .mdalMemberSearchList:hover{
+cursor:pointer;
 	background-color: rgba(59, 68, 75, 0.2);
 }
 .mainChatBtnDiv:hover{
@@ -368,6 +370,14 @@
 .mainMailBtnDiv:hover{
 	background-color: rgba(59, 68, 75, 0.5);
 	cursor: pointer;
+}
+.sideProfileList:hover{
+	cursor: pointer;
+	background-color: rgba(59, 68, 75, 0.2);
+	color:crimson;
+}
+.sideProfileList{
+	color: rgba(255, 0,0, 0.6); 
 }
 </style>
 <body>
@@ -420,9 +430,9 @@
 					    <!-- 여러 개의 메뉴 탭 -->
 					    
 					    <ul class="notification-menu">
-					        <li><a href="${root}/hr/survey/write" style="text-decoration: none;"><span class="notification-count"> </span></a></li>
-					        <li  onclick="goChatList(${loginMember.no})"><span class="chatList-count"></span> </li>
-					         <%-- <li><a href="${root}/approval/getApproval" style="text-decoration: none;"><span class="main-approval-count"> </span></a></li> --%>
+					        <li style="margin-bottom: 10px;"><a style="color: black; text-decoration: none; " href="${root}/hr/survey/write" style="text-decoration: none;"><span class="notification-count"> </span></a></li>
+					        <li style="margin-bottom: 10px;" onclick="goChatList(${loginMember.no})"><span class="chatList-count"></span> </li>
+					        <li style="margin-bottom: 10px;"><a  style="color: black; text-decoration: none; " href="${root}/approval/getApproval" style="text-decoration: none;"><span class="approval-count"> </span></a></li>
 					        <!-- 추가적인 메뉴 탭들을 원하는 만큼 추가할 수 있습니다. -->
 					    </ul>
 
@@ -490,17 +500,23 @@
                 <div id="profile-menu" class="fontbb">
                 	<div style="display: flex; justify-content: center;">
 	                	<div>
-    		            	설문지 
+    		            	설문지 &nbsp;
             	    	</div>
-                	    <div class="sideProfilesurvey">
+                	    <div class="sideProfilesurvey sideProfileList" onclick="goSurveyWrite();">
                     	</div>
                 	</div>
                    	<div style="display: flex; justify-content: center;">	
                     	<div>
-    		            	채팅 
+    		            	채팅 &nbsp;
             	    	</div>
-                    	<div class="sideProfileChat">
-                    	
+                    	<div class="sideProfileChat sideProfileList" onclick="goChatList(${loginMember.no}); " >
+                    	</div>
+                	</div>
+                	<div style="display: flex; justify-content: center;">	
+                    	<div>
+    		            	결재 &nbsp;
+            	    	</div>
+                    	<div class="sideProfileApproval sideProfileList"  onclick="goApprovalMyList();">
                     	</div>
                 	</div>
                 </div>
@@ -603,6 +619,7 @@
             </div>
 
         </div>
+        
 
 <input type="hidden" value="${root}" class="mainRoot">
 <input type="hidden" value="${loginMember.no}" class="loginMemberNoFromMain">
@@ -703,6 +720,10 @@
 	function goSurvey(){
 		window.location.href = "${root}/hr/survey/create";
 	}
+	
+	function goSurveyWrite(){
+		window.location.href = "${root}/hr/survey/write";
+	}
 	function goEm(){
 		window.location.href =  "${root}/hr/em/list";
 	}
@@ -712,6 +733,9 @@
 	
 	function goApprovalByAside(){
 		window.location.href = "${root}/approval/approvalFirstPage"
+	}
+	function goApprovalMyList(){
+		window.location.href = "${root}/approval/getApproval"
 	}
 	
 	function goChatRoomFromMain(selectMemberNo,loginMenberNo) {
@@ -786,11 +810,41 @@
 
 		}
 
+	 
+	 function getApprovalCntInMain() {
+			
+		 let cnt = 0;
+		    // AJAX 요청을 보냅니다.
+			// class명이 currentMsg인 요소들을 가져옵니다.
+
+			$.ajax({
+			    url: "${root}/approval/getApprovalCntInMain", // 실제 서버의 URL 주소로 대체해야 합니다.
+			    method: 'POST', // 또는 GET 등 HTTP 메서드를 선택합니다.
+			    dataType: 'json',
+			    success: function(x) {
+			        console.log("서버 응답:", x);
+			        // response는 배열 형태의 데이터일 것이므로, 배열의 각 요소를 순회합니다.
+			        if(x !="0"){
+			       $(".sideProfileApproval").text(x);
+			        	
+			        }
+			        noneCheckCnt();
+			    },
+			    error: function(error) {
+			        // AJAX 요청이 실패했을 때 처리하는 로직
+			        console.error("에러:", error);
+			    }
+			});
+
+
+		}
 	 function checkBell() {
 		    let chatCntDiv = document.querySelector(".sideProfileChat");
 		    let surveyCntDiv = document.querySelector(".sideProfilesurvey");
+		    let approvalCntDiv = document.querySelector(".sideProfileApproval");
 		    let chatCnt = parseInt(chatCntDiv.textContent); // 문자열을 숫자로 변환
 		    let surveyCnt = parseInt(surveyCntDiv.textContent); // 문자열을 숫자로 변환
+		    let approvalCnt = parseInt(approvalCntDiv.textContent); // 문자열을 숫자로 변환
 		    
 		    if (chatCnt > 0) {
 		        document.querySelector(".chatList-count").textContent = "채팅 : " + chatCnt;
@@ -800,8 +854,13 @@
 		        document.querySelector(".notification-count").textContent = "설문지 : " + surveyCnt;
 		        document.querySelector(".mainTopBellAlert").textContent = "!";
 		    }
+		    if (approvalCnt > 0) {
+		        document.querySelector(".approval-count").textContent = "결재 : " + approvalCnt;
+		        document.querySelector(".mainTopBellAlert").textContent = "!";
+		    }
 		}
-
+	
+	 
 
 
 
@@ -815,7 +874,7 @@
      $(document).ready(function() {
          // 문서가 준비되면 surveyAlert 함수를 호출합니다.
         
-         noneCheckCnt();
+         getApprovalCntInMain();
        
          // "header-notification" 클래스를 클릭했을 때 메뉴를 전환하는 이벤트 핸들러입니다.
          $(".header-notification").on("click", function() {

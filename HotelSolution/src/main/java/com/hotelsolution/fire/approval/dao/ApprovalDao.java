@@ -93,6 +93,8 @@ public interface ApprovalDao {
 
 	List<ItemVo> getItemInfo(SqlSessionTemplate sst, String no);
 
+	int getApprovalCntInMain(SqlSessionTemplate sst, String no);
+
 
 
 

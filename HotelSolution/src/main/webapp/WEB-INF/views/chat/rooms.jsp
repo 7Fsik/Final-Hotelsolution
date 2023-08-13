@@ -215,7 +215,7 @@
    }
 </style>
 <body>
-              <div style="margin: auto;"><img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px;"></div> 
+              <div style="margin: auto;"><img class="header-logoimg" src="${root}/resources/img/호텔솔루션.png" alt="로고이미지" style="width: 500px; margin-top:10px; margin-left:5px;"></div> 
         <div id="topnothing">
            <input type="hidden" id="loginMemberNo" value="${loginMember.no}">
                     
@@ -253,8 +253,7 @@
 	    <div class="scrollable-container">
 		    <c:forEach items="${voList}" var="vo">
 		    	<c:if test="${vo.user1No eq (loginMember.no)}">
-		  			</br>
-			       <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 72px;" onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})"> <!-- 수정된 부분 -->
+			       <div class="chatRoomList" style="display: grid; grid-template-columns: 1fr 5fr; height: 82px; padding-top:10px;" onclick="goChatRoom(${vo.user1No},${vo.user2No},${vo.no})"> <!-- 수정된 부분 -->
 					    <div class="uImage"><img style="border-radius:50px; "alt="" src="${root}/resources/img/member/profile/${vo.user2Image}"></div>
 					    <div style="display: grid; grid-template-rows: 1fr 1fr;"> <!-- 수정된 부분 -->
 					        <div style="padding-left: 20px;">${vo.user2Name} ${vo.user2PositionName} (${vo.user2TeamName})</div>
