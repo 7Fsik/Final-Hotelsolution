@@ -85,6 +85,10 @@
     	grid-template-columns:1fr 3fr 2.5fr;
 		place-items:center;
     }
+
+	.list-title a{
+		cursor: pointer;
+	}
     
     .list-status{
     	display:grid;
@@ -131,7 +135,7 @@
 		        	</div>
 		        	
 		        	<div class="approval-write">
-		        		<div>결재문서 작성:</div>
+		        		<div>문서 작성 :</div>
 		        		<a href="${root}/approval/vaction">휴가 신청서</a>
 		        		<a href="${root}/approval/expenditure">지출 결의서</a>
 		        	</div>

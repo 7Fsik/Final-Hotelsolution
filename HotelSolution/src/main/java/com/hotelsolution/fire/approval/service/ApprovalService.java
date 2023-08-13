@@ -98,5 +98,7 @@ public interface ApprovalService {
 
 	List<ItemVo> getItemInfo(String no);
 
+	List<MemberVo> searchEmployee(String searchValue);
+
 
 }

@@ -237,6 +237,12 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	}
 
+	@Override
+	//결재선정하기 모달창 직원검색
+	public List<MemberVo> searchEmployee(String searchValue) {
+		return dao.searchEmployee(sst,searchValue);
+	}
+
 	
 	
 

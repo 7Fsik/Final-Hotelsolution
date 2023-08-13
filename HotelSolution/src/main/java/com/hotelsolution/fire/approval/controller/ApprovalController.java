@@ -152,7 +152,7 @@ public class ApprovalController {
 		DocumentVo documentType = service.getDocumentVactionNo(map);
 		
 		session.setAttribute("documentType", documentType);
-		//model.addAttribute("documentType", documentType);
+		model.addAttribute("documentType", documentType);
 		
 		List<PositionVo> positionList = service.getPositionList();
 
@@ -167,7 +167,6 @@ public class ApprovalController {
 		List<MemberVo> list = service.getDecideEmployee(params);
 		
 		model.addAttribute("list" , list);
-		System.out.println("list : " + list);
 		model.addAttribute("positionList" , positionList);
 		model.addAttribute("teamList" , teamList);
 	}
@@ -176,10 +175,6 @@ public class ApprovalController {
 	@PostMapping("vacation")
 	public String vaction(VactionVo vo , ApprovalVo avo , String teamLeader , String hrTeamLeader ,  
 			@RequestParam("reference") List<String> referenceList , HttpSession session) {
-		System.out.println("teamLeader :" +teamLeader);
-		System.out.println("hrteamLeader :" +hrTeamLeader);
-		System.out.println(referenceList);
-		System.out.println("avo : " + avo);
 		MemberVo loginMember = (MemberVo)session.getAttribute("loginMember");
 		String no = loginMember.getNo();
 		
@@ -266,7 +261,6 @@ public class ApprovalController {
 		model.addAttribute("teamList" , teamList);
 		
 		List<ItemVo> itemList = service.getItemList();
-		System.out.println("itemsList : " +itemList);
 		
 		model.addAttribute("itemList" , itemList);
 		session.setAttribute("documentType", documentType);
@@ -312,16 +306,11 @@ public class ApprovalController {
 		
 		ApproverVo appVo = new ApproverVo();
 		startIndex = teamLeader.indexOf("[")+1;
-		System.out.println("startIndex : " + startIndex);
 		endIndex = teamLeader.indexOf("]");
-		System.out.println("startIndex : " + endIndex);
 		String tlNo = teamLeader.substring(startIndex , endIndex);
-		System.out.println(tlNo);
 		List<String> approverList = new ArrayList<String>();
 		approverList.add(tlNo);
 		approverList.add(prTeamLeader);
-		System.out.println("teamLeader : " + teamLeader);
-		System.out.println("prTeamLeader : " + prTeamLeader);
 		
 		int x = 0;
 		int result4 =0;
@@ -366,8 +355,6 @@ public class ApprovalController {
 		
 		DocumentVo documentType = service.getDocumentReportNo(map);
 		
-		System.out.println("@@@"+documentType);
-		
 		session.setAttribute("documentType", documentType);
 //		model.addAttribute("documentType" , documentType);
 		
@@ -397,7 +384,6 @@ public class ApprovalController {
 		
 		ApprovalVo avo = service.getDocumentNo(no);
 		String avoNo = avo.getNo();
-		System.out.println(avoNo);
 		
 		Map<String, String> map = new HashMap<>();
 		map.put("avoNo", avoNo);
@@ -533,30 +519,47 @@ public class ApprovalController {
 	
 	
 	//결재선 정하기(화면)
-	@GetMapping("approvalLine")
-	public void approvalLine(Model model ,String name , String approvalPower , String positionName , String teamName) {
+//	@GetMapping("approvalLine")
+//	public void approvalLine(Model model ,String name , String approvalPower , String positionName , 
+//			String teamName , String searchValue) {
+//		
+//	List<PositionVo> positionList = service.getPositionList();
+//
+//	List<TeamVo> teamList = service.getTeamList();
+//	
+//	Map<String, String> params = new HashMap<>();
+//	params.put("name", name);
+//	params.put("positionName", positionName);
+//	params.put("teamName", teamName);
+//	params.put("approvalPower", approvalPower);
+//	params.put("searchValue", searchValue);
+//	System.out.println(params);
+//	List<MemberVo> list = service.getDecideEmployee(params);
+//	
+//	//model.addAttribute("voList" , voList);
+//	model.addAttribute("list" , list);
+//	System.out.println(list);
+//	model.addAttribute("positionList" , positionList);
+//	model.addAttribute("teamList" , teamList);
+//	
+//		
+//	}
+	
+	//결재선 정하기 모달창 직원검색
+	@GetMapping("searchEmployee")
+	@ResponseBody
+	public String searchEmployee(String searchValue) {
 		
-	List<PositionVo> positionList = service.getPositionList();
-
-	List<TeamVo> teamList = service.getTeamList();
-	
-	Map<String, String> params = new HashMap<>();
-	params.put("name", name);
-	params.put("positionName", positionName);
-	params.put("teamName", teamName);
-	params.put("approvalPower", approvalPower);
-	System.out.println(params);
-	List<MemberVo> list = service.getDecideEmployee(params);
-	
-	//model.addAttribute("voList" , voList);
-	model.addAttribute("list" , list);
-	System.out.println(list);
-	model.addAttribute("positionList" , positionList);
-	model.addAttribute("teamList" , teamList);
-	
+		System.out.println("searchValue : "+searchValue);
+		
+		List<MemberVo>  employeeList = service.searchEmployee(searchValue);
+		
+		Gson gson = new Gson();
+		String eList = gson.toJson(employeeList);
+		
+		return eList;
 		
 	}
-	
 	
 	@GetMapping("getEmployee")
 	@ResponseBody
@@ -568,8 +571,6 @@ public class ApprovalController {
 		map.put("positionNo", positionNo);
 		map.put("positionName", positionName);
 		map.put("teamName", teamName);
-		
-		System.out.println(map);
 		
 		List<MemberVo> voList = service.getEmployee(map);
 		System.out.println(voList);

@@ -543,8 +543,8 @@
                     <div class="lineText">결재선 설정</div>
                     <div id="search-bar">
                         <div class="search-btn">
-                            <input type="text" name="search" placeholder="이름 검색">
-                            <button>검색</button>
+                            <input type="text" name="searchValue" placeholder="이름 검색">
+                            <button type="submit" onclick="searchEmployee();">검색</button>
                         </div>
                         <div id="employee">
                             <div class="team-container">
@@ -1120,6 +1120,37 @@
 
                 closeModal();
 
+            }
+
+            function searchEmployee(params) {
+                const searchValueInput = document.querySelector('input[name=searchValue]');
+                const searchValue = searchValueInput.value;
+                let x = document.querySelector('.x');
+                let str = "";
+                    $.ajax({
+                        url : '${root}/approval/searchEmployee',
+                        method : 'get',
+                        data : {
+                            searchValue : searchValue,
+                        },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',  
+                        success : (data)=>{
+                            str += '<div class="x-container">'
+                        for(let i=0; i<data.length; i++){
+                            str += '<input type="checkbox" class="employee-checkbox tlNo" name="checkbox-" value="  '+'['+data[i].no+']' + ' '+ data[i].name + ' ' + '('+data[i].teamName+' '+data[i].positionName+')'+'">'+
+                            data[i].name +" " +"("+data[i].teamName + " "+data[i].positionName+")" + "<br>";
+                            str += '<input type="hidden" name="positionNo" value="'+data[i].positionNo+'">'
+                        }
+                            str += "</div>"
+                        x.innerHTML = str;
+                        },
+                        error : (e)=>{
+                            alert('통신실패' + e);
+                        },
+    
+                    })
+                
             }
 		
 

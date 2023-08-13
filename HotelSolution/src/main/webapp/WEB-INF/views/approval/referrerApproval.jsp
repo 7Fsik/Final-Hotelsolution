@@ -88,6 +88,10 @@
     	align-items:center;
     	text-align:center;
     }
+	
+	.list-title a{
+		cursor: pointer;
+	}
     
     .list-status{
     	display:grid;

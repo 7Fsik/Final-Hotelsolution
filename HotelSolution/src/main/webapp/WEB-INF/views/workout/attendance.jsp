@@ -84,7 +84,6 @@
     	border-radius:16px;
     	color:white;
         cursor: pointer;
-        width:70px;
         height:40px;
         font-size:1.2em;
     }
@@ -96,10 +95,16 @@
         align-items: center;
         text-align: center;
         margin-bottom:15px;
+        flex-direction:row;
     }
+
+	.work-btn .text{
+		color: white;
+	}
     
     .text{
     	font-size:12px;
+		color: white;
     }
     
     .work-time{
@@ -187,7 +192,6 @@
 
 	#startBtn{
 		position: relative;
-		right: 10px;
 	}
 
 	.blueCircle{
@@ -334,8 +338,8 @@
 				               	</div>
 			               </div>
 			               	<div class="work-btn">
-				               	<div><button style="width: 100px;" id="startBtn" onclick="startClock();">출근</button></div>
-				               	<div><button style="width: 100px;" id="endBtn" onclick="stopClock();">퇴근</button></div>
+				               	<span><button id="startBtn" onclick="startClock();">출근</button></span>
+				               	<span><button id="endBtn" onclick="stopClock();">퇴근</button></span>
 				               	<div class="text">버튼을 눌러 <br>출근시간을 기록하세요</div>
 			               	</div>
 		               </div>
