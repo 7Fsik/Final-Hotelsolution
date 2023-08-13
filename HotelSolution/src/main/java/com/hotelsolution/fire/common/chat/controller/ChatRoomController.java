@@ -60,11 +60,9 @@ public class ChatRoomController {
     public void goRoom(String selectMemberNo,String user1No,Model model,String chatRoomNo, HttpSession session) {
     	if(chatRoomNo==null) {
     		String a = create(model, selectMemberNo, session);
-    		System.out.println(a);
     		Gson gson = new Gson();
     	    ChatRoomVo chatRoomVo = gson.fromJson(a, ChatRoomVo.class);
     	    chatRoomNo = chatRoomVo.getNo();
-    	    System.out.println("roomId: " + chatRoomNo);
     	}
     	
     	 MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
@@ -73,33 +71,10 @@ public class ChatRoomController {
          map.put("user1No", user1No);
          map.put("user2No", user2No);
          map.put("loginMemberNo", loginMember.getNo());
-         System.out.println("map"+map);
         
          List<MessageVo> voList= service.getMessage(map);
-         System.out.println("msvoList"+voList);
-         System.out.println("chatRoomNo"+chatRoomNo);
-//         chatRoomNo = vo.getNo();
-//         if(chatRoomNo == null) {
-//        	 
-//    	 
-//    		 
-//    		 int result = service.createChatRoomVo(map);
-//    		 System.out.println("result"+result);
-//    		 if(result ==1) {
-//    			 ChatRoomVo vo2 = service.getCreateChatRoomVo(map);
-//    			 System.out.println("vo2"+vo2);
-//    			 map.put("chatRoomNo",  vo2.getNo());
-//    		
-//        		
-//        	 }
-//         }else {
-//        	 
-//         }
-//         
          map.put("chatRoomNo", chatRoomNo);
-         System.out.println(map);
          int result = updateTime(map);
-         System.out.println(result);
          if(result!=1) {
         	 throw new RuntimeException("1:1 채팅방 입장중 에러");
          }
@@ -116,7 +91,6 @@ public class ChatRoomController {
 
 
         int result = service.updateTime(data);
-        System.out.println("시간 업데이트 서옥ㅇ시 1 :" +result);
         return result;
     }
 

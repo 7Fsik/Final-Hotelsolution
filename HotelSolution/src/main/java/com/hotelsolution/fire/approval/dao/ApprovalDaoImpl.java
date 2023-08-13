@@ -225,6 +225,11 @@ public class ApprovalDaoImpl implements ApprovalDao{
 
 	}
 
+	@Override
+	public int getApprovalCntInMain(SqlSessionTemplate sst, String no) {
+		return sst.selectOne("approval.getApprovalCntInMain" , no);
+	}
+
 
 
 //	@Override

@@ -237,6 +237,11 @@ public class ApprovalServiceImpl implements ApprovalService{
 
 	}
 
+	@Override
+	public int getApprovalCntInMain(String no) {
+		return dao.getApprovalCntInMain(sst,no);
+	}
+
 	
 	
 

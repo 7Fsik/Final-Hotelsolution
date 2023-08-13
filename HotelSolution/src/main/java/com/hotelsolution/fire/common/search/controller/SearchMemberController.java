@@ -31,13 +31,11 @@ public class SearchMemberController {
 		map.put("searchType", searchType);
 		map.put("searchValue", searchValue);
 		//등록 직원 리스트 조회
-		System.out.println("???"+map);
 	
 		List<MemberVo> memberVoList = service.getSearchList(map);
 		
 		Gson gson = new Gson();
     	String list = gson.toJson(memberVoList);
-    	System.out.println("list"+list);
     	return list;
 		
 	}
