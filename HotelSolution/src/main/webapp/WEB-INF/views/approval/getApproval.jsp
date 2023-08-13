@@ -90,8 +90,8 @@
     }
     
     .list-title a{
-    	cursor:pointer;
-    }
+		cursor: pointer;
+	}
     
     .list-status{
     	display:grid;
@@ -104,7 +104,7 @@
     	display:flex;
     	justify-content:center;
     	align-items:center;
-        margin-top: 50px;
+        margin-top: 20px;
     }
     #page-area > a{
 		margin:15px;
@@ -136,7 +136,7 @@
 		        	</div>
 		        	
 		        	<div class="approval-write">
-		        		<div>결재문서 작성:</div>
+		        		<div>문서 작성 :</div>
 		        		<a href="${root}/approval/vaction">휴가 신청서</a>
 		        		<a href="${root}/approval/expenditure">지출 결의서</a>
 		        	</div>

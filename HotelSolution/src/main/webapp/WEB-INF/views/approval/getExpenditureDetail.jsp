@@ -300,10 +300,23 @@
 											   </td>
 										   </c:when>
 										   <c:otherwise>
-												<td class="teamLeader">
-													<input type="hidden" class="tl" value="${list[0].statusName}">
-													  ${list[0].statusName}
-												 </td>
+										   
+										   	<c:choose>
+										   		<c:when test="${list[0].statusName == '승인' }">
+												   <td class="teamLeader" style="color:blue;">
+													   <input type="hidden" class="tl" value="${list[0].statusName}">
+														 ${list[0].approverName}(${list[0].statusName})
+													</td>
+										   		</c:when>
+
+										   		<c:when test="${list[0].statusName == '반려' }">
+												   <td class="teamLeader" style="color:red;">
+													   <input type="hidden" class="tl" value="${list[0].statusName}">
+														 ${list[0].approverName}(${list[0].statusName})
+													</td>
+										   		</c:when>
+										   	</c:choose>
+										   	
 										   </c:otherwise>
 									   </c:choose>
 
@@ -315,9 +328,21 @@
 												  </td>
 										   </c:when>
 										   <c:otherwise>
-												<td class="prLeader">
-													   ${list[1].statusName}
+										   
+											<c:choose>
+												<c:when test="${list[1].statusName == '승인'}">
+													<td class="prLeader" style="color:blue;">
+													   ${list[1].approverName}(${list[1].statusName})
 												   </td>
+												</c:when>
+
+												<c:when test="${list[1].statusName == '반려'}">
+													<td class="prLeader" style="color:red;">
+													   ${list[1].approverName}(${list[1].statusName})
+												   </td>
+												</c:when>
+											</c:choose>	  
+												 
 										   </c:otherwise>
 									   </c:choose>
 
@@ -383,7 +408,7 @@
                             <tr>
                                 <td>${itemList[1].name}</td>
                                 <td>${itemList[1].count}</td>
-                                <td>${itemList[1].count * itemList[1].price}원</td>
+								<td>${itemList[1].count * itemList[1].price}원</td>
                             </tr>
                            
                             <tr>
@@ -435,8 +460,8 @@
 	                           			<div class="end-div">작성인 : ${vo.writerName}</div>
                            			</div>
 									   <div id="status-btn">
-										<button onclick="submit('${loginMember.no}');"> 승인 ${loginMember.no}</button>
-										<button onclick="reject('${loginMember.no}');">반려 ${loginMember.no}</button>
+										<button onclick="submit('${loginMember.no}');"> 승인</button>
+										<button onclick="reject('${loginMember.no}');">반려</button>
 									</div>
                            		</td>
                            	</tr>
@@ -475,8 +500,7 @@
     	                },
     	                dataType: "json",
     	                success: function (x) {
-    	                    teamLeader.textContent = "반려";
-    	                    teamLeader.style.color = "red";
+    	                    alert('반려처리 되었습니다.');
     	                    location.reload();
     	                },
     	                error: function (e) {
@@ -495,8 +519,7 @@
     	                    },
     	                    dataType: "json",
     	                    success: function (x) {
-    	                        prLeader.textContent = "승인";
-    	                        prLeader.style.color = "red";
+    	                        alert('반려처리 되었습니다.');
     	                        location.reload();
     	                    },
     	                    error: function (e) {
@@ -532,8 +555,7 @@
     	                },
     	                dataType: "json",
     	                success: function (x) {
-    	                    teamLeader.textContent = "승인";
-    	                    teamLeader.style.color = "blue";
+    	                    alert('승인처리 되었습니다.')
     	                    location.reload();
     	                },
     	                error: function (e) {
@@ -553,8 +575,7 @@
     	                    },
     	                    dataType: "json",
     	                    success: function (x) {
-    	                        prLeader.textContent = "승인";
-    	                        prLeader.style.color = "blue";
+    	                        alert('승인처리 되었습니다.');
     	                        location.reload();
     	                    },
     	                    error: function (e) {

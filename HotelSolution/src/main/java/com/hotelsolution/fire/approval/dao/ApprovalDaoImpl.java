@@ -226,8 +226,13 @@ public class ApprovalDaoImpl implements ApprovalDao{
 	}
 
 	@Override
+	public List<MemberVo> searchEmployee(SqlSessionTemplate sst, String searchValue) {
+		return sst.selectList("approval.searchEmployee" , searchValue);
+
+   @Override
 	public int getApprovalCntInMain(SqlSessionTemplate sst, String no) {
 		return sst.selectOne("approval.getApprovalCntInMain" , no);
+
 	}
 
 

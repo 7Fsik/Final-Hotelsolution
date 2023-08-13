@@ -275,12 +275,11 @@
                                     <td>구매/재무팀 팀장</td>
                                 </tr>
                             </thead>
-                                
                                <tbody>
 	                                <tr>
 	                                	<td>${vo.writerName}</td>
-	                                	<td class="teamLeader">${list[0].approverName}</td>
-	                                	<td class="prLeader">${list[1].approverName}</td>
+	                                	<td class="teamLeader">${list[0].approverName}(${list[0].statusName})</td>
+	                                	<td class="prLeader">${list[1].approverName}(${list[1].statusName})</td>
 	                                </tr>
 	                                
 	                                <tr>

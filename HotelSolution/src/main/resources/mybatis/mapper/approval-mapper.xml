@@ -537,4 +537,25 @@
 	
 	</select>
 	
+	<select id="searchEmployee" resultType="MemberVo">
+		
+		 SELECT
+  		m.TEAM_NO  
+  		,m.POSITION_NO 
+  		,m.NAME
+  		,m.NO
+  		,p.NAME	AS POSITION_NAME
+        ,t.TEAM_NAME
+  		FROM MEMBER m
+        JOIN TEAM t ON m.TEAM_NO = t.TEAM_NO
+        JOIN POSITION p ON m.POSITION_NO = p.NO
+        WHERE m.status = 1
+        <if test="searchValue != null and searchValue != '' ">
+	        AND m.NAME LIKE '%${searchValue}%'
+        </if>
+		
+		
+	
+	</select>
+	
 </mapper>

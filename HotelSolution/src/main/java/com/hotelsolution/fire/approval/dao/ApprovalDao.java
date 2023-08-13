@@ -93,6 +93,9 @@ public interface ApprovalDao {
 
 	List<ItemVo> getItemInfo(SqlSessionTemplate sst, String no);
 
+
+	List<MemberVo> searchEmployee(SqlSessionTemplate sst, String searchValue);
+
 	int getApprovalCntInMain(SqlSessionTemplate sst, String no);
 
 
