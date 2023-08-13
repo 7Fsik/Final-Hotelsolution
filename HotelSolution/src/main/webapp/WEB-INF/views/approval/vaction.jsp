@@ -27,7 +27,7 @@
 
 .modal-content {
     background-color: white;
-    margin: 15% auto; /* 상단으로부터 15% 내려오며 중앙 정렬됩니다 */
+    margin: 5% auto; /* 상단으로부터 15% 내려오며 중앙 정렬됩니다 */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* 화면 크기에 따라 조절 가능 */
@@ -216,6 +216,8 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		place-items: center;
+		font-size:12px;
+		cursor:pointer;
 	}
 
 	.submit-btn{
@@ -258,6 +260,10 @@
         display: flex;
         place-items: center;
         justify-content: center;
+    }
+    
+    .modalTl{
+    	cursor:pointer;
     }
 
 
@@ -425,20 +431,27 @@
     	display:flex;
     	justify-content:flex-end;
     	margin-top:15px;
+    	place-items:center;
+    	position:relative;
+    	top:10px;
     }
     
     .submitBtn{
     	display:flex;
     	align-items:center;
     	justify-content:center;
+    	position:relative;
+    	top:30px;
     }
     
     input[type=submit]{
-        background-color: #d9d9d9ed;
-        border: 1px solid lightgray;
+        background-color: #3B444B;
+        border: 1px solid #3B444B;
         border-radius:5px;
+        color:white;
+        height:20px;
     }
-
+    
 	.table{
 		margin:auto;
 		width:600px;
@@ -455,7 +468,13 @@
     .setup-btn:hover{
         background-color: lightgray;
     }
-
+    
+    .approver{
+        border:none;
+        outline:none;
+        text-align:center;
+    }
+    
 </style>
 </head>
 <body>
@@ -647,7 +666,7 @@
                            	<tr>
                            		<td colspan="2">
                            			<div id="last-td">
-	                           			<div style="margin-top:10px;">위의 사유로 휴가신청서를 제출합니다.</div>
+	                           			<div style="margin-top:20px;">위의 사유로 휴가신청서를 제출합니다.</div>
 	                           			<div class="end-div">작성인 : <input style="width: 105px;" class="end-input" type="text" name="name" value="${loginMember.name}"></div>
 						                <div class="submitBtn">
 							                <input type="submit" value="제출하기">
@@ -868,16 +887,16 @@
                 const strMtl  = mtl.textContent;
                 const strHtl = htl.textContent;
                 let str = '';
-                str += '<input type="text" name="teamLeader" id="teamLeader" value="' + strMtl + '">';
+                str += '<input type="text" name="teamLeader" id="teamLeader" class="approver" readonly value="' + strMtl + '">';
                 tl.innerHTML = str;
 
                 let str2 ='';
-                str2+='<input type="text"  id="hrTeamLeader" value="' + strHtl + '">';
+                str2+='<input type="text"  id="hrTeamLeader" class="approver" readonly value="' + strHtl + '">';
                 str2+='<input type="hidden" name="hrTeamLeader" id="hrTeamLeader" value="' + hrtlNo + '">';
                 hl.innerHTML = str2;
                 for(let i = 0; i<a.length; i++){
                     //let aa = a[i].textContent;
-                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" value="' + a[i].textContent + '">'
+                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" class="approver" readonly value="' + a[i].textContent + '">'
                 }
 
                 closeModal();

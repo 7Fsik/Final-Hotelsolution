@@ -25,7 +25,7 @@
 
 .modal-content {
     background-color: white;
-    margin: 15% auto; /* 상단으로부터 15% 내려오며 중앙 정렬됩니다 */
+    margin: 5% auto; /* 상단으로부터 15% 내려오며 중앙 정렬됩니다 */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* 화면 크기에 따라 조절 가능 */
@@ -214,6 +214,8 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		place-items: center;
+		font-size:12px;
+		cursor:pointer
 	}
 
 	.submit-btn{
@@ -256,6 +258,10 @@
         display: flex;
         place-items: center;
         justify-content: center;
+    }
+    
+    .modalTl{
+    	cursor:pointer;
     }
 
 
@@ -384,6 +390,8 @@
     	outline:none;
     	font-size:16px;
     	font-weight:bold;
+    	width:50px;
+    	margin-right:50px;
     }
     
     #last-td{
@@ -394,6 +402,7 @@
     	display:flex;
     	justify-content:flex-end;
     	margin-top:15px;
+    	place-items:center;
     }
     
     .submitBtn{
@@ -403,9 +412,11 @@
     }
     
     input[type=submit]{
-        background-color: #d9d9d9ed;
-        border: 1px solid lightgray;
+        background-color: #3B444B;
+        border: 1px solid #3B444B;
         border-radius:5px;
+        color:white;
+        height:20px;
     }
 
 	.first-table{
@@ -509,6 +520,12 @@
         display: flex;
         place-items: center;
         justify-content: center;
+    }
+    
+    .approver{
+        border:none;
+        outline:none;
+        text-align:center;
     }
     
 </style>
@@ -820,7 +837,7 @@
                            		<td colspan="3">
                            			<div id="last-td">
 	                           			<div class="last-td-content">지출결의서를 제출합니다.</div>
-	                           			<div class="end-div">작성인 : <input style="width: 100px;" class="end-input" type="text" name="name" value="${loginMember.name}"></div>
+	                           			<div class="end-div">작성인 : <input class="end-input" type="text" name="name" value="${loginMember.name}"></div>
 						                <div class="submitBtn">
 							                <input type="submit" value="제출하기">
 						                </div>
@@ -1089,16 +1106,16 @@
                 const strMtl  = mtl.textContent;
                 const strPtl = ptl.textContent;
                 let str = '';
-                str += '<input type="text" name="teamLeader" id="teamLeader" value="' + strMtl + '">';
+                str += '<input type="text" name="teamLeader" id="teamLeader" class="approver" readonly value="' + strMtl + '">';
                 tl.innerHTML = str;
 
                 let str2 ='';
-                str2+='<input type="text"  id="prTeamLeader" value="' + strPtl + '">';
-                str2+='<input type="hidden" name="prTeamLeader" id="prTeamLeader" value="' + prtlNo + '">';
+                str2+='<input type="text"  id="prTeamLeader" class="approver" value="' + strPtl + '">';
+                str2+='<input type="hidden" name="prTeamLeader" id="prTeamLeader" readonly  value="' + prtlNo + '">';
                 pl.innerHTML = str2;
                 for(let i = 0; i<a.length; i++){
                     //let aa = a[i].textContent;
-                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" value="' + a[i].textContent + '">'
+                    refer[i].innerHTML = '<input type="text" name="reference" id="refernceEmp" class="approver" readonly value="' + a[i].textContent + '">'
                 }
 
                 closeModal();

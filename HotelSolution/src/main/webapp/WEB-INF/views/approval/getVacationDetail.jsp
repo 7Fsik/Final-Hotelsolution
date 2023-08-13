@@ -155,6 +155,7 @@
     
     #last-td{
     	font-weight:bold;
+    	margin-top:50px;
     }
     
     .end-div{
@@ -180,6 +181,18 @@
     width:95px;
 	}
 	
+	#status-btn{
+		margin-top:30px;
+	}
+	
+	#status-btn > button{
+		border: 1px solid black;
+		color:white;
+		height:25px;
+		border-radius:5px;
+		background-color:#3B444B;
+	}
+	
     
 </style>
 </head>
@@ -190,11 +203,9 @@
      <%@ include file="/WEB-INF/views/common/main.jsp" %>
 
    <div id="mainboard">
-        		 <button onclick="submit('${loginMember.no}');"> 승인 ${loginMember.no}</button>
-    			<button onclick="reject('${loginMember.no}');">반려 ${loginMember.no}</button>
+        		
         <div id="approval">
         
-        	<form action="">
         	
         		<div id ="head">
         		
@@ -305,18 +316,22 @@
                            			<div id="last-td">
 	                           			<div style="margin-top:10px;">위의 사유로 휴가신청서를 제출합니다.</div>
 	                           			<div class="end-div">작성인 : ${vo.writerName}</div>
-                           			</div>
+									</div>
+									<div id="status-btn">
+										<button onclick="submit('${loginMember.no}');"> 승인 ${loginMember.no}</button>
+										<button onclick="reject('${loginMember.no}');">반려 ${loginMember.no}</button>
+									</div>
                            		</td>
                            	</tr>
 
                         </tbody>
                       
                     </table>
+
                     
         		</div>
 
 
-        	</form>
 	    </div>
    	<input type="hidden" class="approvalNo" value="${vo.no}">
    </div>
