@@ -64,8 +64,9 @@ public class ApprovalController {
 		
 		
 		List<ApprovalVo> approvalList = service.getApproval(map);
-		System.out.println(approvalList);
-		model.addAttribute("approvalList" ,approvalList);
+
+		map.put("approvalList", approvalList);
+		model.addAttribute("map" ,map);
 		
 		return "approval/approvalFirstPage";
 	}
@@ -90,8 +91,9 @@ public class ApprovalController {
 		
 		
 		List<ApprovalVo> getList = service.getMyApproval(map);
-		System.out.println("getList : " + getList );
-		model.addAttribute("getList" , getList);
+		map.put("getList", getList);
+		
+		model.addAttribute("map" , map);
 		
 		return "approval/getApproval";
 		
@@ -116,13 +118,13 @@ public class ApprovalController {
 		map.put("pv", pv);
 		
 		List<ApprovalVo> getList = service.getReferenceApproval(map);
-		System.out.println("refgetList :" + getList);
-		model.addAttribute("getList" , getList);
+		map.put("getList", getList);
+		
+		model.addAttribute("map" , map);
 		
 		return "approval/referrerApproval";
 		
 	}
-	
 	
 	//웹페이지가 로드되었을때 ApprovalDocument 인서트
 	@PostMapping("insertApprovalDocument")
@@ -468,13 +470,60 @@ public class ApprovalController {
 		model.addAttribute("list" , list);
 		model.addAttribute("fList" , fList);
 		model.addAttribute("itemList" , itemList);
-		System.out.println("itemList :" + itemList);
-		System.out.println("vo : " + vo);
-		System.out.println("list : " + list);
-		System.out.println("fList : " + fList);
 	}
 	
 	//내가 받은 지출결의서 상세조회(화면)
+	@GetMapping("getExpenditureDetail")
+	public void getExpenditureDetail(Model model , String no) {
+		ApprovalVo vo = service.expenditureDetail(no);
+		
+		List<ApproverVo> list = service.getApprover(no);
+		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		List<ItemVo> itemList = service.getItemInfo(no);
+		
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+		model.addAttribute("itemList" , itemList);
+	}
+	
+	//참조받은 휴가신청서 상세조회(화면)
+	@GetMapping("referenceVacation")
+	public void referenceVacation(String no , Model model) {
+		ApprovalVo vo = service.vacationDetail(no);
+		List<ApproverVo> list = service.getApprover(no);
+		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+	}
+	
+	
+	
+	
+	//참조받은 지출결의서 상세조회(화면)
+	@GetMapping("referenceExpenditure")
+	public void referenceExpenditure(String no , Model model) {
+		ApprovalVo vo = service.expenditureDetail(no);
+		
+		List<ApproverVo> list = service.getApprover(no);
+		
+		List<ApprovalReferrerVo> fList = service.getReferrer(no);
+		
+		List<ItemVo> itemList = service.getItemInfo(no);
+		
+		
+		model.addAttribute("vo" , vo);
+		model.addAttribute("list" , list);
+		model.addAttribute("fList" , fList);
+		model.addAttribute("itemList" , itemList);
+		
+	}
 	
 	//업무보고서 상세조회(화면)
 	@GetMapping("reportDetail")
@@ -490,12 +539,6 @@ public class ApprovalController {
 	List<PositionVo> positionList = service.getPositionList();
 
 	List<TeamVo> teamList = service.getTeamList();
-	
-//	Map<String, String> map = new HashMap<>();
-//	map.put("documentTypeNo", documentTypeNo);
-//	map.put("documentTypeName", documentTypeName);
-//	
-//	List<DocumentVo> voList = service.getDocumentType(map);
 	
 	Map<String, String> params = new HashMap<>();
 	params.put("name", name);
@@ -563,18 +606,18 @@ public class ApprovalController {
 	}
 	
 	//반려시
-		@PostMapping("reject")
-		@ResponseBody
-		public int reject(String approverNo, String approvalNo) {
-			// 결재자 결재상태 1.진행 2.반려 3. 승인  3으로 승인으로 변경
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("approverNo", approverNo);
-			map.put("approvalNo", approvalNo);
-			int result = service.reject(map);
-			result += service.adYnReject(approvalNo);
-			
-			return result;
-		}
+	@PostMapping("reject")
+	@ResponseBody
+	public int reject(String approverNo, String approvalNo) {
+		// 결재자 결재상태 1.진행 2.반려 3. 승인  3으로 승인으로 변경
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("approverNo", approverNo);
+		map.put("approvalNo", approvalNo);
+		int result = service.reject(map);
+		result += service.adYnReject(approvalNo);
+		
+		return result;
+	}
 }//class
 
 

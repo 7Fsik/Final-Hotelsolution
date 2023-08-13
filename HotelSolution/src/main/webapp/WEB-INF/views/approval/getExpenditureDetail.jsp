@@ -137,6 +137,7 @@
     
     #last-td{
     	font-weight:bold;
+    	margin-top:50px;
     }
     
     .end-div{
@@ -233,7 +234,7 @@
 		margin-top:20px;
 		display:flex;
 		justify-content:center;
-		margin-left:60px;
+		margin-left:30px;
 		font-size: 1.1em;
 	}
 	
@@ -243,6 +244,18 @@
     	margin-top:15px;
     	margin-right:20px;
     }
+
+	#status-btn{
+		margin-top:20px;
+	}
+	
+	#status-btn > button{
+		border: 1px solid black;
+		color:white;
+		height:25px;
+		border-radius:5px;
+		background-color:#3B444B;
+	}
 
 </style>
 </head>
@@ -279,8 +292,37 @@
                                <tbody>
 	                                <tr>
 	                                	<td>${vo.writerName}</td>
-	                                	<td class="teamLeader">${list[0].approverName}</td>
-	                                	<td class="prLeader">${list[1].approverName}</td>
+										<c:choose>
+											<c:when test="${ list[0].statusName eq '진행중'}">
+											   <td class="teamLeader">
+												   ${list[0].approverName}
+													   <input type="hidden" class="tl" value="${list[0].approverName}">
+											   </td>
+										   </c:when>
+										   <c:otherwise>
+												<td class="teamLeader">
+													<input type="hidden" class="tl" value="${list[0].statusName}">
+													  ${list[0].statusName}
+												 </td>
+										   </c:otherwise>
+									   </c:choose>
+
+								   <input type="hidden" class="teamLeaderNo" value="${list[0].appNo}">
+									   <c:choose>
+											<c:when test="${ list[1].statusName eq '진행중'}">
+												   <td class="prLeader">
+														  ${list[1].approverName}
+												  </td>
+										   </c:when>
+										   <c:otherwise>
+												<td class="prLeader">
+													   ${list[1].statusName}
+												   </td>
+										   </c:otherwise>
+									   </c:choose>
+
+
+										<input type="hidden" class="prLeaderNo" value="${list[1].appNo}">
 	                                </tr>
 	                                
 	                                <tr>
@@ -392,6 +434,10 @@
 	                           			<div class="last-td-content">지출결의서를 제출합니다.</div>
 	                           			<div class="end-div">작성인 : ${vo.writerName}</div>
                            			</div>
+									   <div id="status-btn">
+										<button onclick="submit('${loginMember.no}');"> 승인 ${loginMember.no}</button>
+										<button onclick="reject('${loginMember.no}');">반려 ${loginMember.no}</button>
+									</div>
                            		</td>
                            	</tr>
                         </tbody>
@@ -400,7 +446,7 @@
         		</div>
         		
 	    </div>
-
+		<input type="hidden" class="approvalNo" value="${vo.no}">
    
    </div>
 
@@ -408,6 +454,124 @@
     </div>
     
 	<script>
+
+		/// 반려버튼 클릭시
+	function reject(loginMemberNo) {
+    	  let approvalNo = document.querySelector(".approvalNo").value;
+          let teamLeader = document.querySelector('.teamLeader');
+          let tl = document.querySelector('.tl').value;
+          let prLeader = document.querySelector('.prLeader');
+          let pl = prLeader.textContent;
+          let teamLeaderNo =document.querySelector('.teamLeaderNo').value;
+          let prLeaderNo =document.querySelector('.prLeaderNo').value;
+    	    if (teamLeaderNo === loginMemberNo) {
+    	        if (confirm("반려하시겠습니까?")) {
+    	            $.ajax({
+    	                url: "${root}/approval/reject",
+    	                method: "POST",
+    	                data: {
+    	                    approverNo: teamLeaderNo,
+    	                    approvalNo: approvalNo
+    	                },
+    	                dataType: "json",
+    	                success: function (x) {
+    	                    alert("1 이 나오면 반려 성공 : " + x);
+    	                    teamLeader.textContent = "반려";
+    	                    teamLeader.style.color = "red";
+    	                    location.reload();
+    	                },
+    	                error: function (e) {
+    	                    console.log(e);
+    	                },
+    	            });
+    	        }
+    	    } else if (prLeaderNo === loginMemberNo) {
+    	            if (confirm("반려하시겠습니까?")) {
+    	                $.ajax({
+    	                    url: "${root}/approval/reject",
+    	                    method: "POST",
+    	                    data: {
+    	                        approverNo: prLeaderNo,
+    	                        approvalNo: approvalNo
+    	                    },
+    	                    dataType: "json",
+    	                    success: function (x) {
+    	                        alert("2가 나오면 반려 성공 : " + x);
+    	                        prLeader.textContent = "승인";
+    	                        prLeader.style.color = "red";
+    	                        location.reload();
+    	                    },
+    	                    error: function (e) {
+    	                        console.log(e);
+    	                    },
+    	                });
+    	            }
+    	    }
+    	}
+	
+	
+	
+	
+   ///승인버튼 클릭시
+   
+      function submit(loginMemberNo) {
+    	  let approvalNo = document.querySelector(".approvalNo").value;
+          let teamLeader = document.querySelector('.teamLeader');
+          let tl = document.querySelector('.tl').value;
+          let prLeader = document.querySelector('.prLeader');
+          let pl = prLeader.textContent;
+          let teamLeaderNo =document.querySelector('.teamLeaderNo').value;
+          let prLeaderNo =document.querySelector('.prLeaderNo').value;
+          
+    	    if (teamLeaderNo === loginMemberNo) {
+    	        if (confirm("승인하시겠습니까?")) {
+    	            $.ajax({
+    	                url: "${root}/approval/submit",
+    	                method: "POST",
+    	                data: {
+    	                    approverNo: teamLeaderNo,
+    	                    approvalNo: approvalNo
+    	                },
+    	                dataType: "json",
+    	                success: function (x) {
+    	                    alert("1 이 나오면 승인 성공 : " + x);
+    	                    teamLeader.textContent = "승인";
+    	                    teamLeader.style.color = "blue";
+    	                    location.reload();
+    	                },
+    	                error: function (e) {
+    	                    console.log(e);
+    	                },
+    	            });
+    	        }
+    	    } else if (prLeaderNo === loginMemberNo) {
+    	        if (tl === "승인") {
+    	            if (confirm("승인하시겠습니까?")) {
+    	                $.ajax({
+    	                    url: "${root}/approval/lastSubmit",
+    	                    method: "POST",
+    	                    data: {
+    	                        approverNo: prLeaderNo,
+    	                        approvalNo: approvalNo
+    	                    },
+    	                    dataType: "json",
+    	                    success: function (x) {
+    	                        alert("2가 나오면 승인 성공 : " + x);
+    	                        prLeader.textContent = "승인";
+    	                        prLeader.style.color = "blue";
+    	                        location.reload();
+    	                    },
+    	                    error: function (e) {
+    	                        console.log(e);
+    	                    },
+    	                });
+    	            }
+    	        } else {
+    	            alert("결재 순번이 아닙니다.");
+    	        }
+    	    }
+    	}
+
 
 	
 	</script>

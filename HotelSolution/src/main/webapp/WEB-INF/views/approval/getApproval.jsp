@@ -1,9 +1,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <c:set var="root" value="${pageContext.request.contextPath}">
-    </c:set>
-    
+    <c:set var="root" value="${pageContext.request.contextPath}" />
+	<c:set var="getList" value="${map.getList}" />
+	<c:set var="pv" value="${map.pv}" />
+	
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"><head>
@@ -88,6 +89,10 @@
 		text-align: center;
     }
     
+    .list-title a{
+    	cursor:pointer;
+    }
+    
     .list-status{
     	display:grid;
     	grid-template-columns:1fr 1fr;
@@ -103,6 +108,10 @@
     }
     #page-area > a{
 		margin:15px;
+    }
+    
+    #approval .get-link:visited{
+    	color:blueviolet;
     }
     
     
@@ -122,14 +131,14 @@
         		<div class="approval-menu">
 		        	<div class="approval-list">
 		        		<a href="${root}/approval/approvalFirstPage">나의 결재</a>
-		        		<a href="${root}/approval/getApproval">내가 받은 결재</a>
+		        		<a href="${root}/approval/getApproval" class="get-link">내가 받은 결재</a>
 		        		<a href="${root}/approval/referrerApproval">참조 결재</a>
 		        	</div>
 		        	
 		        	<div class="approval-write">
+		        		<div>결재문서 작성:</div>
 		        		<a href="${root}/approval/vaction">휴가 신청서</a>
 		        		<a href="${root}/approval/expenditure">지출 결의서</a>
-		        		<a href="${root}/approval/report">업무 보고서</a>
 		        	</div>
         		</div>
         		
@@ -143,28 +152,48 @@
 								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
 								<div>[${list.teamName}]${list.sendName}</div>
 								<div>[${list.documentTypeName }]</div>
-								<a onclick ="getVacationDetail('${list.no}' , '${list.typeNo}');">${list.title}</a>
+								<a onclick ="goApprovalDetail('${list.no}' , '${list.typeNo}');">${list.title}</a>
 							</div>
 							
 							<div class="list-status">
 								<div>${list.enrollDate}</div>
-								<div>${list.statusName }</div>
+								<c:if test="${list.adYn == 'N' }">
+									<div>진행중</div>
+								</c:if>
+								<c:if test="${list.adYn == 'Y' }">
+									<div>승인</div>
+								</c:if>
+								<c:if test="${list.adYn == 'X' }">
+									<div>반려</div>
+								</c:if>
 							</div>
 						</div>
 					</c:forEach>
 					
 				</div>
 				
+				
 				<div id="page-area">
-					<a style="color:#d9d9d9ed" href="#"><<</a>
-					<a style="color:#d9d9d9ed" href="#"><</a>
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a style="color:#d9d9d9ed" href="#">></a>
-					<a style="color:#d9d9d9ed" href="#">>></a>
+					<c:if test="${pv.currentPage > 1 }">
+						<a style="color:black" href="${root}/approval/getApproval?p=1"> << </a>
+						<a style="color:black" href="${root}/approval/getApproval?p=${pv.currentPage-1}"> < </a>
+					</c:if>
+				
+				<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
+						<c:if test="${pv.currentPage != i}">
+							<a href="${root}/approval/getApproval?p=${i}">${i}</a>
+						</c:if>
+						
+						<c:if test="${pv.currentPage == i }">
+							<a style="color:red;">${i}</a>
+						</c:if>
+					</c:forEach>
+				
+				
+					<c:if test="${pv.currentPage < pv.maxPage}">
+						<a style="color:black" href="${root}/approval/getApproval?p=${pv.currentPage+1}"> > </a>
+						<a style="color:black" href="${root}/approval/getApproval?p=${pv.maxPage}"> >> </a>
+					</c:if>
 				</div>
 
         </div>
@@ -177,10 +206,14 @@
 
 	<script>
 
-		function getVacationDetail(no , typeNo) {
+		function goApprovalDetail(no , typeNo) {
 			
 			if(typeNo == 1){
 				location.href = '${root}/approval/getVacationDetail?no=' + no;
+			}
+			
+			if(typeNo == 2){
+				location.href = '${root}/approval/getExpenditureDetail?no=' + no;
 			}
 		}
 	

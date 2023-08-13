@@ -1,8 +1,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <c:set var="root" value="${pageContext.request.contextPath}">
-    </c:set>
+    <c:set var="root" value="${pageContext.request.contextPath}" />
+	<c:set var="pv" value="${map.pv}" />
+	<c:set var="appList" value="${map.approvalList}" />
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"><head>
@@ -103,9 +104,11 @@
 		margin:15px;
     }
     
-	.approval-menu a.active {
-		color: red; /* Change this to the desired text color for the active link */
+	#approval .my-link:visited{
+		color:blueviolet;
 	}
+	
+	
     
 </style>
 </head>
@@ -122,21 +125,21 @@
 					<h1>나의 결재</h1>
         		<div class="approval-menu">
 		        	<div class="approval-list">
-		        		<a href="${root}/approval/approvalFirstPage" class="">나의 결재</a>
+		        		<a href="${root}/approval/approvalFirstPage" class="my-link">나의 결재</a>
 		        		<a href="${root}/approval/getApproval">내가 받은 결재</a>
 		        		<a href="${root}/approval/referrerApproval">참조 결재</a>
 		        	</div>
 		        	
 		        	<div class="approval-write">
+		        		<div>결재문서 작성:</div>
 		        		<a href="${root}/approval/vaction">휴가 신청서</a>
 		        		<a href="${root}/approval/expenditure">지출 결의서</a>
-		        		<a href="${root}/approval/report">업무 보고서</a>
 		        	</div>
         		</div>
         		
 				<hr class="line">  
 				<div id="approval-content">
-					<c:forEach items="${approvalList}" var="appList">
+					<c:forEach items="${appList}" var="appList">
 						<div class="list">
 							<div class="list-title">
 								<img alt="" src="${root}/resources/img/clipboard-minus-fill.svg">
@@ -159,23 +162,31 @@
 						</div>
 					</c:forEach>
 					
-					
 				</div>
 				
 				<div id="page-area">
-					<a style="color:#d9d9d9ed" href="#"><<</a>
-					<a style="color:#d9d9d9ed" href="#"><</a>
-					<a href="#">1</a>
-					<a href="#">2</a>
-					<a href="#">3</a>
-					<a href="#">4</a>
-					<a href="#">5</a>
-					<a style="color:#d9d9d9ed" href="#">></a>
-					<a style="color:#d9d9d9ed" href="#">>></a>
+					<c:if test="${pv.currentPage > 1 }">
+						<a style="color:black" href="${root}/approval/approvalFirstPage?p=1"> << </a>
+						<a style="color:black" href="${root}/approval/approvalFirstPage?p=${pv.currentPage-1}"> < </a>
+					</c:if>
+					
+					<c:forEach begin="${pv.startPage}" end="${pv.endPage}" step="1" var="i">
+						<c:if test="${pv.currentPage != i}">
+							<a href="${root}/approval/approvalFirstPage?p=${i}">${i}</a>
+						</c:if>
+						
+						<c:if test="${pv.currentPage == i }">
+							<a style="color:red;">${i}</a>
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${pv.currentPage < pv.maxPage}">
+						<a style="color:black" href="${root}/approval/approvalFirstPage?p=${pv.currentPage+1}"> > </a>
+						<a style="color:black" href="${root}/approval/approvalFirstPage?p=${pv.maxPage}"> >> </a>
+					</c:if>
 				</div>
 
        		 </div>
-   
    </div>
     
     

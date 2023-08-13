@@ -27,9 +27,10 @@ import com.hotelsolution.fire.member.vo.MemberVo;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
-@RequestMapping("front/useBook")
 @RequiredArgsConstructor
+@RequestMapping("front/useBook")
 public class UseBookController {
 	
 	private final UseBookService us;
