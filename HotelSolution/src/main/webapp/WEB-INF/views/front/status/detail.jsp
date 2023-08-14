@@ -124,6 +124,14 @@
         border-radius: 5px;
         background-color: rgba(59, 68, 75, 1); 
     }
+    #edit:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    #re>a:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
 </style>
 <body>
 

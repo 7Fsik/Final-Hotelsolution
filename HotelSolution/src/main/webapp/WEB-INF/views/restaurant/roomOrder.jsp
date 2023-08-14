@@ -130,7 +130,10 @@
         position: relative;
         left: 90%;
     }
-    
+    .bts:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
     
     
 </style>

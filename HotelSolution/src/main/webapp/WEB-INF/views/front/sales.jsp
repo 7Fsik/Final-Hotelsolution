@@ -96,6 +96,10 @@
         color: black;
         text-decoration: none;
     }
+    #se-btn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
     
 </style>
 <body>

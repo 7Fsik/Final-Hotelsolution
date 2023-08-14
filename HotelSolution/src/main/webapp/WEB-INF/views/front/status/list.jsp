@@ -113,6 +113,11 @@
     .btnrr{
         color: red;
     }
+    #bttb:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+
 
 </style>
 <body>

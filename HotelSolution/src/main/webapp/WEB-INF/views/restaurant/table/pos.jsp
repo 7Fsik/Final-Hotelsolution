@@ -174,6 +174,10 @@
         background-color: rgba(0, 0, 0, 0.4);
         display: none;
     }
+    .bb:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
    
 </style>
 <body>

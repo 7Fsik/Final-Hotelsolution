@@ -38,7 +38,7 @@
 
     #list-area{
         width: 95%;
-        height: 80%;
+        height: 84%;
         margin: auto;
 
     }
@@ -47,7 +47,7 @@
         height: 95%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 50% 50%;
         align-items: center;
         justify-items: center;
     }
@@ -87,7 +87,7 @@
         display: flex;
         align-items: center;
     }
-    button{
+    .btbt{
         height: 30px;
         width: 150px;
         border: 0px ;
@@ -99,6 +99,13 @@
         width: 90%;
         height: 90%;
         border-radius: 5px;
+    }
+    .btnrr{
+        color: red;
+    }
+    .btbt:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
     }
     
     
@@ -136,23 +143,26 @@
                                 <div class="ho">${useList.roomNo} 호</div>
                             </div>
                             <div class="btn">
-                                <button>이용내역</button>
+                                <button class="btbt">이용내역</button>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/status/list?page=1&searchValue=${searchValue}"> << </a>
                         <a href="/fire/front/status/list?page=${pv.currentPage - 1}&searchValue=${searchValue}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
-                        <a href="/fire/front/status/list?page= ${i}&searchValue=${searchValue}">${i}</a>
+                        <c:if test="${pv.currentPage != i}">
+                            <a href="/fire/front/status/list?page= ${i}&searchValue=${searchValue}">${i}</a>
+	            		</c:if>
+	            		<c:if test="${pv.currentPage == i}">
+			            	<a class="btnrr">${i}</a>
+	            		</c:if>
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/status/list?page=${pv.maxPage}&searchValue=${searchValue}"> >> </a>            
                         <a href="/fire/front/status/list?page=${pv.currentPage + 1}&searchValue=${searchValue}"> > </a>
                     </c:if>
                 </div>

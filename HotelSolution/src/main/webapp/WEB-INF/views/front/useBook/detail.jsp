@@ -73,7 +73,7 @@
         left: 70%;
         position: absolute;
     }
-    button{
+    .bnbn{
         position: relative;
         top: 10px;
         width: 120px;
@@ -110,6 +110,14 @@
     .deed{
         font-size: 0.8em;
         color: blue;
+    }
+    #book:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    #use:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
     }
 </style>
 <body>
@@ -180,8 +188,8 @@
                     <div id="price">총 객실 금액 : <span id="totalPrice">${vo.totalPrice}</span> 원</div>
                 </div>
                 <div id="ch">
-                    <button id="book" data-roomIntNo="${paramMap.no}" onclick="book()">예약하기</button>
-                    <button id="use" data-roomIntNo="${paramMap.no}" onclick="use()">이용하기</button>
+                    <button id="book" data-roomIntNo="${paramMap.no}" class="bnbn" onclick="book()">예약하기</button>
+                    <button id="use" data-roomIntNo="${paramMap.no}" class="bnbn"  onclick="use()">이용하기</button>
                 </div>
     
             </div>
