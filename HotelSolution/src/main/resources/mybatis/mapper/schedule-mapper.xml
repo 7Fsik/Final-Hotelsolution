@@ -18,7 +18,7 @@
 	        #{loginMember.no},
 	        #{vo.scheduleTypeNo},
 	        TO_TIMESTAMP( #{vo.startDate}, 'YYYYMMDDHH24MISS'),
-	        TO_TIMESTAMP(#{vo.endDate}, 'YYYYMMDDHH24MISS'),
+	        TO_TIMESTAMP(#{vo.endDate}, 'YYYYMMDDHH24MISS') + INTERVAL '1' DAY ,
 	        #{vo.title},
 	        #{vo.content}
 	    )
