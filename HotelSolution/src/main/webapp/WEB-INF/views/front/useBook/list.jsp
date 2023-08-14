@@ -38,7 +38,7 @@
 
     #list-area{
         width: 95%;
-        height: 80%;
+        height: 84%;
         margin: auto;
 
     }
@@ -54,7 +54,10 @@
 
     #page-area{
         display: flex;
-        justify-content: center
+        justify-content: space-around;
+        width: 40%;
+        position: relative;
+        left: 30%;
     }
     .att{
         height: 90%;
@@ -109,6 +112,14 @@
         font-weight: bolder;
         border-radius: 10px;
     }
+    .btnrr{
+        color: red;
+    }
+    .img>img{
+        height: 90%;
+        width: 90%;
+        border-radius: 5px;
+    }
     
 
 </style>
@@ -149,7 +160,7 @@
                     <c:forEach items="${voList}" var="vo">
                         <div class="att" >
                             <div class="img">
-                                <img src="/fire/static/img/front/room001.jpg">
+                                <img src="${root}/resources/img/front/${vo.img}">
                             </div>
                             <div>
                                 <div class="name">${vo.typeName}</div>
@@ -171,16 +182,19 @@
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/useBook/list?page=1&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> << </a>
                         <a href="/fire/front/useBook/list?page=${pv.currentPage - 1}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
-                        <a href="/fire/front/useBook/list?page= ${i}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}">${i}</a>
+                        <c:if test="${pv.currentPage != i}">
+                            <a href="/fire/front/useBook/list?page= ${i}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}">${i}</a>
+	            		</c:if>
+	            		<c:if test="${pv.currentPage == i}">
+			            	<a class="btnrr">${i}</a>
+	            		</c:if>
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/useBook/list?page=${pv.maxPage}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> >> </a>            
                         <a href="/fire/front/useBook/list?page=${pv.currentPage + 1}&startDate=${paramMap.startDate}&endDate=${paramMap.endDate}&searchType=${paramMap.searchType}"> > </a>
                     </c:if>
                 </div>

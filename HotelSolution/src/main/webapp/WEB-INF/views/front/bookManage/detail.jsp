@@ -43,7 +43,6 @@
     .img{
         width: 70%;
         height: 40%;
-        background-color: antiquewhite;
     }
     .line{
         display: inline-block;
@@ -105,6 +104,12 @@
         background-color: #dedede;
         display: flex;
     }
+    .img>img{
+        width: 90%;
+        height: 90%;
+        border-radius: 5px;
+
+    }
     
     </style>
 <body>
@@ -131,7 +136,7 @@
                             </div>
                 
                             <div class="img">
-                                <img src="" alt="">
+                                <img src="${root}/resources/img/front/${vo.img}" >
                             </div>
                             <div id="userdate-area">
                                 <div class="line font-25">손님 정보</div>

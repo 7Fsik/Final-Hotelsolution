@@ -96,7 +96,7 @@
 		INSERT ALL
 	    <foreach collection="menuList" item="menu" index="index" separator=" ">
 	        INTO FOOD_ORDER(NO, FOOD_NO, BOOK_NO, COUNT)
-	        VALUES(SEQ_FOOD_ORDER_NO.NEXTVAL+${index}, #{menu}, #{useNo}, 1)
+	        VALUES(GetNextSequenceValue('SEQ_FOOD_ORDER_NO'), #{menu}, #{useNo}, 1)
 	    </foreach>
 	    SELECT * FROM DUAL
 	

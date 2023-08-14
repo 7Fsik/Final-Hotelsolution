@@ -19,5 +19,7 @@ public interface BookManageService {
 	int checkIn(Map<String, String> paramMap);
 
 	int cencel(Map<String,String>paramMap);
+	//체크인한 예약들
+	List<BookManageVo> useList();
 
 }

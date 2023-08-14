@@ -46,4 +46,9 @@ public class BookManageDaoImpl implements BookManageDao{
 		return sst.delete("bookManage.cencel", paramMap);
 	}
 
+	@Override
+	public List<BookManageVo> useList(SqlSessionTemplate sst) {
+		return sst.selectList("bookManage.useList");
+	}
+
 }

@@ -69,6 +69,7 @@ public class UseManageDaoImpl implements UseManageDao{
 
 	@Override
 	public int roomOrder(SqlSessionTemplate sst, Map<String, Object> roomOrderMap) {
+		System.out.println(roomOrderMap);
 		return sst.insert("useManage.roomOrder", roomOrderMap);
 	}
 

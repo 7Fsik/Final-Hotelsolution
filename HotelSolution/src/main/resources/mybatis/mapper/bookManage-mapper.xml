@@ -4,9 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bookManage">
 
-	<select id="selectRoomList" resultType="StatusVo">
-		
-		
+	<select id="useList" resultType="BookManageVo" >
+
+		SELECT 
+		L.NO
+		FROM BOOK_LIST L 
+		JOIN ROOM_USE U ON L.NO=U.BOOK_NO
+		WHERE U.CHECK_IN_TIME IS NOT NULL
+	
 	</select>
 	
 	<select id="getBookCnt" resultType="int">

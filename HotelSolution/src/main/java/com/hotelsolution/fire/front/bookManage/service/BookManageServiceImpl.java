@@ -48,4 +48,9 @@ public class BookManageServiceImpl implements BookManageService{
 		return dao.cencel(sst,paramMap);
 	}
 
+	@Override
+	public List<BookManageVo> useList() {
+		return dao.useList(sst);
+	}
+
 }

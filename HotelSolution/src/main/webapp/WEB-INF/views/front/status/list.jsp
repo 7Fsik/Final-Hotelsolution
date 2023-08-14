@@ -109,6 +109,9 @@
         border-radius: 5px;
         height: 100%;
     }
+    .btnrr{
+        color: red;
+    }
 
 </style>
 <body>
@@ -161,16 +164,19 @@
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/status/list?page=1&searchType=${searchType}&searchValue=${searchValue}"> << </a>
                         <a href="/fire/front/status/list?page=${pv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
-                        <a href="/fire/front/status/list?page= ${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
+                        <c:if test="${pv.currentPage != i}">
+                            <a href="/fire/front/status/list?page= ${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
+	            		</c:if>
+	            		<c:if test="${pv.currentPage == i}">
+			            	<a class="btnrr">${i}</a>
+	            		</c:if>
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/status/list?page=${pv.maxPage}&searchType=${searchType}&searchValue=${searchValue}"> >> </a>            
                         <a href="/fire/front/status/list?page=${pv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}"> > </a>
                     </c:if>
                 </div>

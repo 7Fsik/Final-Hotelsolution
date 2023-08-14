@@ -19,5 +19,7 @@ public interface BookManageDao {
 	int checkIn(SqlSessionTemplate sst, Map<String, String> paramMap);
 
 	int cencel(SqlSessionTemplate sst, Map<String,String>paramMap);
+	//체크인한 방
+	List<BookManageVo> useList(SqlSessionTemplate sst);
 
 }

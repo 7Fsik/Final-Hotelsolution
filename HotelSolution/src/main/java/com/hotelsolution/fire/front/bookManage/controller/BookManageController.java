@@ -42,9 +42,12 @@ public class BookManageController {
 		
 		List<BookManageVo>bmList = bs.list(pv,searchType,searchValue);
 		
+		List<BookManageVo>useList = bs.useList();
+		
 		System.out.println(bmList);
 		model.addAttribute("pv", pv);
 		model.addAttribute("bmList", bmList);
+		model.addAttribute("useList", useList);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("searchValue", searchValue);
 		
