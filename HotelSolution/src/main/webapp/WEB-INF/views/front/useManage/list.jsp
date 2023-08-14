@@ -94,6 +94,11 @@
         color: white;
         border-radius: 5px;
     }
+    .img>img{
+        width: 90%;
+        height: 90%;
+        border-radius: 5px;
+    }
     
     
 
@@ -123,7 +128,7 @@
                     <c:forEach items="${useList}" var="useList">
                         <div class="att"onclick="location.href='/fire/front/useManage/detail?no=${useList.roomUseNo}'">
                             <div class="img">
-                                <img src="/fire/static/img/front/room001.jpg">
+                                <img src="${root}/resources/img/front/${useList.img}">
                             </div>
                             <div>
                                 <div class="name">${useList.typeName}</div>

@@ -40,7 +40,6 @@
     .img{
         width: 70%;
         height: 40%;
-        background-color: antiquewhite;
     }
     .line{
         display: inline-block;
@@ -103,6 +102,15 @@
     .small-input{
         width: 50px;
     }
+    .img>img{
+        height: 90%;
+        width: 90%;
+        border-radius: 5px;
+    }
+    .deed{
+        font-size: 0.8em;
+        color: blue;
+    }
 </style>
 <body>
 
@@ -127,10 +135,11 @@
                 </div>
     
                 <div class="img">
-                    <img src="" alt="">
+                    <img src="${root}/resources/img/front/${vo.img}">
                 </div>
                 <div id="userdate-area">
                     <div class="line font-25">손님 정보</div>
+                    <div class="deed">회원인경우 이름과 핸드폰 번호만 입력하여도됩니다</div>
                     <div id="user-area" class="text-left">
                         <div>
                             손님이름 : <input type="text" id="name">
@@ -148,7 +157,7 @@
                     </div>
                     <div id="user-area2" class="text-left">
                         <div>
-                            전화번호 : <input type="text" id="phone"  maxlength="11">
+                            전화번호 : <input type="text" id="phone"  maxlength="11" placeholder="숫자로 11글자 입력">
                         </div>
                         <div>
                             성별 : 

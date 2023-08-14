@@ -183,25 +183,49 @@
 
 </select>
 
-<insert id="foodOrder">
+<select id="foodOrder"  parameterType="hashMap" resultType="int">
 
 	INSERT ALL
-	 <foreach collection="noList" index="index" item="no" >
-		INTO FOOD_ORDER_LIST(lIST_NO,ROOM_USE_NO,FOOD_NO,COUNT)
-		VALUES(SEQ_FOOD_ORDER_LIST_NO.NEXTVAL+${index},#{useNo},#{no},#{numList[${index}]}) 
+	 <foreach collection="noList" index="index" item="no" separator=" ">
+		INTO FOOD_ORDER_LIST(
+		LIST_NO , ROOM_USE_NO , FOOD_NO , COUNT)
+		VALUES
+		(
+		GetNextSequenceValueFood('SEQ_FOOD_ORDER_LIST_NO'),
+		#{useNo},
+		#{no},
+		#{numList[${index}]) 
   	</foreach>
 	SELECT * FROM DUAL
-</insert>
+	
+</select>
 
-<insert id="roomOrder">
 
-	INSERT ALL
-	 <foreach collection="noList" index="index" item="no" >
-		INTO PRODUCT_ORDER_LIST(NO,ROOM_USE_NO,PRODUCT_NO,COUNT)
-		VALUES(SEQ_PRODUCT_ORDER_LIST_NO.NEXTVAL+${index},#{useNo},#{no},#{numList[${index}]}) 
-  	</foreach>
-	SELECT * FROM DUAL
-</insert>
+
+<select id="roomOrder" parameterType="hashMap" resultType="int">
+
+    INSERT ALL
+    <foreach collection="noList" index="index" item="no" separator=" ">
+       INTO PRODUCT_ORDER_LIST
+       (
+       NO
+       ,ROOM_USE_NO
+       ,PRODUCT_NO
+       ,COUNT
+       )
+        VALUES
+        (
+        GetNextSequenceValueRoom('SEQ_PRODUCT_ORDER_LIST_NO')
+        ,#{useNo}
+        ,#{no}
+        , #{numList[${index}]
+        )
+    </foreach>
+    SELECT * FROM DUAL
+    
+</select>
+
+
 
 
 <update id="payment">
@@ -212,6 +236,8 @@
 	WHERE ROOM_USE_NO = #{roomUseNo}
 
 </update>
+
+
 
 
 

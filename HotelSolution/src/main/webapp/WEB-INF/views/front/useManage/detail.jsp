@@ -600,7 +600,7 @@
                                 + "<input type='hidden' value='"+x[i].productNo+"' class='no'>"
                                 + "<td>" + x[i].name + "</td>"
                                 + "<td>" + x[i].pay + " 원 </td>"
-                                + "<td><input type='number' value='1'></td>"
+                                + "<td><input type='number' value='1' class='num'></td>"
                                 + "<td><i class='plus-room'>+</i></td>"
                                 + "</tr>";
                 }
@@ -634,7 +634,7 @@
                     // tr 안의 각 요소들의 값을 가져옵니다.
                     const name = tr.querySelectorAll('td')[0].textContent;
                     const pay = tr.querySelectorAll('td')[1].textContent;
-                    const num = tr.querySelector('input').value;
+                    const num = tr.querySelector('.num').value;
                     const no = tr.querySelector('.no').value;
     
                     // 가져온 값을 목적지 테이블에 추가합니다.

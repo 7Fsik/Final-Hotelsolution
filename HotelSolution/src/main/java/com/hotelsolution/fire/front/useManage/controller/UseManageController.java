@@ -24,10 +24,12 @@ import com.hotelsolution.fire.front.useManage.vo.RoomOrderVo;
 import com.hotelsolution.fire.front.useManage.vo.UseManageVo;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("front/useManage")
 @RequiredArgsConstructor
+@Slf4j
 public class UseManageController {
 	
 	private final UseManageService us;
@@ -105,6 +107,8 @@ public class UseManageController {
 		Gson gson = new Gson();
 		Map paramMap = gson.fromJson(str, Map.class);
 		
+		System.out.println(paramMap);
+		
 		List <String> noList = (List<String>) paramMap.get("no");
 		List <String> numList = (List<String>) paramMap.get("num");
 		String useNo = (String) paramMap.get("useNo");
@@ -113,6 +117,9 @@ public class UseManageController {
 		roomOrderMap.put("noList", noList);
 		roomOrderMap.put("numList", numList);
 		roomOrderMap.put("useNo", useNo);
+		
+		System.out.println(roomOrderMap);
+		
 		
 		int result =us.roomOrder(roomOrderMap);
 		if(result<1) {
@@ -164,6 +171,8 @@ public class UseManageController {
 		foodOrderMap.put("noList", noList);
 		foodOrderMap.put("numList", numList);
 		foodOrderMap.put("useNo", useNo);
+		
+		System.out.println(foodOrderMap);
 		
 		int result =us.foodOrder(foodOrderMap);
 		if(result<1) {

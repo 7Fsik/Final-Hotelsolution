@@ -69,6 +69,7 @@
         align-items: center;
         text-align: center;
         border: 1px solid rgba(59, 68, 75, 1);
+        position: relative;
     }
     .img{
         height:50%;
@@ -116,6 +117,39 @@
         color: white;
         background-color:rgba(59, 68, 75, 1);
     }
+    .soldOut{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        font-style: oblique;
+        font-weight: bolder;
+        border-radius: 10px;
+    }
+    .img>img{
+        width: 90%;
+        height: 90%;
+        border-radius: 5px;
+    }
+    .att2{
+        height: 90%;
+        width: 90%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+       
+        position: relative;
+    }
 
 </style>
 <body>
@@ -146,16 +180,25 @@
             <div id="list-area">
                 <div id="list">
                     <c:forEach items="${bmList}" var="bmList">
-                        <div class="att" onclick="location.href='/fire/front/bookManage/detail?no='+${bmList.no}">
-                            <div class="img">
-                                <img src="/fire/static/img/front/room001.jpg">
+                        <div class="att" >
+                            <div class="att2" onclick="location.href='/fire/front/bookManage/detail?no='+${bmList.no}">
+                                <div class="img">
+                                    <img src="${root}/resources/img/front/${bmList.img}">
+                                </div>
+                                <div class="fff">
+                                    <div class="name blk ggg">${bmList.typeName}</div>
+                                    <div class="ho blk ggg">${bmList.roomNo}</div>
+                                    <div class="int blk ggg">손님정보 : ${bmList.name}(${bmList.phoneNumber})</div>
+                                    <div class="date blk ggg">이용 날짜 :${bmList.startDate} ~ ${bmList.endDate} </div>
+                                </div>
                             </div>
-                            <div class="fff">
-                                <div class="name blk ggg">${bmList.typeName}</div>
-                                <div class="ho blk ggg">${bmList.roomNo}</div>
-                                <div class="int blk ggg">손님정보 : ${bmList.name}(${bmList.phoneNumber})</div>
-                                <div class="date blk ggg">이용 날짜 :${bmList.startDate} ~ ${bmList.endDate} </div>
-                            </div>
+                            <c:forEach items="${useList}" var="use">
+                            	<c:if test="${use.no == bmList.no}">
+		                            <div class="soldOut">
+		                                체크인 완료
+		                            </div>
+                            	</c:if>
+                            </c:forEach>
                         </div>
                     </c:forEach>
                 </div>
