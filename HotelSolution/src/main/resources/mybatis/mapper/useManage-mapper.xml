@@ -75,11 +75,11 @@
 	ON U.ROOM_INT_NO = R.ROOM_INT_NO
 	<where>
 	#{date} BETWEEN U.START_DATE AND U.END_DATE-1
-	
+	AND U.TOTAL_PRICE IS NULL
 		<if test="searchValue != null ">
-			R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
+			AND R.ROOM_NO  LIKE ('%'||#{searchValue}||'%')
 		</if>
-		AND U.TOTAL_PRICE IS NULL
+		
 	</where>
 
 </select>
