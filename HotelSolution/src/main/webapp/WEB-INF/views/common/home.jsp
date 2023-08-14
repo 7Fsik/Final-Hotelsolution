@@ -413,8 +413,8 @@
 					$('#board-list').empty();
 					$.each(data, function (index, item) {
 						let hiddenNo = '<span class="hidden-no" style="display:none;">' + item.no + '</span>';
-						let title = '<span class="title">' + item.title + '</span>';
-						let content = '<span class="content ml-3">' + item.content + '</span>';
+						let title = '<span class="title"> 제목 : ' + item.title + ' </span>';
+						let content = '<span class="content ml-3"> 내용 :' + item.content + '</span>';
 
 						let postWrapper = '<div class="single-post-wrapper border rounded p-3 mb-4 d-flex" data-url="' + "YOUR_ROOT_URL" + '/board/detail?no=' + item.no + '">' + hiddenNo + title + content + '</div>';
 						$('#board-list').append(postWrapper);

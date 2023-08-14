@@ -52,7 +52,10 @@
 			<mapping path="/**"/>
 			<exclude-mapping path="/member/login/**"/>
 			<exclude-mapping path="/member/join/**"/>
-			<exclude-mapping path="/member/emailAuthentication/**"/> 
+			<exclude-mapping path="/member/emailAuthentication/**"/>
+			<exclude-mapping path="/member/emailAuthentication.wow/**"/>
+			<exclude-mapping path="/member/emailKeyRightOrNo/**"/>
+				<exclude-mapping path="/member/passwordReset/**"/>  
 			<exclude-mapping path="/resources/**"/>
 			<beans:bean class="com.hotelsolution.fire.interceptor.CheckSessionInterceptor"/>
 		</interceptor>
