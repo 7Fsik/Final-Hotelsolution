@@ -22,7 +22,7 @@
         font-weight: bold;
         display: flex;
         justify-content: center;
-        padding: 10px;
+        padding: 20px;
     }
     #calendar{
       height: 90%;
@@ -160,6 +160,20 @@
         color: black;
         text-decoration: none;
     }
+    .grayl{
+        color: gray;
+    }
+    .bluel{
+        color: blue;
+    }
+    .meme{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: relative;
+        top: 5%;
+        right: 1%;
+    }
     
 </style>
 <body>
@@ -170,10 +184,14 @@
      
         <div id="mainboard">
      
-           <div id="title">
+            <div id="title">
                  매출관리 
-             </div>
-     
+            </div>
+
+            <div class="meme">
+                <span class="grayl">회색은 식당 하루매출</span>
+                <span class="bluel">하늘색은 호텔 하루매출</span>
+            </div>
      
              <div id="area">
                  <div class="monthSales">
@@ -321,12 +339,21 @@ getMonthSales();
         ,locale: 'ko'
         ,events: [
             
-            <c:forEach items="${fdayVo}" var="vo"  >
+            <c:forEach items="${fdayVo}" var="vo" varStatus="fLoop"  >
                         {
-                        title: '${vo.totalPrice} 원',
-                        start: '${vo.day}',
+
+                            title:'${rdayVo[fLoop.index].totalPrice} 원',
+                            start: '${rdayVo[fLoop.index].day}',
+                            backgroundColor: 'skyblue'
+
                         },
-                        
+                        {
+
+                            title: '${vo.totalPrice} 원',
+                            start: '${vo.day}',
+                            backgroundColor: 'lightgray'
+
+                        },
 
             </c:forEach>
            

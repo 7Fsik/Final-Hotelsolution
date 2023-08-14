@@ -421,7 +421,8 @@
         //체크아웃,  결제 
         function payment(){
 
-            alert('z');
+            
+
             const roomUseNo = document.querySelector("#last-btn").dataset.roomuseno;
             const totalPrice = document.querySelector("#total-price").textContent;
 

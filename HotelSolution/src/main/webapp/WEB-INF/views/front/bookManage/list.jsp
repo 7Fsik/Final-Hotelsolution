@@ -73,6 +73,7 @@
     }
     .img{
         height:50%;
+        width: 90%;
         position: relative;
         top: 10px;
     }

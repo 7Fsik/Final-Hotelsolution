@@ -151,7 +151,7 @@
 	        </div>
 	
 	        <div id="bb-area">
-	            <button id="go">발주하러가기</button>
+	            <button id="go" onclick="location.href='${root}/approval/expenditure'">발주하러가기</button>
 	        </div>
 	   
 	   </div>
