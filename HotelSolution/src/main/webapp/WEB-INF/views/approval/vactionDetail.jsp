@@ -218,8 +218,25 @@
                                <tbody>
 	                                <tr>
 	                                	<td>${vo.writerName}</td>
-	                                	<td class="teamLeader">${list[0].approverName}(${list[0].statusName})</td>
-	                                	<td class="hrLeader">${list[1].approverName}(${list[1].statusName})</td>
+	                                	<c:choose>
+	                                		<c:when test="${list[0].statusName == '승인' }">
+			                                	<td class="teamLeader" style="color:blue;">${list[0].approverName}(${list[0].statusName})</td>
+	                                		</c:when>
+	                                		
+	                                		<c:when test="${list[0].statusName == '반려' }">
+	                                			<td class="teamLeader" style="color:red;">${list[0].approverName}(${list[0].statusName})</td>
+	                                		</c:when>
+	                                	</c:choose>
+	                                	
+	                                	<c:choose>
+	                                		<c:when test="${list[1].statusName == '승인' }">
+			                                	<td class="hrLeader" style="color:blue;">${list[1].approverName}(${list[1].statusName})</td>
+	                                		</c:when>
+
+	                                		<c:when test="${list[1].statusName == '반려' }">
+			                                	<td class="hrLeader" style="color:red;">${list[1].approverName}(${list[1].statusName})</td>
+	                                		</c:when>
+	                                	</c:choose>
 	                                </tr>
 	                                
 	                                <tr>
@@ -270,7 +287,7 @@
 
                             <tr>
                                 <td class="replace">비상 연락망</td>
-                                <td><input class="input" type="text" name="phone"></td>
+                                <td>0${vo.id}</td>
                             </tr>
                             
                            	<tr>

@@ -440,6 +440,7 @@
         ,V.VACATION_START
         ,V.VACATION_END
         ,M.NAME AS WRITER_NAME
+        ,M.ID
         ,P.NAME AS POSITION_NAME
         ,TM.TEAM_NAME
         FROM
