@@ -22,6 +22,7 @@ public class ApprovalVo {
 	private String vacationStart;
 	private String vacationEnd;
 	private String writerName;
+	private String id;
 	
 	
 }
