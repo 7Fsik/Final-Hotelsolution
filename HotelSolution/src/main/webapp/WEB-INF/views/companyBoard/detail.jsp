@@ -26,20 +26,22 @@
                       <span class="detail-title">
                           ${companyBoardVo.title}
                       </span>
-                      <span>
-                          ${companyBoardVo.enrollDate}
-                      </span>
                       <c:if test="${sessionScope.loginMember.no eq companyBoardVo.writerNo}">
-                          <button type="button" onclick="companyBoardEdit();">수정하기</button>
-                          <button type="button" onclick="companyBoardDrop();">삭제하기</button>
+                          <button class="btn btn-primary" type="button" onclick="companyBoardEdit();">수정하기</button>
+                          <button class="btn btn-danger" type="button" onclick="companyBoardDrop();">삭제하기</button>
                       </c:if>
                   </div>
 
-                  <div class="writer-profile-box">
-                      <span>
-                          ${companyBoardVo.writerName}
-                      </span>
-                  </div>
+				<div class="d-flex align-items-center">
+				    <div>
+				        <strong>작성자:</strong>
+				        <span>${companyBoardVo.writerName}</span>
+				    </div>
+				    <div class="mx-3 d-none d-md-block" style="border-left: 1px solid #dee2e6; height: 24px;"></div>
+				    <div>
+				        <span>${companyBoardVo.elapsedSinceEnrollDate}</span>
+				    </div>
+				</div>
 
               </div>
               <hr>
