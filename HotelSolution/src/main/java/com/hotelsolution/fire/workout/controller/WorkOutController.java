@@ -209,6 +209,6 @@ public class WorkOutController {
 		}
 			return "success";
 		
-	}//endTime
+	}
 	
 }//class
