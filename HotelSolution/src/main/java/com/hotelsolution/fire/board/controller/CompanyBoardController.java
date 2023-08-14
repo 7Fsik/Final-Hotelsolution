@@ -44,6 +44,14 @@ public class CompanyBoardController {
             ,Model  model
             )
     {
+    	// searchType과 searchValue 값이 공백인지 확인 후, null로 설정
+        if (paramMap.get("searchType") != null && paramMap.get("searchType").trim().isEmpty()) {
+            paramMap.put("searchType", null);
+        }
+        if (paramMap.get("searchValue") != null && paramMap.get("searchValue").trim().isEmpty()) {
+            paramMap.put("searchValue", null);
+        }
+    
 
         int listCount = boardService.getCompanyBoardCnt(paramMap);
         int currentPage = page;
@@ -144,7 +152,7 @@ public class CompanyBoardController {
         boardService.increaseCompanyBoardHit(no);
 
         CompanyBoardVo companyBoardVo  = boardService.getCompanyBoardDetailByNo(no);
-        System.out.println(companyBoardVo);
+        
 
 
         model.addAttribute("companyBoardVo",companyBoardVo);
@@ -166,15 +174,20 @@ public class CompanyBoardController {
     }
 
     @GetMapping("edit")
-    public String companyBoardEditViewByNo(@RequestParam int no, Model model)
+    public String companyBoardEditViewByNo(@RequestParam int no, Model model, HttpSession session)
     {
-
+        MemberVo loginMember = (MemberVo) session.getAttribute("loginMember");
         CompanyBoardVo companyBoardVo = boardService.getBoardInfoByNo(no);
-        List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
-        model.addAttribute("companyBoardVo", companyBoardVo);
-        model.addAttribute("categoryList", categoryList);
+        // 로그인된 멤버의 번호와 게시물 작성자의 번호가 같은지 확인
+        if (companyBoardVo != null && companyBoardVo.getWriterNo().equals(loginMember.getNo())) {
+            List<CompanyBoardCategoryVo> categoryList = boardService.getCategoryList();
+            model.addAttribute("companyBoardVo", companyBoardVo);
+            model.addAttribute("categoryList", categoryList);
 
-        return "companyBoard/edit";
+            return "companyBoard/edit";
+        } else {
+            return "redirect:/common/error"; // 권한 없음 처리
+        }
     }
 
 
@@ -281,6 +294,7 @@ public class CompanyBoardController {
     public ResponseEntity <List<CompanyBoardVo>> weekTopBoardList(){
 
         List<CompanyBoardVo> companyBoardVoList = boardService.weekTopBoardList();
+        
 
 
         return new ResponseEntity<>(companyBoardVoList, HttpStatus.OK);

@@ -6,25 +6,22 @@
 
 	<select id="getAllCompanyBoardList" resultType="CompanyBoardVo">
 		SELECT
-			b.no,
-			b.category_no,
-			bc.category_name,
-			b.writer_no,
-			m.name as writerName,
-			t.team_name as teamName,
-			b.title,
-			<![CDATA[SUBSTR(REGEXP_REPLACE(REGEXP_REPLACE(b.content, '<img[^>]*>', ''), '<br([^>]*)>', ' '), 1, 30)]]> as content,				b.enroll_date,
-			b.enroll_date,
-			b.hit,
-			b.status
+    	b.no,
+	    b.category_no,
+	    bc.category_name,
+	    b.writer_no,
+	    m.name AS writerName,
+	    t.team_name AS teamName,
+	    b.title,
+        <![CDATA[SUBSTR(REGEXP_REPLACE(REGEXP_REPLACE(b.content, '<img[^>]*>', ''), '<br([^>]*)>', ' '), 1, 30)]]> as content,
+        b.enroll_date,	 
+	    b.hit,
+	    b.status
 		FROM board b
-			LEFT JOIN board_category bc
-			ON b.category_no = bc.no
-			LEFT JOIN member m
-			ON b.writer_no = m.no
-			LEFT JOIN team t
-			ON m.position_no = t.team_no
-			WHERE b.status = 'N'
+		LEFT JOIN board_category bc ON b.category_no = bc.no
+		LEFT JOIN member m ON b.writer_no = m.no
+		LEFT JOIN team t ON t.team_no = m.team_no
+		WHERE b.status = 'N'
 		<if test="searchType != null and searchValue != null">
 			AND ${searchType} LIKE '%' || #{searchValue} || '%'
 		</if>
@@ -211,7 +208,8 @@
                 b.writer_no,
                 b.title,
                 m.name as writerName,
-                SUBSTR(REGEXP_REPLACE(REGEXP_REPLACE(b.content, '<img[^>]*>', ''), '<br([^>]*)>', ' '), 1, 30) as content
+                SUBSTR(REGEXP_REPLACE(REGEXP_REPLACE(b.content, '<img[^>]*>', ''), '<br([^>]*)>', ' '), 1, 30) as content,
+              	b.enroll_date
             FROM BOARD b
             LEFT JOIN member m
               ON b.writer_no = m.no
