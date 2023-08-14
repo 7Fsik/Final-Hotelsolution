@@ -74,6 +74,7 @@
         height:50%;
         position: relative;
         top: 10px;
+        width: 90%;
     }
     .name{
         font-size: 20px;

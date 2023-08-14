@@ -611,7 +611,7 @@ cursor:pointer;
                         <div class="sub-menu">
                             <div class="sub-menu-title">발주 결재 하기</div>
                             <ul class="sub-menu-list">
-                                <li><a class="custom-link" href="#">발주 결재 하기</a></li>
+                                <li><a class="custom-link" href="${root}/approval/getApproval  ">발주 결재 하기</a></li>
                             </ul>
                         </div>
                     </div>
