@@ -166,6 +166,14 @@
         background-color: rgba(59, 68, 75, 1);
         color: white;
     }
+    .bts:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    #plus:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
     
     
 </style>

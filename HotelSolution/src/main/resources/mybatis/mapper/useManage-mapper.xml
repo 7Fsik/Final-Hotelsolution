@@ -219,7 +219,7 @@
         GetNextSequenceValueRoom('SEQ_PRODUCT_ORDER_LIST_NO')
         ,#{useNo}
         ,#{no}
-        , #{numList[${index}]
+        , #{numList[${index}]}
         )
     </foreach>
     SELECT * FROM DUAL

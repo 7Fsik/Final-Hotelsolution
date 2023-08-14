@@ -110,6 +110,14 @@
         border-radius: 5px;
 
     }
+    #checkIn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    #cencel:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
     
     </style>
 <body>

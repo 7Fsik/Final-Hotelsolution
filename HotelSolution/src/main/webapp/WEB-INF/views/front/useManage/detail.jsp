@@ -246,6 +246,14 @@
         height: 180px;
         overflow-y: auto;
     }
+    .order-btn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    #last-btn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
 </style>
 <body>
 
@@ -729,6 +737,7 @@
                             const delist = lists[index];
                             delist.remove();
                         })
+                        alert("주문성공! 비품 가져다주세요");
                     }else{
                         alert("주문 실패,,,")
                         modals[1].style.display = 'none';
@@ -913,6 +922,7 @@
                         })
                         const foodPrice = document.querySelector("#food-total-price");
                         foodPrice.innerHTML=0;
+                        alert("음식 주문성공!");
 
                     }else{
                         alert("주문 실패,,,")

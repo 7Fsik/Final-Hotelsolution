@@ -48,7 +48,7 @@
         height: 95%;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 50% 50%;
         align-items: center;
         justify-items: center;
     }
@@ -151,6 +151,17 @@
        
         position: relative;
     }
+    .btnrr{
+        color: red;
+    }
+    .att2:hover{
+        cursor: pointer;
+        background-color: rgb(220, 226, 231);
+    }
+    #searchb:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
 
 </style>
 <body>
@@ -205,17 +216,20 @@
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/bookManage/list?page=1"> << </a>
-                        <a href="/fire/front/bookManage/list?page=${pv.currentPage - 1}"> < </a>
+                        <a href="/fire/front/bookManage/list?page=${pv.currentPage - 1}&searchType=${searchType}&searchValue=${searchValue}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
-                        <a href="/fire/front/bookManage/list?page= ${i}">${i}</a>
+                        <c:if test="${pv.currentPage != i}">
+                            <a href="/fire/front/bookManage/list?page= ${i}&searchType=${searchType}&searchValue=${searchValue}">${i}</a>
+	            		</c:if>
+	            		<c:if test="${pv.currentPage == i}">
+			            	<a class="btnrr">${i}</a>
+	            		</c:if>
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/bookManage/list?page=${pv.maxPage}"> >> </a>            
-                        <a href="/fire/front/bookManage/list?page=${pv.currentPage + 1}"> > </a>
+                        <a href="/fire/front/bookManage/list?page=${pv.currentPage + 1}&searchType=${searchType}&searchValue=${searchValue}"> > </a>
                     </c:if>
                 </div>
             </div>

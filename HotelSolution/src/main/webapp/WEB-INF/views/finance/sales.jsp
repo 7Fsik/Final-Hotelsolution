@@ -222,7 +222,7 @@
                             월 : 
                             <input type="number" id="hsearchMonth" name="month" min="1" max="12" value="8">
                         </div>
-                        <button id="hse-btn" onclick="getMonthSales();">검색</button>
+                        <button id="hse-btn" onclick="hhgetMonthSales()">검색</button>
                     </div>
                     <div class="hsales-area" id="hgetMonthSales">
                     </div>
@@ -241,6 +241,7 @@
 <script>
     //레스토랑
 getMonthSales();
+hhgetMonthSales();
 
     function getMonthSales(){
 

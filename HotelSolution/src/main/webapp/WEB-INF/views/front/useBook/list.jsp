@@ -121,6 +121,14 @@
         width: 90%;
         border-radius: 5px;
     }
+    .useBtn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    input:hover{
+        cursor: pointer;
+        background-color: rgb(181, 193, 202);
+    }
     
 
 </style>

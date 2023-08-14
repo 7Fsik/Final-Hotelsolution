@@ -179,7 +179,18 @@
     .point {
         cursor: pointer;
     }
-    
+    #sasa:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    .bbb:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
+    .useBtn:hover{
+        cursor: pointer;
+        background-color: rgb(86 93 98);
+    }
 </style>
 <body>
 
