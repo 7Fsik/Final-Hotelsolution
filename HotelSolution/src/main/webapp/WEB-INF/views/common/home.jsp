@@ -656,7 +656,7 @@
 		const hour = document.getElementById('hour');
 		hour.innerHTML = weekWorkTime;
 
-		
+
 		myChart.update();
 
 		getScheduleList();
@@ -671,15 +671,7 @@
 	        success: function(data) {
 	            let scheduleStr = '';
 	
-
-
 	            for (let i = 0; i < data.length; i++) {
-	            let sss = data[i].endDate.substring(0, 10); // "2023-08-15"
-	            let originalDate = new Date(sss);
-	            originalDate.setDate(originalDate.getDate() - 1);
-	            let formattedDate = originalDate.getFullYear() + '-' +
-                ('0' + (originalDate.getMonth() + 1)).slice(-2) + '-' +
-                ('0' + originalDate.getDate()).slice(-2);
 	            	const shortenedTitle = data[i].title.length > 20 ? data[i].title.substring(0, 20) + '...' : data[i].title;
 	                
 	                scheduleStr += '<div onclick="gocalenderPage();" class="scheduleListByONe" style="display:grid; grid-template-columns:1fr 2fr 3fr; grid-gap:10px; margin-left:15px; padding-left:5px; width:550px; border-radius:10px;">'
@@ -688,7 +680,7 @@
 	                    + '<div style="font-size:15px; "> 타입 : ' + data[i].typeName + '</div>'
 	                    + '<div style="font-size:15px; "> 작성자 : ' + data[i].writerName + '</div></div>'
 	                	+ '<div style="display:grid; grid-template-rows:1fr 1fr;">'
-	                    + '<div style="font-size:15px; "> 기간 : ' + data[i].startDate.substring(0, 10) +'~'+ formattedDate+'</div>'
+	                    + '<div style="font-size:15px; "> 기간 : ' + data[i].startDate.substring(0, 10) +'~'+ data[i].endDate.substring(0, 10)+'</div>'
 	                    + '<div style="font-size:15px; "> 제목 : ' + shortenedTitle + '</div></div></div></br>';
 	            }
 	            mainScheduleList.innerHTML = scheduleStr;

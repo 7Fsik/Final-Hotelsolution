@@ -420,12 +420,13 @@ border-radius: 20px;
 					  });
 					},
 
-					eventAdd: function (obj) { // 이벤트 추가클릭)
+					eventAdd: function (obj) { // 이벤트 추가(드래그)
 					
 						let endDateString = obj.event.end;
 						let end = new Date(endDateString);
-						/* end.setDate(end.getDate() + 1); */
+						end.setDate(end.getDate() + 1);
 						
+
 					
 					    let startDateString = obj.event.start;
 					    let start = new Date(startDateString);
@@ -453,9 +454,9 @@ border-radius: 20px;
 					          
 					            let ostr = "";
 					            let ostr2 = "";
-								let end = data.endDate;
+								let end = data.endDate-1;
 								let sd= data.startDate;
-								let edi= data.endDate;
+								let edi= data.endDate-1;
 								let ed = String(edi); // 또는 ed.toString();
 								
 								let syear = sd.substring(2, 4);
@@ -463,6 +464,7 @@ border-radius: 20px;
 								let sday = sd.substring(6, 8);
 					
 								
+
 								// 결과 문자열 생성
 								let sStartDate = syear+'년' +smonth+'월'+sday+'일';
 								
@@ -498,7 +500,7 @@ border-radius: 20px;
 						
 					},
 
-				eventClick: function (obj) { // 이벤트 상세조회
+				eventClick: function (obj) { // 이벤트 삭제 (이벤트 클릭)
 
 					let endDateString = obj.event.end;
 					let end = new Date(endDateString);
@@ -647,8 +649,8 @@ border-radius: 20px;
 		      location.reload();
 		    },
 		    error: function (e) {
-		      alert(e);
 		      alert('작성자만 삭제가 가능합니다');
+		      alert(e);
 		      location.reload();
 		    }
 		  });
