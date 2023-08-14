@@ -51,6 +51,7 @@ public class UseManageController {
 		
 		List<UseManageVo> useList = us.getUseList(pv,date,searchValue);
 		
+		model.addAttribute("pv", pv);
 		model.addAttribute("useList", useList);
 		model.addAttribute("searchValue", searchValue);
 		

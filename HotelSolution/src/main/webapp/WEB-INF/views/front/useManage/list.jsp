@@ -150,12 +150,12 @@
                 </div>
                 <div id="page-area">
                     <c:if test="${pv.currentPage >1}">
-                        <a href="/fire/front/status/list?page=${pv.currentPage - 1}&searchValue=${searchValue}"> < </a>
+                        <a href="/fire/front/useManage/list?page=${pv.currentPage - 1}&searchValue=${searchValue}"> < </a>
                     </c:if>
                     
                     <c:forEach begin="${ pv.startPage }" end="${ pv.endPage }" step="1" var="i">
                         <c:if test="${pv.currentPage != i}">
-                            <a href="/fire/front/status/list?page= ${i}&searchValue=${searchValue}">${i}</a>
+                            <a href="/fire/front/useManage/list?page= ${i}&searchValue=${searchValue}">${i}</a>
 	            		</c:if>
 	            		<c:if test="${pv.currentPage == i}">
 			            	<a class="btnrr">${i}</a>
@@ -163,7 +163,7 @@
                     </c:forEach>
                     
                     <c:if test="${pv.currentPage < pv.maxPage }">
-                        <a href="/fire/front/status/list?page=${pv.currentPage + 1}&searchValue=${searchValue}"> > </a>
+                        <a href="/fire/front/useManage/list?page=${pv.currentPage + 1}&searchValue=${searchValue}"> > </a>
                     </c:if>
                 </div>
             </div>
