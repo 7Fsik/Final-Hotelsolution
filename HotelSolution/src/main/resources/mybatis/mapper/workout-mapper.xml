@@ -36,23 +36,6 @@
 		WHERE NO = #{workoutNo}
 	</update>
 	
-	<!-- <select id="getStartTime" resultType="java.util.Date">
-	    SELECT WORK_START_TIME
-	    FROM COMMUTE_RECORD
-	    WHERE NO = #{workoutNo}
-	    AND WORK_START_TIME IS NOT NULL
-	    ORDER BY WORK_START_TIME DESC
-	    FETCH FIRST ROW ONLY
-	</select>
-
-	<select id="getEndTime" resultType="java.util.Date">
-	    SELECT WORK_END_TIME
-	    FROM COMMUTE_RECORD
-	    WHERE NO = #{workoutNo}
-	    AND WORK_END_TIME IS NOT NULL
-	    ORDER BY WORK_END_TIME DESC
-	    FETCH FIRST ROW ONLY
-	</select> -->
 	
 	<update id="totalWorkHours" parameterType="java.util.Map">
 	

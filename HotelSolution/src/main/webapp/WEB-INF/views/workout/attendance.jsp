@@ -700,7 +700,7 @@
 		];
 		myChart.data.datasets[0].data = graphData;
 		myChart.update();
-			
+			/* ddd */
     </script>
 
 </body>
