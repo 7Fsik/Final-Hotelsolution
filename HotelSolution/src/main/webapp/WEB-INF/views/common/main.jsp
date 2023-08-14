@@ -766,8 +766,12 @@ cursor:pointer;
                 var cnt = response;
 				
                 // HTML에서 알림 카운트를 업데이트(필요한 경우)
+                if(response !="0"){
+                	  $(".sideProfilesurvey").text(response);
+ 			        	
+ 			       
+ 			        }
               
-                $(".sideProfilesurvey").text(cnt);
                 // 카운트에 따라 알림 요소를 표시/숨기기(필요한 경우)
                /*  if (cnt > 0) {
                     $(".notification-count").css("display", "inline");
