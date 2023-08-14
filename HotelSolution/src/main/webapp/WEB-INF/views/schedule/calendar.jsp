@@ -454,10 +454,11 @@ border-radius: 20px;
 					          
 					            let ostr = "";
 					            let ostr2 = "";
-								let end = data.endDate-1;
+								let end = data.endDate;
 								let sd= data.startDate;
-								let edi= data.endDate-1;
-								let ed = String(edi); // 또는 ed.toString();
+								let edi= data.endDate;
+								let edi2= data.endDate-1;
+								let ed = String(edi2); // 또는 ed.toString();
 								
 								let syear = sd.substring(2, 4);
 								let smonth = sd.substring(4, 6);
