@@ -138,15 +138,15 @@
                 <input name="email" type="email" placeholder="이메일을 입력하세요">
             </div>
 
-                    <div id="code-btn"><button type="button" formaction="${root}/member/emailAuthentication.wow">인증코드 받기</button></div>
+                    <div id="code-btn"><button type="button" formaction="${root}/member/emailAuthentication.wow">인증번호 받기</button></div>
                    
                    <div id="code-box">
 	                	<div class="detail">
-		                	인증코드 <input class="code-input" type="text" name="code" maxlength="6" placeholder="인증번호 6자리 입력">
+		                	인증번호 <input class="code-input" type="text" name="code" maxlength="6" placeholder="인증번호 6자리 입력">
 		                	<input formaction="${root}/member/emailKeyRightOrNo" class="sub-input" type="submit" value="확인">
 	                	</div>
 		                <ul class="list">
-	                        <li>입력하신 메일에서 인증코드를 확인해주세요.</li>
+	                        <li>입력하신 메일에서 인증번호를 확인해주세요.</li>
 	                    </ul>
                    </div>
 
