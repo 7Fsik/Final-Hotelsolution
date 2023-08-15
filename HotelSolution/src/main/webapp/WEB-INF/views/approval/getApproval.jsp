@@ -87,6 +87,7 @@
     	grid-template-columns:0.8fr 1fr 1.5fr 1.5fr;
     	align-items:center;
 		text-align: center;
+		width:500px;
     }
     
     .list-title a{
