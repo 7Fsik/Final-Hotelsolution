@@ -226,6 +226,10 @@
 	                                		<c:when test="${list[0].statusName == '반려' }">
 	                                			<td class="teamLeader" style="color:red;">${list[0].approverName}(${list[0].statusName})</td>
 	                                		</c:when>
+
+                                            <c:when test="${list[0].statusName == '진행중'}">
+                                                <td class="teamLeader">${list[0].approverName}(${list[0].statusName})</td>
+                                            </c:when>
 	                                	</c:choose>
 	                                	
 	                                	<c:choose>
@@ -236,6 +240,10 @@
 	                                		<c:when test="${list[1].statusName == '반려' }">
 			                                	<td class="hrLeader" style="color:red;">${list[1].approverName}(${list[1].statusName})</td>
 	                                		</c:when>
+
+                                            <c:when test="${list[1].statusName == '진행중'}">
+                                                <td class="hrLeader">${list[1].approverName}(${list[1].statusName})</td>
+                                            </c:when>
 	                                	</c:choose>
 	                                </tr>
 	                                
