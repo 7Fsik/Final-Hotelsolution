@@ -26,10 +26,11 @@ UI구현 (2023/7/7~2023/7/14)<br>
 마감 및 더미데이터 준비 (2023/8/11~2023/8/16)
 
 <h3>역할</h3>
-김민규님 : 
-추명훈님 : 
-이승권님 : 
-김찬진님 : 
+김민규님 :  <br>
+추명훈님 :  <br>
+이승권님 :  <br>
+김찬진님 :  <br>
 
 <a href="https://www.notion.so/Final-0965f782690141a1977f91972c7a36ce">노션</a>
+<br>
 <a href="https://www.erdcloud.com/d/gqQ7LDani3iHWPyFq#google_vignette">ERDCloud</a>
