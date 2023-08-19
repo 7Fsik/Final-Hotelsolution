@@ -31,6 +31,9 @@ UI구현 (2023/7/7~2023/7/14)<br>
 이승권님 :  <br>
 김찬진님 :  <br>
 
+<hr>
+
 <a href="https://www.notion.so/Final-0965f782690141a1977f91972c7a36ce">노션</a>
+<br>
 <br>
 <a href="https://www.erdcloud.com/d/gqQ7LDani3iHWPyFq#google_vignette">ERDCloud</a>
