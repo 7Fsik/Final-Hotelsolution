@@ -1,7 +1,7 @@
 # hotelSolutionGroupware
 <h1>kh 파이어조 호텔솔루션 그룹웨어입니다.</h1>
 
-h3>목차</h3>
+<h3>목차</h3>
 <ul>
 <li>안내사항</li>
 <li>프로젝트 소개 요약 </li>
