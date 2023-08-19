@@ -1,5 +1,5 @@
 # hotelSolutionGroupware
-<h1>kh 파이어조 호텔솔루션 그룹웨어입니다.</h1>
+kh 파이어조 호텔솔루션 그룹웨어입니다.
 
 <h3>목차</h3>
 <ul>
