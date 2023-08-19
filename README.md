@@ -24,3 +24,12 @@ UI설계 (2023/6/30~2023/7/7)<br>
 UI구현 (2023/7/7~2023/7/14)<br>
 서버구현 (2023/7/14~2023/8/11)<br>
 마감 및 더미데이터 준비 (2023/8/11~2023/8/16)
+
+<h3>역할</h3>
+김민규님 : 
+추명훈님 : 
+이승권님 : 
+김찬진님 : 
+
+<a href="https://www.notion.so/Final-0965f782690141a1977f91972c7a36ce">노션</a>
+<a href="https://www.erdcloud.com/d/gqQ7LDani3iHWPyFq#google_vignette">ERDCloud</a>
